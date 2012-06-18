@@ -1,8 +1,18 @@
 <repast.simphony.visualization.engine.DefaultDisplayDescriptor>
   <name>River Display</name>
   <type>TWO_D</type>
-  <styles/>
-  <editedStyles/>
+  <styles>
+    <entry>
+      <string>siver.BoatAgent</string>
+      <string>repast.simphony.visualization.editedStyle.EditedStyle2D</string>
+    </entry>
+  </styles>
+  <editedStyles>
+    <entry>
+      <string>siver.BoatAgent</string>
+      <string>siver.BoatAgent.style_0.xml</string>
+    </entry>
+  </editedStyles>
   <netStyles/>
   <editedNetStyles/>
   <frequency>ON_MOVE</frequency>
@@ -17,7 +27,12 @@
   <valueLayerStyleName>siver.RiverStyle</valueLayerStyleName>
   <layoutProjection>Simple Grid</layoutProjection>
   <layoutInterval>0</layoutInterval>
-  <layerOrder/>
+  <layerOrder>
+    <entry>
+      <string>siver.BoatAgent</string>
+      <int>0</int>
+    </entry>
+  </layerOrder>
   <projections>
     <repast.simphony.scenario.data.ProjectionData>
       <id>Simple Grid</id>
@@ -59,10 +74,8 @@
     </entry>
   </projectionDescriptors>
   <props/>
-  <backgroundColor>
-    <red>255</red>
-    <green>255</green>
-    <blue>255</blue>
-    <alpha>255</alpha>
+  <backgroundColor class="javax.swing.plaf.ColorUIResource">
+    <value>-1</value>
+    <falpha>0.0</falpha>
   </backgroundColor>
 </repast.simphony.visualization.engine.DefaultDisplayDescriptor>
