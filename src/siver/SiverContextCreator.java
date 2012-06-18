@@ -58,7 +58,7 @@ public class SiverContextCreator implements ContextBuilder<Object> {
 		context.addValueLayer(vl);
 		
 		for(int x = 10; x<20; x++) {
-			for(int y = 0; y<ydim;y++) {
+			for(int y = 0; y<50;y++) {
 				vl.set(1, x, y);
 			}
 		}

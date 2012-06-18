@@ -1,5 +1,5 @@
 <repast.simphony.visualization.engine.DefaultDisplayDescriptor>
-  <name>River Display</name>
+  <name>Grid Display</name>
   <type>TWO_D</type>
   <styles>
     <entry>
@@ -24,7 +24,6 @@
     <frequency>REPEAT</frequency>
   </schedParams>
   <layoutClassName>foo.bar.baz</layoutClassName>
-  <valueLayerStyleName>siver.RiverStyle</valueLayerStyleName>
   <layoutProjection>Simple Grid</layoutProjection>
   <layoutInterval>0</layoutInterval>
   <layerOrder>
@@ -40,11 +39,9 @@
       <type>GRID</type>
     </repast.simphony.scenario.data.ProjectionData>
   </projections>
-  <valueLayers>
-    <string>River Field</string>
-  </valueLayers>
+  <valueLayers/>
   <visualizationProperties class="repast.simphony.visualization.UnitSizeLayoutProperties">
-    <unitSize>15.0</unitSize>
+    <unitSize>1.0</unitSize>
   </visualizationProperties>
   <projectionDescriptors>
     <entry>
@@ -57,7 +54,7 @@
             <map>
               <entry>
                 <string>UNIT_SIZE</string>
-                <float>15.0</float>
+                <float>1.0</float>
               </entry>
               <entry>
                 <string>SHOW</string>
@@ -74,8 +71,10 @@
     </entry>
   </projectionDescriptors>
   <props/>
-  <backgroundColor class="javax.swing.plaf.ColorUIResource">
-    <value>-1</value>
-    <falpha>0.0</falpha>
+  <backgroundColor>
+    <red>255</red>
+    <green>255</green>
+    <blue>255</blue>
+    <alpha>255</alpha>
   </backgroundColor>
 </repast.simphony.visualization.engine.DefaultDisplayDescriptor>
