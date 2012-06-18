@@ -7,3 +7,9 @@
 
 # Eclipse Files #
 .classpath
+
+
+# Repast auto-generated files #
+debug.log
+velocity.log
+Repast.Settings
