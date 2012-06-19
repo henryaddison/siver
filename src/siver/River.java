@@ -6,24 +6,22 @@ import java.util.ArrayList;
 import repast.simphony.space.grid.GridPoint;
 
 public class River {
-	ArrayList<GridPoint> rightbank = new ArrayList<GridPoint>();
-	ArrayList<GridPoint> leftbank = new ArrayList<GridPoint>();
+	ArrayList<Landmark> bank = new ArrayList<Landmark>();
 	ArrayList<Polygon> polys = new ArrayList<Polygon>();
 	
-	public void add(GridPoint left, GridPoint right) {
-		leftbank.add(left);
-		rightbank.add(right);
+	public void add(Landmark l) {
+		bank.add(l);
 		
-		if(rightbank.size() > 1) {
-			int size = rightbank.size();
-			int[] xcoords = {rightbank.get(size-2).getX(),
-							rightbank.get(size-1).getX(), 
-							leftbank.get(size-1).getX(), 
-							leftbank.get(size-2).getX()};
-			int[] ycoords = {rightbank.get(size-2).getY(),
-					rightbank.get(size-1).getY(), 
-					leftbank.get(size-1).getY(), 
-					leftbank.get(size-2).getY()};
+		if(bank.size() > 1) {
+			int size = bank.size();
+			int[] xcoords = {bank.get(size-2).getRight().getX(),
+							bank.get(size-1).getRight().getX(),
+							bank.get(size-1).getLeft().getX(),
+							bank.get(size-2).getLeft().getX()};
+			int[] ycoords = {bank.get(size-2).getRight().getY(),
+							bank.get(size-1).getRight().getY(),
+							bank.get(size-1).getLeft().getY(),
+							bank.get(size-2).getLeft().getY()};
 			Polygon next_bit_of_river = new Polygon(xcoords, ycoords, 4);
 			polys.add(next_bit_of_river);
 		}
@@ -36,5 +34,9 @@ public class River {
 			}
 		}
 		return false;
+	}
+	
+	public ArrayList<Landmark> getLandmarks() {
+		return bank;
 	}
 }

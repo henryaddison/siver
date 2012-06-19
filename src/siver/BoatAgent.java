@@ -11,10 +11,16 @@ public class BoatAgent {
 	private ContinuousSpace<Object> space;
 	private Grid<Object> grid;
 	private boolean upstream;
-	public BoatAgent(ContinuousSpace<Object> space, Grid<Object> grid) {
+	private int landmark_index;
+	private River river;
+	private double angle;
+	public BoatAgent(ContinuousSpace<Object> space, Grid<Object> grid, River river) {
 		this.space = space;
 		this.grid = grid;
 		this.upstream = false;
+		this.river = river;
+		this.landmark_index = 1;
+		this.angle = 0;
 	}
 	
 	// Schedule the step method for agents.  The method is scheduled starting at 
@@ -22,21 +28,14 @@ public class BoatAgent {
 	// and recurs at 2,3,4,...etc
 	@ScheduledMethod(start = 1, interval = 1, shuffle=true)
 	public void step() {
-		GridPoint myLocation = grid.getLocation(this);
-		if(!upstream && myLocation.getY() < 48) {
-			GridPoint pt = new GridPoint(15,49);
-			moveToward(pt);
-		} else if(!upstream && myLocation.getY() >= 48) {
-			spin();
-		} else if(upstream && myLocation.getY() <= 1) {
-			spin();
-		} else if(upstream && myLocation.getY() > 1){
-			GridPoint pt = new GridPoint(15,0);
-			moveToward(pt);
+		if(nearLandmark()) {
+			chooseNextLandmark();
+		} else {
+			Landmark l = river.getLandmarks().get(landmark_index);
+			moveToward(l.getLocation());
 		}
 	}
-
-
+	
 	private void spin() {
 		upstream = !upstream;
 	}
@@ -44,9 +43,39 @@ public class BoatAgent {
 	private void moveToward(GridPoint pt) {
 		NdPoint myPoint  = space.getLocation(this);
 		NdPoint otherPoint = new NdPoint(pt.getX(), pt.getY());
-		double angle = SpatialMath.calcAngleFor2DMovement(space, myPoint, otherPoint);
+		angle = SpatialMath.calcAngleFor2DMovement(space, myPoint, otherPoint);
 		space.moveByVector(this, 1, angle, 0);
 		myPoint = space.getLocation(this);
 		grid.moveTo(this, (int)myPoint.getX(), (int)myPoint.getY());
+	}
+	
+	private void chooseNextLandmark() {
+		if(upstream && landmark_index > 0) {
+			landmark_index--;
+			return;
+		}
+		if(upstream && landmark_index <= 0){
+			spin();
+			return;
+		}
+		if(landmark_index >= river.getLandmarks().size()-1) {
+			spin();
+			return;
+		}
+		if(true){
+			landmark_index++;
+			return;
+		}
+	}
+	
+	private boolean nearLandmark() {
+		Landmark l = river.getLandmarks().get(landmark_index);
+		double distance = (Math.pow((l.getLocation().getX()-grid.getLocation(this).getX()), 2)+
+		Math.pow((l.getLocation().getY()-grid.getLocation(this).getY()), 2));
+		return distance < 5;
+	}
+	
+	public double getAngleInDegrees() {
+		return -(angle*180.0/Math.PI - 90.0);
 	}
 }

@@ -29,6 +29,9 @@ import repast.simphony.valueLayer.GridValueLayer;
  */
 public class SiverContextCreator implements ContextBuilder<Object> {
 	
+	private BoatHouse boatHouse;
+	private River river;
+	
 	/* (non-Javadoc)
 	 * @see repast.simphony.dataLoader.ContextBuilder#build(repast.simphony.context.Context)
 	 */
@@ -68,10 +71,10 @@ public class SiverContextCreator implements ContextBuilder<Object> {
 		River river = new River();
 		context.add(river);
 		
-		river.add(new GridPoint(10,0), new GridPoint(30,0));
-		river.add(new GridPoint(10,50), new GridPoint(30,50));
-		river.add(new GridPoint(50,90), new GridPoint(50,70));
-		river.add(new GridPoint(100,90), new GridPoint(100,70));
+		river.add(new Landmark(new GridPoint(10,0), new GridPoint(30,0)));
+		river.add(new Landmark(new GridPoint(10,50), new GridPoint(30,50)));
+		river.add(new Landmark(new GridPoint(50,90), new GridPoint(50,70)));
+		river.add(new Landmark(new GridPoint(100,90), new GridPoint(100,70)));
 		
 		for(int x = 0; x<xdim; x++) {
 			for(int y = 0; y<ydim;y++) {
@@ -81,7 +84,7 @@ public class SiverContextCreator implements ContextBuilder<Object> {
 			}
 		}
 		
-		BoatHouse boatHouse = new BoatHouse();
+		this.boatHouse = new BoatHouse(river);
 		context.add(boatHouse);
 		space.moveTo(boatHouse, 15, 0);
 		NdPoint pt = space.getLocation(boatHouse);
@@ -96,5 +99,9 @@ public class SiverContextCreator implements ContextBuilder<Object> {
 		
 		return context;
 	}
-
+	
+	public BoatHouse getBoatHouse() {
+		return boatHouse;
+	}
+	
 }

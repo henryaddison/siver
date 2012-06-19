@@ -11,6 +11,7 @@ import saf.v3d.scene.VSpatial;
 public class BoatStyle implements StyleOGL2D<BoatAgent> {
 
 	private ShapeFactory2D shapeFactory;
+	private BoatAgent boat;
 	
 	@Override
 	public void init(ShapeFactory2D factory) {
@@ -18,8 +19,7 @@ public class BoatStyle implements StyleOGL2D<BoatAgent> {
 	}
 
 	@Override
-	public VSpatial getVSpatial(BoatAgent object, VSpatial spatial) {
-		// TODO Auto-generated method stub
+	public VSpatial getVSpatial(BoatAgent object, VSpatial spatial) { 
 		if (spatial == null) return shapeFactory.createRectangle(7,17);
 	    return spatial;
 	}
@@ -41,7 +41,7 @@ public class BoatStyle implements StyleOGL2D<BoatAgent> {
 
 	@Override
 	public float getRotation(BoatAgent object) {
-		return 0;
+		return (float)(object.getAngleInDegrees());
 	}
 
 	@Override

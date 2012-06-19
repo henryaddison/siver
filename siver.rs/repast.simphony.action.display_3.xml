@@ -1,24 +1,24 @@
 <repast.simphony.visualization.engine.DefaultDisplayDescriptor>
-  <name>River Display</name>
+  <name>Cont Display</name>
   <type>TWO_D</type>
   <styles>
-    <entry>
-      <string>siver.BoatHouse</string>
-      <string>repast.simphony.visualization.editedStyle.EditedStyle2D</string>
-    </entry>
     <entry>
       <string>siver.BoatAgent</string>
       <string>siver.BoatStyle</string>
     </entry>
+    <entry>
+      <string>siver.BoatHouse</string>
+      <string>repast.simphony.visualization.editedStyle.EditedStyle2D</string>
+    </entry>
   </styles>
   <editedStyles>
     <entry>
-      <string>siver.BoatHouse</string>
-      <string>siver.BoatHouse.style_1.xml</string>
-    </entry>
-    <entry>
       <string>siver.BoatAgent</string>
       <null/>
+    </entry>
+    <entry>
+      <string>siver.BoatHouse</string>
+      <string>siver.BoatHouse.style_2.xml</string>
     </entry>
   </editedStyles>
   <netStyles/>
@@ -33,23 +33,23 @@
   </schedParams>
   <layoutClassName>foo.bar.baz</layoutClassName>
   <valueLayerStyleName>siver.RiverStyle</valueLayerStyleName>
-  <layoutProjection>Simple Grid</layoutProjection>
+  <layoutProjection>Continuous Space</layoutProjection>
   <layoutInterval>0</layoutInterval>
   <layerOrder>
-    <entry>
-      <string>siver.BoatHouse</string>
-      <int>1</int>
-    </entry>
     <entry>
       <string>siver.BoatAgent</string>
       <int>0</int>
     </entry>
+    <entry>
+      <string>siver.BoatHouse</string>
+      <int>1</int>
+    </entry>
   </layerOrder>
   <projections>
     <repast.simphony.scenario.data.ProjectionData>
-      <id>Simple Grid</id>
+      <id>Continuous Space</id>
       <attributes/>
-      <type>GRID</type>
+      <type>CONTINUOUS_SPACE</type>
     </repast.simphony.scenario.data.ProjectionData>
   </projections>
   <valueLayers>
@@ -60,12 +60,12 @@
   </visualizationProperties>
   <projectionDescriptors>
     <entry>
-      <string>Simple Grid</string>
-      <repast.simphony.visualization.grid.GridProjectionDescriptor>
+      <string>Continuous Space</string>
+      <repast.simphony.visualization.continuous.ContinuousProjectionDescriptor>
         <proj reference="../../../../projections/repast.simphony.scenario.data.ProjectionData"/>
         <props>
           <entry>
-            <string>repast.simphony.visualization.grid.GridDecorator</string>
+            <string>repast.simphony.visualization.continuous.ContinuousDecorator</string>
             <map>
               <entry>
                 <string>UNIT_SIZE</string>
@@ -82,14 +82,14 @@
             </map>
           </entry>
         </props>
-      </repast.simphony.visualization.grid.GridProjectionDescriptor>
+      </repast.simphony.visualization.continuous.ContinuousProjectionDescriptor>
     </entry>
   </projectionDescriptors>
   <props/>
   <backgroundColor>
-    <red>0</red>
-    <green>0</green>
-    <blue>0</blue>
+    <red>255</red>
+    <green>255</green>
+    <blue>255</blue>
     <alpha>255</alpha>
   </backgroundColor>
 </repast.simphony.visualization.engine.DefaultDisplayDescriptor>
