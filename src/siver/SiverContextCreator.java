@@ -3,6 +3,10 @@
  */
 package siver;
 
+
+import java.awt.Polygon;
+import java.util.ArrayList;
+
 import repast.simphony.context.Context;
 import repast.simphony.context.space.continuous.ContinuousSpaceFactoryFinder;
 import repast.simphony.context.space.grid.GridFactoryFinder;
@@ -12,6 +16,7 @@ import repast.simphony.space.continuous.NdPoint;
 import repast.simphony.space.continuous.SimpleCartesianAdder;
 import repast.simphony.space.grid.Grid;
 import repast.simphony.space.grid.GridBuilderParameters;
+import repast.simphony.space.grid.GridPoint;
 import repast.simphony.space.grid.SimpleGridAdder;
 import repast.simphony.valueLayer.GridValueLayer;
 
@@ -28,8 +33,8 @@ public class SiverContextCreator implements ContextBuilder<Object> {
 	public Context build(Context<Object> context) {
 		context.setId("siver");
 		
-		int xdim = 50;   // The x dimension of the physical space
-		int ydim = 50;   // The y dimension of the physical space
+		int xdim = 101;   // The x dimension of the physical space
+		int ydim = 101;   // The y dimension of the physical space
 
 		// Create a new 2D grid to model the discrete patches of grass.  The inputs to the
 		// GridFactory include the grid name, the context in which to place the grid,
@@ -57,9 +62,31 @@ public class SiverContextCreator implements ContextBuilder<Object> {
 		
 		context.addValueLayer(vl);
 		
-		for(int x = 10; x<20; x++) {
-			for(int y = 0; y<50;y++) {
-				vl.set(1, x, y);
+		ArrayList<GridPoint> rightbank = new ArrayList<GridPoint>();
+		ArrayList<GridPoint> leftbank = new ArrayList<GridPoint>();
+		
+		leftbank.add(new GridPoint(10,0));
+		rightbank.add(new GridPoint(30,0));
+		
+		leftbank.add(new GridPoint(10,50));
+		rightbank.add(new GridPoint(30,50));
+		
+		leftbank.add(new GridPoint(50,85));
+		rightbank.add(new GridPoint(50,65));
+		
+		leftbank.add(new GridPoint(100,85));
+		rightbank.add(new GridPoint(100,65));
+		
+		for(int i = 1; i<rightbank.size(); i++) {
+			int[] xcoords = {rightbank.get(i-1).getX(), rightbank.get(i).getX(), leftbank.get(i).getX(), leftbank.get(i-1).getX()};
+			int[] ycoords = {rightbank.get(i-1).getY(), rightbank.get(i).getY(), leftbank.get(i).getY(), leftbank.get(i-1).getY()};
+			Polygon river = new Polygon(xcoords, ycoords, 4);
+			for(int x = 0; x<xdim; x++) {
+				for(int y = 0; y<ydim;y++) {
+					if(river.contains(x,y)) {
+						vl.set(1, x, y);
+					}
+				}
 			}
 		}
 		
