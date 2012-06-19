@@ -30,14 +30,13 @@ public class BoatAgent {
 	public void step() {
 		if(nearLandmark()) {
 			chooseNextLandmark();
-		} else {
+			return;
+		} 
+		if(true) {
 			Landmark l = river.getLandmarks().get(landmark_index);
 			moveToward(l.getLocation());
+			return;
 		}
-	}
-	
-	private void spin() {
-		upstream = !upstream;
 	}
 	
 	private void moveToward(GridPoint pt) {
@@ -66,6 +65,10 @@ public class BoatAgent {
 			landmark_index++;
 			return;
 		}
+	}
+	
+	private void spin() {
+		upstream = !upstream;
 	}
 	
 	private boolean nearLandmark() {
