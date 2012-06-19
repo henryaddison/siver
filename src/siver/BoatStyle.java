@@ -46,7 +46,7 @@ public class BoatStyle implements StyleOGL2D<BoatAgent> {
 
 	@Override
 	public float getScale(BoatAgent object) {
-		return 1;
+		return 15;
 	}
 
 	@Override

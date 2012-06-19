@@ -11,6 +11,9 @@ import repast.simphony.context.Context;
 import repast.simphony.context.space.continuous.ContinuousSpaceFactoryFinder;
 import repast.simphony.context.space.grid.GridFactoryFinder;
 import repast.simphony.dataLoader.ContextBuilder;
+import repast.simphony.engine.environment.RunEnvironment;
+import repast.simphony.engine.schedule.ISchedule;
+import repast.simphony.engine.schedule.ScheduleParameters;
 import repast.simphony.space.continuous.ContinuousSpace;
 import repast.simphony.space.continuous.NdPoint;
 import repast.simphony.space.continuous.SimpleCartesianAdder;
@@ -53,7 +56,7 @@ public class SiverContextCreator implements ContextBuilder<Object> {
 		ContinuousSpace<Object> space = ContinuousSpaceFactoryFinder.createContinuousSpaceFactory(null)
 		.createContinuousSpace("Continuous Space", context, new SimpleCartesianAdder<Object>(),
 				new repast.simphony.space.continuous.StrictBorders(), xdim, ydim);
-
+		
 		// Create a new 2D value layer to store the state of the river grid.  This is
 		// only used for visualization since it's faster to draw the value layer
 		// in 2D displays compared with rendering each grass patch as an agent.
@@ -62,39 +65,34 @@ public class SiverContextCreator implements ContextBuilder<Object> {
 		
 		context.addValueLayer(vl);
 		
-		ArrayList<GridPoint> rightbank = new ArrayList<GridPoint>();
-		ArrayList<GridPoint> leftbank = new ArrayList<GridPoint>();
+		River river = new River();
+		context.add(river);
 		
-		leftbank.add(new GridPoint(10,0));
-		rightbank.add(new GridPoint(30,0));
+		river.add(new GridPoint(10,0), new GridPoint(30,0));
+		river.add(new GridPoint(10,50), new GridPoint(30,50));
+		river.add(new GridPoint(50,90), new GridPoint(50,70));
+		river.add(new GridPoint(100,90), new GridPoint(100,70));
 		
-		leftbank.add(new GridPoint(10,50));
-		rightbank.add(new GridPoint(30,50));
-		
-		leftbank.add(new GridPoint(50,85));
-		rightbank.add(new GridPoint(50,65));
-		
-		leftbank.add(new GridPoint(100,85));
-		rightbank.add(new GridPoint(100,65));
-		
-		for(int i = 1; i<rightbank.size(); i++) {
-			int[] xcoords = {rightbank.get(i-1).getX(), rightbank.get(i).getX(), leftbank.get(i).getX(), leftbank.get(i-1).getX()};
-			int[] ycoords = {rightbank.get(i-1).getY(), rightbank.get(i).getY(), leftbank.get(i).getY(), leftbank.get(i-1).getY()};
-			Polygon river = new Polygon(xcoords, ycoords, 4);
-			for(int x = 0; x<xdim; x++) {
-				for(int y = 0; y<ydim;y++) {
-					if(river.contains(x,y)) {
-						vl.set(1, x, y);
-					}
+		for(int x = 0; x<xdim; x++) {
+			for(int y = 0; y<ydim;y++) {
+				if(river.contains(x,y)) {
+					vl.set(1, x, y);
 				}
 			}
 		}
 		
-		BoatAgent boat = new BoatAgent(space, grid);
-		context.add(boat);
-		space.moveTo(boat, 15, 0);
-		NdPoint pt = space.getLocation(boat);
-		grid.moveTo(boat, (int)pt.getX(), (int)pt.getY());
+		BoatHouse boatHouse = new BoatHouse();
+		context.add(boatHouse);
+		space.moveTo(boatHouse, 15, 0);
+		NdPoint pt = space.getLocation(boatHouse);
+		grid.moveTo(boatHouse, (int)pt.getX(), (int)pt.getY());
+		
+		ISchedule schedule = RunEnvironment.getInstance().getCurrentSchedule();
+		//Specify that the action should start at tick 1 and execute every other tick
+		ScheduleParameters params = ScheduleParameters.createOneTime(1);
+
+		//Schedule my agent to execute the move method given the specified schedule parameters.&nbsp;
+		schedule.schedule(params, boatHouse, "launch");
 		
 		return context;
 	}
