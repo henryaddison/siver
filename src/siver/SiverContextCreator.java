@@ -22,6 +22,8 @@ import repast.simphony.space.grid.GridBuilderParameters;
 import repast.simphony.space.grid.GridPoint;
 import repast.simphony.space.grid.SimpleGridAdder;
 import repast.simphony.valueLayer.GridValueLayer;
+import siver.river.Landmark;
+import siver.river.River;
 
 /**
  * @author hja11

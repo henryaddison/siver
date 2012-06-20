@@ -5,6 +5,7 @@ import repast.simphony.space.continuous.ContinuousSpace;
 import repast.simphony.space.continuous.NdPoint;
 import repast.simphony.space.grid.Grid;
 import repast.simphony.util.ContextUtils;
+import siver.river.River;
 
 public class BoatHouse {
 	private River river;

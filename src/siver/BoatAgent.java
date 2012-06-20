@@ -6,6 +6,8 @@ import repast.simphony.space.continuous.ContinuousSpace;
 import repast.simphony.space.continuous.NdPoint;
 import repast.simphony.space.grid.Grid;
 import repast.simphony.space.grid.GridPoint;
+import siver.river.Landmark;
+import siver.river.River;
 
 public class BoatAgent {
 	private ContinuousSpace<Object> space;

@@ -1,4 +1,4 @@
-package siver;
+package siver.river;
 
 import java.awt.Polygon;
 import java.util.ArrayList;

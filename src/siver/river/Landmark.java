@@ -1,4 +1,4 @@
-package siver;
+package siver.river;
 
 import repast.simphony.space.grid.GridPoint;
 

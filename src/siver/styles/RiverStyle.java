@@ -1,4 +1,4 @@
-package siver;
+package siver.styles;
 
 import java.awt.Color;
 

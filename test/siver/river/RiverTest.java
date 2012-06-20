@@ -1,4 +1,4 @@
-package siver;
+package siver.river;
 
 import static org.junit.Assert.*;
 
@@ -9,6 +9,8 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 
 import repast.simphony.space.grid.GridPoint;
+import siver.river.Landmark;
+import siver.river.River;
 
 public class RiverTest {
 
