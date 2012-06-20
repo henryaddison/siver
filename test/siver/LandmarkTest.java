@@ -50,5 +50,14 @@ public class LandmarkTest {
 		Landmark l = new Landmark(new GridPoint(0,0), new GridPoint(10,10));
 		assertEquals(l.getLocation(), new GridPoint(5,5));
 	}
-
+	
+	@Test
+	public void testEquals() {
+		Landmark l = new Landmark(new GridPoint(0,0), new GridPoint(10,10));
+		Landmark l1 = new Landmark(new GridPoint(0,0), new GridPoint(10,10));
+		Landmark l2 = new Landmark(new GridPoint(10,0), new GridPoint(10,10));
+		
+		assertEquals(l, l1);
+		assertFalse(l.equals(l2));
+	}
 }

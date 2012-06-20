@@ -24,4 +24,12 @@ public class Landmark {
 		GridPoint pt = new GridPoint(midX, midY);
 		return pt;
 	}
+	
+	public boolean equals(Object obj) {
+		if(obj instanceof Landmark) {
+			Landmark other = (Landmark) obj;
+			return left.equals(other.getLeft()) && right.equals(other.getRight());
+		}
+		return false;
+	}
 }
