@@ -1,28 +1,43 @@
 package siver;
 
+import repast.simphony.context.Context;
 import repast.simphony.engine.schedule.ScheduledMethod;
 import repast.simphony.space.SpatialMath;
 import repast.simphony.space.continuous.ContinuousSpace;
 import repast.simphony.space.continuous.NdPoint;
 import repast.simphony.space.grid.Grid;
 import repast.simphony.space.grid.GridPoint;
+import repast.simphony.util.ContextUtils;
 import siver.river.Landmark;
 import siver.river.River;
 
 public class BoatAgent {
-	private ContinuousSpace<Object> space;
-	private Grid<Object> grid;
 	private boolean upstream;
 	private int landmark_index;
 	private River river;
 	private double angle;
-	public BoatAgent(ContinuousSpace<Object> space, Grid<Object> grid, River river) {
-		this.space = space;
-		this.grid = grid;
+	private CoxAgent cox;
+	
+	public BoatAgent(River river) {
+		// initially the boat is moving downstream
 		this.upstream = false;
 		this.river = river;
+		// and heads to the 1st landmark
 		this.landmark_index = 1;
-		this.angle = 0;
+		// and points straight up
+		this.angle = 0;		
+	}
+	
+	public void launch(NdPoint pt) {
+		this.cox = new CoxAgent(this);
+		Context<Object> context = ContextUtils.getContext(this);
+		context.add(this.cox);
+		
+		Grid<Object> grid = (Grid) context.getProjection("Simple Grid");
+		ContinuousSpace<Object> space = (ContinuousSpace) context.getProjection("Continuous Space");
+		
+		space.moveTo(this, pt.getX(), pt.getY());
+		grid.moveTo(this, (int)pt.getX(), (int)pt.getY());
 	}
 	
 	// Schedule the step method for agents.  The method is scheduled starting at 
@@ -42,6 +57,10 @@ public class BoatAgent {
 	}
 	
 	private void moveToward(GridPoint pt) {
+		Context<Object> context = ContextUtils.getContext(this);
+		Grid<Object> grid = (Grid) context.getProjection("Simple Grid");
+		ContinuousSpace<Object> space = (ContinuousSpace) context.getProjection("Continuous Space");
+		
 		NdPoint myPoint  = space.getLocation(this);
 		NdPoint otherPoint = new NdPoint(pt.getX(), pt.getY());
 		angle = SpatialMath.calcAngleFor2DMovement(space, myPoint, otherPoint);
@@ -74,6 +93,9 @@ public class BoatAgent {
 	}
 	
 	private boolean nearLandmark() {
+		Context<Object> context = ContextUtils.getContext(this);
+		Grid<Object> grid = (Grid) context.getProjection("Simple Grid");
+		
 		Landmark l = river.getLandmarks().get(landmark_index);
 		double distance = (Math.pow((l.getLocation().getX()-grid.getLocation(this).getX()), 2)+
 		Math.pow((l.getLocation().getY()-grid.getLocation(this).getY()), 2));
