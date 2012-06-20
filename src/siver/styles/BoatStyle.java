@@ -42,7 +42,9 @@ public class BoatStyle implements StyleOGL2D<BoatAgent> {
 
 	@Override
 	public float getRotation(BoatAgent object) {
-		return (float)(object.getAngleInDegrees());
+		double angle = object.getAngle();
+		float angleForView = (float)-(angle*180.0/Math.PI - 90.0);
+		return angleForView;
 	}
 
 	@Override
