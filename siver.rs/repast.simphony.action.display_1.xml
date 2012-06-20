@@ -3,11 +3,19 @@
   <type>TWO_D</type>
   <styles>
     <entry>
+      <string>siver.CoxAgent</string>
+      <string>repast.simphony.visualizationOGL2D.DefaultStyleOGL2D</string>
+    </entry>
+    <entry>
       <string>siver.BoatAgent</string>
       <string>siver.styles.BoatStyle</string>
     </entry>
   </styles>
   <editedStyles>
+    <entry>
+      <string>siver.CoxAgent</string>
+      <null/>
+    </entry>
     <entry>
       <string>siver.BoatAgent</string>
       <null/>
@@ -27,6 +35,10 @@
   <layoutProjection>Simple Grid</layoutProjection>
   <layoutInterval>0</layoutInterval>
   <layerOrder>
+    <entry>
+      <string>siver.CoxAgent</string>
+      <int>1</int>
+    </entry>
     <entry>
       <string>siver.BoatAgent</string>
       <int>0</int>

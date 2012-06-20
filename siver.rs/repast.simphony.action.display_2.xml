@@ -3,6 +3,10 @@
   <type>TWO_D</type>
   <styles>
     <entry>
+      <string>siver.CoxAgent</string>
+      <string>repast.simphony.visualization.editedStyle.EditedStyle2D</string>
+    </entry>
+    <entry>
       <string>siver.BoatAgent</string>
       <string>siver.styles.BoatStyle</string>
     </entry>
@@ -12,6 +16,10 @@
     </entry>
   </styles>
   <editedStyles>
+    <entry>
+      <string>siver.CoxAgent</string>
+      <string>siver.CoxAgent.style_0.xml</string>
+    </entry>
     <entry>
       <string>siver.BoatAgent</string>
       <null/>
@@ -36,6 +44,10 @@
   <layoutProjection>Continuous Space</layoutProjection>
   <layoutInterval>0</layoutInterval>
   <layerOrder>
+    <entry>
+      <string>siver.CoxAgent</string>
+      <int>2</int>
+    </entry>
     <entry>
       <string>siver.BoatAgent</string>
       <int>0</int>
