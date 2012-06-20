@@ -8,6 +8,8 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
+import repast.simphony.space.grid.GridPoint;
+
 public class LandmarkTest {
 
 	@BeforeClass
@@ -28,22 +30,25 @@ public class LandmarkTest {
 
 	@Test
 	public void testLandmark() {
-		fail("Not yet implemented");
+		Landmark l = new Landmark(new GridPoint(0,0), new GridPoint(10,10));
 	}
 
 	@Test
 	public void testGetLeft() {
-		fail("Not yet implemented");
+		Landmark l = new Landmark(new GridPoint(0,0), new GridPoint(10,10));
+		assertEquals(l.getLeft(), new GridPoint(0,0));
 	}
 
 	@Test
 	public void testGetRight() {
-		fail("Not yet implemented");
+		Landmark l = new Landmark(new GridPoint(0,0), new GridPoint(10,10));
+		assertEquals(l.getLeft(), new GridPoint(0,0));
 	}
 
 	@Test
 	public void testGetLocation() {
-		fail("Not yet implemented");
+		Landmark l = new Landmark(new GridPoint(0,0), new GridPoint(10,10));
+		assertEquals(l.getLocation(), new GridPoint(5,5));
 	}
 
 }
