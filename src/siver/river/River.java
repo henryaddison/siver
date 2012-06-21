@@ -4,11 +4,29 @@ import java.awt.Polygon;
 import java.util.ArrayList;
 
 import repast.simphony.space.grid.GridPoint;
-
+/**
+ * 
+ * River is used to define a layout of the river.
+ * 
+ * A River object is defined by a series of Landmark objects. Each consecutive pair of Landmark objects are joined up to form a Polygon.
+ * A River object can be considered a series of these Polygons.
+ * 
+ * @see java.awt.Polygon
+ * @see siver.river.Landmark
+ * 
+ * @author henryaddison
+ *
+ */
 public class River {
-	ArrayList<Landmark> bank = new ArrayList<Landmark>();
-	ArrayList<Polygon> polys = new ArrayList<Polygon>();
+	private ArrayList<Landmark> bank = new ArrayList<Landmark>();
+	private ArrayList<Polygon> polys = new ArrayList<Polygon>();
 	
+	/**
+	 * 
+	 * This will...
+	 * 
+	 * @param l The Landmark object to add to the river's definition.
+	 */
 	public void add(Landmark l) {
 		bank.add(l);
 		
