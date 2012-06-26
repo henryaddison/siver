@@ -1,15 +1,15 @@
 package siver;
 
 
+import java.awt.geom.AffineTransform;
+import java.awt.geom.Point2D;
+
 import repast.simphony.context.Context;
 import repast.simphony.engine.schedule.ScheduledMethod;
-import repast.simphony.space.SpatialMath;
 import repast.simphony.space.continuous.ContinuousSpace;
 import repast.simphony.space.continuous.NdPoint;
 import repast.simphony.space.grid.Grid;
-import repast.simphony.space.grid.GridPoint;
 import repast.simphony.util.ContextUtils;
-import siver.river.Landmark;
 import siver.river.River;
 /** 
  * BoatAgent is a dumb agent, at each step it will carry on moving in the direction it is facing and at the speed it was set to
@@ -45,9 +45,6 @@ public class BoatAgent {
 		grid.moveTo(this, (int)pt.getX(), (int)pt.getY());
 	}
 	
-	// Schedule the step method for agents.  The method is scheduled starting at 
-	// tick one with an interval of 1 tick.  Specifically, the step starts at 1, and
-	// and recurs at 2,3,4,...etc
 	@ScheduledMethod(start = 1, interval = 1, shuffle=true, priority=1)
 	public void step() {
 		Context<Object> context = ContextUtils.getContext(this);
@@ -70,6 +67,13 @@ public class BoatAgent {
 		return angle;
 	}
 	
+	public NdPoint getMyLocation() {
+		Context<Object> context = ContextUtils.getContext(this);
+		ContinuousSpace<Object> space = (ContinuousSpace) context.getProjection("Continuous Space");
+		
+		return space.getLocation(this);
+	}
+	
 	/**
 	 * Get the River object the boat is considered to be on
 	 * 
@@ -78,5 +82,35 @@ public class BoatAgent {
 	 */
 	public River getRiver() {
 		return river;
+	}
+	
+	public boolean onRiver() {
+		AffineTransform at = new AffineTransform();
+		at.translate(getMyLocation().getX(), getMyLocation().getY());
+		at.rotate(Math.PI/2.0-angle);
+		Point2D.Double blptDst = new Point2D.Double();
+		at.transform(new Point2D.Double(-3.5,-8.5), blptDst);
+		Point2D.Double brptDst = new Point2D.Double();
+		at.transform(new Point2D.Double(3.5,-8.5), brptDst);
+		Point2D.Double tlptDst = new Point2D.Double();
+		at.transform(new Point2D.Double(-3.5,8.5), tlptDst);
+		Point2D.Double trptDst = new Point2D.Double();
+		at.transform(new Point2D.Double(3.5,8.5), trptDst);
+		
+		if(!river.contains(blptDst)) {
+			return false;
+		}
+		if(!river.contains(brptDst)) {
+			return false;
+		}
+		if(!river.contains(tlptDst)) {
+			return false;
+		}
+		if(!river.contains(trptDst)) {
+			return false;
+		}
+		
+		
+		return true;
 	}
 }

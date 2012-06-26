@@ -2,6 +2,7 @@ package siver.styles;
 
 import java.awt.Color;
 import java.awt.Font;
+import java.awt.geom.AffineTransform;
 import java.awt.geom.Path2D;
 
 import repast.simphony.visualizationOGL2D.StyleOGL2D;
@@ -29,13 +30,18 @@ public class BoatStyle implements StyleOGL2D<BoatAgent> {
 		boatOutline.lineTo(3.5, -8.5);
 		boatOutline.lineTo(3.5, 5);
 		boatOutline.closePath();
+		
 		if (spatial == null) return shapeFactory.createShape(boatOutline);
 	    return spatial;
 	}
 
 	@Override
 	public Color getColor(BoatAgent object) {
-		return Color.RED;
+		if(object.onRiver()) {
+			return Color.RED;
+		} else {
+			return Color.BLACK;
+		}
 	}
 
 	@Override
