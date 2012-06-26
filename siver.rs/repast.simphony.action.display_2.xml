@@ -7,12 +7,12 @@
       <string>repast.simphony.visualization.editedStyle.EditedStyle2D</string>
     </entry>
     <entry>
-      <string>siver.BoatAgent</string>
-      <string>siver.styles.BoatStyle</string>
-    </entry>
-    <entry>
       <string>siver.BoatHouse</string>
       <string>repast.simphony.visualization.editedStyle.EditedStyle2D</string>
+    </entry>
+    <entry>
+      <string>siver.BoatAgent</string>
+      <string>siver.styles.BoatStyle</string>
     </entry>
   </styles>
   <editedStyles>
@@ -21,12 +21,12 @@
       <string>siver.CoxAgent.style_0.xml</string>
     </entry>
     <entry>
-      <string>siver.BoatAgent</string>
-      <null/>
-    </entry>
-    <entry>
       <string>siver.BoatHouse</string>
       <string>siver.BoatHouse.style_2.xml</string>
+    </entry>
+    <entry>
+      <string>siver.BoatAgent</string>
+      <null/>
     </entry>
   </editedStyles>
   <netStyles/>
@@ -45,12 +45,12 @@
   <layoutInterval>0</layoutInterval>
   <layerOrder>
     <entry>
-      <string>siver.BoatAgent</string>
-      <int>0</int>
-    </entry>
-    <entry>
       <string>siver.BoatHouse</string>
       <int>1</int>
+    </entry>
+    <entry>
+      <string>siver.BoatAgent</string>
+      <int>0</int>
     </entry>
   </layerOrder>
   <projections>
