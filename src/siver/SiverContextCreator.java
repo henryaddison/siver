@@ -5,6 +5,7 @@ package siver;
 
 
 import java.awt.Polygon;
+import java.awt.geom.Point2D;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.net.MalformedURLException;
@@ -81,12 +82,14 @@ public class SiverContextCreator implements ContextBuilder<Object> {
 		River river = new River();
 		context.add(river);
 		
-		river.add(new Landmark(new GridPoint(10,0), new GridPoint(30,0)));
-		river.add(new Landmark(new GridPoint(10,50), new GridPoint(30,50)));
-		river.add(new Landmark(new GridPoint(50,90), new GridPoint(50,70)));
-		river.add(new Landmark(new GridPoint(100,90), new GridPoint(100,70)));
-		river.add(new Landmark(new GridPoint(120,150), new GridPoint(140,150)));
-		river.add(new Landmark(new GridPoint(120,200), new GridPoint(140,200)));
+		river.add(new Landmark(new Point2D.Double(10,0), new Point2D.Double(30,0)));
+		river.add(new Landmark(new Point2D.Double(10,50), new Point2D.Double(30,50)));
+		river.add(new Landmark(new Point2D.Double(50,90), new Point2D.Double(50,70)));
+		river.add(new Landmark(new Point2D.Double(100,90), new Point2D.Double(100,70)));
+		river.add(new Landmark(new Point2D.Double(120,150), new Point2D.Double(140,150)));
+		river.add(new Landmark(new Point2D.Double(120,200), new Point2D.Double(140,200)));
+		
+		river.complete();
 		
 		for(int x = 0; x<xdim; x++) {
 			for(int y = 0; y<ydim;y++) {

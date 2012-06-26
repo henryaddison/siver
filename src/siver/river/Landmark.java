@@ -1,6 +1,6 @@
 package siver.river;
 
-import repast.simphony.space.grid.GridPoint;
+import java.awt.geom.Point2D;
 
 /**
  * 
@@ -13,15 +13,15 @@ import repast.simphony.space.grid.GridPoint;
  */
 
 public class Landmark {
-	private GridPoint left;
-	private GridPoint right;
+	private Point2D.Double left;
+	private Point2D.Double right;
 	
 	/**
 	 * 
 	 * @param l The point on the left bank of the river.
 	 * @param r The point on the right bank of the river.
 	 */
-	public Landmark(GridPoint l, GridPoint r) {
+	public Landmark(Point2D.Double l, Point2D.Double r) {
 		left = l;
 		right = r;
 	}
@@ -30,7 +30,7 @@ public class Landmark {
 	 * 
 	 * @return The point on the left bank for this landmark
 	 */
-	public GridPoint getLeft() {
+	public Point2D.Double getLeft() {
 		return left;
 	}
 	
@@ -39,7 +39,7 @@ public class Landmark {
 	 * 
 	 * @return The point on the right bank for this landmark
 	 */
-	public GridPoint getRight() {
+	public Point2D.Double getRight() {
 		return right;
 	}
 	
@@ -48,12 +48,12 @@ public class Landmark {
 	 * This is used by CoxAgent objects to navigate.
 	 * Currently very naive and just returns the mid point between the left and right bank points that make up the Landmark
 	 * 
-	 * @return a GridPoint that corresponds to the half-way point between the two
+	 * @return a Point2D.Double that corresponds to the half-way point between the two
 	 */
-	public GridPoint getLocation() {
-		int midX = (left.getX() + right.getX())/2;
-		int midY = (left.getY() + right.getY())/2;
-		GridPoint pt = new GridPoint(midX, midY);
+	public Point2D.Double getLocation() {
+		double midX = (left.getX() + right.getX())/2;
+		double midY = (left.getY() + right.getY())/2;
+		Point2D.Double pt = new Point2D.Double(midX, midY);
 		return pt;
 	}
 	

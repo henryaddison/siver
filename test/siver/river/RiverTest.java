@@ -2,6 +2,8 @@ package siver.river;
 
 import static org.junit.Assert.*;
 
+import java.awt.geom.Point2D;
+
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
@@ -34,27 +36,31 @@ public class RiverTest {
 	public void testAdd() {
 		River r = new River();
 		assertEquals(r.getLandmarks().size(), 0);
-		r.add(new Landmark(new GridPoint(0,0), new GridPoint(10,0)));
+		r.add(new Landmark(new Point2D.Double(0,0), new Point2D.Double(10,0)));
 		assertEquals(r.getLandmarks().size(), 1);
-		assertEquals(r.getLandmarks().get(0), new Landmark(new GridPoint(0,0), new GridPoint(10,0)));
-		r.add(new Landmark(new GridPoint(0,10), new GridPoint(10,10)));
+		assertEquals(r.getLandmarks().get(0), new Landmark(new Point2D.Double(0,0), new Point2D.Double(10,0)));
+		r.add(new Landmark(new Point2D.Double(0,10), new Point2D.Double(10,10)));
 		assertEquals(r.getLandmarks().size(), 2);
-		assertEquals(r.getLandmarks().get(0), new Landmark(new GridPoint(0,0), new GridPoint(10,0)));
-		assertEquals(r.getLandmarks().get(1), new Landmark(new GridPoint(0,10), new GridPoint(10,10)));
+		assertEquals(r.getLandmarks().get(0), new Landmark(new Point2D.Double(0,0), new Point2D.Double(10,0)));
+		assertEquals(r.getLandmarks().get(1), new Landmark(new Point2D.Double(0,10), new Point2D.Double(10,10)));
 	}
 
 	@Test
 	public void testContains() {
 		River r = new River();
+		r.complete();
 		assertFalse(r.contains(5,5));
 		assertFalse(r.contains(15,15));
-		r.add(new Landmark(new GridPoint(0,0), new GridPoint(10,0)));
+		r.add(new Landmark(new Point2D.Double(0,0), new Point2D.Double(10,0)));
+		r.complete();
 		assertFalse(r.contains(5,5));
 		assertFalse(r.contains(15,15));
-		r.add(new Landmark(new GridPoint(0,10), new GridPoint(10,10)));
+		r.add(new Landmark(new Point2D.Double(0,10), new Point2D.Double(10,10)));
+		r.complete();
 		assertTrue(r.contains(5,5));
 		assertFalse(r.contains(15,15));
-		r.add(new Landmark(new GridPoint(20,20), new GridPoint(20,10)));
+		r.add(new Landmark(new Point2D.Double(20,20), new Point2D.Double(20,10)));
+		r.complete();
 		assertTrue(r.contains(5,5));
 		assertTrue(r.contains(15,15));
 	}

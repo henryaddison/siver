@@ -1,5 +1,7 @@
 package siver;
 // CoxAgent will use the boat it is attached to in order to decide how to alter it's
+import java.awt.geom.Point2D;
+
 import repast.simphony.context.Context;
 import repast.simphony.engine.schedule.ScheduledMethod;
 import repast.simphony.space.SpatialMath;
@@ -70,7 +72,7 @@ public class CoxAgent {
 		upstream = !upstream;
 	}
 	
-	private void aimToward(GridPoint pt) {
+	private void aimToward(Point2D.Double pt) {
 		Context<Object> context = ContextUtils.getContext(this);
 		Grid<Object> grid = (Grid) context.getProjection("Simple Grid");
 		ContinuousSpace<Object> space = (ContinuousSpace) context.getProjection("Continuous Space");

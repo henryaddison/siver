@@ -1,7 +1,9 @@
 package siver.river;
 
 import java.awt.Polygon;
+import java.awt.geom.Path2D;
 import java.util.ArrayList;
+import java.util.Collections;
 
 import repast.simphony.space.grid.GridPoint;
 /**
@@ -19,7 +21,7 @@ import repast.simphony.space.grid.GridPoint;
  */
 public class River {
 	private ArrayList<Landmark> bank = new ArrayList<Landmark>();
-	private ArrayList<Polygon> polys = new ArrayList<Polygon>();
+	private Path2D.Double bank_path = new Path2D.Double();
 	
 	/**
 	 * 
@@ -29,29 +31,28 @@ public class River {
 	 */
 	public void add(Landmark l) {
 		bank.add(l);
-		
-		if(bank.size() > 1) {
-			int size = bank.size();
-			int[] xcoords = {bank.get(size-2).getRight().getX(),
-							bank.get(size-1).getRight().getX(),
-							bank.get(size-1).getLeft().getX(),
-							bank.get(size-2).getLeft().getX()};
-			int[] ycoords = {bank.get(size-2).getRight().getY(),
-							bank.get(size-1).getRight().getY(),
-							bank.get(size-1).getLeft().getY(),
-							bank.get(size-2).getLeft().getY()};
-			Polygon next_bit_of_river = new Polygon(xcoords, ycoords, 4);
-			polys.add(next_bit_of_river);
+	}
+	
+	public void complete() {
+		bank_path = new Path2D.Double();
+		if(bank.size() > 0) {
+			bank_path.moveTo(bank.get(0).getRight().getX(), bank.get(0).getRight().getY());
+			for(Landmark l : bank) {
+				bank_path.lineTo(l.getRight().getX(), l.getRight().getY());
+			}
+			Collections.reverse(bank);
+			
+			for(Landmark l : bank) {
+				bank_path.lineTo(l.getLeft().getX(), l.getLeft().getY());
+			}
+			Collections.reverse(bank);
+			
+			bank_path.closePath();
 		}
 	}
 	
 	public boolean contains(int x, int y) {
-		for(Polygon p : polys) {
-			if(p.contains(x,y)) {
-				return true;
-			}
-		}
-		return false;
+		return bank_path.contains(x,y);
 	}
 	
 	public ArrayList<Landmark> getLandmarks() {
