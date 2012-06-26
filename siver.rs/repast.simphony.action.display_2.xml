@@ -3,8 +3,8 @@
   <type>TWO_D</type>
   <styles>
     <entry>
-      <string>siver.CoxAgent</string>
-      <string>repast.simphony.visualization.editedStyle.EditedStyle2D</string>
+      <string>siver.river.River</string>
+      <string>siver.styles.RiverStyle</string>
     </entry>
     <entry>
       <string>siver.BoatAgent</string>
@@ -17,8 +17,8 @@
   </styles>
   <editedStyles>
     <entry>
-      <string>siver.CoxAgent</string>
-      <string>siver.CoxAgent.style_0.xml</string>
+      <string>siver.river.River</string>
+      <null/>
     </entry>
     <entry>
       <string>siver.BoatAgent</string>
@@ -45,7 +45,7 @@
   <layoutInterval>0</layoutInterval>
   <layerOrder>
     <entry>
-      <string>siver.CoxAgent</string>
+      <string>siver.river.River</string>
       <int>0</int>
     </entry>
     <entry>

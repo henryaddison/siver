@@ -32,8 +32,6 @@ public class River {
 		bank.add(l);
 	}
 	
-	
-	
 	/**
 	 * Once all Landmarks have been added to the River, call complete to form the Path2D.Double that makes up the River's outline.
 	 */
@@ -83,5 +81,12 @@ public class River {
 	 */
 	public ArrayList<Landmark> getLandmarks() {
 		return bank;
+	}
+	
+	/**
+	 * Get the Path2D.Double outline for the river
+	 */
+	public Path2D.Double getOutline() {
+		return bank_path;
 	}
 }

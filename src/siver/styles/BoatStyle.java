@@ -14,7 +14,6 @@ import siver.BoatAgent;
 public class BoatStyle implements StyleOGL2D<BoatAgent> {
 
 	private ShapeFactory2D shapeFactory;
-	private BoatAgent boat;
 	
 	@Override
 	public void init(ShapeFactory2D factory) {

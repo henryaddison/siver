@@ -82,6 +82,8 @@ public class SiverContextCreator implements ContextBuilder<Object> {
 		
 		river = RiverFactory.Test();
 		context.add(river);
+		space.moveTo(river, 0,0);
+		grid.moveTo(river, 0,0);
 		
 		for(int x = 0; x<xdim; x++) {
 			for(int y = 0; y<ydim;y++) {
