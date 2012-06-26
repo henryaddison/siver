@@ -5,7 +5,7 @@ import java.awt.Color;
 import repast.simphony.valueLayer.ValueLayer;
 import repast.simphony.visualizationOGL2D.ValueLayerStyleOGL;
 
-public class RiverStyle implements ValueLayerStyleOGL {
+public class RiverLayerStyle implements ValueLayerStyleOGL {
 	private ValueLayer layer;
 	
 	@Override
