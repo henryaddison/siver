@@ -63,6 +63,8 @@ public class RiverTest {
 		r.complete();
 		assertTrue(r.contains(5,5));
 		assertTrue(r.contains(15,15));
+		assertTrue(r.contains(new Point2D.Double(5,5)));
+		assertFalse(r.contains(new Point2D.Double(30,30)));
 	}
 
 }

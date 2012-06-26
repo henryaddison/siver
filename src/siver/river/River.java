@@ -1,6 +1,7 @@
 package siver.river;
 
 import java.awt.geom.Path2D;
+import java.awt.geom.Point2D;
 import java.util.ArrayList;
 import java.util.Collections;
 
@@ -51,6 +52,10 @@ public class River {
 	
 	public boolean contains(int x, int y) {
 		return bank_path.contains(x,y);
+	}
+	
+	public boolean contains(Point2D.Double pt) {
+		return bank_path.contains(pt);
 	}
 	
 	public ArrayList<Landmark> getLandmarks() {
