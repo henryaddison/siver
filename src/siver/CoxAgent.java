@@ -26,39 +26,44 @@ public class CoxAgent {
 	
 	@ScheduledMethod(start = 1, interval = 1, shuffle=true, priority=10)
 	public void step() {
+		if(nearEndRiver()) {
+			spin();
+			return;
+		}
 		if(nearLandmark()) {
 			chooseNextLandmark();
 			return;
 		} 
 		if(true) {
-			Landmark l = boat.getRiver().getLandmarks().get(landmark_index);
-			aimToward(l.getLocation());
+			aimToward(getLandmark().getLocation());
 			return;
 		}
 	}
 	
+	/*
+	 * PREDICATES
+	 */
 	private boolean nearLandmark() {
-		Context<Object> context = ContextUtils.getContext(this);
-		ContinuousSpace<Object> space = (ContinuousSpace) context.getProjection("Continuous Space");
-		
-		Landmark l = boat.getRiver().getLandmarks().get(landmark_index);
-		
-		double dist = l.getLocation().distance(boat.getLocation().getX(), boat.getLocation().getY());
-		
-		return dist < 144;
+		return distanceToLandmark() < 5;
 	}
 	
-	private void chooseNextLandmark() {
-		if(upstream && landmark_index > 0) {
-			landmark_index--;
-			return;
-		}
+	
+	private boolean nearEndRiver() {
 		if(upstream && landmark_index <= 0){
-			spin();
-			return;
+			return distanceToLandmark() < 15;
 		}
 		if(landmark_index >= boat.getRiver().getLandmarks().size()-1) {
-			spin();
+			return distanceToLandmark() < 15;
+		}
+		return false;
+	}	
+	
+	/*
+	 * ACTIONS
+	 */
+	private void chooseNextLandmark() {
+		if(upstream) {
+			landmark_index--;
 			return;
 		}
 		if(true){
@@ -69,6 +74,7 @@ public class CoxAgent {
 	
 	private void spin() {
 		upstream = !upstream;
+		chooseNextLandmark();
 	}
 	
 	private void aimToward(Point2D.Double pt) {
@@ -79,5 +85,17 @@ public class CoxAgent {
 		NdPoint otherPoint = new NdPoint(pt.getX(), pt.getY());
 		double angle = SpatialMath.calcAngleFor2DMovement(space, myPoint, otherPoint);
 		boat.setAngle(angle);
+	}
+	
+	/*
+	 * HELPERS
+	 */
+	private double distanceToLandmark() {
+		
+		return getLandmark().getLocation().distance(boat.getLocation().getX(), boat.getLocation().getY());
+	}
+	
+	private Landmark getLandmark() {
+		return boat.getRiver().getLandmarks().get(landmark_index);
 	}
 }
