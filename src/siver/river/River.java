@@ -24,7 +24,7 @@ public class River {
 	
 	/**
 	 * 
-	 * This will...
+	 * This will add a Landmark to the River's list of Landmarks.
 	 * 
 	 * @param l The Landmark object to add to the river's definition.
 	 */
@@ -32,6 +32,11 @@ public class River {
 		bank.add(l);
 	}
 	
+	
+	
+	/**
+	 * Once all Landmarks have been added to the River, call complete to form the Path2D.Double that makes up the River's outline.
+	 */
 	public void complete() {
 		bank_path = new Path2D.Double();
 		if(bank.size() > 0) {
@@ -50,14 +55,32 @@ public class River {
 		}
 	}
 	
-	public boolean contains(int x, int y) {
+	/**
+	 * Checks whether a given point is on the River.
+	 * 
+	 * @param x x coordinate of point to check
+	 * @param y y coordinate of point to check
+	 * @return true if the point is on the River
+	 */
+	public boolean contains(double x, double y) {
 		return bank_path.contains(x,y);
 	}
 	
+	/**
+	 * Checks whether a given point is on the River.
+	 * 
+	 * @param pt Point2D.Double to check
+	 * @return true if the point is on the River
+	 */
 	public boolean contains(Point2D.Double pt) {
 		return bank_path.contains(pt);
 	}
 	
+	/**
+	 * Get the Landmarks that define the river
+	 * 
+	 * @return the list of Landmarks that make up the river 
+	 */
 	public ArrayList<Landmark> getLandmarks() {
 		return bank;
 	}
