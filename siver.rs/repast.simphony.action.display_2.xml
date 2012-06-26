@@ -3,8 +3,8 @@
   <type>TWO_D</type>
   <styles>
     <entry>
-      <string>siver.river.River</string>
-      <string>siver.styles.RiverStyle</string>
+      <string>siver.BoatCorner</string>
+      <string>repast.simphony.visualization.editedStyle.EditedStyle2D</string>
     </entry>
     <entry>
       <string>siver.BoatAgent</string>
@@ -17,8 +17,8 @@
   </styles>
   <editedStyles>
     <entry>
-      <string>siver.river.River</string>
-      <null/>
+      <string>siver.BoatCorner</string>
+      <string>siver.BoatCorner.style_0.xml</string>
     </entry>
     <entry>
       <string>siver.BoatAgent</string>
@@ -45,16 +45,16 @@
   <layoutInterval>0</layoutInterval>
   <layerOrder>
     <entry>
-      <string>siver.river.River</string>
-      <int>0</int>
+      <string>siver.BoatCorner</string>
+      <int>2</int>
     </entry>
     <entry>
       <string>siver.BoatAgent</string>
-      <int>1</int>
+      <int>0</int>
     </entry>
     <entry>
       <string>siver.BoatHouse</string>
-      <int>2</int>
+      <int>1</int>
     </entry>
   </layerOrder>
   <projections>

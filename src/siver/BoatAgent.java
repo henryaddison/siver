@@ -25,6 +25,12 @@ public class BoatAgent {
 	private River river;
 	private double angle;
 	private CoxAgent cox;
+	private BoatCorner tl,tr,br,bl;
+	
+	Point2D.Double blptDst = new Point2D.Double();
+	Point2D.Double brptDst = new Point2D.Double();
+	Point2D.Double trptDst = new Point2D.Double();
+	Point2D.Double tlptDst = new Point2D.Double();
 	
 	public BoatAgent(River river) {
 		
@@ -43,6 +49,14 @@ public class BoatAgent {
 		
 		space.moveTo(this, pt.getX(), pt.getY());
 		grid.moveTo(this, (int)pt.getX(), (int)pt.getY());
+		tl = new BoatCorner();
+		tr = new BoatCorner();
+		br = new BoatCorner();
+		bl = new BoatCorner();
+		context.add(tl);
+		context.add(tr);
+		context.add(bl);
+		context.add(br);
 	}
 	
 	@ScheduledMethod(start = 1, interval = 1, shuffle=true, priority=1)
@@ -53,6 +67,24 @@ public class BoatAgent {
 		
 		space.moveByVector(this, 1, angle, 0);
 		grid.moveTo(this, (int)getLocation().getX(), (int)getLocation().getY());
+		
+		
+		AffineTransform at = new AffineTransform();
+		at.translate(getLocation().getX(), getLocation().getY());
+		at.rotate(angle);
+		
+		at.transform(new Point2D.Double(-8.5,-3.5), blptDst);
+		space.moveTo(bl, blptDst.getX(), blptDst.getY());
+		
+		at.transform(new Point2D.Double(8.5,-3.5), brptDst);
+		space.moveTo(br, brptDst.getX(), brptDst.getY());
+		
+		
+		at.transform(new Point2D.Double(-8.5,3.5), tlptDst);
+		space.moveTo(tl, tlptDst.getX(), tlptDst.getY());
+		
+		at.transform(new Point2D.Double(8.5,3.5), trptDst);
+		space.moveTo(tr, trptDst.getX(), trptDst.getY());
 	}
 	
 	public void setAngle(double angle) {
@@ -81,17 +113,7 @@ public class BoatAgent {
 	}
 	
 	public boolean onRiver() {
-		AffineTransform at = new AffineTransform();
-		at.translate(getLocation().getX(), getLocation().getY());
-		at.rotate(Math.PI/2.0-angle);
-		Point2D.Double blptDst = new Point2D.Double();
-		at.transform(new Point2D.Double(-3.5,-8.5), blptDst);
-		Point2D.Double brptDst = new Point2D.Double();
-		at.transform(new Point2D.Double(3.5,-8.5), brptDst);
-		Point2D.Double tlptDst = new Point2D.Double();
-		at.transform(new Point2D.Double(-3.5,8.5), tlptDst);
-		Point2D.Double trptDst = new Point2D.Double();
-		at.transform(new Point2D.Double(3.5,8.5), trptDst);
+		
 		
 		if(!river.contains(blptDst)) {
 			return false;
