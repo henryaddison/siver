@@ -2,6 +2,7 @@ package siver.styles;
 
 import java.awt.Color;
 import java.awt.Font;
+import java.awt.geom.Path2D;
 
 import repast.simphony.visualizationOGL2D.StyleOGL2D;
 import saf.v3d.ShapeFactory2D;
@@ -20,8 +21,15 @@ public class BoatStyle implements StyleOGL2D<BoatAgent> {
 	}
 
 	@Override
-	public VSpatial getVSpatial(BoatAgent object, VSpatial spatial) { 
-		if (spatial == null) return shapeFactory.createRectangle(7,17);
+	public VSpatial getVSpatial(BoatAgent object, VSpatial spatial) {
+		Path2D.Double boatOutline = new Path2D.Double();
+		boatOutline.moveTo(0, 8.5);
+		boatOutline.lineTo(-3.5, 5);
+		boatOutline.lineTo(-3.5, -8.5);
+		boatOutline.lineTo(3.5, -8.5);
+		boatOutline.lineTo(3.5, 5);
+		boatOutline.closePath();
+		if (spatial == null) return shapeFactory.createShape(boatOutline);
 	    return spatial;
 	}
 
