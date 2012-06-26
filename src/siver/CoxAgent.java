@@ -7,11 +7,8 @@ import repast.simphony.engine.schedule.ScheduledMethod;
 import repast.simphony.space.SpatialMath;
 import repast.simphony.space.continuous.ContinuousSpace;
 import repast.simphony.space.continuous.NdPoint;
-import repast.simphony.space.grid.Grid;
-import repast.simphony.space.grid.GridPoint;
 import repast.simphony.util.ContextUtils;
 import siver.river.Landmark;
-import siver.river.River;
 
 public class CoxAgent {
 	private BoatAgent boat;
@@ -20,10 +17,11 @@ public class CoxAgent {
 	
 	public CoxAgent(BoatAgent boat) {
 		this.boat = boat;
-		// and heads to the 1st landmark
-		this.landmark_index = 1;
-		// initially the boat is moving downstream
+		// initially the cox wants to head downstream
 		this.upstream = false;
+		// and towards the 1st landmark
+		this.landmark_index = 1;
+		
 	}
 	
 	@ScheduledMethod(start = 1, interval = 1, shuffle=true, priority=10)
@@ -41,12 +39,13 @@ public class CoxAgent {
 	
 	private boolean nearLandmark() {
 		Context<Object> context = ContextUtils.getContext(this);
-		Grid<Object> grid = (Grid) context.getProjection("Simple Grid");
+		ContinuousSpace<Object> space = (ContinuousSpace) context.getProjection("Continuous Space");
 		
 		Landmark l = boat.getRiver().getLandmarks().get(landmark_index);
-		double distance = (Math.pow((l.getLocation().getX()-grid.getLocation(boat).getX()), 2)+
-		Math.pow((l.getLocation().getY()-grid.getLocation(boat).getY()), 2));
-		return distance < 144;
+		
+		double dist = l.getLocation().distance(boat.getLocation().getX(), boat.getLocation().getY());
+		
+		return dist < 144;
 	}
 	
 	private void chooseNextLandmark() {
@@ -74,7 +73,6 @@ public class CoxAgent {
 	
 	private void aimToward(Point2D.Double pt) {
 		Context<Object> context = ContextUtils.getContext(this);
-		Grid<Object> grid = (Grid) context.getProjection("Simple Grid");
 		ContinuousSpace<Object> space = (ContinuousSpace) context.getProjection("Continuous Space");
 		
 		NdPoint myPoint  = space.getLocation(boat);

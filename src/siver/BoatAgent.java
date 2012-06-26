@@ -34,12 +34,12 @@ public class BoatAgent {
 	}
 	
 	public void launch(NdPoint pt) {
-		this.cox = new CoxAgent(this);
 		Context<Object> context = ContextUtils.getContext(this);
-		context.add(this.cox);
-		
 		Grid<Object> grid = (Grid) context.getProjection("Simple Grid");
 		ContinuousSpace<Object> space = (ContinuousSpace) context.getProjection("Continuous Space");
+		
+		this.cox = new CoxAgent(this);
+		context.add(this.cox);
 		
 		space.moveTo(this, pt.getX(), pt.getY());
 		grid.moveTo(this, (int)pt.getX(), (int)pt.getY());
@@ -52,11 +52,7 @@ public class BoatAgent {
 		ContinuousSpace<Object> space = (ContinuousSpace) context.getProjection("Continuous Space");
 		
 		space.moveByVector(this, 1, angle, 0);
-		NdPoint myPoint = space.getLocation(this);
-		grid.moveTo(this, (int)myPoint.getX(), (int)myPoint.getY());
-		
-		space.moveTo(cox, myPoint.getX(), myPoint.getY());
-		grid.moveTo(cox, (int)myPoint.getX(), (int)myPoint.getY());
+		grid.moveTo(this, (int)getLocation().getX(), (int)getLocation().getY());
 	}
 	
 	public void setAngle(double angle) {
@@ -67,7 +63,7 @@ public class BoatAgent {
 		return angle;
 	}
 	
-	public NdPoint getMyLocation() {
+	public NdPoint getLocation() {
 		Context<Object> context = ContextUtils.getContext(this);
 		ContinuousSpace<Object> space = (ContinuousSpace) context.getProjection("Continuous Space");
 		
@@ -86,7 +82,7 @@ public class BoatAgent {
 	
 	public boolean onRiver() {
 		AffineTransform at = new AffineTransform();
-		at.translate(getMyLocation().getX(), getMyLocation().getY());
+		at.translate(getLocation().getX(), getLocation().getY());
 		at.rotate(Math.PI/2.0-angle);
 		Point2D.Double blptDst = new Point2D.Double();
 		at.transform(new Point2D.Double(-3.5,-8.5), blptDst);

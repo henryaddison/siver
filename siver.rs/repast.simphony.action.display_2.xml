@@ -45,10 +45,6 @@
   <layoutInterval>0</layoutInterval>
   <layerOrder>
     <entry>
-      <string>siver.CoxAgent</string>
-      <int>2</int>
-    </entry>
-    <entry>
       <string>siver.BoatAgent</string>
       <int>0</int>
     </entry>
