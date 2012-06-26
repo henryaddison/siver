@@ -5,10 +5,14 @@ package siver;
 
 
 import java.awt.Polygon;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.net.MalformedURLException;
 import java.util.ArrayList;
 
 import repast.simphony.context.Context;
 import repast.simphony.context.space.continuous.ContinuousSpaceFactoryFinder;
+import repast.simphony.context.space.gis.GeographyFactoryFinder;
 import repast.simphony.context.space.grid.GridFactoryFinder;
 import repast.simphony.dataLoader.ContextBuilder;
 import repast.simphony.engine.environment.RunEnvironment;
@@ -17,6 +21,10 @@ import repast.simphony.engine.schedule.ScheduleParameters;
 import repast.simphony.space.continuous.ContinuousSpace;
 import repast.simphony.space.continuous.NdPoint;
 import repast.simphony.space.continuous.SimpleCartesianAdder;
+import repast.simphony.space.gis.Geography;
+import repast.simphony.space.gis.GeographyParameters;
+import repast.simphony.space.gis.ShapefileLoader;
+import repast.simphony.space.gis.SimpleAdder;
 import repast.simphony.space.grid.Grid;
 import repast.simphony.space.grid.GridBuilderParameters;
 import repast.simphony.space.grid.GridPoint;
@@ -41,8 +49,8 @@ public class SiverContextCreator implements ContextBuilder<Object> {
 	public Context build(Context<Object> context) {
 		context.setId("siver");
 		
-		int xdim = 101;   // The x dimension of the physical space
-		int ydim = 101;   // The y dimension of the physical space
+		int xdim = 201;   // The x dimension of the physical space
+		int ydim = 201;   // The y dimension of the physical space
 
 		// Create a new 2D grid to model the discrete patches of grass.  The inputs to the
 		// GridFactory include the grid name, the context in which to place the grid,
@@ -77,6 +85,8 @@ public class SiverContextCreator implements ContextBuilder<Object> {
 		river.add(new Landmark(new GridPoint(10,50), new GridPoint(30,50)));
 		river.add(new Landmark(new GridPoint(50,90), new GridPoint(50,70)));
 		river.add(new Landmark(new GridPoint(100,90), new GridPoint(100,70)));
+		river.add(new Landmark(new GridPoint(120,150), new GridPoint(140,150)));
+		river.add(new Landmark(new GridPoint(120,200), new GridPoint(140,200)));
 		
 		for(int x = 0; x<xdim; x++) {
 			for(int y = 0; y<ydim;y++) {
@@ -98,6 +108,12 @@ public class SiverContextCreator implements ContextBuilder<Object> {
 
 		//Schedule my agent to execute the move method given the specified schedule parameters.&nbsp;
 		schedule.schedule(params, boatHouse, "launch");
+		
+		
+		
+		Geography<Object> geoProj = GeographyFactoryFinder.createGeographyFactory(null).createGeography(
+				"geo", context,
+				new GeographyParameters<Object>(new SimpleAdder<Object>()));
 		
 		return context;
 	}

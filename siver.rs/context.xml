@@ -2,4 +2,5 @@
   	<projection type="continuous space" id="Continuous Space" />
   	<projection type="grid" id="Simple Grid" />
   	<projection type="value layer" id="River Field"></projection>
+  	<projection type="geography" id="geo"></projection>
 </context>
