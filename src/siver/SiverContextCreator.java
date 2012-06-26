@@ -109,7 +109,7 @@ public class SiverContextCreator implements ContextBuilder<Object> {
 		//Specify that the action should start at tick 1 and execute every other tick
 		ScheduleParameters params = ScheduleParameters.createOneTime(1);
 
-		//Schedule my agent to execute the move method given the specified schedule parameters.&nbsp;
+		//Schedule the boathouse to launch a boat on the first tick only for now
 		schedule.schedule(params, boatHouse, "launch");
 		
 		

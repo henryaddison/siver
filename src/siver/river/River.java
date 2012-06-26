@@ -1,19 +1,17 @@
 package siver.river;
 
-import java.awt.Polygon;
 import java.awt.geom.Path2D;
 import java.util.ArrayList;
 import java.util.Collections;
 
-import repast.simphony.space.grid.GridPoint;
 /**
  * 
  * River is used to define a layout of the river.
  * 
- * A River object is defined by a series of Landmark objects. Each consecutive pair of Landmark objects are joined up to form a Polygon.
- * A River object can be considered a series of these Polygons.
+ * A River object is defined by a series of Landmark objects.
+ * Once all the Landmarks are added, the call complete() to join up the points in a correct order to create a river polygon (using Path2D.Double)
  * 
- * @see java.awt.Polygon
+ * @see java.awt.geom.Path2D
  * @see siver.river.Landmark
  * 
  * @author henryaddison
@@ -40,8 +38,8 @@ public class River {
 			for(Landmark l : bank) {
 				bank_path.lineTo(l.getRight().getX(), l.getRight().getY());
 			}
-			Collections.reverse(bank);
 			
+			Collections.reverse(bank);
 			for(Landmark l : bank) {
 				bank_path.lineTo(l.getLeft().getX(), l.getLeft().getY());
 			}
