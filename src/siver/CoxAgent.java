@@ -11,9 +11,22 @@ import repast.simphony.util.ContextUtils;
 import siver.river.Landmark;
 
 public class CoxAgent {
+	/**
+	 * The boat the cox is controlling.
+	 */
 	private BoatAgent boat;
+	/**
+	 * The index of the landmark on the river that cox is heading towards
+	 */
 	private int landmark_index;
+	/**
+	 * Indicates whether the cox is trying to head upstream (towards boathouse) or not.
+	 */
 	private boolean upstream;
+	/**
+	 * Indicates whether the cox is trying to spin the boat.
+	 */
+	private boolean spinning;
 	
 	public CoxAgent(BoatAgent boat) {
 		this.boat = boat;
@@ -21,11 +34,17 @@ public class CoxAgent {
 		this.upstream = false;
 		// and towards the 1st landmark
 		this.landmark_index = 1;
+		// and not spinning
+		this.spinning = false;
 		
 	}
 	
 	@ScheduledMethod(start = 1, interval = 1, shuffle=true, priority=10)
 	public void step() {
+		if(spinning) {
+			spin();
+			return;
+		}
 		if(nearEndRiver()) {
 			spin();
 			return;
@@ -73,8 +92,10 @@ public class CoxAgent {
 	}
 	
 	private void spin() {
+		spinning = true;
 		upstream = !upstream;
 		chooseNextLandmark();
+		
 	}
 	
 	private void aimToward(Point2D.Double pt) {
