@@ -17,14 +17,17 @@ public class RiverFactory {
 	public static River Test() {
 		River river = new River();
 		
-		river.add(new Landmark(new Point2D.Double(10,0), new Point2D.Double(30,0)));
-		river.add(new Landmark(new Point2D.Double(10,50), new Point2D.Double(30,50)));
-		river.add(new Landmark(new Point2D.Double(50,90), new Point2D.Double(50,70)));
-		river.add(new Landmark(new Point2D.Double(100,90), new Point2D.Double(100,70)));
-		river.add(new Landmark(new Point2D.Double(120,150), new Point2D.Double(140,150)));
-		river.add(new Landmark(new Point2D.Double(120,200), new Point2D.Double(140,200)));
+		river.add(0,0);
+		river.add(1000, 0);
+		river.add(1000, 250);
+		river.add(1500, 250);
+		river.add(1500, 280);
+		river.add(970, 280);
+		river.add(970,30);
+		river.add(0,30);
 		
 		river.complete();
+		
 		return river;
 	}
 }

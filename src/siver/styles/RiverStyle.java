@@ -26,7 +26,7 @@ public class RiverStyle implements StyleOGL2D<River> {
 
 	@Override
 	public Color getColor(River object) {
-		return Color.YELLOW;
+		return Color.BLUE;
 	}
 
 	@Override

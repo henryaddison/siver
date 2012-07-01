@@ -1,12 +1,17 @@
 package siver;
 // CoxAgent will use the boat it is attached to in order to decide how to alter it's
 import java.awt.geom.Point2D;
+import java.util.Iterator;
+
+import lane.LaneEdge;
+import lane.LaneNode;
 
 import repast.simphony.context.Context;
 import repast.simphony.engine.schedule.ScheduledMethod;
 import repast.simphony.space.SpatialMath;
 import repast.simphony.space.continuous.ContinuousSpace;
 import repast.simphony.space.continuous.NdPoint;
+import repast.simphony.space.graph.RepastEdge;
 import repast.simphony.util.ContextUtils;
 import siver.river.Landmark;
 
@@ -16,93 +21,87 @@ public class CoxAgent {
 	 */
 	private BoatAgent boat;
 	/**
-	 * The index of the landmark on the river that cox is heading towards
+	 * The part of a the lane the cox is currently travelling on
 	 */
-	private int landmark_index;
+	private LaneEdge<LaneNode> current_edge;
+	/**
+	 * Progress made by the cox along the current edge
+	 */
+	private double progress;
 	/**
 	 * Indicates whether the cox is trying to head upstream (towards boathouse) or not.
 	 */
 	private boolean upstream;
-	/**
-	 * Indicates whether the cox is trying to spin the boat.
-	 */
-	private boolean spinning;
 	
 	public CoxAgent(BoatAgent boat) {
 		this.boat = boat;
 		// initially the cox wants to head downstream
 		this.upstream = false;
-		// and towards the 1st landmark
-		this.landmark_index = 1;
-		// and not spinning
-		this.spinning = false;
-		
+		this.current_edge = (LaneEdge<LaneNode>) SiverContextCreator.getMiddleLane().getOutEdges(SiverContextCreator.getBoatHouse()).iterator().next();
+		this.progress = 0;
 	}
 	
 	@ScheduledMethod(start = 1, interval = 1, shuffle=true, priority=10)
 	public void step() {
-		if(spinning) {
-			spin();
-			return;
-		}
-		if(nearEndRiver()) {
-			spin();
-			return;
-		}
-		if(nearLandmark()) {
-			chooseNextLandmark();
-			return;
-		} 
 		if(true) {
-			aimToward(getLandmark().getLocation());
+			travel(boat.getSpeed());
 			return;
+		}
+	}
+	
+	private void travel(double distance_to_cover) {
+		double distance_till_next_node = current_edge.getWeight() - progress;
+		if(distance_to_cover < distance_till_next_node) {
+			progress += distance_to_cover;
+			boat.move(distance_to_cover);
+		} else {
+			boat.move(distance_till_next_node);
+			setNextEdge();
+			travel(distance_to_cover-distance_till_next_node);
 		}
 	}
 	
 	/*
 	 * PREDICATES
 	 */
-	private boolean nearLandmark() {
-		return distanceToLandmark() < 5;
-	}
 	
-	
-	private boolean nearEndRiver() {
-		if(upstream && landmark_index <= 0){
-			return distanceToLandmark() < 15;
-		}
-		if(landmark_index >= boat.getRiver().getLandmarks().size()-1) {
-			return distanceToLandmark() < 15;
-		}
-		return false;
-	}	
 	
 	/*
 	 * ACTIONS
 	 */
-	private void chooseNextLandmark() {
-		if(upstream) {
-			landmark_index--;
+	private void setNextEdge() {
+		if(!upstream) {
+			Iterator<RepastEdge<LaneNode>> i = SiverContextCreator.getMiddleLane().getOutEdges(current_edge.getTarget()).iterator();
+			if(!i.hasNext()) {
+				upstream = !upstream;
+				setNextEdge();
+			} else {
+				current_edge = (LaneEdge<LaneNode>) i.next();
+				progress = 0;
+				aimToward(current_edge.getTarget().getLocation());
+			}
 			return;
 		}
 		if(true){
-			landmark_index++;
+			Iterator<RepastEdge<LaneNode>> i = SiverContextCreator.getMiddleLane().getInEdges(current_edge.getSource()).iterator();
+			if(!i.hasNext()) {
+				upstream = !upstream;
+				setNextEdge();
+			} else {
+				current_edge = (LaneEdge<LaneNode>) i.next();
+				progress = 0;
+				aimToward(current_edge.getSource().getLocation());
+			}
 			return;
 		}
 	}
 	
-	private void spin() {
-		spinning = true;
-		upstream = !upstream;
-		chooseNextLandmark();
-		
-	}
 	
 	private void aimToward(Point2D.Double pt) {
 		Context<Object> context = ContextUtils.getContext(this);
 		ContinuousSpace<Object> space = (ContinuousSpace) context.getProjection("Continuous Space");
 		
-		NdPoint myPoint  = space.getLocation(boat);
+		NdPoint myPoint  = boat.getLocation();
 		NdPoint otherPoint = new NdPoint(pt.getX(), pt.getY());
 		double angle = SpatialMath.calcAngleFor2DMovement(space, myPoint, otherPoint);
 		boat.setAngle(angle);
@@ -111,12 +110,5 @@ public class CoxAgent {
 	/*
 	 * HELPERS
 	 */
-	private double distanceToLandmark() {
-		
-		return getLandmark().getLocation().distance(boat.getLocation().getX(), boat.getLocation().getY());
-	}
 	
-	private Landmark getLandmark() {
-		return boat.getRiver().getLandmarks().get(landmark_index);
-	}
 }

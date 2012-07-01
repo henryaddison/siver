@@ -11,9 +11,13 @@ import java.io.FileNotFoundException;
 import java.net.MalformedURLException;
 import java.util.ArrayList;
 
+import lane.LaneEdgeCreator;
+import lane.LaneNode;
+
 import repast.simphony.context.Context;
 import repast.simphony.context.space.continuous.ContinuousSpaceFactoryFinder;
 import repast.simphony.context.space.gis.GeographyFactoryFinder;
+import repast.simphony.context.space.graph.NetworkBuilder;
 import repast.simphony.context.space.grid.GridFactoryFinder;
 import repast.simphony.dataLoader.ContextBuilder;
 import repast.simphony.engine.environment.RunEnvironment;
@@ -22,16 +26,7 @@ import repast.simphony.engine.schedule.ScheduleParameters;
 import repast.simphony.space.continuous.ContinuousSpace;
 import repast.simphony.space.continuous.NdPoint;
 import repast.simphony.space.continuous.SimpleCartesianAdder;
-import repast.simphony.space.gis.Geography;
-import repast.simphony.space.gis.GeographyParameters;
-import repast.simphony.space.gis.ShapefileLoader;
-import repast.simphony.space.gis.SimpleAdder;
-import repast.simphony.space.grid.Grid;
-import repast.simphony.space.grid.GridBuilderParameters;
-import repast.simphony.space.grid.GridPoint;
-import repast.simphony.space.grid.SimpleGridAdder;
-import repast.simphony.valueLayer.GridValueLayer;
-import siver.river.Landmark;
+import repast.simphony.space.graph.Network;
 import siver.river.River;
 import siver.river.RiverFactory;
 
@@ -41,8 +36,9 @@ import siver.river.RiverFactory;
  */
 public class SiverContextCreator implements ContextBuilder<Object> {
 	
-	private BoatHouse boatHouse;
-	private River river;
+	private static BoatHouse boatHouse;
+	private static River river;
+	private static Network<LaneNode> laneNetwork;
 	
 	/* (non-Javadoc)
 	 * @see repast.simphony.dataLoader.ContextBuilder#build(repast.simphony.context.Context)
@@ -51,17 +47,8 @@ public class SiverContextCreator implements ContextBuilder<Object> {
 	public Context build(Context<Object> context) {
 		context.setId("siver");
 		
-		int xdim = 201;   // The x dimension of the physical space
-		int ydim = 201;   // The y dimension of the physical space
-
-		// Create a new 2D grid to model the discrete patches of grass.  The inputs to the
-		// GridFactory include the grid name, the context in which to place the grid,
-		// and the grid parameters.  Grid parameters include the border specification,
-		// random adder for populating the grid with agents, boolean for multiple occupancy,
-		// and the dimensions of the grid.
-		Grid<Object> grid = GridFactoryFinder.createGridFactory(null).createGrid("Simple Grid", context,
-				new GridBuilderParameters<Object>(new repast.simphony.space.grid.StrictBorders(),
-						new SimpleGridAdder<Object>(), true, xdim, ydim));
+		int xdim = 1500;   // The x dimension of the physical space
+		int ydim = 1500;   // The y dimension of the physical space
 
 		// Create a new 2D continuous space to model the physical space on which the sheep
 		// and wolves will move.  The inputs to the Space Factory include the space name, 
@@ -72,32 +59,41 @@ public class SiverContextCreator implements ContextBuilder<Object> {
 		.createContinuousSpace("Continuous Space", context, new SimpleCartesianAdder<Object>(),
 				new repast.simphony.space.continuous.StrictBorders(), xdim, ydim);
 		
-		// Create a new 2D value layer to store the state of the river grid.  This is
-		// only used for visualization since it's faster to draw the value layer
-		// in 2D displays compared with rendering each grass patch as an agent.
-		GridValueLayer vl = new GridValueLayer("River Field", true, 
-				new repast.simphony.space.grid.StrictBorders(),xdim,ydim);
-		
-		context.addValueLayer(vl);
-		
 		river = RiverFactory.Test();
 		context.add(river);
 		space.moveTo(river, 0,0);
-		grid.moveTo(river, 0,0);
+
+		boatHouse = new BoatHouse(new Point2D.Double(0, 15), river);
+		context.add(boatHouse);
+		space.moveTo(boatHouse, 0, 15);
 		
-		for(int x = 0; x<xdim; x++) {
-			for(int y = 0; y<ydim;y++) {
-				if(river.contains(x,y)) {
-					vl.set(1, x, y);
-				}
-			}
+		Context<LaneNode> lane_context = new LaneContext();
+		context.addSubContext(lane_context);
+		
+		NetworkBuilder<LaneNode> builder = new NetworkBuilder<LaneNode>("Middle Lane",
+				lane_context, true);
+		builder.setEdgeCreator(new LaneEdgeCreator<LaneNode>());
+		laneNetwork = builder.buildNetwork();
+		
+		LaneNode current = boatHouse;
+		
+		for(int i = 10; i <= 985; i+=10) {
+			LaneNode next = new LaneNode(i,15);
+			laneNetwork.addEdge(current, next, next.distance(current));
+			current = next;
 		}
 		
-		this.boatHouse = new BoatHouse(river);
-		context.add(boatHouse);
-		space.moveTo(boatHouse, 15, 0);
-		NdPoint pt = space.getLocation(boatHouse);
-		grid.moveTo(boatHouse, (int)pt.getX(), (int)pt.getY());
+		for(int i = 15; i <= 265; i+=10) {
+			LaneNode next = new LaneNode(985, i);
+			laneNetwork.addEdge(current, next, next.distance(current));
+			current = next;
+		}
+		
+		for(int i = 985; i< 1500; i+=10) {
+			LaneNode next = new LaneNode(i, 265);
+			laneNetwork.addEdge(current, next, next.distance(current));
+			current = next;
+		}
 		
 		ISchedule schedule = RunEnvironment.getInstance().getCurrentSchedule();
 		//Specify that the action should start at tick 1 and execute every other tick
@@ -106,17 +102,15 @@ public class SiverContextCreator implements ContextBuilder<Object> {
 		//Schedule the boathouse to launch a boat on the first tick only for now
 		schedule.schedule(params, boatHouse, "launch");
 		
-		
-		
-		Geography<Object> geoProj = GeographyFactoryFinder.createGeographyFactory(null).createGeography(
-				"geo", context,
-				new GeographyParameters<Object>(new SimpleAdder<Object>()));
-		
 		return context;
 	}
 	
-	public BoatHouse getBoatHouse() {
+	public static BoatHouse getBoatHouse() {
 		return boatHouse;
+	}
+	
+	public static Network<LaneNode> getMiddleLane() {
+		return laneNetwork;
 	}
 	
 }

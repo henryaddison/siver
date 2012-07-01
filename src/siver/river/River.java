@@ -19,8 +19,7 @@ import java.util.Collections;
  *
  */
 public class River {
-	private ArrayList<Landmark> bank = new ArrayList<Landmark>();
-	private Path2D.Double bank_path = new Path2D.Double();
+	private Path2D.Double bank = new Path2D.Double();
 	
 	/**
 	 * 
@@ -28,29 +27,19 @@ public class River {
 	 * 
 	 * @param l The Landmark object to add to the river's definition.
 	 */
-	public void add(Landmark l) {
-		bank.add(l);
+	public void add(double x, double y) {
+		if(bank.getCurrentPoint() == null) {
+			bank.moveTo(x, y);
+		} else {
+			bank.lineTo(x, y);
+		}
 	}
 	
 	/**
 	 * Once all Landmarks have been added to the River, call complete to form the Path2D.Double that makes up the River's outline.
 	 */
 	public void complete() {
-		bank_path = new Path2D.Double();
-		if(bank.size() > 0) {
-			bank_path.moveTo(bank.get(0).getRight().getX(), bank.get(0).getRight().getY());
-			for(Landmark l : bank) {
-				bank_path.lineTo(l.getRight().getX(), l.getRight().getY());
-			}
-			
-			Collections.reverse(bank);
-			for(Landmark l : bank) {
-				bank_path.lineTo(l.getLeft().getX(), l.getLeft().getY());
-			}
-			Collections.reverse(bank);
-			
-			bank_path.closePath();
-		}
+		bank.closePath();
 	}
 	
 	/**
@@ -61,7 +50,7 @@ public class River {
 	 * @return true if the point is on the River
 	 */
 	public boolean contains(double x, double y) {
-		return bank_path.contains(x,y);
+		return bank.contains(x,y);
 	}
 	
 	/**
@@ -71,22 +60,15 @@ public class River {
 	 * @return true if the point is on the River
 	 */
 	public boolean contains(Point2D.Double pt) {
-		return bank_path.contains(pt);
+		return bank.contains(pt);
 	}
 	
-	/**
-	 * Get the Landmarks that define the river
-	 * 
-	 * @return the list of Landmarks that make up the river 
-	 */
-	public ArrayList<Landmark> getLandmarks() {
-		return bank;
-	}
+
 	
 	/**
 	 * Get the Path2D.Double outline for the river
 	 */
 	public Path2D.Double getOutline() {
-		return bank_path;
+		return bank;
 	}
 }

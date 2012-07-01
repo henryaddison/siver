@@ -26,29 +26,32 @@ public class BoatAgent {
 	private double angle;
 	private CoxAgent cox;
 	private BoatCorner tl,tr,br,bl;
+	private double speed;
+	
+	private ContinuousSpace<Object> space;
 	
 	Point2D.Double blptDst = new Point2D.Double();
 	Point2D.Double brptDst = new Point2D.Double();
 	Point2D.Double trptDst = new Point2D.Double();
 	Point2D.Double tlptDst = new Point2D.Double();
 	
-	public BoatAgent(River river) {
+	public BoatAgent(River river, ContinuousSpace<Object> space) {
 		
 		this.river = river;
 		// and points straight up
-		this.angle = 0;		
+		this.angle = 0;
+		this.speed = 10;
+		this.space = space;
 	}
 	
 	public void launch(NdPoint pt) {
 		Context<Object> context = ContextUtils.getContext(this);
-		Grid<Object> grid = (Grid) context.getProjection("Simple Grid");
-		ContinuousSpace<Object> space = (ContinuousSpace) context.getProjection("Continuous Space");
 		
 		this.cox = new CoxAgent(this);
 		context.add(this.cox);
 		
-		space.moveTo(this, pt.getX(), pt.getY());
-		grid.moveTo(this, (int)pt.getX(), (int)pt.getY());
+		space.moveTo(this, pt.toDoubleArray(null));
+		
 		tl = new BoatCorner();
 		tr = new BoatCorner();
 		br = new BoatCorner();
@@ -58,33 +61,18 @@ public class BoatAgent {
 		context.add(bl);
 		context.add(br);
 	}
-	
-	@ScheduledMethod(start = 1, interval = 1, shuffle=true, priority=1)
-	public void step() {
-		Context<Object> context = ContextUtils.getContext(this);
-		Grid<Object> grid = (Grid) context.getProjection("Simple Grid");
-		ContinuousSpace<Object> space = (ContinuousSpace) context.getProjection("Continuous Space");
 		
-		space.moveByVector(this, 1, angle, 0);
-		grid.moveTo(this, (int)getLocation().getX(), (int)getLocation().getY());
-		
+	public void move(double dist) {
+		space.moveByVector(this, dist, angle, 0);
 		
 		AffineTransform at = new AffineTransform();
 		at.translate(getLocation().getX(), getLocation().getY());
 		at.rotate(angle);
 		
 		at.transform(new Point2D.Double(-8.5,-3.5), blptDst);
-		space.moveTo(bl, blptDst.getX(), blptDst.getY());
-		
 		at.transform(new Point2D.Double(8.5,-3.5), brptDst);
-		space.moveTo(br, brptDst.getX(), brptDst.getY());
-		
-		
 		at.transform(new Point2D.Double(-8.5,3.5), tlptDst);
-		space.moveTo(tl, tlptDst.getX(), tlptDst.getY());
-		
 		at.transform(new Point2D.Double(8.5,3.5), trptDst);
-		space.moveTo(tr, trptDst.getX(), trptDst.getY());
 	}
 	
 	public void setAngle(double angle) {
@@ -95,10 +83,11 @@ public class BoatAgent {
 		return angle;
 	}
 	
+	public double getSpeed() {
+		return speed;
+	}
+	
 	public NdPoint getLocation() {
-		Context<Object> context = ContextUtils.getContext(this);
-		ContinuousSpace<Object> space = (ContinuousSpace) context.getProjection("Continuous Space");
-		
 		return space.getLocation(this);
 	}
 	
