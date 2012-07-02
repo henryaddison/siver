@@ -2,5 +2,7 @@
   	<projection type="continuous space" id="Continuous Space" />
   	<context id= "Lane Context">
   		<projection type="network" id="Middle Lane"></projection>
+  		<projection type="network" id="Downstream Lane"></projection>
+  		<projection type="network" id="Upstream Lane"></projection>
   	</context>
 </context>
