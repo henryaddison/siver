@@ -24,21 +24,21 @@ import siver.river.lane.Lane.UnstartedLaneException;
 public class LaneTest {
 	private static Lane startedL;
 	
-	private static ArrayList<Point2D.Double> exp_top, exp_mid, exp_bottom;
+	private static ArrayList<Point2D.Double> exp_top, exp_bottom;
 	/**
 	 * @throws java.lang.Exception
 	 */
 	@BeforeClass
 	public static void setUpBeforeClass() throws Exception {
-		startedL = new Lane(new LaneContext());
+		startedL = new Lane(new LaneContext(), "Test Lane");
 		startedL.start(new Point2D.Double(0,10));
 		
 		exp_top = new ArrayList<Point2D.Double>();
-		exp_mid = new ArrayList<Point2D.Double>();
+		
 		exp_bottom = new ArrayList<Point2D.Double>();
 		
 		exp_top.add(new Point2D.Double(0,20));
-		exp_mid.add(new Point2D.Double(0,10));
+		
 		exp_bottom.add(new Point2D.Double(0,0));
 	}
 
@@ -68,10 +68,9 @@ public class LaneTest {
 	 */
 	@Test
 	public void testLane() {
-		Lane unstartedlane = new Lane(new LaneContext());
+		Lane unstartedlane = new Lane(new LaneContext(), "Test Lane");
 		assertTrue(!unstartedlane.isStarted());
 		assertEquals(0, unstartedlane.getTop().size());
-		assertEquals(0, unstartedlane.getMid().size());
 		assertEquals(0, unstartedlane.getBottom().size());
 	}
 	
@@ -82,43 +81,38 @@ public class LaneTest {
 	public void testLaneStart() {
 		assertTrue(startedL.isStarted());
 		assertEquals(exp_top, startedL.getTop());
-		assertEquals(exp_mid, startedL.getMid());
 		assertEquals(exp_bottom, startedL.getBottom());
 	}
 	
 	
 	/**
-	 * Test method for {@link siver.river.lane.Lane#add(double)}.
+	 * Test method for {@link siver.river.lane.Lane#extend(double)}.
 	 */
 	@Test
 	public void testAdd() throws UnstartedLaneException {
-		startedL.add(0);
+		startedL.extend(0);
 		exp_top.add(new Point2D.Double(20, 20));
-		exp_mid.add(new Point2D.Double(20, 10));
 		exp_bottom.add(new Point2D.Double(20, 0));
 		
 		assertEquals(exp_top, startedL.getTop());
-		assertEquals(exp_mid, startedL.getMid());
 		assertEquals(exp_bottom, startedL.getBottom());
 		
-		startedL.add(Math.PI/2.0);
+		startedL.extend(Math.PI/2.0);
 		exp_top.add(new Point2D.Double(10, 30));
-		exp_mid.add(new Point2D.Double(20, 30));
 		exp_bottom.add(new Point2D.Double(30, 30));
 		
 		assertEquals(exp_top, startedL.getTop());
-		assertEquals(exp_mid, startedL.getMid());
 		assertEquals(exp_bottom, startedL.getBottom());
 	}
 	
 	/**
-	 * Test method for {@link siver.river.lane.Lane#add(double)} on unstarted Lane.
+	 * Test method for {@link siver.river.lane.Lane#extend(double)} on unstarted Lane.
 	 * @throws UnstartedLaneException 
 	 */
 	@Test(expected=UnstartedLaneException.class)
 	public void testAddToUnstarted() throws UnstartedLaneException {
-		Lane unstartedLane = new Lane(new LaneContext());
-		unstartedLane.add(0);
+		Lane unstartedLane = new Lane(new LaneContext(), "Test Lane");
+		unstartedLane.extend(0);
 		
 	}
 

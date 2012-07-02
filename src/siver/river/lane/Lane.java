@@ -1,11 +1,26 @@
 package siver.river.lane;
 
 import java.awt.geom.AffineTransform;
+import java.awt.geom.Path2D;
 import java.awt.geom.Point2D;
 import java.util.ArrayList;
 
+import repast.simphony.context.space.graph.NetworkBuilder;
+import repast.simphony.space.graph.Network;
 import siver.LaneContext;
-
+/**
+ * Contains the make up of a lane.
+ * 
+ * A Lane can be considered a network of points that boat will travel between 
+ * and an area around that network defined by a top and bottom border.
+ * The nodes of the network are what the boat will travel between when considered as a point that travels
+ * in straight lines.
+ * The area bounded by the lane is where the boat must sit when the boat itself is 
+ * considered as an object that takes up space.
+ * 
+ * @author henryaddison
+ *
+ */
 public class Lane {
 	public class UnstartedLaneException extends Exception {
 
@@ -16,41 +31,80 @@ public class Lane {
 		}
 	}
 
-	private ArrayList<Point2D.Double> top, bottom, mid;
+	//the context that the network projection will belong to
 	private LaneContext context;
+	//the list of points defining the top and bottom 
+	private ArrayList<Point2D.Double> top, bottom;
+	//the network of LaneNodes that shall be used to steer a boat
+	private Network<LaneNode> net;
+	//the last node added to the lane so we can determine where a new node should be joined on next.
+	private LaneNode lastAddedNode;
 	
+	//used to determine whether this lane has been properly started as we should not allow 
+	//a lane to be extended until it has been started
 	private boolean started = false;
 	
+	//outline of the lane to be used to display the lane
+	private Path2D.Double outline;
+	
+	 //The width the river should be roughly. 
 	final private static double width = 10;
+	
+	// The distance between each node in the lane's network. 
+	// Only need to determine the angle between each point.
 	final private static double edge_length = 20;
 	
-	public Lane(LaneContext context) {
+	public Lane(LaneContext context, String projectionId) {
 		top = new ArrayList<Point2D.Double>();
 		bottom = new ArrayList<Point2D.Double>();
-		mid = new ArrayList<Point2D.Double>();
+		
 		this.context = context;
+		
+		NetworkBuilder<LaneNode> builder = new NetworkBuilder<LaneNode>(projectionId,
+				context, true);
+		builder.setEdgeCreator(new LaneEdgeCreator<LaneNode>());
+		net = builder.buildNetwork();
 	}
 	
+	/**
+	 * Use to add the first node to the network that makes up this lane.
+	 * Also adds the corresponding top and bottom boundaries for this first point/
+	 * 
+	 * @param start the location of the first node that will make up the 
+	 */
 	public void start(Point2D.Double start) {
 		bottom.add(new Point2D.Double(start.getX(), start.getY() - width ));
 		top.add(new Point2D.Double(start.getX(), start.getY() + width ));
-		mid.add(new Point2D.Double(start.getX(), start.getY() ));
+		lastAddedNode = new LaneNode(start);
 		started = true;
 	}
 	
+	/**
+	 * 
+	 * @return true is the lane has been given a starting point.
+	 */
 	public boolean isStarted() {
 		return started;
 	}
 	
-	public void add(double heading) throws UnstartedLaneException {
+	
+	/**
+	 * Extends a lane.
+	 * 
+	 *  Adds a new vertex and edge by defining a new LaneNode whose position 
+	 *  is determined by following the angle provided for the distance defined by
+	 *  #{link siver.river.lane.Lane.edge_length} 
+	 * 
+	 * @param heading the angle in radians at which the lane should head next
+	 * @throws UnstartedLaneException
+	 */
+	public void extend(double heading) throws UnstartedLaneException {
 		if(!started) {
 			throw new UnstartedLaneException("Cannot add a point when the Lane has not been started");
 		}
-		int lasti = mid.size()-1;
-		Point2D.Double lastp = mid.get(lasti);
 		
 		AffineTransform at = new AffineTransform();
-		at.translate(lastp.getX(), lastp.getY());
+		at.translate(lastAddedNode.getLocation().getX(), lastAddedNode.getLocation().getY());
 		at.rotate(heading);
 		
 		Point2D.Double next_top = new Point2D.Double();
@@ -62,19 +116,44 @@ public class Lane {
 		at.transform(new Point2D.Double(edge_length, -width), next_bottom);
 		
 		top.add(next_top);
-		mid.add(next_mid);
-		bottom.add(next_bottom);
 		
+		bottom.add(next_bottom);
+		LaneNode next = new LaneNode(next_mid);
+		net.addEdge(lastAddedNode, next);
+		lastAddedNode = next;
 	}
 	
+	/**
+	 * 
+	 * Gets the points that make up the Lane#s top boundary.
+	 * 
+	 * Top and bottom are somewhat arbitrary which fits well with the arbitrary 
+	 * way the lane edges must be differentiated.
+	 * 
+	 * @return An ArrayList of Point2D.Double that defines the top boundary ().
+	 */
 	public ArrayList<Point2D.Double> getTop() {
 		return top;
 	}
 	
-	public ArrayList<Point2D.Double> getMid() {
-		return mid;
+	/**
+	 * 
+	 * @return the repast.simphony.space.graph.Network<LaneNode> that defines the route a boat in this lane
+	 * will travel.
+	 */
+	public Network<LaneNode> getNet() {
+		return net;
 	}
 	
+	/**
+	 * 
+	 * Gets the points that make up the Lane's bottom boundary.
+	 * 
+	 * Top and bottom are somewhat arbitrary which fits well with the arbitrary 
+	 * way the lane edges must be differentiated.
+	 * 
+	 * @return An ArrayList of Point2D.Double that defines the bottom boundary ().
+	 */
 	public ArrayList<Point2D.Double> getBottom() {
 		return bottom;
 	}
