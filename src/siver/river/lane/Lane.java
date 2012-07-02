@@ -7,6 +7,7 @@ import java.util.ArrayList;
 public class Lane {
 	ArrayList<Point2D.Double> top, bottom, mid;
 	
+	
 	final private static double width = 10;
 	final private static double edge_length = 20;
 	

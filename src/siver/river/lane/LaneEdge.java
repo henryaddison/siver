@@ -1,7 +1,7 @@
 /**
  * 
  */
-package lane;
+package siver.river.lane;
 
 import repast.simphony.space.graph.RepastEdge;
 

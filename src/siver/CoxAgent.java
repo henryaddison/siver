@@ -3,8 +3,6 @@ package siver;
 import java.awt.geom.Point2D;
 import java.util.Iterator;
 
-import lane.LaneEdge;
-import lane.LaneNode;
 
 import repast.simphony.context.Context;
 import repast.simphony.engine.schedule.ScheduledMethod;
@@ -14,6 +12,8 @@ import repast.simphony.space.continuous.NdPoint;
 import repast.simphony.space.graph.RepastEdge;
 import repast.simphony.util.ContextUtils;
 import siver.river.Landmark;
+import siver.river.lane.LaneEdge;
+import siver.river.lane.LaneNode;
 
 public class CoxAgent {
 	/**

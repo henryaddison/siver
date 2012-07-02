@@ -2,13 +2,13 @@ package siver;
 
 import java.awt.geom.Point2D;
 
-import lane.LaneNode;
 import repast.simphony.context.Context;
 import repast.simphony.space.continuous.ContinuousSpace;
 import repast.simphony.space.continuous.NdPoint;
 import repast.simphony.space.grid.Grid;
 import repast.simphony.util.ContextUtils;
 import siver.river.River;
+import siver.river.lane.LaneNode;
 
 public class BoatHouse extends LaneNode {
 	private River river;

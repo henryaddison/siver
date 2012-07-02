@@ -1,4 +1,4 @@
-package lane;
+package siver.river.lane;
 
 import java.awt.geom.Point2D;
 

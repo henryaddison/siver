@@ -11,8 +11,6 @@ import java.io.FileNotFoundException;
 import java.net.MalformedURLException;
 import java.util.ArrayList;
 
-import lane.LaneEdgeCreator;
-import lane.LaneNode;
 
 import repast.simphony.context.Context;
 import repast.simphony.context.space.continuous.ContinuousSpaceFactoryFinder;
@@ -29,6 +27,8 @@ import repast.simphony.space.continuous.SimpleCartesianAdder;
 import repast.simphony.space.graph.Network;
 import siver.river.River;
 import siver.river.RiverFactory;
+import siver.river.lane.LaneEdgeCreator;
+import siver.river.lane.LaneNode;
 
 /**
  * @author hja11

@@ -3,8 +3,8 @@
  */
 package siver;
 
-import lane.LaneNode;
 import repast.simphony.context.DefaultContext;
+import siver.river.lane.LaneNode;
 
 /**
  * @author henryaddison
