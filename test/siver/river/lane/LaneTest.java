@@ -89,7 +89,7 @@ public class LaneTest {
 	 * Test method for {@link siver.river.lane.Lane#extend(double)}.
 	 */
 	@Test
-	public void testAdd() throws UnstartedLaneException {
+	public void testExtend() throws UnstartedLaneException {
 		startedL.extend(0);
 		exp_top.add(new Point2D.Double(20, 20));
 		exp_bottom.add(new Point2D.Double(20, 0));
@@ -110,7 +110,7 @@ public class LaneTest {
 	 * @throws UnstartedLaneException 
 	 */
 	@Test(expected=UnstartedLaneException.class)
-	public void testAddToUnstarted() throws UnstartedLaneException {
+	public void testExtendToUnstarted() throws UnstartedLaneException {
 		Lane unstartedLane = new Lane(new LaneContext(), "Test Lane");
 		unstartedLane.extend(0);
 		
