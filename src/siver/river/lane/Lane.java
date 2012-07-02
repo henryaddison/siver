@@ -54,14 +54,14 @@ public class Lane {
 	// Only need to determine the angle between each point.
 	final private static double edge_length = 20;
 	
-	public Lane(LaneContext context, String projectionId) {
+	public Lane(LaneContext c, String projectionId) {
 		top = new ArrayList<Point2D.Double>();
 		bottom = new ArrayList<Point2D.Double>();
 		
-		this.context = context;
+		this.context = c;
 		
 		NetworkBuilder<LaneNode> builder = new NetworkBuilder<LaneNode>(projectionId,
-				context, true);
+				this.context, true);
 		builder.setEdgeCreator(new LaneEdgeCreator<LaneNode>());
 		net = builder.buildNetwork();
 	}
