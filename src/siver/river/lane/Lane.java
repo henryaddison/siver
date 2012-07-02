@@ -4,6 +4,7 @@ import java.awt.geom.AffineTransform;
 import java.awt.geom.Path2D;
 import java.awt.geom.Point2D;
 import java.util.ArrayList;
+import java.util.Collections;
 
 import repast.simphony.context.space.graph.NetworkBuilder;
 import repast.simphony.space.graph.Network;
@@ -22,6 +23,14 @@ import siver.LaneContext;
  *
  */
 public class Lane {
+	public class CompletedLaneException extends Exception {
+		private static final long serialVersionUID = 1L;
+
+		public CompletedLaneException(String msg) {
+			super(msg);
+		}
+	}
+
 	public class UnstartedLaneException extends Exception {
 
 		private static final long serialVersionUID = 1L;
@@ -43,6 +52,8 @@ public class Lane {
 	//used to determine whether this lane has been properly started as we should not allow 
 	//a lane to be extended until it has been started
 	private boolean started = false;
+	//similarly used to determine whether this lane has been completed as should not change a completed lane
+	private boolean completed = false;
 	
 	//outline of the lane to be used to display the lane
 	private Path2D.Double outline;
@@ -76,6 +87,7 @@ public class Lane {
 		bottom.add(new Point2D.Double(start.getX(), start.getY() - width ));
 		top.add(new Point2D.Double(start.getX(), start.getY() + width ));
 		lastAddedNode = new LaneNode(start);
+		
 		started = true;
 	}
 	
@@ -97,10 +109,14 @@ public class Lane {
 	 * 
 	 * @param heading the angle in radians at which the lane should head next
 	 * @throws UnstartedLaneException
+	 * @throws CompletedLaneException 
 	 */
-	public void extend(double heading) throws UnstartedLaneException {
+	public void extend(double heading) throws UnstartedLaneException, CompletedLaneException {
 		if(!started) {
 			throw new UnstartedLaneException("Cannot add a point when the Lane has not been started");
+		}
+		if(completed) {
+			throw new CompletedLaneException("Cannot extend a lane that has already been completed");
 		}
 		
 		AffineTransform at = new AffineTransform();
@@ -122,6 +138,38 @@ public class Lane {
 		net.addEdge(lastAddedNode, next);
 		lastAddedNode = next;
 	}
+	
+	/**
+	 * Call when the lane as been finished and will no longer be extended.
+	 * 
+	 * Allows the outline of the lanes to be drawn
+	 */
+	public void complete() {
+		outline = new Path2D.Double();
+		outline.moveTo(top.get(0).getX(), top.get(0).getY());
+		for(Point2D.Double pt : top) {
+			outline.lineTo(pt.getX(), pt.getY());
+		}
+		
+		Collections.reverse(bottom);
+		for(Point2D.Double pt : bottom) {
+			outline.lineTo(pt.getX(), pt.getY());
+		}
+		Collections.reverse(bottom);
+		
+		outline.closePath();
+		
+		completed = true;
+	}
+	
+	/**
+	 * Indicates whether the lane has been completed
+	 */
+	public boolean isComplete() {
+		return completed;
+	}
+	
+	//GETTERS & SETTERS
 	
 	/**
 	 * 
@@ -156,5 +204,12 @@ public class Lane {
 	 */
 	public ArrayList<Point2D.Double> getBottom() {
 		return bottom;
+	}
+	
+	/**
+	 * Get the Path2D.Double outline for the lane
+	 */
+	public Path2D.Double getOutline() {
+		return outline;
 	}
 }

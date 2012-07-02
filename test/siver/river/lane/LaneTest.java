@@ -15,6 +15,7 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 
 import siver.LaneContext;
+import siver.river.lane.Lane.CompletedLaneException;
 import siver.river.lane.Lane.UnstartedLaneException;
 
 /**
@@ -87,9 +88,10 @@ public class LaneTest {
 	
 	/**
 	 * Test method for {@link siver.river.lane.Lane#extend(double)}.
+	 * @throws CompletedLaneException 
 	 */
 	@Test
-	public void testExtend() throws UnstartedLaneException {
+	public void testExtend() throws UnstartedLaneException, CompletedLaneException {
 		startedL.extend(0);
 		exp_top.add(new Point2D.Double(20, 20));
 		exp_bottom.add(new Point2D.Double(20, 0));
@@ -108,12 +110,33 @@ public class LaneTest {
 	/**
 	 * Test method for {@link siver.river.lane.Lane#extend(double)} on unstarted Lane.
 	 * @throws UnstartedLaneException 
+	 * @throws CompletedLaneException 
 	 */
 	@Test(expected=UnstartedLaneException.class)
-	public void testExtendToUnstarted() throws UnstartedLaneException {
+	public void testExtendToUnstarted() throws UnstartedLaneException, CompletedLaneException {
 		Lane unstartedLane = new Lane(new LaneContext(), "Test Lane");
 		unstartedLane.extend(0);
 		
 	}
+	
+	/**
+	 * Test method for {@link siver.river.lane.Lane#extend(double)} on a completed Lane.
+	 * @throws CompletedLaneException 
+	 */
+	@Test(expected=CompletedLaneException.class)
+	public void testExtendOnCompleted() throws CompletedLaneException, UnstartedLaneException {
+		startedL.complete();
+		startedL.extend(1);
+	}
+	
+	@Test
+	public void testComplete() {
+		assertTrue(startedL.isComplete());
+		startedL.complete();
+		assertNotNull(startedL.getOutline());
+		assertTrue(startedL.isComplete());
+	}
+	
+	
 
 }
