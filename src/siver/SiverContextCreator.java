@@ -3,40 +3,21 @@
  */
 package siver;
 
-
-import java.awt.Polygon;
 import java.awt.geom.Point2D;
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.net.MalformedURLException;
-import java.util.ArrayList;
-
 
 import repast.simphony.context.Context;
 import repast.simphony.context.space.continuous.ContinuousSpaceFactoryFinder;
-import repast.simphony.context.space.gis.GeographyFactoryFinder;
-import repast.simphony.context.space.graph.NetworkBuilder;
-import repast.simphony.context.space.grid.GridFactoryFinder;
 import repast.simphony.dataLoader.ContextBuilder;
-import repast.simphony.engine.environment.RunEnvironment;
-import repast.simphony.engine.schedule.ISchedule;
-import repast.simphony.engine.schedule.ScheduleParameters;
 import repast.simphony.space.continuous.ContinuousSpace;
-import repast.simphony.space.continuous.NdPoint;
 import repast.simphony.space.continuous.SimpleCartesianAdder;
-import repast.simphony.space.graph.Network;
 import siver.river.River;
 import siver.river.RiverFactory;
-import siver.river.lane.LaneEdgeCreator;
-import siver.river.lane.LaneNode;
 
 /**
  * @author hja11
  *
  */
 public class SiverContextCreator implements ContextBuilder<Object> {
-	
-	private static BoatHouse boatHouse;
 	
 	/* (non-Javadoc)
 	 * @see repast.simphony.dataLoader.ContextBuilder#build(repast.simphony.context.Context)
