@@ -21,7 +21,7 @@ public class BoatHouseStyle implements StyleOGL2D<BoatHouse> {
 
 	@Override
 	public VSpatial getVSpatial(BoatHouse object, VSpatial spatial) {
-		if (spatial == null) return shapeFactory.createRectangle(20, 60);
+		if (spatial == null) return shapeFactory.createRectangle(20, 60, false);
 	    return spatial;
 	}
 
