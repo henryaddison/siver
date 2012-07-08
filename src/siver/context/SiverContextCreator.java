@@ -1,7 +1,7 @@
 /**
  * 
  */
-package siver;
+package siver.context;
 
 import java.awt.geom.Point2D;
 
@@ -10,6 +10,7 @@ import repast.simphony.context.space.continuous.ContinuousSpaceFactoryFinder;
 import repast.simphony.dataLoader.ContextBuilder;
 import repast.simphony.space.continuous.ContinuousSpace;
 import repast.simphony.space.continuous.SimpleCartesianAdder;
+import siver.BoatHouse;
 import siver.river.River;
 import siver.river.RiverFactory;
 

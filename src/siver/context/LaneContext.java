@@ -1,7 +1,7 @@
 /**
  * 
  */
-package siver;
+package siver.context;
 
 import repast.simphony.context.DefaultContext;
 import siver.river.lane.LaneNode;

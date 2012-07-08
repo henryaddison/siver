@@ -6,7 +6,7 @@ import java.util.ArrayList;
 
 import repast.simphony.context.space.graph.NetworkBuilder;
 import repast.simphony.space.graph.Network;
-import siver.LaneContext;
+import siver.context.LaneContext;
 import siver.river.OutlinedArea;
 /**
  * Contains the make up of a lane.

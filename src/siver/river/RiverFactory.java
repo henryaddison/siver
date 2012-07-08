@@ -9,7 +9,7 @@ import repast.simphony.engine.schedule.ISchedule;
 import repast.simphony.engine.schedule.ScheduleParameters;
 import repast.simphony.space.continuous.ContinuousSpace;
 import siver.BoatHouse;
-import siver.LaneContext;
+import siver.context.LaneContext;
 import siver.river.lane.Lane;
 import siver.river.lane.Lane.CompletedLaneException;
 import siver.river.lane.Lane.UnstartedLaneException;

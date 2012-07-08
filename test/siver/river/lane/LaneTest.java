@@ -14,7 +14,7 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
-import siver.LaneContext;
+import siver.context.LaneContext;
 import siver.river.lane.Lane.CompletedLaneException;
 import siver.river.lane.Lane.UnstartedLaneException;
 
