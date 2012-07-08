@@ -1,7 +1,5 @@
 package siver;
 
-import java.awt.geom.Point2D;
-
 import repast.simphony.context.Context;
 import repast.simphony.engine.environment.RunEnvironment;
 import repast.simphony.engine.schedule.ISchedule;

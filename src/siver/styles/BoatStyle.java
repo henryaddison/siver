@@ -2,7 +2,6 @@ package siver.styles;
 
 import java.awt.Color;
 import java.awt.Font;
-import java.awt.geom.AffineTransform;
 import java.awt.geom.Path2D;
 
 import repast.simphony.visualizationOGL2D.StyleOGL2D;

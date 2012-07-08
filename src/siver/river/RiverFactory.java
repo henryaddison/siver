@@ -3,18 +3,11 @@ package siver.river;
 import java.awt.geom.Point2D;
 
 import repast.simphony.context.Context;
-import repast.simphony.context.space.graph.NetworkBuilder;
-import repast.simphony.engine.environment.RunEnvironment;
-import repast.simphony.engine.schedule.ISchedule;
-import repast.simphony.engine.schedule.ScheduleParameters;
 import repast.simphony.space.continuous.ContinuousSpace;
-import siver.BoatHouse;
 import siver.context.LaneContext;
 import siver.river.lane.Lane;
 import siver.river.lane.Lane.CompletedLaneException;
 import siver.river.lane.Lane.UnstartedLaneException;
-import siver.river.lane.LaneEdgeCreator;
-import siver.river.lane.LaneNode;
 
 /**
  * Factory for making complete River objects.
