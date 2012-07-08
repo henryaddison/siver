@@ -12,7 +12,7 @@
     </entry>
     <entry>
       <string>siver.BoatHouse</string>
-      <string>repast.simphony.visualization.editedStyle.EditedStyle2D</string>
+      <string>siver.styles.BoatHouseStyle</string>
     </entry>
   </styles>
   <editedStyles>
@@ -26,7 +26,7 @@
     </entry>
     <entry>
       <string>siver.BoatHouse</string>
-      <string>siver.BoatHouse.style_3.xml</string>
+      <null/>
     </entry>
   </editedStyles>
   <netStyles/>
