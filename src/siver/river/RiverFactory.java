@@ -50,9 +50,9 @@ public class RiverFactory {
 		
 		for(int i = 1; i <= 10; i++) {
 			try {
-				up.extend(i);
-				down.extend(i);
-				middle.extend(i);
+				up.extend(0);
+				down.extend(0);
+				middle.extend(0);
 			} catch (UnstartedLaneException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
