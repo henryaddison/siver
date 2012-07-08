@@ -1,14 +1,13 @@
 package siver.river.lane;
 
 import java.awt.geom.AffineTransform;
-import java.awt.geom.Path2D;
 import java.awt.geom.Point2D;
 import java.util.ArrayList;
-import java.util.Collections;
 
 import repast.simphony.context.space.graph.NetworkBuilder;
 import repast.simphony.space.graph.Network;
 import siver.LaneContext;
+import siver.river.OutlinedArea;
 /**
  * Contains the make up of a lane.
  * 
@@ -22,7 +21,7 @@ import siver.LaneContext;
  * @author henryaddison
  *
  */
-public class Lane {
+public class Lane extends OutlinedArea {
 	public class CompletedLaneException extends Exception {
 		private static final long serialVersionUID = 1L;
 
@@ -42,8 +41,7 @@ public class Lane {
 
 	//the context that the network projection will belong to
 	private LaneContext context;
-	//the list of points defining the top and bottom 
-	private ArrayList<Point2D.Double> top, bottom;
+	
 	//the network of LaneNodes that shall be used to steer a boat
 	private Network<LaneNode> net;
 	//the last node added to the lane so we can determine where a new node should be joined on next.
@@ -52,11 +50,6 @@ public class Lane {
 	//used to determine whether this lane has been properly started as we should not allow 
 	//a lane to be extended until it has been started
 	private boolean started = false;
-	//similarly used to determine whether this lane has been completed as should not change a completed lane
-	private boolean completed = false;
-	
-	//outline of the lane to be used to display the lane
-	private Path2D.Double outline;
 	
 	 //The width the river should be roughly. 
 	final private static double width = 10;
@@ -99,7 +92,6 @@ public class Lane {
 		return started;
 	}
 	
-	
 	/**
 	 * Extends a lane.
 	 * 
@@ -139,50 +131,7 @@ public class Lane {
 		lastAddedNode = next;
 	}
 	
-	/**
-	 * Call when the lane as been finished and will no longer be extended.
-	 * 
-	 * Allows the outline of the lanes to be drawn
-	 */
-	public void complete() {
-		outline = new Path2D.Double();
-		outline.moveTo(top.get(0).getX(), top.get(0).getY());
-		for(Point2D.Double pt : top) {
-			outline.lineTo(pt.getX(), pt.getY());
-		}
-		
-		Collections.reverse(bottom);
-		for(Point2D.Double pt : bottom) {
-			outline.lineTo(pt.getX(), pt.getY());
-		}
-		Collections.reverse(bottom);
-		
-		outline.closePath();
-		
-		completed = true;
-	}
-	
-	/**
-	 * Indicates whether the lane has been completed
-	 */
-	public boolean isComplete() {
-		return completed;
-	}
-	
 	//GETTERS & SETTERS
-	
-	/**
-	 * 
-	 * Gets the points that make up the Lane#s top boundary.
-	 * 
-	 * Top and bottom are somewhat arbitrary which fits well with the arbitrary 
-	 * way the lane edges must be differentiated.
-	 * 
-	 * @return An ArrayList of Point2D.Double that defines the top boundary ().
-	 */
-	public ArrayList<Point2D.Double> getTop() {
-		return top;
-	}
 	
 	/**
 	 * 
@@ -193,23 +142,5 @@ public class Lane {
 		return net;
 	}
 	
-	/**
-	 * 
-	 * Gets the points that make up the Lane's bottom boundary.
-	 * 
-	 * Top and bottom are somewhat arbitrary which fits well with the arbitrary 
-	 * way the lane edges must be differentiated.
-	 * 
-	 * @return An ArrayList of Point2D.Double that defines the bottom boundary ().
-	 */
-	public ArrayList<Point2D.Double> getBottom() {
-		return bottom;
-	}
 	
-	/**
-	 * Get the Path2D.Double outline for the lane
-	 */
-	public Path2D.Double getOutline() {
-		return outline;
-	}
 }

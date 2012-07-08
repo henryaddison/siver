@@ -1,16 +1,15 @@
 package siver.river;
 
-import java.awt.geom.Path2D;
-import java.awt.geom.Point2D;
-import java.util.ArrayList;
-import java.util.Collections;
+import siver.river.lane.Lane;
 
 /**
  * 
  * River is used to define a layout of the river.
  * 
- * A River object is defined by a series of Landmark objects.
- * Once all the Landmarks are added, the call complete() to join up the points in a correct order to create a river polygon (using Path2D.Double)
+ * A River object is an area defined as containing the three lanes that make it up.
+ * Consider the downstream lane to be the bottom lane and upstream to be the top lane.
+ * The outline of the river is then the area bounded by the points that make up the bottom boundary
+ * of the downstream lane and the top boundary of the upstream lane.
  * 
  * @see java.awt.geom.Path2D
  * @see siver.river.Landmark
@@ -18,57 +17,30 @@ import java.util.Collections;
  * @author henryaddison
  *
  */
-public class River {
-	private Path2D.Double bank = new Path2D.Double();
+public class River extends OutlinedArea {
+	private Lane upstream, middle, downstream;
 	
-	/**
-	 * 
-	 * This will add a Landmark to the River's list of Landmarks.
-	 * 
-	 * @param l The Landmark object to add to the river's definition.
-	 */
-	public void add(double x, double y) {
-		if(bank.getCurrentPoint() == null) {
-			bank.moveTo(x, y);
-		} else {
-			bank.lineTo(x, y);
-		}
+	public River(Lane u, Lane m, Lane d) {
+		upstream = u;
+		middle = m;
+		downstream = d;
+		
+		top = upstream.getTop();
+		bottom = downstream.getBottom();
+		complete();
 	}
 	
-	/**
-	 * Once all Landmarks have been added to the River, call complete to form the Path2D.Double that makes up the River's outline.
-	 */
-	public void complete() {
-		bank.closePath();
+	//GETTERS
+	public Lane getUpstream() {
+		return upstream;
 	}
 	
-	/**
-	 * Checks whether a given point is on the River.
-	 * 
-	 * @param x x coordinate of point to check
-	 * @param y y coordinate of point to check
-	 * @return true if the point is on the River
-	 */
-	public boolean contains(double x, double y) {
-		return bank.contains(x,y);
+	public Lane getDownstream() {
+		return downstream;
 	}
 	
-	/**
-	 * Checks whether a given point is on the River.
-	 * 
-	 * @param pt Point2D.Double to check
-	 * @return true if the point is on the River
-	 */
-	public boolean contains(Point2D.Double pt) {
-		return bank.contains(pt);
+	public Lane getMiddle() {
+		return middle;
 	}
 	
-
-	
-	/**
-	 * Get the Path2D.Double outline for the river
-	 */
-	public Path2D.Double getOutline() {
-		return bank;
-	}
 }

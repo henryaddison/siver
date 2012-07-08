@@ -11,7 +11,9 @@ import siver.river.lane.LaneNodeTest;
 import siver.river.lane.LaneTest;
 
 @RunWith(Suite.class)
-@SuiteClasses({ LaneTest.class, RiverTest.class, LaneNodeTest.class, LaneEdgeTest.class, LaneEdgeCreatorTest.class})
+@SuiteClasses({ LaneTest.class, RiverTest.class, 
+	LaneNodeTest.class, LaneEdgeTest.class, 
+	LaneEdgeCreatorTest.class})
 public class AllTests {
 
 }

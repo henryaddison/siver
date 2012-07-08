@@ -10,14 +10,37 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
-import repast.simphony.space.grid.GridPoint;
-import siver.river.Landmark;
+import siver.LaneContext;
 import siver.river.River;
+import siver.river.lane.Lane;
 
 public class RiverTest {
-
+	private static Lane up, down, mid;
 	@BeforeClass
 	public static void setUpBeforeClass() throws Exception {
+		up = new Lane(new LaneContext(), "Upstream Test Lane");
+		down = new Lane(new LaneContext(), "Downstream Test Lane");
+		mid = new Lane(new LaneContext(), "Middle Test Lane");
+		
+		up.start(new Point2D.Double(0,50));
+		mid.start(new Point2D.Double(0,30));
+		down.start(new Point2D.Double(0,10));
+		
+		up.extend(0);
+		up.extend(0);
+		up.extend(0);
+		
+		mid.extend(0);
+		mid.extend(0);
+		mid.extend(0);
+		
+		down.extend(0);
+		down.extend(0);
+		down.extend(0);
+		
+		up.complete();
+		mid.complete();
+		down.complete();
 	}
 
 	@AfterClass
@@ -31,40 +54,22 @@ public class RiverTest {
 	@After
 	public void tearDown() throws Exception {
 	}
-
+	
 	@Test
-	public void testAdd() {
-		River r = new River();
-		assertEquals(r.getLandmarks().size(), 0);
-		r.add(new Landmark(new Point2D.Double(0,0), new Point2D.Double(10,0)));
-		assertEquals(r.getLandmarks().size(), 1);
-		assertEquals(r.getLandmarks().get(0), new Landmark(new Point2D.Double(0,0), new Point2D.Double(10,0)));
-		r.add(new Landmark(new Point2D.Double(0,10), new Point2D.Double(10,10)));
-		assertEquals(r.getLandmarks().size(), 2);
-		assertEquals(r.getLandmarks().get(0), new Landmark(new Point2D.Double(0,0), new Point2D.Double(10,0)));
-		assertEquals(r.getLandmarks().get(1), new Landmark(new Point2D.Double(0,10), new Point2D.Double(10,10)));
+	public void testRiver() {
+		River r = new River(up,mid,down);
+		assertTrue(r.contains(10,10));
+		assertTrue(r.contains(10,20));
+		assertFalse(r.contains(10,70));
+		assertFalse(r.contains(70,10));
 	}
-
+	
 	@Test
-	public void testContains() {
-		River r = new River();
-		r.complete();
-		assertFalse(r.contains(5,5));
-		assertFalse(r.contains(15,15));
-		r.add(new Landmark(new Point2D.Double(0,0), new Point2D.Double(10,0)));
-		r.complete();
-		assertFalse(r.contains(5,5));
-		assertFalse(r.contains(15,15));
-		r.add(new Landmark(new Point2D.Double(0,10), new Point2D.Double(10,10)));
-		r.complete();
-		assertTrue(r.contains(5,5));
-		assertFalse(r.contains(15,15));
-		r.add(new Landmark(new Point2D.Double(20,20), new Point2D.Double(20,10)));
-		r.complete();
-		assertTrue(r.contains(5,5));
-		assertTrue(r.contains(15,15));
-		assertTrue(r.contains(new Point2D.Double(5,5)));
-		assertFalse(r.contains(new Point2D.Double(30,30)));
+	public void testLaneGetters() {
+		River r = new River(up,mid,down);
+		assertEquals(up, r.getUpstream());
+		assertEquals(mid, r.getMiddle());
+		assertEquals(down, r.getDownstream());
 	}
 
 }
