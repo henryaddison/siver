@@ -8,15 +8,12 @@ import repast.simphony.engine.schedule.ISchedule;
 import repast.simphony.engine.schedule.ScheduleParameters;
 import repast.simphony.space.continuous.ContinuousSpace;
 import repast.simphony.space.continuous.NdPoint;
-import repast.simphony.space.grid.Grid;
 import repast.simphony.util.ContextUtils;
 import siver.river.River;
-import siver.river.lane.LaneNode;
 
-public class BoatHouse extends LaneNode {
+public class BoatHouse {
 	private River river;
-	public BoatHouse(Point2D.Double l, River river) {
-		super(l);
+	public BoatHouse(River river) {
 		this.river = river;
 		
 		ISchedule schedule = RunEnvironment.getInstance().getCurrentSchedule();
