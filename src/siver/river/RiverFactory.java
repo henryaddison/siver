@@ -64,7 +64,8 @@ public class RiverFactory {
 		
 		River river = new River(up, middle, down);
 		
-		
+		context.add(river);
+		space.moveTo(river, 0,0);
 		
 		return river;
 	}

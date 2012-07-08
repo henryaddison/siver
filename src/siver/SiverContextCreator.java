@@ -59,9 +59,6 @@ public class SiverContextCreator implements ContextBuilder<Object> {
 		
 		River river = RiverFactory.Test(context, space);
 		
-		context.add(river);
-		space.moveTo(river, 0,0);
-		
 		BoatHouse boatHouse = new BoatHouse(new Point2D.Double(0, 30), river);
 		context.add(boatHouse);
 		space.moveTo(boatHouse, 0, 30);
