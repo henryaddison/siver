@@ -63,13 +63,6 @@ public class SiverContextCreator implements ContextBuilder<Object> {
 		context.add(boatHouse);
 		space.moveTo(boatHouse, 0, 30);
 		
-		ISchedule schedule = RunEnvironment.getInstance().getCurrentSchedule();
-		//Specify that the action should start at tick 1 and execute every other tick
-		ScheduleParameters params = ScheduleParameters.createOneTime(1);
-
-		//Schedule the boathouse to launch a boat on the first tick only for now
-		schedule.schedule(params, boatHouse, "launch");
-		
 		return context;
 	}
 }
