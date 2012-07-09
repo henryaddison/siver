@@ -5,7 +5,7 @@ import java.awt.geom.Point2D;
 import siver.context.LaneContext;
 import siver.river.lane.Lane;
 
-public class LanedTest {
+public abstract class LanedTest {
 	protected static Lane up, down, mid;
 	
 	public static void createLanes() throws Exception {
