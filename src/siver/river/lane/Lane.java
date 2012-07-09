@@ -38,9 +38,6 @@ public class Lane extends OutlinedArea {
 			super(msg);
 		}
 	}
-
-	//the context that the network projection will belong to
-	private LaneContext context;
 	
 	//the network of LaneNodes that shall be used to steer a boat
 	private Network<LaneNode> net;
@@ -64,10 +61,8 @@ public class Lane extends OutlinedArea {
 		top = new ArrayList<Point2D.Double>();
 		bottom = new ArrayList<Point2D.Double>();
 		
-		this.context = c;
-		
 		NetworkBuilder<LaneNode> builder = new NetworkBuilder<LaneNode>(projectionId,
-				this.context, true);
+				c, true);
 		builder.setEdgeCreator(new LaneEdgeCreator<LaneNode>());
 		net = builder.buildNetwork();
 	}
