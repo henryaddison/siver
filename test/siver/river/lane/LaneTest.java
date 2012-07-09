@@ -149,5 +149,24 @@ public class LaneTest {
 		unstartedLane.getStartNode();
 	}
 	
+	@Test
+	public void getNextEdge() throws UnstartedLaneException {
+		LaneNode sln = startedL.getStartNode();
+		LaneEdge<LaneNode> edge = startedL.getNextEdge(sln, false);
+		assertSame(sln, edge.getSource());
+		assertEquals(new Point2D.Double(20,10), edge.getTarget().getLocation());
+		
+		LaneEdge<LaneNode> same_edge = startedL.getNextEdge(edge.getTarget(), true);
+		LaneEdge<LaneNode> another_edge = startedL.getNextEdge(edge.getTarget(), false);
+		assertSame(same_edge, edge);
+		assertNotSame(another_edge, edge);
+	}
+	
+	@Test(expected=java.util.NoSuchElementException.class)	
+	public void getNextEdgeNoEdge() throws UnstartedLaneException {
+		LaneNode sln = startedL.getStartNode();
+		startedL.getNextEdge(sln, true);
+		
+	}
 
 }

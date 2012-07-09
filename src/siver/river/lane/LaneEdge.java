@@ -24,4 +24,11 @@ public class LaneEdge<T extends LaneNode> extends RepastEdge<T> {
 		setWeight(w);
 	}
 
+	public LaneNode getNextNode(boolean upstream) {
+		if(upstream) {
+			return getSource();
+		} else {
+			return getTarget();
+		}
+	}
 }

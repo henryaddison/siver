@@ -3,9 +3,11 @@ package siver.river.lane;
 import java.awt.geom.AffineTransform;
 import java.awt.geom.Point2D;
 import java.util.ArrayList;
+import java.util.Iterator;
 
 import repast.simphony.context.space.graph.NetworkBuilder;
 import repast.simphony.space.graph.Network;
+import repast.simphony.space.graph.RepastEdge;
 import siver.context.LaneContext;
 import siver.river.OutlinedArea;
 /**
@@ -129,6 +131,22 @@ public class Lane extends OutlinedArea {
 		lastAddedNode = next;
 	}
 	
+	//GRAPH HELPERS
+	public LaneEdge<LaneNode> getNextEdge(LaneNode node, boolean upstream) {
+		Iterator<RepastEdge<LaneNode>> i;
+		if(upstream) {
+			i =  net.getInEdges(node).iterator();
+		} else {
+			i = net.getOutEdges(node).iterator();
+		}
+		if(i.hasNext()) {
+			return (LaneEdge<LaneNode>) i.next();
+		} else {
+			return null;
+		}
+		
+	}
+	
 	//GETTERS & SETTERS
 	
 	/**
@@ -151,6 +169,7 @@ public class Lane extends OutlinedArea {
 		}
 		return startNode;
 	}
+	
 	
 	
 }
