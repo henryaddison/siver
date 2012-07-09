@@ -41,18 +41,51 @@ public class RiverFactory {
 		context.add(down);
 		space.moveTo(up, 0, 10);
 		
-		for(int i = 1; i <= 10; i++) {
-			try {
+		try {
+			for(int i = 1; i <= 40; i++) {
 				up.extend(0);
 				down.extend(0);
 				middle.extend(0);
-			} catch (UnstartedLaneException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			} catch (CompletedLaneException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
 			}
+			
+			for(double theta = 0; theta < Math.PI/2.0; theta += Math.PI/20.0) {
+				up.extend(theta);
+			}
+			for(double theta = 0; theta < Math.PI/2.0; theta += (Math.PI/2.0)/(10+Math.PI/2.0)) {
+				middle.extend(theta);
+			}
+			for(double theta = 0; theta < Math.PI/2.0; theta += (Math.PI/2.0)/(10+Math.PI)) {
+				down.extend(theta);
+			}
+			
+			up.extend(Math.PI/2.0);
+			up.extend(Math.PI/2.0);
+			middle.extend(Math.PI/2.0);
+			middle.extend(Math.PI/2.0);
+			down.extend(Math.PI/2.0);
+			
+			for(double theta = Math.PI/2.0; theta > 0 ; theta -= Math.PI/21.0) {
+				down.extend(theta);
+			}
+			for(double theta = Math.PI/2.0; theta > 0; theta -= (Math.PI/2.0)/(10+Math.PI/2.0)) {
+				middle.extend(theta);
+			}
+			for(double theta = Math.PI/2.0; theta > 0; theta -= (Math.PI/2.0)/(10+Math.PI)) {
+				up.extend(theta);
+			}
+			
+			for(int i = 1; i <= 20; i++) {
+				up.extend(0);
+				down.extend(0);
+				middle.extend(0);
+			}
+			
+		} catch (UnstartedLaneException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (CompletedLaneException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
 		
 		River river = new River(up, middle, down);
