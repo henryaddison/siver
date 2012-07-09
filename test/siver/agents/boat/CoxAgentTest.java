@@ -1,4 +1,4 @@
-package siver;
+package siver.agents.boat;
 
 import static org.junit.Assert.*;
 

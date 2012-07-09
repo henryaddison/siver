@@ -1,4 +1,4 @@
-package siver;
+package siver.agents.boat;
 
 
 import java.awt.geom.AffineTransform;

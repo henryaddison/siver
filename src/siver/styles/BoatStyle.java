@@ -8,7 +8,7 @@ import repast.simphony.visualizationOGL2D.StyleOGL2D;
 import saf.v3d.ShapeFactory2D;
 import saf.v3d.scene.Position;
 import saf.v3d.scene.VSpatial;
-import siver.BoatAgent;
+import siver.agents.boat.BoatAgent;
 
 public class BoatStyle implements StyleOGL2D<BoatAgent> {
 

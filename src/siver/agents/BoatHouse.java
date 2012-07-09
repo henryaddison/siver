@@ -7,7 +7,7 @@ import repast.simphony.engine.schedule.ScheduleParameters;
 import repast.simphony.space.continuous.ContinuousSpace;
 import repast.simphony.space.continuous.NdPoint;
 import repast.simphony.util.ContextUtils;
-import siver.BoatAgent;
+import siver.agents.boat.BoatAgent;
 import siver.river.River;
 import siver.river.lane.Lane.UnstartedLaneException;
 import siver.river.lane.LaneNode;

@@ -1,4 +1,4 @@
-package siver;
+package siver.agents.boat;
 // CoxAgent will use the boat it is attached to in order to decide how to alter it's
 import java.awt.geom.Point2D;
 import java.util.Iterator;
