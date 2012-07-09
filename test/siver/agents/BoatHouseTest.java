@@ -40,7 +40,8 @@ public class BoatHouseTest extends LanedTest {
 
 	@Test
 	public void testLaunchBoat() {
-		fail("Not yet implemented");
+		BoatHouse bh = new BoatHouse(r);
+		bh.launchBoat();
 	}
 	
 	@Test
