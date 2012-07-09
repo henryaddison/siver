@@ -9,6 +9,7 @@ import repast.simphony.space.continuous.ContinuousSpace;
 import repast.simphony.space.continuous.NdPoint;
 import repast.simphony.util.ContextUtils;
 import siver.river.River;
+import siver.river.lane.LaneNode;
 /** 
  * BoatAgent is a dumb agent, at each step it will carry on moving in the direction it is facing and at the speed it was set to
  * The CoxAgent will make decisions based on the boat's location to alter these speed and angle properties
@@ -42,13 +43,13 @@ public class BoatAgent {
 		this.space = space;
 	}
 	
-	public void launch(NdPoint pt) {
+	public void launch(LaneNode launchNode) {
 		Context<Object> context = ContextUtils.getContext(this);
 		
 		this.cox = new CoxAgent(this);
 		context.add(this.cox);
 		
-		space.moveTo(this, pt.toDoubleArray(null));
+		space.moveTo(this, launchNode.getLocation().getX(), launchNode.getLocation().getY());
 		
 		tl = new BoatCorner();
 		tr = new BoatCorner();

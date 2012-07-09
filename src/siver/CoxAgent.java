@@ -11,7 +11,7 @@ import repast.simphony.space.continuous.ContinuousSpace;
 import repast.simphony.space.continuous.NdPoint;
 import repast.simphony.space.graph.RepastEdge;
 import repast.simphony.util.ContextUtils;
-import siver.river.Landmark;
+import siver.context.SiverContextCreator;
 import siver.river.lane.LaneEdge;
 import siver.river.lane.LaneNode;
 

@@ -137,6 +137,17 @@ public class LaneTest {
 		assertTrue(startedL.isComplete());
 	}
 	
+	@Test
+	public void testGetStartNode() throws UnstartedLaneException {
+		LaneNode sn = startedL.getStartNode();
+		assertEquals(new Point2D.Double(0,10), sn.getLocation());
+	}
+	
+	@Test(expected=UnstartedLaneException.class)
+	public void testGetStartNodeNotStarted() throws UnstartedLaneException {
+		Lane unstartedLane = new Lane(new LaneContext(), "Test Lane");
+		unstartedLane.getStartNode();
+	}
 	
 
 }

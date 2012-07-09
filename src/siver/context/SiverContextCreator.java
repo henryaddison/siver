@@ -8,9 +8,12 @@ import java.awt.geom.Point2D;
 import repast.simphony.context.Context;
 import repast.simphony.context.space.continuous.ContinuousSpaceFactoryFinder;
 import repast.simphony.dataLoader.ContextBuilder;
+import repast.simphony.engine.environment.RunEnvironment;
+import repast.simphony.engine.schedule.ISchedule;
+import repast.simphony.engine.schedule.ScheduleParameters;
 import repast.simphony.space.continuous.ContinuousSpace;
 import repast.simphony.space.continuous.SimpleCartesianAdder;
-import siver.BoatHouse;
+import siver.agents.BoatHouse;
 import siver.river.River;
 import siver.river.RiverFactory;
 
@@ -44,6 +47,13 @@ public class SiverContextCreator implements ContextBuilder<Object> {
 		BoatHouse boatHouse = new BoatHouse(river);
 		context.add(boatHouse);
 		space.moveTo(boatHouse, 0, 30);
+		
+		ISchedule schedule = RunEnvironment.getInstance().getCurrentSchedule();
+		//Specify that the action should start at tick 1 and execute every other tick
+		ScheduleParameters params = ScheduleParameters.createOneTime(1);
+
+		//Schedule the boathouse to launch a boat on the first tick only for now
+		schedule.schedule(params, this, "launch");
 		
 		return context;
 	}

@@ -46,6 +46,8 @@ public class Lane extends OutlinedArea {
 	private Network<LaneNode> net;
 	//the last node added to the lane so we can determine where a new node should be joined on next.
 	private LaneNode lastAddedNode;
+	//the first node added to the lane so we can determine where the lane begins.
+	private LaneNode startNode;
 	
 	//used to determine whether this lane has been properly started as we should not allow 
 	//a lane to be extended until it has been started
@@ -79,7 +81,8 @@ public class Lane extends OutlinedArea {
 	public void start(Point2D.Double start) {
 		bottom.add(new Point2D.Double(start.getX(), start.getY() - width ));
 		top.add(new Point2D.Double(start.getX(), start.getY() + width ));
-		lastAddedNode = new LaneNode(start);
+		startNode = new LaneNode(start);
+		lastAddedNode = startNode;
 		
 		started = true;
 	}
@@ -140,6 +143,18 @@ public class Lane extends OutlinedArea {
 	 */
 	public Network<LaneNode> getNet() {
 		return net;
+	}
+	
+	/**
+	 * 
+	 * @return the first LaneNode in the lane's graph
+	 * @throws UnstartedLaneException when the called on a Lane that has not yet been started
+	 */
+	public LaneNode getStartNode() throws UnstartedLaneException {
+		if(!started) {
+			throw new UnstartedLaneException("Cannot get start node before lane has been started");
+		}
+		return startNode;
 	}
 	
 	
