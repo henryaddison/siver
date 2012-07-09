@@ -44,9 +44,9 @@ public class BoatHouseTest extends LanedTest {
 	}
 	
 	@Test
-	public void testGetLaunchNode() throws UnstartedLaneException {
+	public void testGetLaunchLane() throws UnstartedLaneException {
 		BoatHouse bh = new BoatHouse(r);
-		assertEquals(down.getStartNode(), bh.getLaunchNode());
+		assertEquals(down, bh.getLaunchLane());
 	}
 
 }

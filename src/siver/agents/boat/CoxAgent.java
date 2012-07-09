@@ -20,10 +20,7 @@ public class CoxAgent {
 	 * The boat the cox is controlling.
 	 */
 	private BoatAgent boat;
-	/**
-	 * The part of a the lane the cox is currently travelling on
-	 */
-	private LaneEdge<LaneNode> current_edge;
+	
 	/**
 	 * Progress made by the cox along the current edge
 	 */
@@ -37,75 +34,74 @@ public class CoxAgent {
 		this.boat = boat;
 		// initially the cox wants to head downstream
 		this.upstream = false;
-		this.current_edge = (LaneEdge<LaneNode>) SiverContextCreator.getMiddleLane().getOutEdges(SiverContextCreator.getBoatHouse()).iterator().next();
 		this.progress = 0;
 	}
 	
-	@ScheduledMethod(start = 1, interval = 1, shuffle=true, priority=10)
+	
 	public void step() {
 		if(true) {
-			travel(boat.getSpeed());
+//			travel(boat.getSpeed());
 			return;
 		}
 	}
 	
-	private void travel(double distance_to_cover) {
-		double distance_till_next_node = current_edge.getWeight() - progress;
-		if(distance_to_cover < distance_till_next_node) {
-			progress += distance_to_cover;
-			boat.move(distance_to_cover);
-		} else {
-			boat.move(distance_till_next_node);
-			setNextEdge();
-			travel(distance_to_cover-distance_till_next_node);
-		}
-	}
-	
-	/*
-	 * PREDICATES
-	 */
-	
-	
-	/*
-	 * ACTIONS
-	 */
-	private void setNextEdge() {
-		if(!upstream) {
-			Iterator<RepastEdge<LaneNode>> i = SiverContextCreator.getMiddleLane().getOutEdges(current_edge.getTarget()).iterator();
-			if(!i.hasNext()) {
-				upstream = !upstream;
-				setNextEdge();
-			} else {
-				current_edge = (LaneEdge<LaneNode>) i.next();
-				progress = 0;
-				aimToward(current_edge.getTarget().getLocation());
-			}
-			return;
-		}
-		if(true){
-			Iterator<RepastEdge<LaneNode>> i = SiverContextCreator.getMiddleLane().getInEdges(current_edge.getSource()).iterator();
-			if(!i.hasNext()) {
-				upstream = !upstream;
-				setNextEdge();
-			} else {
-				current_edge = (LaneEdge<LaneNode>) i.next();
-				progress = 0;
-				aimToward(current_edge.getSource().getLocation());
-			}
-			return;
-		}
-	}
-	
-	
-	private void aimToward(Point2D.Double pt) {
-		Context<Object> context = ContextUtils.getContext(this);
-		ContinuousSpace<Object> space = (ContinuousSpace) context.getProjection("Continuous Space");
-		
-		NdPoint myPoint  = boat.getLocation();
-		NdPoint otherPoint = new NdPoint(pt.getX(), pt.getY());
-		double angle = SpatialMath.calcAngleFor2DMovement(space, myPoint, otherPoint);
-		boat.setAngle(angle);
-	}
+//	private void travel(double distance_to_cover) {
+//		double distance_till_next_node = current_edge.getWeight() - progress;
+//		if(distance_to_cover < distance_till_next_node) {
+//			progress += distance_to_cover;
+//			boat.move(distance_to_cover);
+//		} else {
+//			boat.move(distance_till_next_node);
+//			setNextEdge();
+//			travel(distance_to_cover-distance_till_next_node);
+//		}
+//	}
+//	
+//	/*
+//	 * PREDICATES
+//	 */
+//	
+//	
+//	/*
+//	 * ACTIONS
+//	 */
+//	private void setNextEdge() {
+//		if(!upstream) {
+//			Iterator<RepastEdge<LaneNode>> i = SiverContextCreator.getMiddleLane().getOutEdges(current_edge.getTarget()).iterator();
+//			if(!i.hasNext()) {
+//				upstream = !upstream;
+//				setNextEdge();
+//			} else {
+//				current_edge = (LaneEdge<LaneNode>) i.next();
+//				progress = 0;
+//				aimToward(current_edge.getTarget().getLocation());
+//			}
+//			return;
+//		}
+//		if(true){
+//			Iterator<RepastEdge<LaneNode>> i = SiverContextCreator.getMiddleLane().getInEdges(current_edge.getSource()).iterator();
+//			if(!i.hasNext()) {
+//				upstream = !upstream;
+//				setNextEdge();
+//			} else {
+//				current_edge = (LaneEdge<LaneNode>) i.next();
+//				progress = 0;
+//				aimToward(current_edge.getSource().getLocation());
+//			}
+//			return;
+//		}
+//	}
+//	
+//	
+//	private void aimToward(Point2D.Double pt) {
+//		Context<Object> context = ContextUtils.getContext(this);
+//		ContinuousSpace<Object> space = (ContinuousSpace) context.getProjection("Continuous Space");
+//		
+//		NdPoint myPoint  = boat.getLocation();
+//		NdPoint otherPoint = new NdPoint(pt.getX(), pt.getY());
+//		double angle = SpatialMath.calcAngleFor2DMovement(space, myPoint, otherPoint);
+//		boat.setAngle(angle);
+//	}
 	
 	/*
 	 * HELPERS
