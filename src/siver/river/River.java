@@ -11,8 +11,6 @@ import siver.river.lane.Lane;
  * The outline of the river is then the area bounded by the points that make up the bottom boundary
  * of the downstream lane and the top boundary of the upstream lane.
  * 
- * @see java.awt.geom.Path2D
- * @see siver.river.Landmark
  * 
  * @author henryaddison
  *
