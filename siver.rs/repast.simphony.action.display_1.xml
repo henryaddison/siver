@@ -7,11 +7,11 @@
       <string>siver.styles.RiverStyle</string>
     </entry>
     <entry>
-      <string>siver.BoatAgent</string>
+      <string>siver.agents.boat.BoatAgent</string>
       <string>siver.styles.BoatStyle</string>
     </entry>
     <entry>
-      <string>siver.BoatHouse</string>
+      <string>siver.agents.BoatHouse</string>
       <string>siver.styles.BoatHouseStyle</string>
     </entry>
   </styles>
@@ -21,11 +21,11 @@
       <null/>
     </entry>
     <entry>
-      <string>siver.BoatAgent</string>
+      <string>siver.agents.boat.BoatAgent</string>
       <null/>
     </entry>
     <entry>
-      <string>siver.BoatHouse</string>
+      <string>siver.agents.BoatHouse</string>
       <null/>
     </entry>
   </editedStyles>
@@ -48,11 +48,11 @@
       <int>0</int>
     </entry>
     <entry>
-      <string>siver.BoatAgent</string>
+      <string>siver.agents.boat.BoatAgent</string>
       <int>1</int>
     </entry>
     <entry>
-      <string>siver.BoatHouse</string>
+      <string>siver.agents.BoatHouse</string>
       <int>2</int>
     </entry>
   </layerOrder>

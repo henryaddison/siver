@@ -53,7 +53,7 @@ public class SiverContextCreator implements ContextBuilder<Object> {
 		ScheduleParameters params = ScheduleParameters.createOneTime(1);
 
 		//Schedule the boathouse to launch a boat on the first tick only for now
-		schedule.schedule(params, this, "launch");
+		schedule.schedule(params, boatHouse, "launchBoat");
 		
 		return context;
 	}
