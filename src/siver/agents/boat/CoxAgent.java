@@ -12,96 +12,103 @@ import repast.simphony.space.continuous.NdPoint;
 import repast.simphony.space.graph.RepastEdge;
 import repast.simphony.util.ContextUtils;
 import siver.context.SiverContextCreator;
+import siver.river.lane.Lane;
+import siver.river.lane.Lane.UnstartedLaneException;
 import siver.river.lane.LaneEdge;
 import siver.river.lane.LaneNode;
 
 public class CoxAgent {
-	/**
-	 * The boat the cox is controlling.
-	 */
+	//The boat the cox is controlling.
 	private BoatAgent boat;
 	
-	/**
-	 * Progress made by the cox along the current edge
-	 */
-	private double progress;
-	/**
-	 * Indicates whether the cox is trying to head upstream (towards boathouse) or not.
-	 */
+	// Indicates whether the cox is trying to head upstream (towards boathouse) or not.
 	private boolean upstream;
+	
+	//Progress made by the boat along the current edge
+	private double progress;
+	private double distance_covered_this_tick;
+	
+	// The part of a the lane the boat is currently travelling on
+	private LaneEdge<LaneNode> current_edge;
+	
+	private Lane lane;
 	
 	public CoxAgent(BoatAgent boat) {
 		this.boat = boat;
-		// initially the cox wants to head downstream
-		this.upstream = false;
-		this.progress = 0;
 	}
 	
 	
+	public void launch(Lane launchLane) throws UnstartedLaneException {
+		// initially the cox wants to head downstream
+		this.upstream = false;
+		this.lane = launchLane;
+		
+		//and is positioned on the startNode of the lane
+		LaneNode launchNode = lane.getStartNode();
+		boat.launch(this, launchNode.getLocation());
+		reactTo(launchNode);
+	}
+	
+	@ScheduledMethod(start = 1, interval = 1, shuffle=true, priority=10)
 	public void step() {
+		distance_covered_this_tick = 0;
 		if(true) {
-//			travel(boat.getSpeed());
+			travel(boat.getSpeed());
 			return;
 		}
 	}
 	
-//	private void travel(double distance_to_cover) {
-//		double distance_till_next_node = current_edge.getWeight() - progress;
-//		if(distance_to_cover < distance_till_next_node) {
-//			progress += distance_to_cover;
-//			boat.move(distance_to_cover);
-//		} else {
-//			boat.move(distance_till_next_node);
-//			setNextEdge();
-//			travel(distance_to_cover-distance_till_next_node);
-//		}
-//	}
-//	
-//	/*
-//	 * PREDICATES
-//	 */
-//	
-//	
-//	/*
-//	 * ACTIONS
-//	 */
-//	private void setNextEdge() {
-//		if(!upstream) {
-//			Iterator<RepastEdge<LaneNode>> i = SiverContextCreator.getMiddleLane().getOutEdges(current_edge.getTarget()).iterator();
-//			if(!i.hasNext()) {
-//				upstream = !upstream;
-//				setNextEdge();
-//			} else {
-//				current_edge = (LaneEdge<LaneNode>) i.next();
-//				progress = 0;
-//				aimToward(current_edge.getTarget().getLocation());
-//			}
-//			return;
-//		}
-//		if(true){
-//			Iterator<RepastEdge<LaneNode>> i = SiverContextCreator.getMiddleLane().getInEdges(current_edge.getSource()).iterator();
-//			if(!i.hasNext()) {
-//				upstream = !upstream;
-//				setNextEdge();
-//			} else {
-//				current_edge = (LaneEdge<LaneNode>) i.next();
-//				progress = 0;
-//				aimToward(current_edge.getSource().getLocation());
-//			}
-//			return;
-//		}
-//	}
-//	
-//	
-//	private void aimToward(Point2D.Double pt) {
-//		Context<Object> context = ContextUtils.getContext(this);
-//		ContinuousSpace<Object> space = (ContinuousSpace) context.getProjection("Continuous Space");
-//		
-//		NdPoint myPoint  = boat.getLocation();
-//		NdPoint otherPoint = new NdPoint(pt.getX(), pt.getY());
-//		double angle = SpatialMath.calcAngleFor2DMovement(space, myPoint, otherPoint);
-//		boat.setAngle(angle);
-//	}
+	private void travel(double distance_to_cover) {
+		if(distance_covered_this_tick >= boat.getSpeed()) {
+			return;
+		}
+		double distance_till_next_node = current_edge.getWeight() - progress;
+		if(distance_to_cover < distance_till_next_node) {
+			progress += distance_to_cover;
+			boat.move(distance_to_cover);
+		} else {
+			progress += distance_till_next_node;
+			boat.move(distance_till_next_node);
+			reactTo(current_edge.getNextNode(upstream));
+			travel(distance_to_cover-distance_till_next_node);
+		}
+	}
+	
+	/*
+	 * PREDICATES
+	 */
+	
+	
+	/*
+	 * ACTIONS
+	 */
+	
+	private void reactTo(LaneNode node) {
+		LaneEdge<LaneNode> next_edge = lane.getNextEdge(node, upstream);
+		if(next_edge == null) {
+			boat.setSpeed(0);
+		} else {
+			aimAlong(next_edge);
+		}
+	}
+	
+	private void aimAlong(LaneEdge<LaneNode> edge) {
+		LaneNode next_node = edge.getNextNode(upstream);
+		aimToward(next_node.getLocation());
+		this.current_edge = edge;
+		this.progress = 0;
+	}
+	
+	
+	private void aimToward(Point2D.Double pt) {
+		Context<Object> context = ContextUtils.getContext(this);
+		ContinuousSpace<Object> space = (ContinuousSpace) context.getProjection("Continuous Space");
+		
+		NdPoint myPoint  = boat.getLocation();
+		NdPoint otherPoint = new NdPoint(pt.getX(), pt.getY());
+		double angle = SpatialMath.calcAngleFor2DMovement(space, myPoint, otherPoint);
+		boat.setAngle(angle);
+	}
 	
 	/*
 	 * HELPERS

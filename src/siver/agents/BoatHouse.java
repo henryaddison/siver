@@ -8,6 +8,7 @@ import repast.simphony.space.continuous.ContinuousSpace;
 import repast.simphony.space.continuous.NdPoint;
 import repast.simphony.util.ContextUtils;
 import siver.agents.boat.BoatAgent;
+import siver.agents.boat.CoxAgent;
 import siver.river.River;
 import siver.river.lane.Lane;
 import siver.river.lane.Lane.UnstartedLaneException;
@@ -36,8 +37,11 @@ public class BoatHouse {
 		
 		BoatAgent boat = new BoatAgent(river, space);
 		context.add(boat);
+		CoxAgent cox = new CoxAgent(boat);
+		context.add(cox);
+		
 		try {
-			boat.launch(getLaunchLane());
+			cox.launch(getLaunchLane());
 		} catch (UnstartedLaneException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

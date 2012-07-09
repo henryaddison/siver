@@ -27,12 +27,11 @@ public class BoatAgent {
 	private River river;
 	private CoxAgent cox;
 	
-	//the current speed, orientation and lane of the boat
+	//the current speed, orientation
 	private double angle;
 	private double speed;
-	private Lane lane;
 	
-	//keep a record of the space the boat is in for easier movement
+	//keep a reference of the space the boat is in for easier movement
 	private ContinuousSpace<Object> space;
 	
 	//some debugging variables for checking collision detection 
@@ -42,73 +41,55 @@ public class BoatAgent {
 	Point2D.Double trptDst = new Point2D.Double();
 	Point2D.Double tlptDst = new Point2D.Double();
 	
-	/**
-	 * The part of a the lane the boat is currently travelling on
-	 */
-	private LaneEdge<LaneNode> current_edge;
-	
 	public BoatAgent(River river, ContinuousSpace<Object> space) {
 		this.river = river;
 		this.space = space;
 	}
 	
-	public void launch(Lane launchLane) throws UnstartedLaneException {
+	public void launch(CoxAgent cox, Point2D.Double pt) {
 		//initially the boat points straight up and is going at speed 10
 		this.angle = 0;
-		this.speed = 10;
-		this.lane = launchLane;
+		this.speed = 5;
+		this.cox = cox;
 		
-		//and is positioned on the startNode of the lane
-		LaneNode launchNode = lane.getStartNode();
-		space.moveTo(this, launchNode.getLocation().getX(), launchNode.getLocation().getY());
-		
-		current_edge = (LaneEdge<LaneNode>) lane.getNet().getOutEdges(launchNode).iterator().next();
+		space.moveTo(this, pt.getX(), pt.getY());
 		
 		//now add the cox and the 4 corners for collision detection
-		Context<Object> context = ContextUtils.getContext(this);
-		
-		this.cox = new CoxAgent(this);
-		context.add(this.cox);
-		
 		setupCorners();
-	}
-	
-	
-	
-	//BEHAVIOUR
-	
-	@ScheduledMethod(start = 1, interval = 1, shuffle=true, priority=10)
-	public void step() {
-		move(this.speed);
 	}
 	
 	//MOVEMENT
 	
 	public void move(double dist) {
-		space.moveByVector(this, dist, angle, 0);
-		
-		AffineTransform at = new AffineTransform();
-		at.translate(getLocation().getX(), getLocation().getY());
-		at.rotate(angle);
-		
-		at.transform(new Point2D.Double(-8.5,-3.5), blptDst);
-		at.transform(new Point2D.Double(8.5,-3.5), brptDst);
-		at.transform(new Point2D.Double(-8.5,3.5), tlptDst);
-		at.transform(new Point2D.Double(8.5,3.5), trptDst);
+		if(dist > 0) {
+			space.moveByVector(this, dist, angle, 0);
+			
+			AffineTransform at = new AffineTransform();
+			at.translate(getLocation().getX(), getLocation().getY());
+			at.rotate(angle);
+			
+			at.transform(new Point2D.Double(-8.5,-3.5), blptDst);
+			at.transform(new Point2D.Double(8.5,-3.5), brptDst);
+			at.transform(new Point2D.Double(-8.5,3.5), tlptDst);
+			at.transform(new Point2D.Double(8.5,3.5), trptDst);
+		}
 	}
 	
 	//GETTERS AND SETTERS
+	public double getAngle() {
+		return angle;
+	}
 	
 	public void setAngle(double angle) {
 		this.angle = angle;
 	}
 	
-	public double getAngle() {
-		return angle;
-	}
-	
 	public double getSpeed() {
 		return speed;
+	}
+	
+	public void setSpeed(double new_speed) {
+		this.speed = new_speed;
 	}
 	
 	public NdPoint getLocation() {
@@ -124,7 +105,6 @@ public class BoatAgent {
 	public River getRiver() {
 		return river;
 	}
-	
 	
 	//COLLISION DETECTION
 	private void setupCorners() {
