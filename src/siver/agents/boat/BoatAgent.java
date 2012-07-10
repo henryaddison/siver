@@ -97,12 +97,6 @@ public class BoatAgent {
 		return space;
 	}
 	
-	/**
-	 * Get the River object the boat is considered to be on
-	 * 
-	 * @return this.river
-	 * @see siver.river.River
-	 */
 	public River getRiver() {
 		return river;
 	}
