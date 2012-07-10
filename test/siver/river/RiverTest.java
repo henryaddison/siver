@@ -2,8 +2,6 @@ package siver.river;
 
 import static org.junit.Assert.*;
 
-import java.awt.geom.Point2D;
-
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
@@ -11,9 +9,7 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 
 import siver.LanedTest;
-import siver.context.LaneContext;
 import siver.river.River;
-import siver.river.lane.Lane;
 
 public class RiverTest extends LanedTest {
 	

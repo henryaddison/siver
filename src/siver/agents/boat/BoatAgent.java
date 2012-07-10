@@ -5,16 +5,11 @@ import java.awt.geom.AffineTransform;
 import java.awt.geom.Point2D;
 
 import repast.simphony.context.Context;
-import repast.simphony.engine.schedule.ScheduledMethod;
 import repast.simphony.space.continuous.ContinuousSpace;
 import repast.simphony.space.continuous.NdPoint;
 import repast.simphony.util.ContextUtils;
-import siver.context.SiverContextCreator;
 import siver.river.River;
-import siver.river.lane.Lane;
-import siver.river.lane.Lane.UnstartedLaneException;
-import siver.river.lane.LaneEdge;
-import siver.river.lane.LaneNode;
+
 /** 
  * BoatAgent is a dumb agent, at each step it will carry on moving in the direction it is facing and at the speed it was set to
  * The CoxAgent will make decisions based on the boat's location to alter these speed and angle properties

@@ -3,8 +3,6 @@
  */
 package siver.context;
 
-import java.awt.geom.Point2D;
-
 import repast.simphony.context.Context;
 import repast.simphony.context.space.continuous.ContinuousSpaceFactoryFinder;
 import repast.simphony.dataLoader.ContextBuilder;

@@ -35,7 +35,7 @@ public class BoatHouseTest extends LanedTest {
 
 	@Test
 	public void testBoatHouse() {
-		BoatHouse bh = new BoatHouse(r);
+		new BoatHouse(r);
 	}
 
 	@Test

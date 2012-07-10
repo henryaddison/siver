@@ -1,17 +1,13 @@
 package siver.agents.boat;
 // CoxAgent will use the boat it is attached to in order to decide how to alter it's
 import java.awt.geom.Point2D;
-import java.util.Iterator;
-
 
 import repast.simphony.context.Context;
 import repast.simphony.engine.schedule.ScheduledMethod;
 import repast.simphony.space.SpatialMath;
 import repast.simphony.space.continuous.ContinuousSpace;
 import repast.simphony.space.continuous.NdPoint;
-import repast.simphony.space.graph.RepastEdge;
 import repast.simphony.util.ContextUtils;
-import siver.context.SiverContextCreator;
 import siver.river.lane.Lane;
 import siver.river.lane.Lane.UnstartedLaneException;
 import siver.river.lane.LaneEdge;
@@ -39,13 +35,14 @@ public class CoxAgent {
 	
 	
 	public void launch(Lane launchLane) throws UnstartedLaneException {
-		// initially the cox wants to head downstream
+		// initially the cox wants to head downstream in the lane launched in
 		this.upstream = false;
 		this.lane = launchLane;
 		
-		//and is positioned on the startNode of the lane
+		//place the boat at the location of the first node of the lane
 		LaneNode launchNode = lane.getStartNode();
 		boat.launch(this, launchNode.getLocation());
+		//and have the cox react to this node (i.e. point the boat in the correct direction)
 		reactTo(launchNode);
 	}
 	
@@ -101,7 +98,7 @@ public class CoxAgent {
 	
 	
 	private void aimToward(Point2D.Double pt) {
-		Context<Object> context = ContextUtils.getContext(this);
+		Context<Object> context = ContextUtils.getContext(boat);
 		ContinuousSpace<Object> space = (ContinuousSpace) context.getProjection("Continuous Space");
 		
 		NdPoint myPoint  = boat.getLocation();
