@@ -30,7 +30,7 @@ public class BoatHouse {
 	}
 	
 	public BoatAgent launchBoat() {
-		BoatAgent boat = new BoatAgent(river, space);
+		BoatAgent boat = new BoatAgent(river, context, space);
 		context.add(boat);
 		CoxAgent cox = new CoxAgent(boat);
 		context.add(cox);

@@ -28,6 +28,7 @@ public class BoatAgent {
 	
 	//keep a reference of the space the boat is in for easier movement
 	private ContinuousSpace<Object> space;
+	private Context<Object> context;
 	
 	//some debugging variables for checking collision detection 
 	private BoatCorner tl,tr,br,bl;
@@ -36,9 +37,10 @@ public class BoatAgent {
 	Point2D.Double trptDst = new Point2D.Double();
 	Point2D.Double tlptDst = new Point2D.Double();
 	
-	public BoatAgent(River river, ContinuousSpace<Object> space) {
+	public BoatAgent(River river, Context<Object> context, ContinuousSpace<Object> space) {
 		this.river = river;
 		this.space = space;
+		this.context = context;
 	}
 	
 	public void launch(CoxAgent cox, Point2D.Double pt) {
@@ -107,8 +109,6 @@ public class BoatAgent {
 	
 	//COLLISION DETECTION
 	private void setupCorners() {
-		Context<Object> context = ContextUtils.getContext(this);
-		
 		tl = new BoatCorner();
 		context.add(tl);
 		
