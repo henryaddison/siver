@@ -91,6 +91,10 @@ public class BoatAgent {
 		return space.getLocation(this);
 	}
 	
+	public ContinuousSpace<Object> getSpace() {
+		return space;
+	}
+	
 	/**
 	 * Get the River object the boat is considered to be on
 	 * 

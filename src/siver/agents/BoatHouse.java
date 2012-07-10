@@ -1,18 +1,12 @@
 package siver.agents;
 
 import repast.simphony.context.Context;
-import repast.simphony.engine.environment.RunEnvironment;
-import repast.simphony.engine.schedule.ISchedule;
-import repast.simphony.engine.schedule.ScheduleParameters;
 import repast.simphony.space.continuous.ContinuousSpace;
-import repast.simphony.space.continuous.NdPoint;
-import repast.simphony.util.ContextUtils;
 import siver.agents.boat.BoatAgent;
 import siver.agents.boat.CoxAgent;
 import siver.river.River;
 import siver.river.lane.Lane;
 import siver.river.lane.Lane.UnstartedLaneException;
-import siver.river.lane.LaneNode;
 
 /**
  * A BoatHouse is where boats are launched from and then return to home.
@@ -26,15 +20,16 @@ import siver.river.lane.LaneNode;
 
 public class BoatHouse {
 	private River river;
+	private Context<Object> context;
+	private ContinuousSpace<Object> space;
 	
-	public BoatHouse(River river) {
+	public BoatHouse(River river, Context<Object> context, ContinuousSpace<Object> space) {
 		this.river = river;
+		this.context = context;
+		this.space = space;
 	}
 	
 	public BoatAgent launchBoat() {
-		Context<Object> context = ContextUtils.getContext(this);
-		ContinuousSpace<Object> space = (ContinuousSpace) context.getProjection("Continuous Space");
-		
 		BoatAgent boat = new BoatAgent(river, space);
 		context.add(boat);
 		CoxAgent cox = new CoxAgent(boat);

@@ -35,18 +35,18 @@ public class BoatHouseTest extends LanedTest {
 
 	@Test
 	public void testBoatHouse() {
-		new BoatHouse(r);
+		new BoatHouse(r, null, null);
 	}
 
 	@Test
 	public void testLaunchBoat() {
-		BoatHouse bh = new BoatHouse(r);
+		BoatHouse bh = new BoatHouse(r, null, null);
 		bh.launchBoat();
 	}
 	
 	@Test
 	public void testGetLaunchLane() throws UnstartedLaneException {
-		BoatHouse bh = new BoatHouse(r);
+		BoatHouse bh = new BoatHouse(r, null, null);
 		assertEquals(down, bh.getLaunchLane());
 	}
 

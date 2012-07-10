@@ -2,12 +2,9 @@ package siver.agents.boat;
 // CoxAgent will use the boat it is attached to in order to decide how to alter it's
 import java.awt.geom.Point2D;
 
-import repast.simphony.context.Context;
 import repast.simphony.engine.schedule.ScheduledMethod;
 import repast.simphony.space.SpatialMath;
-import repast.simphony.space.continuous.ContinuousSpace;
 import repast.simphony.space.continuous.NdPoint;
-import repast.simphony.util.ContextUtils;
 import siver.river.lane.Lane;
 import siver.river.lane.Lane.UnstartedLaneException;
 import siver.river.lane.LaneEdge;
@@ -98,12 +95,9 @@ public class CoxAgent {
 	
 	
 	private void aimToward(Point2D.Double pt) {
-		Context<Object> context = ContextUtils.getContext(boat);
-		ContinuousSpace<Object> space = (ContinuousSpace) context.getProjection("Continuous Space");
-		
 		NdPoint myPoint  = boat.getLocation();
 		NdPoint otherPoint = new NdPoint(pt.getX(), pt.getY());
-		double angle = SpatialMath.calcAngleFor2DMovement(space, myPoint, otherPoint);
+		double angle = SpatialMath.calcAngleFor2DMovement(boat.getSpace(), myPoint, otherPoint);
 		boat.setAngle(angle);
 	}
 	

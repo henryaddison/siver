@@ -42,7 +42,7 @@ public class SiverContextCreator implements ContextBuilder<Object> {
 		
 		River river = RiverFactory.Test(context, space);
 		
-		BoatHouse boatHouse = new BoatHouse(river);
+		BoatHouse boatHouse = new BoatHouse(river, context, space);
 		context.add(boatHouse);
 		space.moveTo(boatHouse, 0, 30);
 		
