@@ -162,10 +162,10 @@ public class LaneTest {
 		assertNotSame(another_edge, edge);
 	}
 	
-	@Test(expected=java.util.NoSuchElementException.class)	
+	@Test	
 	public void getNextEdgeNoEdge() throws UnstartedLaneException {
 		LaneNode sln = startedL.getStartNode();
-		startedL.getNextEdge(sln, true);
+		assertNull(startedL.getNextEdge(sln, true));
 		
 	}
 
