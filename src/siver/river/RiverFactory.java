@@ -1,5 +1,6 @@
 package siver.river;
 
+import static java.lang.Math.PI;
 import java.awt.geom.Point2D;
 
 import repast.simphony.context.Context;
@@ -48,35 +49,35 @@ public class RiverFactory {
 				middle.extend(0);
 			}
 			
-			for(double theta = 0; theta < Math.PI/2.0; theta += Math.PI/20.0) {
+			for(double theta = 0; theta < PI/2.0; theta += PI/20.0) {
 				up.extend(theta);
 			}
-			for(double theta = 0; theta < Math.PI/2.0; theta += (Math.PI/2.0)/(10+Math.PI/2.0)) {
+			for(double theta = 0; theta < PI/2.0; theta += (PI/2.0)/(10+PI/2.0)) {
 				middle.extend(theta);
 			}
-			for(double theta = 0; theta < Math.PI/2.0; theta += (Math.PI/2.0)/(10+Math.PI)) {
+			for(double theta = 0; theta < PI/2.0; theta += (PI/2.0)/(10+PI)) {
 				down.extend(theta);
 			}
 			
-			up.extend(Math.PI/2.0);
-			up.extend(Math.PI/2.0);
-			middle.extend(Math.PI/2.0);
-			middle.extend(Math.PI/2.0);
-			down.extend(Math.PI/2.0);
+			up.extend(PI/2.0);
+			up.extend(PI/2.0);
+			middle.extend(PI/2.0);
+			middle.extend(PI/2.0);
+			down.extend(PI/2.0);
 			
 			for(int i = 1; i<= 5; i++) {
-				up.extend(Math.PI/2.0);
-				middle.extend(Math.PI/2.0);
-				down.extend(Math.PI/2.0);
+				up.extend(PI/2.0);
+				middle.extend(PI/2.0);
+				down.extend(PI/2.0);
 			}
 			
-			for(double theta = Math.PI/2.0; theta > 0 ; theta -= Math.PI/21.0) {
+			for(double theta = PI/2.0; theta > 0 ; theta -= PI/21.0) {
 				down.extend(theta);
 			}
-			for(double theta = Math.PI/2.0; theta > 0; theta -= (Math.PI/2.0)/(10+Math.PI/2.0)) {
+			for(double theta = PI/2.0; theta > 0; theta -= (PI/2.0)/(10+PI/2.0)) {
 				middle.extend(theta);
 			}
-			for(double theta = Math.PI/2.0; theta > 0; theta -= (Math.PI/2.0)/(10+Math.PI)) {
+			for(double theta = PI/2.0; theta > 0; theta -= (PI/2.0)/(10+PI)) {
 				up.extend(theta);
 			}
 			
