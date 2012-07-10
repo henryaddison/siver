@@ -29,7 +29,7 @@ public class BoatHouse {
 		this.space = space;
 	}
 	
-	public BoatAgent launchBoat() {
+	public void launchBoat() {
 		BoatAgent boat = new BoatAgent(river, context, space);
 		context.add(boat);
 		CoxAgent cox = new CoxAgent(boat);
@@ -41,7 +41,6 @@ public class BoatHouse {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		return boat;
 	}
 	
 	public Lane getLaunchLane() {
