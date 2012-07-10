@@ -64,6 +64,12 @@ public class RiverFactory {
 			middle.extend(Math.PI/2.0);
 			down.extend(Math.PI/2.0);
 			
+			for(int i = 1; i<= 5; i++) {
+				up.extend(Math.PI/2.0);
+				middle.extend(Math.PI/2.0);
+				down.extend(Math.PI/2.0);
+			}
+			
 			for(double theta = Math.PI/2.0; theta > 0 ; theta -= Math.PI/21.0) {
 				down.extend(theta);
 			}
