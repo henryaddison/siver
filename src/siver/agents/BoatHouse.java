@@ -32,11 +32,11 @@ public class BoatHouse {
 	public void launchBoat() {
 		BoatAgent boat = new BoatAgent(river, context, space);
 		context.add(boat);
-		CoxAgent cox = new CoxAgent(boat);
+		CoxAgent cox = new CoxAgent();
 		context.add(cox);
 		
 		try {
-			cox.launch(getLaunchLane());
+			cox.launch(boat, getLaunchLane());
 		} catch (UnstartedLaneException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
