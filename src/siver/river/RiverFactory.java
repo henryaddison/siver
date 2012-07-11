@@ -30,17 +30,17 @@ public class RiverFactory {
 		Lane middle = new Lane(lane_context, "Middle Lane");
 		Lane down = new Lane(lane_context, "Downstream Lane");
 		
-		up.start(new Point2D.Double(0, 50));
+		up.start(new Point2D.Double(10, 50));
 		context.add(up);
-		space.moveTo(up, 0, 50);
+		space.moveTo(up, 10, 50);
 		
-		middle.start(new Point2D.Double(0, 30));
+		middle.start(new Point2D.Double(10, 30));
 		context.add(middle);
-		space.moveTo(middle, 0, 30);
+		space.moveTo(middle, 10, 30);
 		
-		down.start(new Point2D.Double(0, 10));
+		down.start(new Point2D.Double(10, 10));
 		context.add(down);
-		space.moveTo(up, 0, 10);
+		space.moveTo(up, 10, 10);
 		
 		try {
 			for(int i = 1; i <= 40; i++) {
