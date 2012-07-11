@@ -62,18 +62,16 @@ public class BoatAgent {
 	//MOVEMENT
 	
 	public void move(double dist) {
-		if(dist > 0) {
-			space.moveByVector(this, dist, angle, 0);
-			
-			AffineTransform at = new AffineTransform();
-			at.translate(getLocation().getX(), getLocation().getY());
-			at.rotate(angle);
-			
-			at.transform(new Point2D.Double(-8.5,-3.5), blptDst);
-			at.transform(new Point2D.Double(8.5,-3.5), brptDst);
-			at.transform(new Point2D.Double(-8.5,3.5), tlptDst);
-			at.transform(new Point2D.Double(8.5,3.5), trptDst);
-		}
+		space.moveByVector(this, dist, angle, 0);
+		
+		AffineTransform at = new AffineTransform();
+		at.translate(getLocation().getX(), getLocation().getY());
+		at.rotate(angle);
+		
+		at.transform(new Point2D.Double(-8.5,-3.5), blptDst);
+		at.transform(new Point2D.Double(8.5,-3.5), brptDst);
+		at.transform(new Point2D.Double(-8.5,3.5), tlptDst);
+		at.transform(new Point2D.Double(8.5,3.5), trptDst);
 	}
 	
 	//GETTERS AND SETTERS
