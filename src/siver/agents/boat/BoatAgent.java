@@ -7,7 +7,6 @@ import java.awt.geom.Point2D;
 import repast.simphony.context.Context;
 import repast.simphony.space.continuous.ContinuousSpace;
 import repast.simphony.space.continuous.NdPoint;
-import repast.simphony.util.ContextUtils;
 import siver.river.River;
 
 /** 
@@ -46,13 +45,18 @@ public class BoatAgent {
 	public void launch(CoxAgent cox, Point2D.Double pt) {
 		//initially the boat points straight up and is going at speed 10
 		this.angle = 0;
-		this.speed = 5;
+		this.speed = 4;
 		this.cox = cox;
 		
 		space.moveTo(this, pt.getX(), pt.getY());
 		
 		//now add the cox and the 4 corners for collision detection
 		setupCorners();
+	}
+	
+	public void land() {
+		context.remove(cox);
+		context.remove(this);
 	}
 	
 	//MOVEMENT

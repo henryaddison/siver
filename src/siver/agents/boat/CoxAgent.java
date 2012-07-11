@@ -62,7 +62,21 @@ public class CoxAgent {
 	 */
 	
 	private boolean canReachNextNode() {
-		return tick_distance_remaining < edge_remaining; 
+		return tick_distance_remaining >= edge_remaining; 
+	}
+	
+	private boolean atRiversEnd(LaneEdge<LaneNode> next_edge) {
+		return !upstream && next_edge == null;
+	}
+	
+	private boolean backAtBoatHouse(LaneNode node) {
+		try {
+			return upstream && node.equals(lane.getStartNode());
+		} catch (UnstartedLaneException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			throw new RuntimeException("Unexpected unstarted lane found");
+		}
 	}
 	
 	/*
@@ -71,22 +85,55 @@ public class CoxAgent {
 	
 	private void reactTo(LaneNode node) {
 		LaneEdge<LaneNode> next_edge = lane.getNextEdge(node, upstream);
-		if(next_edge == null) {
-			boat.setSpeed(0);
-		} else {
+		if(atRiversEnd(next_edge)) {
+			spin();
+			return;
+		}
+		if(backAtBoatHouse(node)) {
+			boat.land();
+			return;
+		}
+		if(true) {
 			aimAlong(next_edge);
 			letBoatRun();
+			return;
 		}
+	}
+	
+	private void spin() {
+		boat.setSpeed(0);
+		tick_distance_remaining = 0;
+		double min_distance = Integer.MAX_VALUE;
+		LaneNode spin_target = null;
+		Lane spin_to = null;
+		if(upstream) {
+			spin_to = boat.getRiver().getDownstream();
+		} else {
+			spin_to = boat.getRiver().getUpstream();
+		}
+		
+		for(LaneNode node : spin_to.getNet().getNodes()) {
+			if(min_distance > node.distance(current_edge.getNextNode(upstream))) {
+				spin_target = node;
+				min_distance = node.distance(current_edge.getNextNode(upstream));
+			}
+		}
+		upstream = !upstream;
+		steerToward(spin_target.getLocation());
+		boat.move(min_distance);
+		lane = spin_to;
+		reactTo(spin_target);
+		boat.setSpeed(2);
 	}
 	
 	private void letBoatRun() {
 		if(canReachNextNode()) {
-			boat.move(tick_distance_remaining);
-			edge_remaining -= tick_distance_remaining;
-		} else {
 			boat.move(edge_remaining);
 			edge_remaining = 0;
 			reactTo(current_edge.getNextNode(upstream));
+		} else {
+			boat.move(tick_distance_remaining);
+			edge_remaining -= tick_distance_remaining;
 		}
 	}
 	
