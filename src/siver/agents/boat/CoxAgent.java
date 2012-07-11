@@ -9,6 +9,7 @@ import siver.river.lane.Lane;
 import siver.river.lane.Lane.UnstartedLaneException;
 import siver.river.lane.LaneEdge;
 import siver.river.lane.LaneNode;
+import siver.agents.boat.actions.*;
 
 public class CoxAgent {
 	//The boat the cox is controlling.
@@ -26,6 +27,8 @@ public class CoxAgent {
 	private LaneEdge<LaneNode> current_edge;
 	
 	private Lane lane;
+	
+	private Action action;
 	
 	public CoxAgent() {
 	}
@@ -52,9 +55,9 @@ public class CoxAgent {
 	public void step() {
 		tick_distance_remaining = boat.getSpeed();
 		if(true) {
-			letBoatRun();
-			return;
+			action = new LetBoatRun();
 		}
+		
 	}
 	
 	/*
@@ -154,5 +157,7 @@ public class CoxAgent {
 	/*
 	 * HELPERS
 	 */
-	
+	public Action getAction() {
+		return action;
+	}
 }
