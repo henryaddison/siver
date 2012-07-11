@@ -4,7 +4,6 @@ import static org.easymock.EasyMock.*;
 import static org.junit.Assert.*;
 
 import org.easymock.EasyMock;
-import org.easymock.internal.matchers.InstanceOf;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
