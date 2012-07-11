@@ -15,7 +15,8 @@ import siver.agents.boat.actions.*;
 @SuiteClasses({ LaneTest.class, RiverTest.class, 
 	LaneNodeTest.class, LaneEdgeTest.class, 
 	LaneEdgeCreatorTest.class, BoatHouseTest.class,
-	BoatAgentTest.class, CoxAgentTest.class})
+	BoatAgentTest.class, CoxAgentTest.class,
+	CoxLocationTest.class})
 public class AllTests {
 
 }
