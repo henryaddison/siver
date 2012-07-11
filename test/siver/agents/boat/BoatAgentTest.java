@@ -14,6 +14,7 @@ import org.junit.Test;
 
 import repast.simphony.context.Context;
 import repast.simphony.space.continuous.ContinuousSpace;
+import repast.simphony.space.continuous.NdPoint;
 import siver.river.River;
 
 public class BoatAgentTest {
@@ -66,6 +67,10 @@ public class BoatAgentTest {
 		replay(mockCox);
 		
 		boat.launch(mockCox, new Point2D.Double(0,0));
+		
+		assertEquals(0,boat.getAngle(), 1E-5);
+		assertEquals(4,boat.getSpeed(), 1E-5);
+		
 		verify(mockContext);
 		verify(mockSpace);
 		verify(mockRiver);
@@ -74,7 +79,11 @@ public class BoatAgentTest {
 
 	@Test
 	public void testLand() {
-		fail("Not yet implemented");
+		expect(mockContext.remove(null)).andReturn(true).once();
+		expect(mockContext.remove(boat)).andReturn(true).once();
+		replay(mockContext);
+		boat.land();
+		verify(mockContext);
 	}
 
 	@Test
@@ -83,38 +92,40 @@ public class BoatAgentTest {
 	}
 
 	@Test
-	public void testGetAngle() {
-		fail("Not yet implemented");
+	public void testGetAndSetAngle() {
+		boat.setAngle(Math.PI);
+		assertEquals(Math.PI, boat.getAngle(), 1E-5);
+		
+		boat.setAngle(1);
+		assertEquals(1, boat.getAngle(), 1E-5);
 	}
 
 	@Test
-	public void testSetAngle() {
-		fail("Not yet implemented");
+	public void testSetAndGetSpeed() {
+		boat.setSpeed(3);
+		assertEquals(3, boat.getSpeed(), 1E-5);
+		
+		boat.setSpeed(5);
+		assertEquals(5, boat.getSpeed(), 1E-5);
 	}
-
-	@Test
-	public void testGetSpeed() {
-		fail("Not yet implemented");
-	}
-
-	@Test
-	public void testSetSpeed() {
-		fail("Not yet implemented");
-	}
-
+	
 	@Test
 	public void testGetLocation() {
-		fail("Not yet implemented");
+		NdPoint expLoc = new NdPoint(10,5);
+		expect(mockSpace.getLocation(boat)).andReturn(expLoc);
+		replay(mockSpace);
+		assertEquals(expLoc, boat.getLocation());
+		verify(mockSpace);
 	}
 
 	@Test
 	public void testGetSpace() {
-		fail("Not yet implemented");
+		assertEquals(mockSpace, boat.getSpace());
 	}
 
 	@Test
 	public void testGetRiver() {
-		fail("Not yet implemented");
+		assertEquals(mockRiver, boat.getRiver());
 	}
 
 	@Test
