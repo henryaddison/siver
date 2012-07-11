@@ -18,15 +18,47 @@ public class BoatStyle implements StyleOGL2D<BoatAgent> {
 	public void init(ShapeFactory2D factory) {
 		this.shapeFactory = factory;
 	}
-
+	
 	@Override
 	public VSpatial getVSpatial(BoatAgent object, VSpatial spatial) {
 		Path2D.Double boatOutline = new Path2D.Double();
 		boatOutline.moveTo(0, 8.5);
+		
+		boatOutline.lineTo(-1, 5);
 		boatOutline.lineTo(-3.5, 5);
-		boatOutline.lineTo(-3.5, -8.5);
-		boatOutline.lineTo(3.5, -8.5);
+		boatOutline.lineTo(-3.5, 3.5);
+		boatOutline.lineTo(-1, 3.5);
+		boatOutline.lineTo(-1, 2);
+		boatOutline.lineTo(-3.5, 2);
+		boatOutline.lineTo(-3.5, 0.5);
+		boatOutline.lineTo(-1, 0.5);
+		boatOutline.lineTo(-1, -1);
+		boatOutline.lineTo(-3.5, -1);
+		boatOutline.lineTo(-3.5, -2.5);
+		boatOutline.lineTo(-1, -2.5);
+		boatOutline.lineTo(-1, -4);
+		boatOutline.lineTo(-3.5, -4);
+		boatOutline.lineTo(-3.5, -5.5);
+		boatOutline.lineTo(-1, -5.5);
+		boatOutline.lineTo(-1, -8.5);
+		boatOutline.lineTo(1, -8.5);
+		boatOutline.lineTo(1, -5.5);
+		boatOutline.lineTo(3.5, -5.5);
+		boatOutline.lineTo(3.5, -4);
+		boatOutline.lineTo(1, -4);
+		boatOutline.lineTo(1, -2.5);
+		boatOutline.lineTo(3.5, -2.5);
+		boatOutline.lineTo(3.5, -1);
+		boatOutline.lineTo(1, -1);
+		boatOutline.lineTo(1, 0.5);
+		boatOutline.lineTo(3.5, 0.5);
+		boatOutline.lineTo(3.5, 2);
+		boatOutline.lineTo(1, 2);
+		boatOutline.lineTo(1, 3.5);
+		boatOutline.lineTo(3.5, 3.5);
 		boatOutline.lineTo(3.5, 5);
+		boatOutline.lineTo(1, 5);
+		
 		boatOutline.closePath();
 		
 		if (spatial == null) return shapeFactory.createShape(boatOutline);
