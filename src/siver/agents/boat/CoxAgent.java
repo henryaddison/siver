@@ -9,12 +9,10 @@ import siver.agents.boat.actions.*;
 public class CoxAgent {
 	//The boat the cox is controlling.
 	private BoatAgent boat;
-	
 	//distance that can be travelled this tick
 	private double tick_distance_remaining;
 	
 	private Action action;
-	
 	private CoxLocation location;
 	
 	public CoxAgent() {
@@ -36,6 +34,7 @@ public class CoxAgent {
 	
 	//BEHAVIOUR
 	
+	//Temporal behaviour method - how to react as time changes, i.e. at each tick.
 	@ScheduledMethod(start = 1, interval = 1, shuffle=true, priority=10)
 	public void step() {
 		tick_distance_remaining = boat.getSpeed();
@@ -43,10 +42,10 @@ public class CoxAgent {
 			letBoatRun();
 			action = new LetBoatRun();
 		}
-		
 		action.execute();
 	}
 	
+	//Spatial behaviour method - how to react as cox's position changes.
 	private void reactTo(LaneNode node) {
 		LaneEdge<LaneNode> next_edge = node.getLane().getNextEdge(node, upstream());
 		if(atRiversEnd(next_edge)) {
