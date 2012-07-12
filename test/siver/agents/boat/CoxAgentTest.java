@@ -94,5 +94,11 @@ public class CoxAgentTest {
 	public void testGetAction() {
 		assertNull(cox.getAction());
 	}
+	
+	@Test
+	public void testGetBoat() {
+		launchCox();
+		assertEquals(mockBoat, cox.getBoat());
+	}
 
 }

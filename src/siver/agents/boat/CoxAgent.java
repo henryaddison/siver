@@ -144,4 +144,8 @@ public class CoxAgent {
 		return action;
 	}
 	
+	public BoatAgent getBoat() {
+		return boat;
+	}
+	
 }
