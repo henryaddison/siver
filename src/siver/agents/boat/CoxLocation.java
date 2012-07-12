@@ -11,11 +11,17 @@ public class CoxLocation {
 	// How much of the current edge is left before the cox reaches the end and then next node.
 	private double till_edge_end;
 	
-	public CoxLocation(LaneEdge<LaneNode> e, double tee) {
+	// Whether the cox is trying to go upstream or downstream.
+	private boolean upstream;
+	
+	public CoxLocation(LaneEdge<LaneNode> e, double tee, boolean up) {
+		upstream = up;
 		updateEdge(e);
+		till_edge_end = tee;
 	}
 	
-	public CoxLocation(LaneEdge<LaneNode> e) {
+	public CoxLocation(LaneEdge<LaneNode> e, boolean up) {
+		upstream = up;
 		updateEdge(e);
 	}
 	
@@ -42,6 +48,14 @@ public class CoxLocation {
 	
 	public void moveAlongEdge(double distance) {
 		till_edge_end -= distance;
+	}
+	
+	public boolean headingUpstream() {
+		return upstream;
+	}
+	
+	public void toggleUpstream() {
+		upstream = !upstream;
 	}
 }
 
