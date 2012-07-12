@@ -56,25 +56,22 @@ public class BoatAgentTest {
 		verify(mockSpace);
 		verify(mockRiver);
 	}
-
-	@Test
-	public void testLaunch() {
+	
+	private void launchBoat() {
 		expect(mockSpace.moveTo(boat, 0,0)).andReturn(true).times(1);
 		expect(mockContext.add(anyObject(BoatCorner.class))).andReturn(true).times(4);
 		replay(mockContext);
 		replay(mockSpace);
-		replay(mockRiver);
-		replay(mockCox);
-		
 		boat.launch(mockCox, new Point2D.Double(0,0));
-		
-		assertEquals(0,boat.getAngle(), 1E-5);
-		assertEquals(4,boat.getSpeed(), 1E-5);
-		
 		verify(mockContext);
 		verify(mockSpace);
-		verify(mockRiver);
-		verify(mockCox);
+	}
+	
+	@Test
+	public void testLaunch() {		
+		launchBoat();
+		assertEquals(0,boat.getAngle(), 1E-5);
+		assertEquals(4,boat.getSpeed(), 1E-5);
 	}
 
 	@Test
@@ -135,11 +132,25 @@ public class BoatAgentTest {
 	public void testGetRiver() {
 		assertEquals(mockRiver, boat.getRiver());
 	}
-
+	
+	@Test
+	public void testSteerToward() {
+		launchBoat();
+		reset(mockSpace);
+		expect(mockSpace.getLocation(boat)).andReturn(new NdPoint(0,0)).once();
+		expect(mockSpace.getDisplacement(new NdPoint(0,0), new NdPoint(0,100))).andReturn(new double[]{0,100}).once();
+		replay(mockSpace);
+		boat.steerToward(new Point2D.Double(0,100));
+		verify(mockSpace);
+		assertEquals(Math.PI/2.0,boat.getAngle(), 1E-5);
+	}
+	
 	@Test
 	public void testOnRiver() {
 		//TODO: HTF to test this? Is is worth it given we're not using it at the moment?
 		//fail("Not yet implemented");
 	}
+	
+	
 
 }

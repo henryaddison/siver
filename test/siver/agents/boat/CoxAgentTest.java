@@ -13,7 +13,6 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 
 import repast.simphony.space.continuous.ContinuousSpace;
-import repast.simphony.space.continuous.NdPoint;
 import siver.agents.boat.actions.LetBoatRun;
 import siver.river.lane.Lane;
 import siver.river.lane.LaneEdge;
@@ -69,11 +68,7 @@ public class CoxAgentTest {
 		mockBoat.launch(cox, expLoc);
 		expectLastCall().once();
 		expect(mockLane.getNextEdge(expNode, false)).andReturn(new LaneEdge<LaneNode>(expNode, nextNode)).once();
-		expect(mockBoat.getLocation()).andReturn(new NdPoint(10,30)).once();
-		
-		expect(mockBoat.getSpace()).andReturn(mockSpace).once();
-		expect(mockSpace.getDisplacement(new NdPoint(10,30), new NdPoint(30,30))).andReturn(new double[]{20,0}).once();
-		mockBoat.setAngle(0);
+		mockBoat.steerToward(nextNode.getLocation());
 		expectLastCall().once();
 		
 		replay(mockBoat);

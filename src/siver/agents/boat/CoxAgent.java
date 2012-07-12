@@ -1,10 +1,6 @@
 package siver.agents.boat;
-// CoxAgent will use the boat it is attached to in order to decide how to alter it's
-import java.awt.geom.Point2D;
 
 import repast.simphony.engine.schedule.ScheduledMethod;
-import repast.simphony.space.SpatialMath;
-import repast.simphony.space.continuous.NdPoint;
 import siver.river.lane.Lane;
 import siver.river.lane.LaneEdge;
 import siver.river.lane.LaneNode;
@@ -51,30 +47,6 @@ public class CoxAgent {
 		action.execute();
 	}
 	
-	/*
-	 * PREDICATES
-	 */
-	
-	private boolean canReachNextNode() {
-		return tick_distance_remaining >= location.getTillEdgeEnd(); 
-	}
-	
-	private boolean atRiversEnd(LaneEdge<LaneNode> next_edge) {
-		return !upstream() && next_edge == null;
-	}
-	
-	private boolean backAtBoatHouse(LaneNode node) {
-		return upstream() && node.equals(location.getLane().getStartNode());
-	}
-	
-	private boolean upstream() {
-		return location.headingUpstream();
-	}
-	
-	/*
-	 * ACTIONS
-	 */
-	
 	private void reactTo(LaneNode node) {
 		LaneEdge<LaneNode> next_edge = node.getLane().getNextEdge(node, upstream());
 		if(atRiversEnd(next_edge)) {
@@ -91,6 +63,10 @@ public class CoxAgent {
 			return;
 		}
 	}
+	
+	/*
+	 * ACTIONS
+	 */
 	
 	private void spin() {
 		boat.setSpeed(0);
@@ -111,7 +87,7 @@ public class CoxAgent {
 			}
 		}
 		location.toggleUpstream();
-		steerToward(spin_target.getLocation());
+		boat.steerToward(spin_target.getLocation());
 		boat.move(min_distance);
 		
 		reactTo(spin_target);
@@ -131,14 +107,27 @@ public class CoxAgent {
 	
 	private void aimAlong(LaneEdge<LaneNode> edge) {
 		location.updateEdge(edge);
-		steerToward(edge.getNextNode(upstream()).getLocation());
+		boat.steerToward(edge.getNextNode(upstream()).getLocation());
 	}
 	
-	private void steerToward(Point2D.Double pt) {
-		NdPoint myPoint  = boat.getLocation();
-		NdPoint otherPoint = new NdPoint(pt.getX(), pt.getY());
-		double angle = SpatialMath.calcAngleFor2DMovement(boat.getSpace(), myPoint, otherPoint);
-		boat.setAngle(angle);
+	/*
+	 * PREDICATES
+	 */
+	
+	private boolean canReachNextNode() {
+		return tick_distance_remaining >= location.getTillEdgeEnd(); 
+	}
+	
+	private boolean atRiversEnd(LaneEdge<LaneNode> next_edge) {
+		return !upstream() && next_edge == null;
+	}
+	
+	private boolean backAtBoatHouse(LaneNode node) {
+		return upstream() && node.equals(location.getLane().getStartNode());
+	}
+	
+	private boolean upstream() {
+		return location.headingUpstream();
 	}
 	
 	/*

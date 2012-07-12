@@ -5,6 +5,7 @@ import java.awt.geom.AffineTransform;
 import java.awt.geom.Point2D;
 
 import repast.simphony.context.Context;
+import repast.simphony.space.SpatialMath;
 import repast.simphony.space.continuous.ContinuousSpace;
 import repast.simphony.space.continuous.NdPoint;
 import siver.river.River;
@@ -72,6 +73,12 @@ public class BoatAgent {
 		at.transform(new Point2D.Double(8.5,-3.5), brptDst);
 		at.transform(new Point2D.Double(-8.5,3.5), tlptDst);
 		at.transform(new Point2D.Double(8.5,3.5), trptDst);
+	}
+	
+	public void steerToward(Point2D.Double pt) {
+		NdPoint otherPoint = new NdPoint(pt.getX(), pt.getY());
+		double angle = SpatialMath.calcAngleFor2DMovement(space, getLocation(), otherPoint);
+		setAngle(angle);
 	}
 	
 	//GETTERS AND SETTERS
