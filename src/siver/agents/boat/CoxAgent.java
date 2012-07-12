@@ -54,12 +54,11 @@ public class CoxAgent {
 			return;
 		}
 		if(backAtBoatHouse(node)) {
-			boat.land();
+			land();
 			return;
 		}
 		if(true) {
-			aimAlong(next_edge);
-			letBoatRun();
+			steer(next_edge);
 			return;
 		}
 	}
@@ -67,6 +66,15 @@ public class CoxAgent {
 	/*
 	 * ACTIONS
 	 */
+	
+	private void land() {
+		boat.land();
+	}
+	
+	private void steer(LaneEdge<LaneNode> next_edge) {
+		aimAlong(next_edge);
+		letBoatRun();
+	}
 	
 	private void spin() {
 		boat.setSpeed(0);
@@ -136,4 +144,5 @@ public class CoxAgent {
 	public Action getAction() {
 		return action;
 	}
+	
 }
