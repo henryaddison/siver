@@ -12,13 +12,16 @@ import java.awt.geom.Point2D;
 public class LaneNode {
 	// a node has a location in the world
 	protected Point2D.Double location;
+	protected Lane lane;
 	
-	public LaneNode(double x, double y) {
+	public LaneNode(double x, double y, Lane l) {
 		location = new Point2D.Double(x,y);
+		lane = l;
 	}
 	
-	public LaneNode(Point2D.Double l) {
-		location = l;
+	public LaneNode(Point2D.Double loc, Lane lan) {
+		location = loc;
+		lane = lan;
 	}
 	
 	/**
@@ -36,5 +39,13 @@ public class LaneNode {
 	 */
 	public Point2D.Double getLocation() {
 		return location;
+	}
+	
+	/**
+	 * 
+	 * @return lane node is in
+	 */
+	public Lane getLane() {
+		return lane;
 	}
 }

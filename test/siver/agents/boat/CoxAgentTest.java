@@ -64,8 +64,8 @@ public class CoxAgentTest {
 	
 	private void launchCox() {
 		Point2D.Double expLoc = new Point2D.Double(10,30);
-		LaneNode expNode = new LaneNode(expLoc);
-		LaneNode nextNode = new LaneNode(30,30);
+		LaneNode expNode = new LaneNode(expLoc, null);
+		LaneNode nextNode = new LaneNode(30,30, null);
 		expect(mockLane.getStartNode()).andReturn(expNode).once();
 		mockBoat.launch(cox, expLoc);
 		expectLastCall().once();

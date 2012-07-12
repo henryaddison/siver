@@ -28,8 +28,8 @@ public class LaneEdgeTest {
 
 	@Test
 	public void testLaneEdge() {
-		LaneNode s = new LaneNode(0,0);
-		LaneNode d = new LaneNode(3,4);
+		LaneNode s = new LaneNode(0,0,null);
+		LaneNode d = new LaneNode(3,4,null);
 		LaneEdge<LaneNode> e = new LaneEdge<LaneNode>(s,d);
 		assertEquals(5.0, e.getWeight(), 1E-5);
 	}
