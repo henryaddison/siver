@@ -40,7 +40,7 @@ public class CoxAgent {
 		tick_distance_remaining = boat.getSpeed();
 		if(true) {
 			letBoatRun();
-			action = new LetBoatRun();
+			action = new LetBoatRun(this);
 		}
 		action.execute();
 	}
