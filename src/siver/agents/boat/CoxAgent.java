@@ -53,7 +53,8 @@ public class CoxAgent {
 			return;
 		}
 		if(backAtBoatHouse(node)) {
-			land();
+			action = new Land(this);
+			action.execute();
 			return;
 		}
 		if(true) {
@@ -65,11 +66,6 @@ public class CoxAgent {
 	/*
 	 * ACTIONS
 	 */
-	
-	private void land() {
-		boat.land();
-	}
-	
 	private void steer(LaneEdge<LaneNode> next_edge) {
 		aimAlong(next_edge);
 		letBoatRun();
