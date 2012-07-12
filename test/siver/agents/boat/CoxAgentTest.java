@@ -5,7 +5,7 @@ import static org.junit.Assert.*;
 
 import java.awt.geom.Point2D;
 
-import org.easymock.EasyMock;
+
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
@@ -16,7 +16,6 @@ import repast.simphony.space.continuous.ContinuousSpace;
 import repast.simphony.space.continuous.NdPoint;
 import siver.agents.boat.actions.LetBoatRun;
 import siver.river.lane.Lane;
-import siver.river.lane.Lane.UnstartedLaneException;
 import siver.river.lane.LaneEdge;
 import siver.river.lane.LaneNode;
 

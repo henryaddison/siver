@@ -6,7 +6,6 @@ import repast.simphony.engine.schedule.ScheduledMethod;
 import repast.simphony.space.SpatialMath;
 import repast.simphony.space.continuous.NdPoint;
 import siver.river.lane.Lane;
-import siver.river.lane.Lane.UnstartedLaneException;
 import siver.river.lane.LaneEdge;
 import siver.river.lane.LaneNode;
 import siver.agents.boat.actions.*;

@@ -6,7 +6,6 @@ import siver.agents.boat.BoatAgent;
 import siver.agents.boat.CoxAgent;
 import siver.river.River;
 import siver.river.lane.Lane;
-import siver.river.lane.Lane.UnstartedLaneException;
 
 /**
  * A BoatHouse is where boats are launched from and then return to home.
