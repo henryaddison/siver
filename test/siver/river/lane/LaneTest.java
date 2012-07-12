@@ -138,19 +138,20 @@ public class LaneTest {
 	}
 	
 	@Test
-	public void testGetStartNode() throws UnstartedLaneException {
+	public void testGetStartNode() {
 		LaneNode sn = startedL.getStartNode();
 		assertEquals(new Point2D.Double(0,10), sn.getLocation());
-	}
-	
-	@Test(expected=UnstartedLaneException.class)
-	public void testGetStartNodeNotStarted() throws UnstartedLaneException {
-		Lane unstartedLane = new Lane(new LaneContext(), "Test Lane");
-		unstartedLane.getStartNode();
+		assertEquals(startedL, sn.getLane());
 	}
 	
 	@Test
-	public void getNextEdge() throws UnstartedLaneException {
+	public void testGetStartNodeNotStarted() {
+		Lane unstartedLane = new Lane(new LaneContext(), "Test Lane");
+		assertNull(unstartedLane.getStartNode());
+	}
+	
+	@Test
+	public void testGetNextEdge() {
 		LaneNode sln = startedL.getStartNode();
 		LaneEdge<LaneNode> edge = startedL.getNextEdge(sln, false);
 		assertSame(sln, edge.getSource());
@@ -163,10 +164,9 @@ public class LaneTest {
 	}
 	
 	@Test	
-	public void getNextEdgeNoEdge() throws UnstartedLaneException {
+	public void testGetNextEdgeNoEdge() {
 		LaneNode sln = startedL.getStartNode();
 		assertNull(startedL.getNextEdge(sln, true));
-		
 	}
 
 }

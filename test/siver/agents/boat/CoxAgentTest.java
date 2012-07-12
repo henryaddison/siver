@@ -54,7 +54,7 @@ public class CoxAgentTest {
 	}
 
 	@Test
-	public void testLaunch() throws UnstartedLaneException {
+	public void testLaunch() {
 		launchCox();
 		
 		verify(mockBoat);
@@ -62,7 +62,7 @@ public class CoxAgentTest {
 		verify(mockSpace);
 	}
 	
-	private void launchCox() throws UnstartedLaneException {
+	private void launchCox() {
 		Point2D.Double expLoc = new Point2D.Double(10,30);
 		LaneNode expNode = new LaneNode(expLoc);
 		LaneNode nextNode = new LaneNode(30,30);
@@ -86,7 +86,7 @@ public class CoxAgentTest {
 	}
 
 	@Test
-	public void testStep() throws UnstartedLaneException {
+	public void testStep() {
 		launchCox();
 		reset(mockBoat);
 		expect(mockBoat.getSpeed()).andReturn(5.0).once();

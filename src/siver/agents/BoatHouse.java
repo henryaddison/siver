@@ -34,13 +34,7 @@ public class BoatHouse {
 		context.add(boat);
 		CoxAgent cox = new CoxAgent();
 		context.add(cox);
-		
-		try {
-			cox.launch(boat, getLaunchLane());
-		} catch (UnstartedLaneException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		cox.launch(boat, getLaunchLane());
 	}
 	
 	public Lane getLaunchLane() {

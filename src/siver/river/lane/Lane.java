@@ -163,10 +163,7 @@ public class Lane extends OutlinedArea {
 	 * @return the first LaneNode in the lane's graph
 	 * @throws UnstartedLaneException when the called on a Lane that has not yet been started
 	 */
-	public LaneNode getStartNode() throws UnstartedLaneException {
-		if(!started) {
-			throw new UnstartedLaneException("Cannot get start node before lane has been started");
-		}
+	public LaneNode getStartNode() {
 		return startNode;
 	}
 	

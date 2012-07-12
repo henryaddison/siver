@@ -33,7 +33,7 @@ public class CoxAgent {
 	public CoxAgent() {
 	}
 	
-	public void launch(BoatAgent boat, Lane launchLane) throws UnstartedLaneException {
+	public void launch(BoatAgent boat, Lane launchLane) {
 		// initially the cox wants to head downstream in the lane launched in
 		this.upstream = false;
 		this.lane = launchLane;
@@ -73,13 +73,7 @@ public class CoxAgent {
 	}
 	
 	private boolean backAtBoatHouse(LaneNode node) {
-		try {
-			return upstream && node.equals(lane.getStartNode());
-		} catch (UnstartedLaneException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-			throw new RuntimeException("Unexpected unstarted lane found");
-		}
+		return upstream && node.equals(location.getLane().getStartNode());
 	}
 	
 	/*
