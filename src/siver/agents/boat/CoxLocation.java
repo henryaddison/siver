@@ -12,13 +12,11 @@ public class CoxLocation {
 	private double till_edge_end;
 	
 	public CoxLocation(LaneEdge<LaneNode> e, double tee) {
-		current_edge = e;
-		till_edge_end = tee;
+		updateEdge(e);
 	}
 	
 	public CoxLocation(LaneEdge<LaneNode> e) {
-		current_edge = e;
-		till_edge_end = e.getWeight();
+		updateEdge(e);
 	}
 	
 	public Lane getLane() {
@@ -31,6 +29,19 @@ public class CoxLocation {
 	
 	public double getTillEdgeEnd() {
 		return till_edge_end;
+	}
+	
+	public void updateEdge(LaneEdge<LaneNode> new_edge) {
+		current_edge = new_edge;
+		till_edge_end = new_edge.getWeight();
+	}
+	
+	public void moveToEdgeEnd() {
+		till_edge_end = 0;
+	}
+	
+	public void moveAlongEdge(double distance) {
+		till_edge_end -= distance;
 	}
 }
 

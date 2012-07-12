@@ -76,8 +76,6 @@ public class CoxAgentTest {
 		expect(mockSpace.getDisplacement(new NdPoint(10,30), new NdPoint(30,30))).andReturn(new double[]{20,0}).once();
 		mockBoat.setAngle(0);
 		expectLastCall().once();
-		mockBoat.move(0);
-		expectLastCall().once();
 		
 		replay(mockBoat);
 		replay(mockLane);

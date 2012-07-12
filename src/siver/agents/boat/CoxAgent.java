@@ -18,17 +18,12 @@ public class CoxAgent {
 	// Indicates whether the cox is trying to head upstream (towards boathouse) or not.
 	private boolean upstream;
 	
-	//Progress made by the boat along the current edge
-	private double edge_remaining;
 	//distance that can be travelled this tick
 	private double tick_distance_remaining;
 	
-	// The part of a the lane the boat is currently travelling on
-	private LaneEdge<LaneNode> current_edge;
-	
-	private Lane lane;
-	
 	private Action action;
+	
+	private CoxLocation location;
 	
 	public CoxAgent() {
 	}
@@ -36,17 +31,18 @@ public class CoxAgent {
 	public void launch(BoatAgent boat, Lane launchLane) {
 		// initially the cox wants to head downstream in the lane launched in
 		this.upstream = false;
-		this.lane = launchLane;
 		
 		//save reference to boat launched in
 		this.boat = boat;
 		
 		//place the boat at the location of the first node of the lane
-		LaneNode launchNode = lane.getStartNode();
+		LaneNode launchNode = launchLane.getStartNode();
 		boat.launch(this, launchNode.getLocation());
 		
-		//and have the cox react to this node (i.e. point the boat in the correct direction)
-		reactTo(launchNode);
+		//and point the boat in the correct direction
+		LaneEdge<LaneNode> launchEdge = launchLane.getNextEdge(launchNode, upstream);
+		location = new CoxLocation(launchEdge);
+		aimAlong(launchEdge);
 	}
 	
 	//BEHAVIOUR
@@ -55,9 +51,11 @@ public class CoxAgent {
 	public void step() {
 		tick_distance_remaining = boat.getSpeed();
 		if(true) {
+			letBoatRun();
 			action = new LetBoatRun();
 		}
 		
+		action.execute();
 	}
 	
 	/*
@@ -65,7 +63,7 @@ public class CoxAgent {
 	 */
 	
 	private boolean canReachNextNode() {
-		return tick_distance_remaining >= edge_remaining; 
+		return tick_distance_remaining >= location.getTillEdgeEnd(); 
 	}
 	
 	private boolean atRiversEnd(LaneEdge<LaneNode> next_edge) {
@@ -81,7 +79,7 @@ public class CoxAgent {
 	 */
 	
 	private void reactTo(LaneNode node) {
-		LaneEdge<LaneNode> next_edge = lane.getNextEdge(node, upstream);
+		LaneEdge<LaneNode> next_edge = node.getLane().getNextEdge(node, upstream);
 		if(atRiversEnd(next_edge)) {
 			spin();
 			return;
@@ -110,35 +108,33 @@ public class CoxAgent {
 		}
 		
 		for(LaneNode node : spin_to.getNet().getNodes()) {
-			if(min_distance > node.distance(current_edge.getNextNode(upstream))) {
+			if(min_distance > node.distance(location.getEdge().getNextNode(upstream))) {
 				spin_target = node;
-				min_distance = node.distance(current_edge.getNextNode(upstream));
+				min_distance = node.distance(location.getEdge().getNextNode(upstream));
 			}
 		}
 		upstream = !upstream;
 		steerToward(spin_target.getLocation());
 		boat.move(min_distance);
-		lane = spin_to;
+		
 		reactTo(spin_target);
 		boat.setSpeed(2);
 	}
 	
 	private void letBoatRun() {
 		if(canReachNextNode()) {
-			boat.move(edge_remaining);
-			edge_remaining = 0;
-			reactTo(current_edge.getNextNode(upstream));
+			boat.move(location.getTillEdgeEnd());
+			location.moveToEdgeEnd();
+			reactTo(location.getEdge().getNextNode(upstream));
 		} else {
 			boat.move(tick_distance_remaining);
-			edge_remaining -= tick_distance_remaining;
+			location.moveAlongEdge(tick_distance_remaining);
 		}
 	}
 	
 	private void aimAlong(LaneEdge<LaneNode> edge) {
-		this.current_edge = edge;
-		this.edge_remaining = current_edge.getWeight();
-		LaneNode next_node = edge.getNextNode(upstream);
-		steerToward(next_node.getLocation());
+		location.updateEdge(edge);
+		steerToward(edge.getNextNode(upstream).getLocation());
 	}
 	
 	private void steerToward(Point2D.Double pt) {
