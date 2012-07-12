@@ -87,6 +87,8 @@ public class CoxAgentTest {
 		launchCox();
 		reset(mockBoat);
 		expect(mockBoat.getSpeed()).andReturn(5.0).once();
+		mockBoat.move(5);
+		expectLastCall().once();
 		replay(mockBoat);
 		cox.step();
 		assertTrue(cox.getAction() instanceof LetBoatRun);
