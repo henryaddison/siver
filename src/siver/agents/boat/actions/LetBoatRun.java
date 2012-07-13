@@ -10,8 +10,13 @@ public class LetBoatRun extends Action {
 	
 	@Override
 	public void execute() {
-		// TODO Auto-generated method stub
-		
+		if(cox.canReachNextNode()) {
+			cox.getBoat().move(cox.getLocation().getTillEdgeEnd());
+			cox.getLocation().moveToEdgeEnd();
+			cox.reactTo(cox.getLocation().getEdge().getNextNode(cox.getLocation().headingUpstream()));
+		} else {
+			
+		}
 	}
 	
 }

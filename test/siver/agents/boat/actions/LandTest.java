@@ -9,16 +9,7 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
-import repast.simphony.context.Context;
-import repast.simphony.space.continuous.ContinuousSpace;
-import siver.agents.boat.*;
-import siver.river.River;
-
-public class LandTest {
-	
-	private BoatAgent mockBoat;
-	private CoxAgent mockCox;
-	private Land action;
+public class LandTest extends ActionTest {
 	
 	@BeforeClass
 	public static void setUpBeforeClass() throws Exception {
@@ -31,8 +22,7 @@ public class LandTest {
 
 	@Before
 	public void setUp() throws Exception {
-		mockBoat = createMock(BoatAgent.class);
-		mockCox = createMock(CoxAgent.class);
+		setUpMocks();
 		action = new Land(mockCox);
 	}
 
