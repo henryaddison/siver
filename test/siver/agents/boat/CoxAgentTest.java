@@ -62,8 +62,8 @@ public class CoxAgentTest {
 	
 	private void launchCox() {
 		Point2D.Double expLoc = new Point2D.Double(10,30);
-		LaneNode expNode = new LaneNode(expLoc, null);
-		LaneNode nextNode = new LaneNode(30,30, null);
+		LaneNode expNode = new LaneNode(expLoc, mockLane);
+		LaneNode nextNode = new LaneNode(30,30, mockLane);
 		expect(mockLane.getStartNode()).andReturn(expNode).once();
 		mockBoat.launch(cox, expLoc);
 		expectLastCall().once();
@@ -99,6 +99,17 @@ public class CoxAgentTest {
 	public void testGetBoat() {
 		launchCox();
 		assertEquals(mockBoat, cox.getBoat());
+	}
+	
+	@Test
+	public void testGetLocation() {
+		launchCox();
+		CoxLocation cl = cox.getLocation();
+		assertEquals(mockLane, cl.getLane());
+		assertEquals(new Point2D.Double(10,30), cl.getEdge().getSource().getLocation());
+		assertEquals(new Point2D.Double(30,30), cl.getEdge().getTarget().getLocation());
+		assertEquals(20, cl.getTillEdgeEnd(), 1E-5);
+		assertTrue(!cl.headingUpstream());
 	}
 
 }
