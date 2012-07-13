@@ -56,7 +56,8 @@ public class CoxAgent {
 			return;
 		}
 		if(true) {
-			steer(next_edge);
+			action = new Steer(this);
+			action.execute();
 			return;
 		}
 	}
@@ -64,12 +65,6 @@ public class CoxAgent {
 	/*
 	 * ACTIONS
 	 */
-	private void steer(LaneEdge<LaneNode> next_edge) {
-		aimAlong(next_edge);
-		action = new LetBoatRun(this);
-		action.execute();
-	}
-	
 	private void spin() {
 		boat.setSpeed(0);
 		tick_distance_remaining = 0;
