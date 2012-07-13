@@ -48,18 +48,15 @@ public class CoxAgent {
 	public void reactToLocation() {
 		if(atRiversEnd()) {
 			spin();
-			return;
+			action = new Spin(this);
 		}
-		if(backAtBoatHouse()) {
+		else if(backAtBoatHouse()) {
 			action = new Land(this);
-			action.execute();
-			return;
 		}
-		if(true) {
+		else if(true) {
 			action = new Steer(this);
-			action.execute();
-			return;
 		}
+		action.execute();
 	}
 	
 	/*
