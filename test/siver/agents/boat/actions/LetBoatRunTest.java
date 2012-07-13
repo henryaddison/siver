@@ -77,7 +77,6 @@ public class LetBoatRunTest extends ActionTest {
 	public void testExecuteCannotReachNextNode() {	
 		expect(mockLocation.getTillEdgeEnd()).andReturn(9.0).once();
 		expect(mockCox.getTickDistanceRemaining()).andReturn(5.0).once();
-
 		
 		expect(mockCox.getBoat()).andReturn(mockBoat).once();
 		

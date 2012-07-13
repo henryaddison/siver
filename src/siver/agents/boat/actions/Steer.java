@@ -18,6 +18,8 @@ public class Steer extends Action {
 		
 		cox.getLocation().updateEdge(next_edge);
 		cox.getBoat().steerToward(cox.getLocation().getDestinationNode().getLocation());
+		
+		new LetBoatRun(cox).execute();
 	}
 
 }
