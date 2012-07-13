@@ -9,13 +9,12 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
-import siver.agents.boat.CoxLocation;
 import siver.river.lane.*;
 
 
 public class LetBoatRunTest extends ActionTest {
 
-	private CoxLocation mockLocation;
+	
 	
 	@BeforeClass
 	public static void setUpBeforeClass() throws Exception {
@@ -28,7 +27,6 @@ public class LetBoatRunTest extends ActionTest {
 	@Before
 	public void setUp() throws Exception {
 		setUpMocks();
-		mockLocation = createMock(CoxLocation.class);
 		action = new LetBoatRun(mockCox);
 	}
 
@@ -39,8 +37,6 @@ public class LetBoatRunTest extends ActionTest {
 	@Test
 	public void testExecuteCanReachNextNode() {
 		double exp_distance_travelled = 3.5;
-		
-		expect(mockCox.getLocation()).andReturn(mockLocation).andStubReturn(mockLocation);
 		
 		expect(mockLocation.getTillEdgeEnd()).andReturn(exp_distance_travelled).once();
 		
@@ -79,7 +75,6 @@ public class LetBoatRunTest extends ActionTest {
 	
 	@Test
 	public void testExecuteCannotReachNextNode() {	
-		expect(mockCox.getLocation()).andReturn(mockLocation).andStubReturn(mockLocation);
 		expect(mockLocation.getTillEdgeEnd()).andReturn(9.0).once();
 		expect(mockCox.getTickDistanceRemaining()).andReturn(5.0).once();
 
