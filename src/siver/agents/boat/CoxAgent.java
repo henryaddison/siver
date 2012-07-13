@@ -104,11 +104,7 @@ public class CoxAgent {
 	
 	/*
 	 * PREDICATES
-	 */
-	
-	public boolean canReachNextNode() {
-		return tick_distance_remaining >= location.getTillEdgeEnd(); 
-	}
+	 */	
 	
 	private boolean atRiversEnd(LaneEdge<LaneNode> next_edge) {
 		return !upstream() && next_edge == null;
