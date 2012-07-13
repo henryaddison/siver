@@ -39,7 +39,6 @@ public class CoxAgent {
 	public void step() {
 		tick_distance_remaining = boat.getSpeed();
 		if(true) {
-			letBoatRun();
 			action = new LetBoatRun(this);
 		}
 		action.execute();
@@ -68,13 +67,14 @@ public class CoxAgent {
 	 */
 	private void steer(LaneEdge<LaneNode> next_edge) {
 		aimAlong(next_edge);
-		letBoatRun();
+		action = new LetBoatRun(this);
+		action.execute();
 	}
 	
 	private void spin() {
 		boat.setSpeed(0);
 		tick_distance_remaining = 0;
-		double min_distance = Integer.MAX_VALUE;
+		double min_distance = Double.MAX_VALUE;
 		LaneNode spin_target = null;
 		Lane spin_to = null;
 		if(upstream()) {
@@ -95,17 +95,6 @@ public class CoxAgent {
 		
 		reactTo(spin_target);
 		boat.setSpeed(2);
-	}
-	
-	private void letBoatRun() {
-		if(canReachNextNode()) {
-			boat.move(location.getTillEdgeEnd());
-			location.moveToEdgeEnd();
-			reactTo(location.getEdge().getNextNode(upstream()));
-		} else {
-			boat.move(tick_distance_remaining);
-			location.moveAlongEdge(tick_distance_remaining);
-		}
 	}
 	
 	private void aimAlong(LaneEdge<LaneNode> edge) {
@@ -146,6 +135,14 @@ public class CoxAgent {
 	
 	public CoxLocation getLocation() {
 		return location;
+	}
+	
+	public double getTickDistanceRemaining() {
+		return tick_distance_remaining;
+	}
+	
+	public void setTickDistanceRemaining(double value) {
+		tick_distance_remaining = value;
 	}
 	
 }

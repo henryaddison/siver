@@ -38,13 +38,23 @@ public class LetBoatRunTest extends ActionTest {
 	
 	@Test
 	public void testExecuteCanReachNextNode() {
-		expect(mockCox.canReachNextNode()).andReturn(true).once();
-		expect(mockCox.getBoat()).andReturn(mockBoat).once();
+		double exp_distance_travelled = 3.5;
+		
 		expect(mockCox.getLocation()).andReturn(mockLocation).andStubReturn(mockLocation);
-		expect(mockLocation.getTillEdgeEnd()).andReturn(20.0).once();
-		mockBoat.move(20.0);
+		
+		expect(mockLocation.getTillEdgeEnd()).andReturn(exp_distance_travelled).once();
+		
+		expect(mockCox.getTickDistanceRemaining()).andReturn(5.0).once();
+		
+		expect(mockCox.getBoat()).andReturn(mockBoat).once();
+		
+		mockBoat.move(exp_distance_travelled);
 		expectLastCall().once();
+		
 		mockLocation.moveToEdgeEnd();
+		expectLastCall().once();
+		
+		mockCox.setTickDistanceRemaining(1.5);
 		expectLastCall().once();
 		
 		LaneNode edge_start = new LaneNode(10,30,null);
@@ -69,16 +79,32 @@ public class LetBoatRunTest extends ActionTest {
 	}
 	
 	@Test
-	public void testExecuteCannotReachNextNode() {
-		expect(mockCox.canReachNextNode()).andReturn(false).once();
+	public void testExecuteCannotReachNextNode() {	
+		expect(mockCox.getLocation()).andReturn(mockLocation).andStubReturn(mockLocation);
+		expect(mockLocation.getTillEdgeEnd()).andReturn(9.0).once();
+		expect(mockCox.getTickDistanceRemaining()).andReturn(5.0).once();
+
+		
+		expect(mockCox.getBoat()).andReturn(mockBoat).once();
+		
+		mockBoat.move(5.0);
+		expectLastCall().once();
+		
+		mockLocation.moveAlongEdge(5.0);
+		expectLastCall().once();
+		
+		mockCox.setTickDistanceRemaining(0);
+		expectLastCall().once();
 		
 		replay(mockBoat);
 		replay(mockCox);
+		replay(mockLocation);
 		
 		action.execute();
 		
 		verify(mockBoat);
 		verify(mockCox);
+		verify(mockLocation);
 	}
 
 }

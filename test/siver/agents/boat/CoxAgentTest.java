@@ -111,5 +111,13 @@ public class CoxAgentTest {
 		assertEquals(20, cl.getTillEdgeEnd(), 1E-5);
 		assertTrue(!cl.headingUpstream());
 	}
-
+	
+	@Test
+	public void testGetAndSetTickDistanceRemaining() {
+		launchCox();
+		assertEquals(0,cox.getTickDistanceRemaining(), 1E-5);
+		cox.setTickDistanceRemaining(15.0);
+		assertEquals(15,cox.getTickDistanceRemaining(), 1E-5);
+	}
+	
 }
