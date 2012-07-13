@@ -14,6 +14,9 @@ public class CoxLocation {
 	// Whether the cox is trying to go upstream or downstream.
 	private boolean upstream;
 	
+	// Reference to the node the boat is on, if it is on one otherewise null
+	private LaneNode onNode;
+	
 	public CoxLocation(LaneEdge<LaneNode> e, double tee, boolean up) {
 		upstream = up;
 		updateEdge(e);
@@ -43,10 +46,12 @@ public class CoxLocation {
 	}
 	
 	public void moveToEdgeEnd() {
+		onNode = getDestinationNode();
 		till_edge_end = 0;
 	}
 	
 	public void moveAlongEdge(double distance) {
+		onNode = null;
 		till_edge_end -= distance;
 	}
 	
@@ -60,6 +65,10 @@ public class CoxLocation {
 	
 	public LaneNode getDestinationNode() {
 		return current_edge.getNextNode(upstream);
+	}
+	
+	public LaneNode getNode() {
+		return onNode;
 	}
 }
 
