@@ -57,9 +57,9 @@ public class LetBoatRunTest extends ActionTest {
 		LaneNode edge_end = new LaneNode(30,30,null);
 		LaneEdge<LaneNode> edge = new LaneEdge<LaneNode>(edge_start, edge_end); 
 		
-		expect(mockLocation.getDestinationNode()).andReturn(edge_end).once();
+
 		
-		mockCox.reactTo(edge_end);
+		mockCox.reactToLocation();
 		expectLastCall().once();
 		
 		replay(mockBoat);

@@ -45,13 +45,12 @@ public class CoxAgent {
 	}
 	
 	//Spatial behaviour method - how to react as cox's position changes.
-	public void reactTo(LaneNode node) {
-		LaneEdge<LaneNode> next_edge = node.getLane().getNextEdge(node, upstream());
-		if(atRiversEnd(next_edge)) {
+	public void reactToLocation() {
+		if(atRiversEnd()) {
 			spin();
 			return;
 		}
-		if(backAtBoatHouse(node)) {
+		if(backAtBoatHouse()) {
 			action = new Land(this);
 			action.execute();
 			return;
@@ -92,8 +91,8 @@ public class CoxAgent {
 		location.toggleUpstream();
 		boat.steerToward(spin_target.getLocation());
 		boat.move(min_distance);
+		aimAlong(spin_to.getNextEdge(spin_target, upstream()));
 		
-		reactTo(spin_target);
 		boat.setSpeed(2);
 	}
 	
@@ -106,12 +105,14 @@ public class CoxAgent {
 	 * PREDICATES
 	 */	
 	
-	private boolean atRiversEnd(LaneEdge<LaneNode> next_edge) {
+	private boolean atRiversEnd() {
+		LaneNode node = location.getNode();
+		LaneEdge<LaneNode> next_edge = node.getLane().getNextEdge(node, upstream());
 		return !upstream() && next_edge == null;
 	}
 	
-	private boolean backAtBoatHouse(LaneNode node) {
-		return upstream() && node.equals(location.getLane().getStartNode());
+	private boolean backAtBoatHouse() {
+		return upstream() && location.getNode().equals(location.getLane().getStartNode());
 	}
 	
 	private boolean upstream() {

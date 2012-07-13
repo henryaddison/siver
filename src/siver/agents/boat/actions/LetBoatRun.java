@@ -16,7 +16,7 @@ public class LetBoatRun extends Action {
 			cox.getBoat().move(distance_till_next_node);
 			cox.getLocation().moveToEdgeEnd();
 			cox.setTickDistanceRemaining(distance_can_travel - distance_till_next_node);
-			cox.reactTo(cox.getLocation().getDestinationNode());
+			cox.reactToLocation();
 		} else {
 			cox.getBoat().move(distance_can_travel);
 			cox.getLocation().moveAlongEdge(distance_can_travel);
