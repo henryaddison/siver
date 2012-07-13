@@ -57,5 +57,9 @@ public class CoxLocation {
 	public void toggleUpstream() {
 		upstream = !upstream;
 	}
+	
+	public LaneNode getDestinationNode() {
+		return current_edge.getNextNode(upstream);
+	}
 }
 

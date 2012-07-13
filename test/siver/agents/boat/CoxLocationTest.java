@@ -17,6 +17,10 @@ import siver.river.lane.Lane.UnstartedLaneException;
 
 public class CoxLocationTest {
 	private CoxLocation cl;
+	private LaneEdge<LaneNode> edge;
+	private LaneNode startNode, nextNode;
+	private Lane lane;
+	
 	@BeforeClass
 	public static void setUpBeforeClass() throws Exception {
 	}
@@ -27,7 +31,13 @@ public class CoxLocationTest {
 
 	@Before
 	public void setUp() throws Exception {
-		LaneEdge<LaneNode> edge = new LaneEdge<LaneNode>(new LaneNode(0,0,null), new LaneNode(10,0, null));
+		lane = new Lane(new LaneContext(), "Test Lane");
+		lane.start(new Point2D.Double(0,0));
+		lane.extend(0);
+		lane.extend(Math.PI/4.0);
+		startNode = lane.getStartNode();		
+		edge = lane.getNextEdge(lane.getStartNode(), false);
+		
 		cl = new CoxLocation(edge, false);
 	}
 
@@ -37,38 +47,28 @@ public class CoxLocationTest {
 
 	@Test
 	public void testCoxLocation() {
-		Lane exp_lane = new Lane(new LaneContext(), "Test Lane");
-		LaneEdge<LaneNode> exp_edge = new LaneEdge<LaneNode>(new LaneNode(0,30, exp_lane), new LaneNode(20,30, exp_lane));
-		CoxLocation cl = new CoxLocation(exp_edge, 10, false);
+		CoxLocation cl = new CoxLocation(edge, 10, false);
 		assertTrue(cl instanceof CoxLocation);
-		assertEquals(exp_lane, cl.getLane());
-		assertEquals(exp_edge, cl.getEdge());
+		assertEquals(lane, cl.getLane());
+		assertEquals(edge, cl.getEdge());
 		assertEquals(10, cl.getTillEdgeEnd(), 1E-5);
 		assertTrue(!cl.headingUpstream());
 	}
 	
 	@Test
 	public void testCoxLocationWithoutDistance() {
-		Lane exp_lane = new Lane(new LaneContext(), "Test Lane");
-		LaneEdge<LaneNode> exp_edge = new LaneEdge<LaneNode>(new LaneNode(0,30, exp_lane), new LaneNode(20,30, exp_lane));
-		CoxLocation cl = new CoxLocation(exp_edge, true);
+		CoxLocation cl = new CoxLocation(edge, true);
 		assertTrue(cl instanceof CoxLocation);
-		assertEquals(exp_lane, cl.getLane());
-		assertEquals(exp_edge, cl.getEdge());
+		assertEquals(lane, cl.getLane());
+		assertEquals(edge, cl.getEdge());
 		assertEquals(20, cl.getTillEdgeEnd(), 1E-5);
 		assertTrue(cl.headingUpstream());
 	}
 	
 	@Test
 	public void testUpdateEdge() throws UnstartedLaneException, CompletedLaneException {
-		Lane exp_lane = new Lane(new LaneContext(), "Test Lane");
-		exp_lane.start(new Point2D.Double(0,0));
-		exp_lane.extend(0);
-		exp_lane.extend(Math.PI/4.0);
-		
-		LaneEdge<LaneNode> startEdge = exp_lane.getNextEdge(exp_lane.getStartNode(), false);
-		LaneEdge<LaneNode> expEdge = exp_lane.getNextEdge(startEdge.getTarget(), false);
-		CoxLocation cl = new CoxLocation(startEdge, false);
+		LaneEdge<LaneNode> expEdge = lane.getNextEdge(edge.getTarget(), false);
+		CoxLocation cl = new CoxLocation(edge, false);
 		cl.updateEdge(expEdge);
 		assertEquals(expEdge, cl.getEdge());
 		assertEquals(20.0, cl.getTillEdgeEnd(), 1E-5);
@@ -77,7 +77,6 @@ public class CoxLocationTest {
 	
 	@Test
 	public void testMoveToEdgeEnd() {
-		LaneEdge<LaneNode> edge = new LaneEdge<LaneNode>(new LaneNode(0,0,null), new LaneNode(10,10, null));
 		CoxLocation cl = new CoxLocation(edge, false);
 		assertTrue(cl.getTillEdgeEnd() > 5);
 		cl.moveToEdgeEnd();
@@ -86,10 +85,9 @@ public class CoxLocationTest {
 	
 	@Test
 	public void testMoveAlongEdge() {
-		
-		assertEquals(10, cl.getTillEdgeEnd(), 1E-5);
+		assertEquals(20, cl.getTillEdgeEnd(), 1E-5);
 		cl.moveAlongEdge(3.5);
-		assertEquals(6.5, cl.getTillEdgeEnd(), 1E-5);
+		assertEquals(16.5, cl.getTillEdgeEnd(), 1E-5);
 	}
 	
 	@Test
@@ -98,4 +96,11 @@ public class CoxLocationTest {
 		cl.toggleUpstream();
 		assertTrue(cl.headingUpstream());
 	}
+	
+	@Test
+	public void testGetDestinationNode() {
+		assertEquals(edge.getTarget(), cl.getDestinationNode());
+	}
 }
+
+

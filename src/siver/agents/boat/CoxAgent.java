@@ -84,9 +84,9 @@ public class CoxAgent {
 		}
 		
 		for(LaneNode node : spin_to.getNet().getNodes()) {
-			if(min_distance > node.distance(location.getEdge().getNextNode(upstream()))) {
+			if(min_distance > node.distance(location.getDestinationNode())) {
 				spin_target = node;
-				min_distance = node.distance(location.getEdge().getNextNode(upstream()));
+				min_distance = node.distance(location.getDestinationNode());
 			}
 		}
 		location.toggleUpstream();
