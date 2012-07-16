@@ -28,6 +28,7 @@ public class LetBoatRunTest extends ActionTest {
 	public void setUp() throws Exception {
 		setUpMocks();
 		action = new LetBoatRun(mockCox);
+		reset(mockCox);
 	}
 
 	@After
@@ -41,8 +42,6 @@ public class LetBoatRunTest extends ActionTest {
 		expect(mockLocation.getTillEdgeEnd()).andReturn(exp_distance_travelled).once();
 		
 		expect(mockCox.getTickDistanceRemaining()).andReturn(5.0).once();
-		
-		expect(mockCox.getBoat()).andReturn(mockBoat).once();
 		
 		mockBoat.move(exp_distance_travelled);
 		expectLastCall().once();
@@ -77,8 +76,6 @@ public class LetBoatRunTest extends ActionTest {
 	public void testExecuteCannotReachNextNode() {	
 		expect(mockLocation.getTillEdgeEnd()).andReturn(9.0).once();
 		expect(mockCox.getTickDistanceRemaining()).andReturn(5.0).once();
-		
-		expect(mockCox.getBoat()).andReturn(mockBoat).once();
 		
 		mockBoat.move(5.0);
 		expectLastCall().once();

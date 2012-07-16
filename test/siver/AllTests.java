@@ -17,7 +17,8 @@ import siver.agents.boat.actions.*;
 	LaneEdgeCreatorTest.class, BoatHouseTest.class,
 	BoatAgentTest.class, CoxAgentTest.class,
 	CoxLocationTest.class, LandTest.class,
-	LetBoatRunTest.class, SteerTest.class})
+	LetBoatRunTest.class, SteerTest.class,
+	SpinTest.class})
 public class AllTests {
 
 }

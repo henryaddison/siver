@@ -24,6 +24,7 @@ public class LandTest extends ActionTest {
 	public void setUp() throws Exception {
 		setUpMocks();
 		action = new Land(mockCox);
+		reset(mockCox);
 	}
 
 	@After
@@ -32,7 +33,6 @@ public class LandTest extends ActionTest {
 
 	@Test
 	public void testExecute() {
-		expect(mockCox.getBoat()).andReturn(mockBoat).once();
 		mockBoat.land();
 		expectLastCall().once();
 		replay(mockBoat);

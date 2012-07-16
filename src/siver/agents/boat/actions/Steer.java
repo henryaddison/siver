@@ -12,12 +12,12 @@ public class Steer extends Action {
 	}
 	@Override
 	public void execute() {
-		LaneNode steer_from = cox.getLocation().getNode();
+		LaneNode steer_from = location.getNode();
 		Lane lane = steer_from.getLane();
-		LaneEdge<LaneNode> next_edge =lane.getNextEdge(steer_from, cox.getLocation().headingUpstream());
+		LaneEdge<LaneNode> next_edge =lane.getNextEdge(steer_from, location.headingUpstream());
 		
-		cox.getLocation().updateEdge(next_edge);
-		cox.getBoat().steerToward(cox.getLocation().getDestinationNode().getLocation());
+		location.updateEdge(next_edge);
+		boat.steerToward(location.getDestinationNode().getLocation());
 		
 		new LetBoatRun(cox).execute();
 	}

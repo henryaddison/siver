@@ -1,8 +1,6 @@
 package siver.agents.boat.actions;
 
-import siver.agents.boat.BoatAgent;
 import siver.agents.boat.CoxAgent;
-import siver.agents.boat.CoxLocation;
 import siver.river.lane.Lane;
 import siver.river.lane.LaneEdge;
 import siver.river.lane.LaneNode;
@@ -14,10 +12,7 @@ public class Spin extends Action {
 	}
 	
 	@Override
-	public void execute() {
-		CoxLocation location = cox.getLocation();
-		BoatAgent boat = cox.getBoat();
-		
+	public void execute() {		
 		boat.setSpeed(0);
 		cox.setTickDistanceRemaining(0);
 		double min_distance = Double.MAX_VALUE;

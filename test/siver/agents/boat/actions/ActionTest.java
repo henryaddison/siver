@@ -1,7 +1,6 @@
 package siver.agents.boat.actions;
 
-import static org.easymock.EasyMock.createMock;
-import static org.easymock.EasyMock.expect;
+import static org.easymock.EasyMock.*;
 import siver.agents.boat.BoatAgent;
 import siver.agents.boat.CoxAgent;
 import siver.agents.boat.CoxLocation;
@@ -19,6 +18,8 @@ public abstract class ActionTest {
 		
 		expect(mockCox.getLocation()).andStubReturn(mockLocation);
 		expect(mockCox.getBoat()).andStubReturn(mockBoat);
+		
+		replay(mockCox);
 	}
 	
 }

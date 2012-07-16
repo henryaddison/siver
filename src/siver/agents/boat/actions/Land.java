@@ -10,7 +10,7 @@ public class Land extends Action {
 	
 	@Override
 	public void execute() {
-		cox.getBoat().land();
+		boat.land();
 	}
 
 }

@@ -1,5 +1,7 @@
 package siver.agents.boat.actions;
 
+import static org.easymock.EasyMock.expect;
+import static org.easymock.EasyMock.reset;
 import static org.junit.Assert.*;
 
 import org.junit.After;
@@ -8,7 +10,7 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
-public class SpinTest {
+public class SpinTest extends ActionTest {
 
 	@BeforeClass
 	public static void setUpBeforeClass() throws Exception {
@@ -20,6 +22,9 @@ public class SpinTest {
 
 	@Before
 	public void setUp() throws Exception {
+		setUpMocks();
+		action = new Spin(mockCox);
+		reset(mockCox);
 	}
 
 	@After
@@ -30,10 +35,4 @@ public class SpinTest {
 	public void testExecute() {
 		fail("Not yet implemented");
 	}
-
-	@Test
-	public void testSpin() {
-		fail("Not yet implemented");
-	}
-
 }
