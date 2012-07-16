@@ -30,61 +30,76 @@ public class RiverFactory {
 		Lane middle = new Lane(lane_context, "Middle Lane");
 		Lane down = new Lane(lane_context, "Downstream Lane");
 		
-		up.start(new Point2D.Double(10, 50));
+		up.start(new Point2D.Double(10, 30));
 		context.add(up);
-		space.moveTo(up, 10, 50);
+		space.moveTo(up, 10, 30);
 		
-		middle.start(new Point2D.Double(10, 30));
+		middle.start(new Point2D.Double(10, 20));
 		context.add(middle);
-		space.moveTo(middle, 10, 30);
+		space.moveTo(middle, 10, 20);
 		
 		down.start(new Point2D.Double(10, 10));
 		context.add(down);
 		space.moveTo(up, 10, 10);
 		
 		try {
-			for(int i = 1; i <= 40; i++) {
+			for(int i = 1; i <= 70; i++) {
 				up.extend(0);
 				down.extend(0);
 				middle.extend(0);
 			}
 			
-			for(double theta = 0; theta < PI/2.0; theta += PI/20.0) {
+			for(double theta = 0; theta <= PI/2.0; theta += 1/4.4) {
 				up.extend(theta);
 			}
-			for(double theta = 0; theta < PI/2.0; theta += (PI/2.0)/(10+PI/2.0)) {
+			for(double theta = 0; theta <= PI/2.0; theta += 1/5.0) {
 				middle.extend(theta);
 			}
-			for(double theta = 0; theta < PI/2.0; theta += (PI/2.0)/(10+PI)) {
+			for(double theta = 0; theta <= PI/2.0; theta += 1/5.5) {
 				down.extend(theta);
 			}
 			
-			up.extend(PI/2.0);
 			up.extend(PI/2.0);
 			middle.extend(PI/2.0);
 			middle.extend(PI/2.0);
 			down.extend(PI/2.0);
 			
-			for(int i = 1; i<= 5; i++) {
+			for(int i = 1; i<= 12; i++) {
 				up.extend(PI/2.0);
 				middle.extend(PI/2.0);
 				down.extend(PI/2.0);
 			}
 			
-			for(double theta = PI/2.0; theta > 0 ; theta -= PI/21.0) {
+			for(double theta = PI/2.0; theta >= 0 ; theta -= 1/4.4) {
 				down.extend(theta);
 			}
-			for(double theta = PI/2.0; theta > 0; theta -= (PI/2.0)/(10+PI/2.0)) {
+			for(double theta = PI/2.0; theta >= 0; theta -= 1/5.0) {
 				middle.extend(theta);
 			}
-			for(double theta = PI/2.0; theta > 0; theta -= (PI/2.0)/(10+PI)) {
+			for(double theta = PI/2.0; theta >= 0; theta -= 1/5.7) {
 				up.extend(theta);
 			}
 			
-			for(int i = 1; i <= 20; i++) {
+			for(int i = 1; i <= 7; i++) {
 				up.extend(0);
-				down.extend(0);
 				middle.extend(0);
+				down.extend(0);
+			}
+			
+			for(double theta = 0; theta <= PI/3.0; theta += 1/4.5) {
+				up.extend(theta);
+			}
+			for(double theta = 0; theta <= PI/3.0; theta += 1/5.0) {
+				middle.extend(theta);
+			}
+			for(double theta = 0; theta <= PI/3.0; theta += 1/5.5) {
+				down.extend(theta);
+			}
+			
+			for(int i = 1; i <= 25; i++) {
+				up.extend(PI/3.0);
+				middle.extend(PI/3.0);
+				down.extend(PI/3.0);
 			}
 			
 		} catch (UnstartedLaneException e) {

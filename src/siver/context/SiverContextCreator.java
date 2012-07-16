@@ -28,8 +28,8 @@ public class SiverContextCreator implements ContextBuilder<Object> {
 	public Context build(Context<Object> context) {
 		context.setId("siver");
 		
-		int xdim = 1600;   // The x dimension of the physical space
-		int ydim = 600;   // The y dimension of the physical space
+		int xdim = 2200;   // The x dimension of the physical space
+		int ydim = 1000;   // The y dimension of the physical space
 
 		// Create a new 2D continuous space to model the physical space on which the sheep
 		// and wolves will move.  The inputs to the Space Factory include the space name, 
@@ -44,7 +44,7 @@ public class SiverContextCreator implements ContextBuilder<Object> {
 		
 		BoatHouse boatHouse = new BoatHouse(river, context, space);
 		context.add(boatHouse);
-		space.moveTo(boatHouse, 10, 30);
+		space.moveTo(boatHouse, 10, 20);
 		
 		ISchedule schedule = RunEnvironment.getInstance().getCurrentSchedule();
 		//Specify that the action should start at tick 1 and execute every other tick

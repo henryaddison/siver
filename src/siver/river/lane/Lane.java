@@ -52,8 +52,8 @@ public class Lane extends OutlinedArea {
 	//a lane to be extended until it has been started
 	private boolean started = false;
 	
-	 //The width the river should be roughly. 
-	final private static double width = 10;
+	 //The half-width of each lane roughly 
+	final private static double width = 5;
 	
 	// The distance between each node in the lane's network. 
 	// Only need to determine the angle between each point.

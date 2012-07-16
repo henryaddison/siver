@@ -38,9 +38,9 @@ public class LaneTest {
 		
 		exp_bottom = new ArrayList<Point2D.Double>();
 		
-		exp_top.add(new Point2D.Double(0,20));
+		exp_top.add(new Point2D.Double(0,15));
 		
-		exp_bottom.add(new Point2D.Double(0,0));
+		exp_bottom.add(new Point2D.Double(0,5));
 	}
 
 	/**
@@ -93,15 +93,15 @@ public class LaneTest {
 	@Test
 	public void testExtend() throws UnstartedLaneException, CompletedLaneException {
 		startedL.extend(0);
-		exp_top.add(new Point2D.Double(20, 20));
-		exp_bottom.add(new Point2D.Double(20, 0));
+		exp_top.add(new Point2D.Double(20, 15));
+		exp_bottom.add(new Point2D.Double(20, 5));
 		
 		assertEquals(exp_top, startedL.getTop());
 		assertEquals(exp_bottom, startedL.getBottom());
 		
 		startedL.extend(Math.PI/2.0);
-		exp_top.add(new Point2D.Double(10, 30));
-		exp_bottom.add(new Point2D.Double(30, 30));
+		exp_top.add(new Point2D.Double(15, 30));
+		exp_bottom.add(new Point2D.Double(25, 30));
 		
 		assertEquals(exp_top, startedL.getTop());
 		assertEquals(exp_bottom, startedL.getBottom());
