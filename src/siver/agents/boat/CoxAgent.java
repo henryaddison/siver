@@ -29,7 +29,8 @@ public class CoxAgent {
 		//and point the boat in the correct direction
 		LaneEdge<LaneNode> launchEdge = launchLane.getNextEdge(launchNode, false);
 		location = new CoxLocation(launchEdge, false);
-		aimAlong(launchEdge);
+		location.updateEdge(launchEdge);
+		boat.steerToward(launchEdge.getNextNode(upstream()).getLocation());
 	}
 	
 	//BEHAVIOUR
@@ -46,51 +47,16 @@ public class CoxAgent {
 	
 	//Spatial behaviour method - how to react as cox's position changes.
 	public void reactToLocation() {
-		if(atRiversEnd()) {
-			spin();
-			action = new Spin(this);
-		}
-		else if(backAtBoatHouse()) {
+		if(backAtBoatHouse()) {
 			action = new Land(this);
+		}
+		else if(atRiversEnd()) {
+			action = new Spin(this);
 		}
 		else if(true) {
 			action = new Steer(this);
 		}
 		action.execute();
-	}
-	
-	/*
-	 * ACTIONS
-	 */
-	private void spin() {
-		boat.setSpeed(0);
-		tick_distance_remaining = 0;
-		double min_distance = Double.MAX_VALUE;
-		LaneNode spin_target = null;
-		Lane spin_to = null;
-		if(upstream()) {
-			spin_to = boat.getRiver().getDownstream();
-		} else {
-			spin_to = boat.getRiver().getUpstream();
-		}
-		
-		for(LaneNode node : spin_to.getNet().getNodes()) {
-			if(min_distance > node.distance(location.getDestinationNode())) {
-				spin_target = node;
-				min_distance = node.distance(location.getDestinationNode());
-			}
-		}
-		location.toggleUpstream();
-		boat.steerToward(spin_target.getLocation());
-		boat.move(min_distance);
-		aimAlong(spin_to.getNextEdge(spin_target, upstream()));
-		
-		boat.setSpeed(2);
-	}
-	
-	private void aimAlong(LaneEdge<LaneNode> edge) {
-		location.updateEdge(edge);
-		boat.steerToward(edge.getNextNode(upstream()).getLocation());
 	}
 	
 	/*
