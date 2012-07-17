@@ -43,6 +43,7 @@ public class CoxLocation {
 	public void updateEdge(LaneEdge<LaneNode> new_edge) {
 		current_edge = new_edge;
 		till_edge_end = new_edge.getWeight();
+		onNode = null;
 	}
 	
 	public void moveToEdgeEnd() {
