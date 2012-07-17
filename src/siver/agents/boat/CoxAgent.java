@@ -12,6 +12,9 @@ public class CoxAgent {
 	//distance that can be travelled this tick
 	private double tick_distance_remaining;
 	
+	//how fast the boat would like to be travelling
+	private double desired_speed;
+	
 	private Action action;
 	private CoxLocation location;
 	
@@ -30,6 +33,8 @@ public class CoxAgent {
 		LaneEdge<LaneNode> launchEdge = launchLane.getNextEdge(launchNode, false);
 		location = new CoxLocation(launchEdge, false);
 		boat.steerToward(location.getDestinationNode().getLocation());
+		
+		desired_speed = 4;
 	}
 	
 	//BEHAVIOUR
@@ -38,23 +43,24 @@ public class CoxAgent {
 	@ScheduledMethod(start = 1, interval = 1, shuffle=true, priority=10)
 	public void step() {
 		tick_distance_remaining = boat.getSpeed();
-		
-		if(true) {
-			action = new LetBoatRun(this);
-		}
-		action.execute();
+		makeDecision();
 	}
 	
-	//Spatial behaviour method - how to react as cox's position changes.
-	public void reactToLocation() {
+	public void makeDecision() {
 		if(backAtBoatHouse()) {
 			action = new Land(this);
 		}
 		else if(atRiversEnd()) {
 			action = new Spin(this);
 		}
-		else if(true) {
+		else if(onNode()) {
 			action = new Steer(this);
+		}
+		else if(belowDesiredSpeed()) {
+			action = new SpeedUp(this);
+		}
+		else if(true) {
+			action = new LetBoatRun(this);
 		}
 		action.execute();
 	}
@@ -63,18 +69,28 @@ public class CoxAgent {
 	 * PREDICATES
 	 */	
 	
+	private boolean onNode() {
+		return location.getNode() != null;
+	}
+	
 	private boolean atRiversEnd() {
+		if(!onNode()) return false; 
 		LaneNode node = location.getNode();
 		LaneEdge<LaneNode> next_edge = node.getLane().getNextEdge(node, upstream());
 		return !upstream() && next_edge == null;
 	}
 	
 	private boolean backAtBoatHouse() {
+		if(!onNode()) return false;
 		return upstream() && location.getNode().equals(location.getLane().getStartNode());
 	}
 	
 	private boolean upstream() {
 		return location.headingUpstream();
+	}
+	
+	public boolean belowDesiredSpeed() {
+		return boat.getSpeed() < desired_speed;
 	}
 	
 	/*

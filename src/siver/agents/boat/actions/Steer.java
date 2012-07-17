@@ -14,7 +14,7 @@ public class Steer extends Action {
 	public void execute() {
 		LaneNode steer_from = location.getNode();
 		Lane lane = steer_from.getLane();
-		LaneEdge<LaneNode> next_edge =lane.getNextEdge(steer_from, location.headingUpstream());
+		LaneEdge<LaneNode> next_edge = lane.getNextEdge(steer_from, location.headingUpstream());
 		
 		location.updateEdge(next_edge);
 		boat.steerToward(location.getDestinationNode().getLocation());

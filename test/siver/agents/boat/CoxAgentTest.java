@@ -81,7 +81,7 @@ public class CoxAgentTest {
 	public void testStep() {
 		launchCox();
 		reset(mockBoat);
-		expect(mockBoat.getSpeed()).andReturn(5.0).once();
+		expect(mockBoat.getSpeed()).andReturn(5.0).times(2);
 		mockBoat.move(5);
 		expectLastCall().once();
 		replay(mockBoat);
@@ -118,6 +118,21 @@ public class CoxAgentTest {
 		assertEquals(0,cox.getTickDistanceRemaining(), 1E-5);
 		cox.setTickDistanceRemaining(15.0);
 		assertEquals(15,cox.getTickDistanceRemaining(), 1E-5);
+	}
+	
+	@Test
+	public void testTravellingTooSlowly() {
+		launchCox();
+		reset(mockBoat);
+		expect(mockBoat.getSpeed()).andReturn(1.0).once();
+		replay(mockBoat);
+		assertTrue(cox.belowDesiredSpeed());
+		verify(mockBoat);
+		reset(mockBoat);
+		expect(mockBoat.getSpeed()).andReturn(5.0).once();
+		replay(mockBoat);
+		assertFalse(cox.belowDesiredSpeed());
+		verify(mockBoat);
 	}
 	
 }
