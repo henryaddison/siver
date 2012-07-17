@@ -58,22 +58,7 @@ public class SteerTest extends ActionTest {
 		mockBoat.steerToward(exp_aim_loc);
 		expectLastCall().once();
 		
-		expect(mockCox.getLocation()).andStubReturn(mockLocation);
-		expect(mockCox.getBoat()).andStubReturn(mockBoat);
-		
-		expect(mockLocation.getTillEdgeEnd()).andReturn(9.0).once();
-		expect(mockCox.getTickDistanceRemaining()).andReturn(5.0).once();
-		
-		mockBoat.move(5.0);
-		expectLastCall().once();
-		
-		mockLocation.moveAlongEdge(5.0);
-		expectLastCall().once();
-		
-		mockCox.setTickDistanceRemaining(0);
-		expectLastCall().once();
-		
-		
+		LetBoatRunTest.setUpRunAlongEdgeExpectations(mockCox, mockBoat, mockLocation);		
 		
 		replay(mockCox);
 		replay(mockBoat);

@@ -9,6 +9,7 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
+import siver.agents.boat.*;
 import siver.river.lane.*;
 
 
@@ -74,18 +75,7 @@ public class LetBoatRunTest extends ActionTest {
 	
 	@Test
 	public void testExecuteCannotReachNextNode() {	
-		expect(mockLocation.getTillEdgeEnd()).andReturn(9.0).once();
-		expect(mockCox.getTickDistanceRemaining()).andReturn(5.0).once();
-		
-		mockBoat.move(5.0);
-		expectLastCall().once();
-		
-		mockLocation.moveAlongEdge(5.0);
-		expectLastCall().once();
-		
-		mockCox.setTickDistanceRemaining(0);
-		expectLastCall().once();
-		
+		setUpRunAlongEdgeExpectations(mockCox, mockBoat, mockLocation);
 		replay(mockBoat);
 		replay(mockCox);
 		replay(mockLocation);
@@ -95,6 +85,23 @@ public class LetBoatRunTest extends ActionTest {
 		verify(mockBoat);
 		verify(mockCox);
 		verify(mockLocation);
+	}
+	
+	public static void setUpRunAlongEdgeExpectations(CoxAgent mCox, BoatAgent mBoat, CoxLocation mLoc) {
+		expect(mCox.getLocation()).andStubReturn(mLoc);
+		expect(mCox.getBoat()).andStubReturn(mBoat);
+		
+		expect(mLoc.getTillEdgeEnd()).andReturn(9.0).once();
+		expect(mCox.getTickDistanceRemaining()).andReturn(5.0).once();
+		
+		mBoat.move(5.0);
+		expectLastCall().once();
+		
+		mLoc.moveAlongEdge(5.0);
+		expectLastCall().once();
+		
+		mCox.setTickDistanceRemaining(0);
+		expectLastCall().once();
 	}
 
 }

@@ -71,7 +71,7 @@ public class BoatAgentTest {
 	public void testLaunch() {		
 		launchBoat();
 		assertEquals(0,boat.getAngle(), 1E-5);
-		assertEquals(4,boat.getSpeed(), 1E-5);
+		assertEquals(0,boat.getSpeed(), 1E-5);
 	}
 
 	@Test
@@ -112,6 +112,16 @@ public class BoatAgentTest {
 		
 		boat.setSpeed(5);
 		assertEquals(5, boat.getSpeed(), 1E-5);
+	}
+	
+	@Test
+	public void alterSpeed() {
+		boat.setSpeed(3);
+		assertEquals(3, boat.getSpeed(), 1E-5);
+		boat.alterSpeed(0.5);
+		assertEquals(3.5, boat.getSpeed(), 1E-5);
+		boat.alterSpeed(-1);
+		assertEquals(2.5, boat.getSpeed(), 1E-5);
 	}
 	
 	@Test

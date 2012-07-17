@@ -46,7 +46,7 @@ public class BoatAgent {
 	public void launch(CoxAgent cox, Point2D.Double pt) {
 		//initially the boat points straight up and is going at speed 10
 		this.angle = 0;
-		this.speed = 4;
+		this.speed = 0;
 		this.cox = cox;
 		
 		space.moveTo(this, pt.getX(), pt.getY());
@@ -96,6 +96,10 @@ public class BoatAgent {
 	
 	public void setSpeed(double new_speed) {
 		this.speed = new_speed;
+	}
+	
+	public void alterSpeed(double variation) {
+		speed += variation;
 	}
 	
 	public NdPoint getLocation() {
