@@ -29,8 +29,7 @@ public class CoxAgent {
 		//and point the boat in the correct direction
 		LaneEdge<LaneNode> launchEdge = launchLane.getNextEdge(launchNode, false);
 		location = new CoxLocation(launchEdge, false);
-		location.updateEdge(launchEdge);
-		boat.steerToward(launchEdge.getNextNode(upstream()).getLocation());
+		boat.steerToward(location.getDestinationNode().getLocation());
 	}
 	
 	//BEHAVIOUR
@@ -39,6 +38,7 @@ public class CoxAgent {
 	@ScheduledMethod(start = 1, interval = 1, shuffle=true, priority=10)
 	public void step() {
 		tick_distance_remaining = boat.getSpeed();
+		
 		if(true) {
 			action = new LetBoatRun(this);
 		}
