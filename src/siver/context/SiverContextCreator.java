@@ -44,7 +44,7 @@ public class SiverContextCreator implements ContextBuilder<Object> {
 		
 		BoatHouse boatHouse = new BoatHouse(river, context, space);
 		context.add(boatHouse);
-		space.moveTo(boatHouse, 10, 20);
+		space.moveTo(boatHouse, 0, 20);
 		
 		ISchedule schedule = RunEnvironment.getInstance().getCurrentSchedule();
 		//Specify that the action should start at tick 1 and execute every other tick
