@@ -17,13 +17,11 @@ public class CoxLocation {
 	// Reference to the node the boat is on, if it is on one otherewise null
 	private LaneNode onNode;
 	
-	public CoxLocation(LaneEdge<LaneNode> e, double tee, boolean up) {
-		upstream = up;
-		updateEdge(e);
-		till_edge_end = tee;
-	}
+	//The cox object this location refers to
+	private CoxAgent cox;
 	
-	public CoxLocation(LaneEdge<LaneNode> e, boolean up) {
+	public CoxLocation(CoxAgent cox, LaneEdge<LaneNode> e, boolean up) {
+		this.cox = cox;
 		upstream = up;
 		updateEdge(e);
 	}
@@ -41,6 +39,8 @@ public class CoxLocation {
 	}
 	
 	public void updateEdge(LaneEdge<LaneNode> new_edge) {
+		if(current_edge != null) current_edge.removeCox(cox);
+		new_edge.addCox(cox);
 		current_edge = new_edge;
 		till_edge_end = new_edge.getWeight();
 		onNode = null;
