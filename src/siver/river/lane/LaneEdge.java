@@ -3,7 +3,10 @@
  */
 package siver.river.lane;
 
+import java.util.ArrayList;
+
 import repast.simphony.space.graph.RepastEdge;
+import siver.agents.boat.CoxAgent;
 
 /**
  * A class to represent the edges in a Lane.
@@ -16,12 +19,16 @@ import repast.simphony.space.graph.RepastEdge;
  *
  */
 public class LaneEdge<T extends LaneNode> extends RepastEdge<T> {
+	
+	private ArrayList<CoxAgent> coxesOnEdge;
+	
 	public LaneEdge(T source, T destination) {
 		//shall assume that LaneEdges are directed by default
 		super(source, destination, true);
 		//weight of an edge should be the distance between the two nodes
 		double w = source.distance(destination);
 		setWeight(w);
+		coxesOnEdge = new ArrayList<CoxAgent>();
 	}
 
 	public LaneNode getNextNode(boolean upstream) {
@@ -30,5 +37,23 @@ public class LaneEdge<T extends LaneNode> extends RepastEdge<T> {
 		} else {
 			return getTarget();
 		}
+	}
+	
+	public void addCox(CoxAgent cox) {
+		if(!contains(cox)) {
+			coxesOnEdge.add(cox);
+		}
+	}
+	
+	public void removeCox(CoxAgent cox) {
+		coxesOnEdge.remove(cox);
+	}
+	
+	public boolean isEmpty() {
+		return coxesOnEdge.isEmpty();
+	}
+	
+	public boolean contains(CoxAgent cox) {
+		return coxesOnEdge.contains(cox);
 	}
 }
