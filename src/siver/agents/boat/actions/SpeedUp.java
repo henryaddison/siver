@@ -2,7 +2,7 @@ package siver.agents.boat.actions;
 
 import siver.agents.boat.CoxAgent;
 
-public class SpeedUp extends Action {
+public class SpeedUp extends LetBoatRun {
 	
 	public SpeedUp(CoxAgent cox) {
 		super(cox);
@@ -13,7 +13,7 @@ public class SpeedUp extends Action {
 	@Override
 	public void execute() {
 		boat.alterSpeed(increment);
-		new LetBoatRun(cox).execute();
+		super.execute();
 	}
 
 }

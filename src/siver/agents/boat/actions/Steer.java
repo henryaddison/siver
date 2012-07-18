@@ -5,7 +5,7 @@ import siver.river.lane.Lane;
 import siver.river.lane.LaneEdge;
 import siver.river.lane.LaneNode;
 
-public class Steer extends Action {
+public class Steer extends LetBoatRun {
 	
 	public Steer(CoxAgent cox) {
 		super(cox);
@@ -19,7 +19,7 @@ public class Steer extends Action {
 		location.updateEdge(next_edge);
 		boat.steerToward(location.getDestinationNode().getLocation());
 		
-		new LetBoatRun(cox).execute();
+		super.execute();
 	}
 
 }
