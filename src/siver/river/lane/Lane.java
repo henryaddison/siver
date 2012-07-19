@@ -131,6 +131,7 @@ public class Lane extends OutlinedArea {
 		
 		bottom.add(next_bottom);
 		LaneNode next = new LaneNode(next_mid, this);
+		context.add(next);
 		net.addEdge(lastAddedNode, next);
 		lastAddedNode = next;
 	}
