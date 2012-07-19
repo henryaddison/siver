@@ -32,7 +32,7 @@ public class CoxLocationTest {
 
 	@Before
 	public void setUp() throws Exception {
-		lane = new Lane(new LaneContext(), "Test Lane");
+		lane = new Lane(new LaneContext("Test Context"), "Test Lane");
 		lane.start(new Point2D.Double(0,0));
 		lane.extend(0);
 		lane.extend(Math.PI/4.0);

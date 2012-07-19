@@ -63,14 +63,14 @@ public class LaneNodeTest {
 	
 	@Test
 	public void testLaneNodeWithLane() {
-		Lane testLane = new Lane(new LaneContext(), "Test lane");
+		Lane testLane = new Lane(new LaneContext("Test Context"), "Test lane");
 		LaneNode ln = new LaneNode(1,2, testLane);
 		assertEquals(testLane, ln.getLane());
 	}
 	
 	@Test
 	public void testLaneNodeDoubleWithLane() {
-		Lane testLane = new Lane(new LaneContext(), "Test lane");
+		Lane testLane = new Lane(new LaneContext("Test Context"), "Test lane");
 		LaneNode ln = new LaneNode(new Point2D.Double(12,13), testLane);
 		assertEquals(testLane, ln.getLane());
 	}

@@ -48,7 +48,7 @@ public abstract class ChangeLaneTest extends ActionTest {
 		ContinuousSpace<Object> space = createMock(ContinuousSpace.class);
 		
 		context.addSubContext(anyObject(LaneContext.class));
-		expectLastCall().once();
+		expectLastCall().times(3);
 		expect(context.add(anyObject(River.class))).andReturn(true).once();
 		expect(space.moveTo(anyObject(River.class), eq(0.0),eq(0.0))).andReturn(true).once();
 		replay(context);

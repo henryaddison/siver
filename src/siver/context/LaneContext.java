@@ -11,8 +11,8 @@ import siver.river.lane.LaneNode;
  *
  */
 public class LaneContext extends DefaultContext<LaneNode> {
-	public LaneContext() {
-		super("Lane Context");
+	public LaneContext(String contextId) {
+		super(contextId);
 	}
 
 }

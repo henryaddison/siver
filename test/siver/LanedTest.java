@@ -9,9 +9,9 @@ public abstract class LanedTest {
 	protected static Lane up, down, mid;
 	
 	public static void createLanes() throws Exception {
-		up = new Lane(new LaneContext(), "Upstream Test Lane");
-		down = new Lane(new LaneContext(), "Downstream Test Lane");
-		mid = new Lane(new LaneContext(), "Middle Test Lane");
+		up = new Lane(new LaneContext("Upstream Test Context"), "Upstream Test Lane");
+		down = new Lane(new LaneContext("Downstream Test Context"), "Downstream Test Lane");
+		mid = new Lane(new LaneContext("Middle Test Context"), "Middle Test Lane");
 		
 		up.start(new Point2D.Double(0,50));
 		mid.start(new Point2D.Double(0,30));

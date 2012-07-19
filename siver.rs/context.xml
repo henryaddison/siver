@@ -1,8 +1,13 @@
 <context id="siver" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://repast.org/scenario/context">
   	<projection type="continuous space" id="Continuous Space" />
-  	<context id= "Lane Context">
-  		<projection type="network" id="Middle Lane"></projection>
-  		<projection type="network" id="Downstream Lane"></projection>
+  	<context id= "Upstream Context">
   		<projection type="network" id="Upstream Lane"></projection>
+  	</context>
+  	<context id= "Middle Context">
+  		<projection type="network" id="Middle Lane"></projection>
+  	</context>
+  	
+  	<context id= "Downstream Context">
+  		<projection type="network" id="Downstream Lane"></projection>
   	</context>
 </context>

@@ -23,11 +23,17 @@ public class RiverFactory {
 	 * @return completed River object based on the test coordinates
 	 */
 	public static River Cam(Context<Object> context, ContinuousSpace<Object> space) {
-		LaneContext lane_context = new LaneContext();
+		LaneContext lane_context = new LaneContext("Upstream Context");
 		context.addSubContext(lane_context);
-		
 		Lane up = new Lane(lane_context, "Upstream Lane");
+		
+		
+		lane_context = new LaneContext("Middle Context");
+		context.addSubContext(lane_context);
 		Lane middle = new Lane(lane_context, "Middle Lane");
+		
+		lane_context = new LaneContext("Downstream Context");
+		context.addSubContext(lane_context);
 		Lane down = new Lane(lane_context, "Downstream Lane");
 		
 		up.start(new Point2D.Double(10, 30));
@@ -119,11 +125,16 @@ public class RiverFactory {
 	}
 	
 	public static River Test(Context<Object> context, ContinuousSpace<Object> space) {
-		LaneContext lane_context = new LaneContext();
+		LaneContext lane_context = new LaneContext("Upstream Context");
 		context.addSubContext(lane_context);
-		
 		Lane up = new Lane(lane_context, "Upstream Lane");
+		
+		lane_context = new LaneContext("Middle Context");
+		context.addSubContext(lane_context);
 		Lane middle = new Lane(lane_context, "Middle Lane");
+		
+		lane_context = new LaneContext("Downstream Context");
+		context.addSubContext(lane_context);
 		Lane down = new Lane(lane_context, "Downstream Lane");
 		
 		up.start(new Point2D.Double(10, 30));

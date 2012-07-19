@@ -47,7 +47,7 @@ public class LaneTest {
 	 */
 	@Before
 	public void setUp() throws Exception {
-		startedL = new Lane(new LaneContext(), "Test Lane");
+		startedL = new Lane(new LaneContext("Test Context"), "Test Lane");
 		startedL.start(new Point2D.Double(0,10));
 		
 		exp_top = new ArrayList<Point2D.Double>();
@@ -71,7 +71,7 @@ public class LaneTest {
 	 */
 	@Test
 	public void testLane() {
-		Lane unstartedlane = new Lane(new LaneContext(), "Test Lane");
+		Lane unstartedlane = new Lane(new LaneContext("Test Context"), "Test Lane");
 		assertTrue(!unstartedlane.isStarted());
 		assertEquals(0, unstartedlane.getTop().size());
 		assertEquals(0, unstartedlane.getBottom().size());
@@ -116,7 +116,7 @@ public class LaneTest {
 	 */
 	@Test(expected=UnstartedLaneException.class)
 	public void testExtendToUnstarted() throws UnstartedLaneException, CompletedLaneException {
-		Lane unstartedLane = new Lane(new LaneContext(), "Test Lane");
+		Lane unstartedLane = new Lane(new LaneContext("Test Context"), "Test Lane");
 		unstartedLane.extend(0);
 		
 	}
@@ -148,7 +148,7 @@ public class LaneTest {
 	
 	@Test
 	public void testGetStartNodeNotStarted() {
-		Lane unstartedLane = new Lane(new LaneContext(), "Test Lane");
+		Lane unstartedLane = new Lane(new LaneContext("Test Context"), "Test Lane");
 		assertNull(unstartedLane.getStartNode());
 	}
 	
