@@ -5,6 +5,7 @@ import siver.river.River.NoLaneFound;
 import siver.river.lane.Lane;
 import siver.river.lane.LaneChangeEdge;
 import siver.river.lane.LaneNode;
+import siver.river.lane.TemporaryLaneNode;
 
 public abstract class ChangeLane extends Action {
 	final protected static int nodes_ahead_to_aim_for = 6;
@@ -43,7 +44,7 @@ public abstract class ChangeLane extends Action {
 		}
 		
 		
-		LaneNode startingNode = new LaneNode(boat.getLocation(), targetLane);
+		LaneNode startingNode = new TemporaryLaneNode(boat.getLocation(), targetLane);
 		
 		LaneNode nearestNode = targetLane.nodeNearest(boat.getLocation());
 		LaneNode destinationNode = targetLane.getNthNodeAhead(nearestNode, location.headingUpstream(), nodes_ahead_to_aim_for);

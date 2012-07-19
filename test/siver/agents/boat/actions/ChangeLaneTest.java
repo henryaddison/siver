@@ -1,18 +1,12 @@
 package siver.agents.boat.actions;
 
-import static org.easymock.EasyMock.anyObject;
-import static org.easymock.EasyMock.createMock;
-import static org.easymock.EasyMock.eq;
-import static org.easymock.EasyMock.expect;
-import static org.easymock.EasyMock.expectLastCall;
-import static org.easymock.EasyMock.replay;
-import static org.easymock.EasyMock.reset;
-import static org.easymock.EasyMock.verify;
+import static org.easymock.EasyMock.*;
 import static org.junit.Assert.*;
 
 import java.awt.geom.Point2D;
 import java.lang.reflect.Constructor;
 
+import org.easymock.Capture;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
@@ -28,6 +22,7 @@ import siver.river.River;
 import siver.river.RiverFactory;
 import siver.river.lane.Lane;
 import siver.river.lane.LaneChangeEdge;
+import siver.river.lane.LaneNode;
 
 public abstract class ChangeLaneTest extends ActionTest {
 	protected River river;
@@ -80,7 +75,9 @@ public abstract class ChangeLaneTest extends ActionTest {
 		expect(mockBoat.getLocation()).andStubReturn(new NdPoint(15,20));
 		expect(mockLocation.headingUpstream()).andStubReturn(false);
 		
-		mockLocation.updateEdge(anyObject(LaneChangeEdge.class));
+		Capture<LaneChangeEdge> captured = new Capture<LaneChangeEdge>();
+		
+		mockLocation.updateEdge(capture(captured));
 		expectLastCall().once();
 		mockBoat.steerToward(expDestLocation);
 		expectLastCall().once();
@@ -89,6 +86,8 @@ public abstract class ChangeLaneTest extends ActionTest {
 		replay(mockBoat);
 		replay(mockCox);
 		action.execute();
+		LaneNode srcNode = (LaneNode) captured.getValue().getSource();
+		assertTrue(srcNode.isTemporary());
 		assertEquals(river.getMiddle(), ((ChangeLane) action).getStartLane());
 		assertEquals(expDestLane, ((ChangeLane) action).getTargetLane());
 		verify(mockCox);
