@@ -43,6 +43,14 @@ public class LaneNodeTest {
 		LaneNode ln = new LaneNode(exp_loc, null);
 		assertEquals(exp_loc, ln.getLocation());
 	}
+	
+	@Test
+	public void testLaneNodeNdPoint() {
+		Point2D.Double exp_loc = new Point2D.Double(1.5,6.7);
+		NdPoint pt = new NdPoint(1.5, 6.7);
+		LaneNode ln = new LaneNode(pt, null);
+		assertEquals(exp_loc, ln.getLocation());
+	}
 
 	@Test
 	public void testDistance() {

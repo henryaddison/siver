@@ -1,6 +1,7 @@
 package siver.river.lane;
 
 import java.awt.geom.Point2D;
+import java.awt.geom.Point2D.Double;
 
 import repast.simphony.space.continuous.NdPoint;
 /**
@@ -23,6 +24,11 @@ public class LaneNode {
 	
 	public LaneNode(Point2D.Double loc, Lane lan) {
 		location = loc;
+		lane = lan;
+	}
+	
+	public LaneNode(NdPoint loc, Lane lan) {
+		location = new Point2D.Double(loc.getX(), loc.getY());
 		lane = lan;
 	}
 	
