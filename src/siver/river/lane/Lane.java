@@ -84,7 +84,7 @@ public class Lane extends OutlinedArea {
 		top.add(new Point2D.Double(start.getX(), start.getY() + width ));
 		startNode = new LaneNode(start, this);
 		lastAddedNode = startNode;
-		
+		context.add(startNode);
 		started = true;
 	}
 	
