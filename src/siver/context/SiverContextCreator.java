@@ -11,9 +11,11 @@ import repast.simphony.engine.schedule.ISchedule;
 import repast.simphony.engine.schedule.ScheduleParameters;
 import repast.simphony.space.continuous.ContinuousSpace;
 import repast.simphony.space.continuous.SimpleCartesianAdder;
+import repast.simphony.ui.RSApplication;
 import siver.agents.BoatHouse;
 import siver.river.River;
 import siver.river.RiverFactory;
+import siver.ui.UserPanel;
 
 /**
  * @author hja11
@@ -49,10 +51,12 @@ public class SiverContextCreator implements ContextBuilder<Object> {
 		ISchedule schedule = RunEnvironment.getInstance().getCurrentSchedule();
 		//Specify that the action should start at tick 1 and execute every other tick
 //		ScheduleParameters params = ScheduleParameters.createOneTime(1);
-		ScheduleParameters params = ScheduleParameters.createRepeating(1, 67);
+		ScheduleParameters params = ScheduleParameters.createRepeating(1, 100);
 
 		//Schedule the boathouse to launch a boat on the first tick only for now
 		schedule.schedule(params, boatHouse, "launchBoat");
+		
+		RSApplication.getRSApplicationInstance().addCustomUserPanel(new UserPanel(boatHouse));
 		
 		return context;
 	}
