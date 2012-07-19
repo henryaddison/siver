@@ -134,10 +134,9 @@ public class RiverFactory {
 		
 		
 		try {
-			for(int i=1; i<=3; i++) {
+			for(int i=1; i<=10; i++) {
 				
-					up.extend(0);
-				
+				up.extend(0);
 				middle.extend(0);
 				down.extend(0);
 			}
