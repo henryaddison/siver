@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.Iterator;
 
 import repast.simphony.context.space.graph.NetworkBuilder;
+import repast.simphony.space.continuous.NdPoint;
 import repast.simphony.space.graph.Network;
 import repast.simphony.space.graph.RepastEdge;
 import siver.context.LaneContext;
@@ -147,6 +148,21 @@ public class Lane extends OutlinedArea {
 		
 	}
 	
+	public LaneNode nodeNearest(NdPoint pt) {
+		LaneNode answer = null;
+		
+		double min_distance = Double.MAX_VALUE;
+		
+		for(LaneNode node : this.getNet().getNodes()) {
+			if(min_distance > node.distance(pt)) {
+				answer = node;
+				min_distance = node.distance(pt);
+			}
+		}
+		
+		return answer;
+	}
+	
 	//GETTERS & SETTERS
 	
 	/**
@@ -166,7 +182,6 @@ public class Lane extends OutlinedArea {
 	public LaneNode getStartNode() {
 		return startNode;
 	}
-	
 	
 	
 }

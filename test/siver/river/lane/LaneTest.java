@@ -14,6 +14,7 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
+import repast.simphony.space.continuous.NdPoint;
 import siver.context.LaneContext;
 import siver.river.lane.Lane.CompletedLaneException;
 import siver.river.lane.Lane.UnstartedLaneException;
@@ -23,7 +24,7 @@ import siver.river.lane.Lane.UnstartedLaneException;
  *
  */
 public class LaneTest {
-	private static Lane startedL;
+	private Lane startedL;
 	
 	private static ArrayList<Point2D.Double> exp_top, exp_bottom;
 	/**
@@ -31,16 +32,7 @@ public class LaneTest {
 	 */
 	@BeforeClass
 	public static void setUpBeforeClass() throws Exception {
-		startedL = new Lane(new LaneContext(), "Test Lane");
-		startedL.start(new Point2D.Double(0,10));
 		
-		exp_top = new ArrayList<Point2D.Double>();
-		
-		exp_bottom = new ArrayList<Point2D.Double>();
-		
-		exp_top.add(new Point2D.Double(0,15));
-		
-		exp_bottom.add(new Point2D.Double(0,5));
 	}
 
 	/**
@@ -55,6 +47,16 @@ public class LaneTest {
 	 */
 	@Before
 	public void setUp() throws Exception {
+		startedL = new Lane(new LaneContext(), "Test Lane");
+		startedL.start(new Point2D.Double(0,10));
+		
+		exp_top = new ArrayList<Point2D.Double>();
+		
+		exp_bottom = new ArrayList<Point2D.Double>();
+		
+		exp_top.add(new Point2D.Double(0,15));
+		
+		exp_bottom.add(new Point2D.Double(0,5));
 	}
 
 	/**
@@ -131,7 +133,7 @@ public class LaneTest {
 	
 	@Test
 	public void testComplete() {
-		assertTrue(startedL.isComplete());
+		assertFalse(startedL.isComplete());
 		startedL.complete();
 		assertNotNull(startedL.getOutline());
 		assertTrue(startedL.isComplete());
@@ -151,7 +153,9 @@ public class LaneTest {
 	}
 	
 	@Test
-	public void testGetNextEdge() {
+	public void testGetNextEdge() throws UnstartedLaneException, CompletedLaneException {
+		startedL.extend(0);
+		startedL.extend(0);
 		LaneNode sln = startedL.getStartNode();
 		LaneEdge<LaneNode> edge = startedL.getNextEdge(sln, false);
 		assertSame(sln, edge.getSource());
@@ -164,9 +168,26 @@ public class LaneTest {
 	}
 	
 	@Test	
-	public void testGetNextEdgeNoEdge() {
+	public void testGetNextEdgeNoEdge() throws UnstartedLaneException, CompletedLaneException {
+		startedL.extend(0);
+		startedL.extend(0);
 		LaneNode sln = startedL.getStartNode();
 		assertNull(startedL.getNextEdge(sln, true));
 	}
-
+	
+	@Test
+	public void testNearestNodeTo() throws UnstartedLaneException, CompletedLaneException {
+		startedL.extend(0);
+		startedL.extend(0);
+		
+		LaneNode first = startedL.getStartNode();
+		LaneNode second = startedL.getNextEdge(first, false).getTarget();
+		LaneNode third = startedL.getNextEdge(second, false).getTarget();
+		
+		assertEquals(first, startedL.nodeNearest(new NdPoint(0,10)));
+		assertEquals(first, startedL.nodeNearest(new NdPoint(10,10)));
+		assertEquals(second, startedL.nodeNearest(new NdPoint(15,10)));
+		assertEquals(second, startedL.nodeNearest(new NdPoint(15,15)));
+	}
+	
 }
