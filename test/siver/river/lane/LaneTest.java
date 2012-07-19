@@ -213,4 +213,14 @@ public class LaneTest {
 		assertEquals(second, startedL.nodeNearest(new NdPoint(15,15)));
 	}
 	
+	@Test
+	public void testGetNextNode() {
+		fail("Test not yet implemented");
+	}
+	
+	@Test
+	public void testgetNthNodeAhead() {
+		fail("Test not yet implemented");
+	}
+	
 }

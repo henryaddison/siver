@@ -151,6 +151,18 @@ public class Lane extends OutlinedArea {
 		return null;
 	}
 	
+	public LaneNode getNextNode(LaneNode after, boolean upstream) {
+		return getNextEdge(after, upstream).getNextNode(upstream);
+	}
+	
+	public LaneNode getNthNodeAhead(LaneNode from, boolean upstream, int n) {
+		LaneNode node = from;
+		for(int i = 1; i<=n;i++) {
+			node = getNextNode(node, upstream);
+		}
+		return node;
+	}
+	
 	public LaneNode nodeNearest(NdPoint pt) {
 		LaneNode answer = null;
 		
