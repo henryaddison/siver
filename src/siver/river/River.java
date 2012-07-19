@@ -1,5 +1,7 @@
 package siver.river;
 
+import org.junit.Test;
+
 import siver.river.lane.Lane;
 
 /**
@@ -16,6 +18,14 @@ import siver.river.lane.Lane;
  *
  */
 public class River extends OutlinedArea {
+	public class NoLaneFound extends Exception {
+		/**
+		 * 
+		 */
+		private static final long serialVersionUID = 1L;
+
+	}
+
 	private Lane upstream, middle, downstream;
 	
 	public River(Lane u, Lane m, Lane d) {
@@ -39,6 +49,21 @@ public class River extends OutlinedArea {
 	
 	public Lane getMiddle() {
 		return middle;
+	}
+	
+	public Lane getLaneToLeftOf(Lane current, boolean upstream) throws NoLaneFound {
+		if(!upstream) {
+			if(current == downstream) return middle;
+			if(current == middle) return this.upstream;
+		} else {
+			if(current == this.upstream) return middle;
+			if(current == middle) return downstream;
+		}
+		throw new NoLaneFound();
+	}
+	
+	public Lane getLaneToRightOf(Lane current, boolean upstream) throws NoLaneFound {
+		return getLaneToLeftOf(current, !upstream);
 	}
 	
 }
