@@ -207,10 +207,17 @@ public class LaneTest {
 		LaneNode second = startedL.getNextEdge(first, false).getTarget();
 		LaneNode third = startedL.getNextEdge(second, false).getTarget();
 		
+		LaneNode tempNode = new TemporaryLaneNode(50,50, startedL);
+		LaneChangeEdge<LaneNode> temp_edge = new LaneChangeEdge<LaneNode>(second, tempNode);
+		startedL.getContext().add(tempNode);		
+		startedL.getNet().addEdge(temp_edge);
+
 		assertEquals(first, startedL.nodeNearest(new NdPoint(0,10)));
 		assertEquals(first, startedL.nodeNearest(new NdPoint(9,10)));
 		assertEquals(second, startedL.nodeNearest(new NdPoint(15,10)));
 		assertEquals(second, startedL.nodeNearest(new NdPoint(15,15)));
+		
+		assertEquals(third, startedL.nodeNearest(new NdPoint(50,50)));
 	}
 	
 	@Test

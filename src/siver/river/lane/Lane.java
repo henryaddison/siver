@@ -169,7 +169,7 @@ public class Lane extends OutlinedArea {
 		double min_distance = Double.MAX_VALUE;
 		
 		for(LaneNode node : this.getNet().getNodes()) {
-			if(min_distance > node.distance(pt)) {
+			if(!node.isTemporary() && min_distance > node.distance(pt)) {
 				answer = node;
 				min_distance = node.distance(pt);
 			}
