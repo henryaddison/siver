@@ -1,6 +1,8 @@
 package siver.river.lane;
 
 import java.awt.geom.Point2D;
+
+import repast.simphony.space.continuous.NdPoint;
 /**
  * The base class for the nodes in a Lane network.
  * Upon reaching a node, a cox will make a decision based on the information provided by the node.
@@ -47,5 +49,18 @@ public class LaneNode {
 	 */
 	public Lane getLane() {
 		return lane;
+	}
+	
+	/**
+	 * 
+	 * @return NdPoint that matches this nodes location
+	 */
+	public NdPoint toNdPoint() {
+		return new NdPoint(location.getX(), location.getY());
+	}
+	
+	public double distance(NdPoint pt) {
+		Point2D.Double ptInGeom = new Point2D.Double(pt.getX(), pt.getY());
+		return location.distance(ptInGeom);
 	}
 }

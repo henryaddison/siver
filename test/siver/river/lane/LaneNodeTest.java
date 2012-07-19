@@ -10,6 +10,7 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
+import repast.simphony.space.continuous.NdPoint;
 import siver.context.LaneContext;
 
 public class LaneNodeTest {
@@ -64,6 +65,25 @@ public class LaneNodeTest {
 		Lane testLane = new Lane(new LaneContext(), "Test lane");
 		LaneNode ln = new LaneNode(new Point2D.Double(12,13), testLane);
 		assertEquals(testLane, ln.getLane());
+	}
+	
+	@Test
+	public void testDistanceToNdPoint() {
+		LaneNode ln = new LaneNode(0,0,null);
+		NdPoint pt = new NdPoint(3,4);
+		NdPoint otherpt = new NdPoint(-3,-4);
+		NdPoint anotherpt = new NdPoint(10,0);
+		
+		
+		assertEquals(0, ln.distance(ln.toNdPoint()), 1E-5);
+		assertEquals(5, ln.distance(pt), 1E-5);
+	}
+	
+	@Test
+	public void testToNdPoint() {
+		LaneNode ln = new LaneNode(3,5,null);
+		
+		assertEquals(new NdPoint(3,5), ln.toNdPoint());
 	}
 
 }
