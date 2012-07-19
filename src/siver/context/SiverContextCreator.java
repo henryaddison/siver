@@ -40,7 +40,7 @@ public class SiverContextCreator implements ContextBuilder<Object> {
 		.createContinuousSpace("Continuous Space", context, new SimpleCartesianAdder<Object>(),
 				new repast.simphony.space.continuous.StrictBorders(), xdim, ydim);
 		
-		River river = RiverFactory.Test(context, space);
+		River river = RiverFactory.Cam(context, space);
 		
 		BoatHouse boatHouse = new BoatHouse(river, context, space);
 		context.add(boatHouse);
