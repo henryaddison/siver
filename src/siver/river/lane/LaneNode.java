@@ -69,4 +69,9 @@ public class LaneNode {
 		Point2D.Double ptInGeom = new Point2D.Double(pt.getX(), pt.getY());
 		return location.distance(ptInGeom);
 	}
+	
+	
+	public boolean isTemporary() {
+		return false;
+	}
 }
