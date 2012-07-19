@@ -44,6 +44,8 @@ public class Lane extends OutlinedArea {
 	
 	//the network of LaneNodes that shall be used to steer a boat
 	private Network<LaneNode> net;
+	private LaneContext context;
+	
 	//the last node added to the lane so we can determine where a new node should be joined on next.
 	private LaneNode lastAddedNode;
 	//the first node added to the lane so we can determine where the lane begins.
@@ -60,10 +62,11 @@ public class Lane extends OutlinedArea {
 	// Only need to determine the angle between each point.
 	final private static double edge_length = 20;
 	
+	
 	public Lane(LaneContext c, String projectionId) {
 		top = new ArrayList<Point2D.Double>();
 		bottom = new ArrayList<Point2D.Double>();
-		
+		context=c;
 		NetworkBuilder<LaneNode> builder = new NetworkBuilder<LaneNode>(projectionId,
 				c, true);
 		builder.setEdgeCreator(new LaneEdgeCreator<LaneNode>());
@@ -136,16 +139,15 @@ public class Lane extends OutlinedArea {
 	public LaneEdge<LaneNode> getNextEdge(LaneNode node, boolean upstream) {
 		Iterator<RepastEdge<LaneNode>> i;
 		if(upstream) {
-			i =  net.getInEdges(node).iterator();
+			i = net.getInEdges(node).iterator();
 		} else {
 			i = net.getOutEdges(node).iterator();
 		}
-		if(i.hasNext()) {
-			return (LaneEdge<LaneNode>) i.next();
-		} else {
-			return null;
-		}
-		
+		while(i.hasNext()) {
+			LaneEdge<LaneNode> next_edge = (LaneEdge<LaneNode>) i.next();
+			if(!(next_edge instanceof LaneChangeEdge)) return  next_edge;
+		} 
+		return null;
 	}
 	
 	public LaneNode nodeNearest(NdPoint pt) {
@@ -174,6 +176,10 @@ public class Lane extends OutlinedArea {
 		return net;
 	}
 	
+	public LaneContext getContext() {
+		return context;
+	}
+	
 	/**
 	 * 
 	 * @return the first LaneNode in the lane's graph
@@ -182,6 +188,7 @@ public class Lane extends OutlinedArea {
 	public LaneNode getStartNode() {
 		return startNode;
 	}
+	
 	
 	
 }

@@ -156,6 +156,7 @@ public class LaneTest {
 	public void testGetNextEdge() throws UnstartedLaneException, CompletedLaneException {
 		startedL.extend(0);
 		startedL.extend(0);
+		
 		LaneNode sln = startedL.getStartNode();
 		LaneEdge<LaneNode> edge = startedL.getNextEdge(sln, false);
 		assertSame(sln, edge.getSource());
@@ -167,12 +168,34 @@ public class LaneTest {
 		assertNotSame(another_edge, edge);
 	}
 	
+	@Test
+	public void testGetNextEdgeIgnoresLaneChangingEdges() throws UnstartedLaneException, CompletedLaneException {
+		startedL.extend(0);
+		LaneNode first = startedL.getStartNode();
+		LaneNode second = startedL.getNextEdge(first, false).getTarget();
+		LaneNode tempNode = new LaneNode(50,50, startedL);
+		LaneChangeEdge<LaneNode> temp_edge = new LaneChangeEdge<LaneNode>(second, tempNode);
+		startedL.getContext().add(tempNode);
+		startedL.getContext().add(second);
+		startedL.getNet().addEdge(temp_edge);
+		startedL.extend(0);
+		
+		LaneEdge<LaneNode> edge = startedL.getNextEdge(second, false);
+		assertSame(second, edge.getSource());
+		assertEquals(new Point2D.Double(40,10), edge.getTarget().getLocation());
+		
+	}
+	
 	@Test	
 	public void testGetNextEdgeNoEdge() throws UnstartedLaneException, CompletedLaneException {
 		startedL.extend(0);
 		startedL.extend(0);
 		LaneNode sln = startedL.getStartNode();
 		assertNull(startedL.getNextEdge(sln, true));
+		
+		LaneNode second = startedL.getNextEdge(sln, false).getTarget();
+		LaneNode third = startedL.getNextEdge(second, false).getTarget();
+		assertNull(startedL.getNextEdge(third, false));
 	}
 	
 	@Test
