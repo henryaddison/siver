@@ -14,8 +14,16 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
+import repast.simphony.context.Context;
+import repast.simphony.context.DefaultContext;
+import repast.simphony.context.space.continuous.ContinuousSpaceFactoryFinder;
+import repast.simphony.space.continuous.ContinuousSpace;
+import repast.simphony.space.continuous.DefaultContinuousSpace;
 import repast.simphony.space.continuous.NdPoint;
+import repast.simphony.space.continuous.SimpleCartesianAdder;
 import siver.context.LaneContext;
+import siver.river.River;
+import siver.river.RiverFactory;
 import siver.river.lane.Lane.CompletedLaneException;
 import siver.river.lane.Lane.UnstartedLaneException;
 
@@ -221,13 +229,59 @@ public class LaneTest {
 	}
 	
 	@Test
-	public void testGetNextNode() {
-		fail("Test not yet implemented");
+	public void testGetNextNode() throws UnstartedLaneException, CompletedLaneException {
+		startedL.extend(0);
+		LaneNode first = startedL.getStartNode();
+		LaneNode second = startedL.getNextEdge(first, false).getTarget();
+		LaneNode tempNode = new LaneNode(50,50, startedL);
+		LaneChangeEdge<LaneNode> temp_edge = new LaneChangeEdge<LaneNode>(second, tempNode);
+		startedL.getContext().add(tempNode);
+		
+		startedL.getNet().addEdge(temp_edge);
+		startedL.extend(0);
+		LaneNode third = startedL.getNextEdge(second, false).getTarget();
+		assertSame(third, startedL.getNextNode(second, false));
+		assertSame(first, startedL.getNextNode(second, true));
+	}
+	
+	@Test(expected = NullPointerException.class)
+	public void testGetNextNodeNoNode() throws UnstartedLaneException, CompletedLaneException {
+		startedL.getNextNode(startedL.getStartNode(), false);
+	}
+	
+	private River setupRiver() {
+		Context<Object> context = new DefaultContext();
+		
+		ContinuousSpace<Object> space = ContinuousSpaceFactoryFinder.createContinuousSpaceFactory(null)
+				.createContinuousSpace("Continuous Space", context, new SimpleCartesianAdder<Object>(),
+						new repast.simphony.space.continuous.StrictBorders(), 200, 200);
+		
+		River r = RiverFactory.Test(context, space);
+		return r;
 	}
 	
 	@Test
 	public void testgetNthNodeAhead() {
-		fail("Test not yet implemented");
+		River r = setupRiver();
+		Lane l = r.getUpstream();
+		LaneNode startNode = l.getStartNode();
+		
+		LaneNode foundNode = l.getNthNodeAhead(startNode, false, 0);
+		assertSame(startNode, foundNode);
+		
+		foundNode = l.getNthNodeAhead(startNode, false, 1);
+		assertSame(l.getNextNode(startNode, false), foundNode);
+		
+		foundNode = l.getNthNodeAhead(startNode, false, 5);
+		assertEquals(new Point2D.Double(110, 30), foundNode.getLocation());
+	}
+	
+	@Test(expected = NullPointerException.class)
+	public void testGetNthNodeAheadTooFar() {
+		River r = setupRiver();
+		Lane l = r.getUpstream();
+		LaneNode startNode = l.getStartNode();
+		l.getNthNodeAhead(startNode, false, 100);
 	}
 	
 }
