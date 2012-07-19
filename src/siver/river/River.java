@@ -18,13 +18,6 @@ import siver.river.lane.Lane;
  *
  */
 public class River extends OutlinedArea {
-	public class NoLaneFound extends Exception {
-		/**
-		 * 
-		 */
-		private static final long serialVersionUID = 1L;
-
-	}
 
 	private Lane upstream, middle, downstream;
 	
@@ -51,7 +44,7 @@ public class River extends OutlinedArea {
 		return middle;
 	}
 	
-	public Lane getLaneToLeftOf(Lane current, boolean upstream) throws NoLaneFound {
+	public Lane getLaneToLeftOf(Lane current, boolean upstream) {
 		if(!upstream) {
 			if(current == downstream) return middle;
 			if(current == middle) return this.upstream;
@@ -59,10 +52,10 @@ public class River extends OutlinedArea {
 			if(current == this.upstream) return middle;
 			if(current == middle) return downstream;
 		}
-		throw new NoLaneFound();
+		return null;
 	}
 	
-	public Lane getLaneToRightOf(Lane current, boolean upstream) throws NoLaneFound {
+	public Lane getLaneToRightOf(Lane current, boolean upstream) {
 		return getLaneToLeftOf(current, !upstream);
 	}
 	

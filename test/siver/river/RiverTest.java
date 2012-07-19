@@ -10,8 +10,6 @@ import org.junit.Test;
 
 import siver.LanedTest;
 import siver.river.River;
-import siver.river.River.NoLaneFound;
-import siver.river.lane.Lane.UnstartedLaneException;
 
 public class RiverTest extends LanedTest {
 	
@@ -51,36 +49,36 @@ public class RiverTest extends LanedTest {
 	}
 	
 	@Test
-	public void testGetLaneToLeftOfDownStream() throws NoLaneFound {
+	public void testGetLaneToLeftOfDownStream() {
 		assertEquals(mid, r.getLaneToLeftOf(down, false));
 		assertEquals(up, r.getLaneToLeftOf(mid, false));
 	}
 	
 	@Test
-	public void testGetLaneToRightOfDownStream() throws NoLaneFound {
+	public void testGetLaneToRightOfDownStream() {
 		assertEquals(down, r.getLaneToRightOf(mid, false));
 		assertEquals(mid, r.getLaneToRightOf(up, false));
 	}
 	
 	@Test
-	public void testGetLaneToLeftOfUpStream() throws NoLaneFound {
+	public void testGetLaneToLeftOfUpStream() {
 		assertEquals(mid, r.getLaneToLeftOf(up, true));
 		assertEquals(down, r.getLaneToLeftOf(mid, true));
 	}
 	
 	@Test
-	public void testGetLaneToRightOfUpStream() throws NoLaneFound {
+	public void testGetLaneToRightOfUpStream() {
 		assertEquals(mid, r.getLaneToRightOf(down, true));
 		assertEquals(up, r.getLaneToRightOf(mid, true));
 	}
 	
-	@Test(expected=NoLaneFound.class)
-	public void testGetLaneToLeftOfNoLanePresent() throws NoLaneFound {
-		r.getLaneToLeftOf(up, false);
+	@Test
+	public void testGetLaneToLeftOfNoLanePresent() {
+		assertNull(r.getLaneToLeftOf(up, false));
 	}
 
-	@Test(expected=NoLaneFound.class)
-	public void testGetLaneToRightOfNoLanePresent() throws NoLaneFound {
-		r.getLaneToRightOf(up, true);
+	@Test
+	public void testGetLaneToRightOfNoLanePresent() {
+		assertNull(r.getLaneToRightOf(up, true));
 	}
 }
