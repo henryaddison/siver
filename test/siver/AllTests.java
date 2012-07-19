@@ -12,14 +12,23 @@ import siver.agents.boat.actions.*;
 
 
 @RunWith(Suite.class)
-@SuiteClasses({ LaneTest.class, RiverTest.class, 
-	LaneNodeTest.class, LaneEdgeTest.class, 
-	LaneEdgeCreatorTest.class, BoatHouseTest.class,
-	BoatAgentTest.class, CoxAgentTest.class,
-	CoxLocationTest.class, LandTest.class,
-	LetBoatRunTest.class, SteerTest.class,
-	SpinTest.class, SpeedUpTest.class,
-	SlowDownTest.class})
+@SuiteClasses({ 
+	LaneTest.class, 
+	RiverTest.class, 
+	LaneNodeTest.class, 
+	LaneEdgeTest.class, 
+	LaneEdgeCreatorTest.class, 
+	BoatHouseTest.class,
+	BoatAgentTest.class, 
+	CoxAgentTest.class,
+	CoxLocationTest.class, 
+	LandTest.class,
+	LetBoatRunTest.class,
+	SpinTest.class, 
+	SpeedUpTest.class,
+	SlowDownTest.class, 
+	MoveToLaneOnLeftTest.class,
+	MoveToLaneOnRightTest.class})
 public class AllTests {
 
 }
