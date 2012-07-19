@@ -54,17 +54,13 @@ public class CoxAgentTest {
 	@Test
 	public void testLaunch() {
 		launchCox();
-		
-		verify(mockBoat);
-		verify(mockLane);
-		verify(mockSpace);
 	}
 	
 	private void launchCox() {
 		Point2D.Double expLoc = new Point2D.Double(10,30);
 		LaneNode expNode = new LaneNode(expLoc, mockLane);
 		LaneNode nextNode = new LaneNode(30,30, mockLane);
-		expect(mockLane.getStartNode()).andReturn(expNode).once();
+		expect(mockLane.getStartNode()).andStubReturn(expNode);
 		mockBoat.launch(cox, expLoc);
 		expectLastCall().once();
 		expect(mockLane.getNextEdge(expNode, false)).andReturn(new LaneEdge<LaneNode>(expNode, nextNode)).once();
@@ -75,19 +71,39 @@ public class CoxAgentTest {
 		replay(mockLane);
 		replay(mockSpace);
 		cox.launch(mockBoat, mockLane);
+		verify(mockBoat);
+		verify(mockLane);
+		verify(mockSpace);
+		
+		assertEquals(nextNode, cox.getLocation().getDestinationNode());
+		
+		reset(mockLane);
+		reset(mockSpace);
+		reset(mockBoat);
 	}
 
 	@Test
 	public void testStep() {
 		launchCox();
-		reset(mockBoat);
+		
+		Point2D.Double expLoc = new Point2D.Double(10,30);
+		LaneNode expNode = new LaneNode(expLoc, mockLane);
+		LaneNode nextNode = new LaneNode(30,30, mockLane);
+		LaneNode furtherNode = new LaneNode(50,30, mockLane);
+		
 		expect(mockBoat.getSpeed()).andReturn(5.0).times(2);
-		mockBoat.move(5);
+		mockBoat.run();
 		expectLastCall().once();
+		
+		expect(mockLane.getStartNode()).andStubReturn(expNode);
+		expect(mockLane.getNextEdge(cox.getLocation().getDestinationNode(), false)).andReturn(new LaneEdge<LaneNode>(cox.getLocation().getDestinationNode(), furtherNode)).once();
+		
+		replay(mockLane);
 		replay(mockBoat);
 		cox.step();
 		assertTrue(cox.getAction() instanceof LetBoatRun);
 		verify(mockBoat);
+		verify(mockLane);
 	}
 	
 	@Test

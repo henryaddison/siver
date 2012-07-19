@@ -38,8 +38,6 @@ public class SlowDownTest extends ActionTest {
 		mockBoat.alterSpeed(-1);
 		expectLastCall().once();
 		
-		LetBoatRunTest.setUpRunAlongEdgeExpectations(mockCox, mockBoat, mockLocation);
-		
 		replay(mockBoat);
 		replay(mockCox);
 		replay(mockLocation);

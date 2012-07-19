@@ -9,6 +9,9 @@ import repast.simphony.space.SpatialMath;
 import repast.simphony.space.continuous.ContinuousSpace;
 import repast.simphony.space.continuous.NdPoint;
 import siver.river.River;
+import siver.river.lane.Lane;
+import siver.river.lane.LaneEdge;
+import siver.river.lane.LaneNode;
 
 /** 
  * BoatAgent is a dumb agent, at each step it will carry on moving in the direction it is facing and at the speed it was set to
@@ -61,6 +64,29 @@ public class BoatAgent {
 	}
 	
 	//MOVEMENT
+	
+	public void run() {
+		CoxLocation location = cox.getLocation();
+		double distance_till_next_node = location.getTillEdgeEnd();
+		double distance_can_travel = cox.getTickDistanceRemaining();
+		if(distance_can_travel >= distance_till_next_node) {
+			this.move(distance_till_next_node);
+			location.moveToEdgeEnd();
+			cox.setTickDistanceRemaining(distance_can_travel - distance_till_next_node);
+			
+			LaneNode steer_from = location.getDestinationNode();
+			Lane lane = steer_from.getLane();
+			LaneEdge<LaneNode> next_edge = lane.getNextEdge(steer_from, location.headingUpstream());
+			
+			location.updateEdge(next_edge);
+			this.steerToward(location.getDestinationNode().getLocation());
+			run();
+		} else {
+			this.move(distance_can_travel);
+			location.moveAlongEdge(distance_can_travel);
+			cox.setTickDistanceRemaining(0);
+		}
+	}
 	
 	public void move(double dist) {
 		space.moveByVector(this, dist, angle, 0);

@@ -36,7 +36,19 @@ public class LetBoatRunTest extends ActionTest {
 	public void tearDown() throws Exception {
 	}
 	
+	
 	@Test
+	public void testExecute() {
+		replay(mockCox);
+		replay(mockLocation);
+		replay(mockBoat);
+		action.execute();
+		verify(mockCox);
+		verify(mockLocation);
+		verify(mockBoat);
+		
+	}
+	
 	public void testExecuteCanReachNextNode() {
 		double exp_distance_travelled = 3.5;
 		
@@ -57,7 +69,7 @@ public class LetBoatRunTest extends ActionTest {
 		LaneNode edge_end = new LaneNode(30,30,null);
 		LaneEdge<LaneNode> edge = new LaneEdge<LaneNode>(edge_start, edge_end); 
 		
-		mockCox.makeDecision();
+		mockCox.takeAction();
 		expectLastCall().once();
 		
 		replay(mockBoat);
@@ -71,7 +83,7 @@ public class LetBoatRunTest extends ActionTest {
 		verify(mockLocation);
 	}
 	
-	@Test
+	
 	public void testExecuteCannotReachNextNode() {	
 		setUpRunAlongEdgeExpectations(mockCox, mockBoat, mockLocation);
 		replay(mockBoat);

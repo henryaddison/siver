@@ -42,19 +42,17 @@ public class CoxAgent {
 	//Temporal behaviour method - how to react as time changes, i.e. at each tick.
 	@ScheduledMethod(start = 1, interval = 1, shuffle=true, priority=10)
 	public void step() {
+		takeAction();
 		tick_distance_remaining = boat.getSpeed();
-		makeDecision();
+		boat.run();
 	}
 	
-	public void makeDecision() {
+	public void takeAction() {
 		if(backAtBoatHouse()) {
 			action = new Land(this);
 		}
 		else if(atRiversEnd()) {
 			action = new Spin(this);
-		}
-		else if(onNode()) {
-			action = new Steer(this);
 		}
 		else if(belowDesiredSpeed()) {
 			action = new SpeedUp(this);
@@ -69,24 +67,14 @@ public class CoxAgent {
 	 * PREDICATES
 	 */	
 	
-	private boolean onNode() {
-		return location.getNode() != null;
-	}
-	
-	private boolean atRiversEnd() {
-		if(!onNode()) return false; 
-		LaneNode node = location.getNode();
-		LaneEdge<LaneNode> next_edge = node.getLane().getNextEdge(node, upstream());
-		return !upstream() && next_edge == null;
+	private boolean atRiversEnd() { 
+		LaneNode node = location.getDestinationNode();
+		LaneEdge<LaneNode> next_edge = node.getLane().getNextEdge(node, location.headingUpstream());
+		return next_edge == null;
 	}
 	
 	private boolean backAtBoatHouse() {
-		if(!onNode()) return false;
-		return upstream() && location.getNode().equals(location.getLane().getStartNode());
-	}
-	
-	private boolean upstream() {
-		return location.headingUpstream();
+		return location.getDestinationNode().equals(location.getLane().getStartNode());
 	}
 	
 	public boolean belowDesiredSpeed() {

@@ -72,7 +72,6 @@ public class CoxLocationTest {
 		assertTrue(cl.getTillEdgeEnd() > 5);
 		cl.moveToEdgeEnd();
 		assertEquals(0,cl.getTillEdgeEnd(),1E-5);
-		assertEquals(edge.getTarget(), cl.getNode());
 	}
 	
 	@Test
@@ -80,7 +79,6 @@ public class CoxLocationTest {
 		assertEquals(20, cl.getTillEdgeEnd(), 1E-5);
 		cl.moveAlongEdge(3.5);
 		assertEquals(16.5, cl.getTillEdgeEnd(), 1E-5);
-		assertNull(cl.getNode());
 	}
 	
 	@Test

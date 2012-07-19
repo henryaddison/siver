@@ -35,8 +35,6 @@ public class SpeedUpTest extends ActionTest {
 		mockBoat.alterSpeed(0.5);
 		expectLastCall().once();
 		
-		LetBoatRunTest.setUpRunAlongEdgeExpectations(mockCox, mockBoat, mockLocation);
-		
 		replay(mockBoat);
 		replay(mockCox);
 		replay(mockLocation);
