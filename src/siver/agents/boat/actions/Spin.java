@@ -15,7 +15,7 @@ public class Spin extends Action {
 	public void execute() {		
 		boat.setSpeed(0);
 		cox.setTickDistanceRemaining(0);
-		double min_distance = Double.MAX_VALUE;
+		
 		LaneNode spin_target = null;
 		Lane spin_to = null;
 		if(location.headingUpstream()) {
@@ -24,15 +24,11 @@ public class Spin extends Action {
 			spin_to = boat.getRiver().getUpstream();
 		}
 		
-		for(LaneNode node : spin_to.getNet().getNodes()) {
-			if(min_distance > node.distance(location.getDestinationNode())) {
-				spin_target = node;
-				min_distance = node.distance(location.getDestinationNode());
-			}
-		}
+		spin_target = spin_to.nodeNearest(boat.getLocation());
+		
 		location.toggleUpstream();
 		boat.steerToward(spin_target.getLocation());
-		boat.move(min_distance);
+		boat.move(spin_target.distance(boat.getLocation()));
 		
 		LaneEdge<LaneNode> new_edge = spin_to.getNextEdge(spin_target, location.headingUpstream());
 		location.updateEdge(new_edge);
