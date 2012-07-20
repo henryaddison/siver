@@ -59,7 +59,6 @@ public class BoatAgentTest {
 	
 	private void launchBoat() {
 		expect(mockSpace.moveTo(boat, 0,0)).andReturn(true).times(1);
-		expect(mockContext.add(anyObject(BoatCorner.class))).andReturn(true).times(4);
 		replay(mockContext);
 		replay(mockSpace);
 		boat.launch(mockCox, new Point2D.Double(0,0));
@@ -90,7 +89,6 @@ public class BoatAgentTest {
 		NdPoint expNewLoc = new NdPoint(10,5);
 		boat.setAngle(exp_angle);
 		expect(mockSpace.moveByVector(boat, exp_distance,exp_angle,0)).andReturn(expNewLoc).once();
-		expect(mockSpace.getLocation(boat)).andReturn(expNewLoc).times(2);
 		replay(mockSpace);
 		boat.move(exp_distance);
 		verify(mockSpace);

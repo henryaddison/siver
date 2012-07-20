@@ -15,7 +15,6 @@ import repast.simphony.space.continuous.ContinuousSpace;
 import repast.simphony.space.continuous.NdPoint;
 import siver.LanedTest;
 import siver.agents.boat.BoatAgent;
-import siver.agents.boat.BoatCorner;
 import siver.agents.boat.CoxAgent;
 import siver.river.River;
 import siver.river.lane.Lane.UnstartedLaneException;
@@ -60,7 +59,6 @@ public class BoatHouseTest extends LanedTest {
 	public void testLaunchBoat() {
 		expect(mockContext.add(anyObject(BoatAgent.class))).andReturn(true).times(1);
 		expect(mockContext.add(anyObject(CoxAgent.class))).andReturn(true).times(1);
-		expect(mockContext.add(anyObject(BoatCorner.class))).andReturn(true).times(4);
 		expect(mockSpace.moveTo(anyObject(BoatAgent.class), eq(0.0), eq(10.0))).andReturn(true).times(1);
 		expect(mockSpace.getLocation(anyObject(BoatAgent.class))).andReturn(new NdPoint(0,10)).times(1);
 		expect(mockSpace.getDisplacement(new NdPoint(0,10), new NdPoint(20,10))).andReturn(new double[]{20,0}).times(1);

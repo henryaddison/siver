@@ -1,7 +1,6 @@
 package siver.agents.boat;
 
 
-import java.awt.geom.AffineTransform;
 import java.awt.geom.Point2D;
 
 import repast.simphony.context.Context;
@@ -33,13 +32,6 @@ public class BoatAgent {
 	private ContinuousSpace<Object> space;
 	private Context<Object> context;
 	
-	//some debugging variables for checking collision detection 
-	private BoatCorner tl,tr,br,bl;
-	Point2D.Double blptDst = new Point2D.Double();
-	Point2D.Double brptDst = new Point2D.Double();
-	Point2D.Double trptDst = new Point2D.Double();
-	Point2D.Double tlptDst = new Point2D.Double();
-	
 	public BoatAgent(River river, Context<Object> context, ContinuousSpace<Object> space) {
 		this.river = river;
 		this.space = space;
@@ -53,9 +45,6 @@ public class BoatAgent {
 		this.cox = cox;
 		
 		space.moveTo(this, pt.getX(), pt.getY());
-		
-		//now add the cox and the 4 corners for collision detection
-		setupCorners();
 	}
 	
 	public void land() {
@@ -90,15 +79,6 @@ public class BoatAgent {
 	
 	public void move(double dist) {
 		space.moveByVector(this, dist, angle, 0);
-		
-		AffineTransform at = new AffineTransform();
-		at.translate(getLocation().getX(), getLocation().getY());
-		at.rotate(angle);
-		
-		at.transform(new Point2D.Double(-8.5,-3.5), blptDst);
-		at.transform(new Point2D.Double(8.5,-3.5), brptDst);
-		at.transform(new Point2D.Double(-8.5,3.5), tlptDst);
-		at.transform(new Point2D.Double(8.5,3.5), trptDst);
 	}
 	
 	public void steerToward(Point2D.Double pt) {
@@ -138,37 +118,6 @@ public class BoatAgent {
 	
 	public River getRiver() {
 		return river;
-	}
-	
-	//COLLISION DETECTION
-	private void setupCorners() {
-		tl = new BoatCorner();
-		context.add(tl);
-		
-		tr = new BoatCorner();
-		context.add(tr);
-		
-		br = new BoatCorner();
-		context.add(br);
-		
-		bl = new BoatCorner();
-		context.add(bl);
-	}
-	
-	public boolean onRiver() {
-		if(!river.contains(blptDst)) {
-			return false;
-		}
-		if(!river.contains(brptDst)) {
-			return false;
-		}
-		if(!river.contains(tlptDst)) {
-			return false;
-		}
-		if(!river.contains(trptDst)) {
-			return false;
-		}
-		return true;
 	}
 	
 }
