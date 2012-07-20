@@ -141,6 +141,10 @@ public class BoatAgent {
 		return space;
 	}
 	
+	public Context<Object> getContext() {
+		return context;
+	}
+	
 	public River getRiver() {
 		return river;
 	}
