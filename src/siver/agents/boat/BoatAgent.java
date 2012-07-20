@@ -80,7 +80,11 @@ public class BoatAgent {
 	}
 	
 	public void move(double dist) {
-		space.moveByVector(this, dist, orientation, 0);
+		move(dist, orientation);
+	}
+	
+	public void move(double dist, double heading) {
+		space.moveByVector(this, dist, heading, 0);
 	}
 	
 	public void steerToward(Point2D.Double pt) {
