@@ -1,6 +1,7 @@
 package siver.agents;
 
 import repast.simphony.context.Context;
+import repast.simphony.random.RandomHelper;
 import repast.simphony.space.continuous.ContinuousSpace;
 import siver.agents.boat.BoatAgent;
 import siver.agents.boat.CoxAgent;
@@ -33,7 +34,7 @@ public class BoatHouse {
 		context.add(boat);
 		CoxAgent cox = new CoxAgent();
 		context.add(cox);
-		cox.launch(boat, getLaunchLane(), 4);
+		cox.launch(boat, getLaunchLane(), RandomHelper.nextIntFromTo(1,10));
 	}
 	
 	public Lane getLaunchLane() {
