@@ -25,6 +25,12 @@ import siver.river.OutlinedArea;
  *
  */
 public class Lane extends OutlinedArea {
+	public class NoNextNode extends Exception {
+		public NoNextNode(String msg) {
+			super(msg);
+		}
+	}
+
 	public class CompletedLaneException extends Exception {
 		private static final long serialVersionUID = 1L;
 
@@ -151,14 +157,24 @@ public class Lane extends OutlinedArea {
 		return null;
 	}
 	
-	public LaneNode getNextNode(LaneNode after, boolean upstream) {
-		return getNextEdge(after, upstream).getNextNode(upstream);
+	public LaneNode getNextNode(LaneNode after, boolean upstream) throws NoNextNode {
+		LaneEdge<LaneNode> edge = getNextEdge(after, upstream);
+		if(edge == null) {
+			throw new NoNextNode("There is no node after the one at " + after.getLocation().toString() + 
+					"when travelling upstream is " + Boolean.toString(upstream));
+		}
+		return edge.getNextNode(upstream);
 	}
 	
-	public LaneNode getNthNodeAhead(LaneNode from, boolean upstream, int n) {
+	public LaneNode getNthNodeAhead(LaneNode from, boolean upstream, int n) throws NoNextNode {
 		LaneNode node = from;
 		for(int i = 1; i<=n;i++) {
-			node = getNextNode(node, upstream);
+			try {
+				node = getNextNode(node, upstream);
+			} catch (NoNextNode e) {
+				throw new NoNextNode("Tried to look ahead " + Integer.toString(n) + " nodes but only got as far as " + 
+						Integer.toString(i) + "\n " + e.getMessage());
+			}
 		}
 		return node;
 	}

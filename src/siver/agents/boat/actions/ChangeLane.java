@@ -3,6 +3,7 @@ package siver.agents.boat.actions;
 import siver.agents.boat.CoxAgent;
 import siver.river.River.NoLaneFound;
 import siver.river.lane.Lane;
+import siver.river.lane.Lane.NoNextNode;
 import siver.river.lane.LaneChangeEdge;
 import siver.river.lane.LaneNode;
 import siver.river.lane.TemporaryLaneNode;
@@ -35,6 +36,8 @@ public abstract class ChangeLane extends Action {
 	
 	@Override
 	public void execute() {
+		if(location.changingLane()) return;
+		
 		setStartLane(location.getLane());
 		try {
 			directionSpecificSetup();
@@ -46,7 +49,12 @@ public abstract class ChangeLane extends Action {
 		LaneNode startingNode = new TemporaryLaneNode(boat.getLocation(), targetLane);
 		
 		LaneNode nearestNode = targetLane.nodeNearest(boat.getLocation());
-		LaneNode destinationNode = targetLane.getNthNodeAhead(nearestNode, location.headingUpstream(), nodes_ahead_to_aim_for);
+		LaneNode destinationNode;
+		try {
+			destinationNode = targetLane.getNthNodeAhead(nearestNode, location.headingUpstream(), nodes_ahead_to_aim_for);
+		} catch (NoNextNode e) {
+			return;
+		}
 		
 		
 		LaneNode source = startingNode;

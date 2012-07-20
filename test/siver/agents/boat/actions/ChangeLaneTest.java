@@ -65,7 +65,6 @@ public abstract class ChangeLaneTest extends ActionTest {
 		reset(mockCox);
 		
 		expect(mockBoat.getRiver()).andStubReturn(river);
-		expect(mockBoat.getLocation()).andStubReturn(new NdPoint(15,20));
 		expect(mockLocation.headingUpstream()).andStubReturn(false);
 	}
 
@@ -84,6 +83,8 @@ public abstract class ChangeLaneTest extends ActionTest {
 	}
 	
 	protected void runExecute(Lane startingLane, Lane expDestLane, Point2D.Double expDestLocation) {
+		expect(mockBoat.getLocation()).andStubReturn(new NdPoint(15,20));
+		expect(mockLocation.changingLane()).andReturn(false).once();
 		expect(mockLocation.getLane()).andReturn(startingLane);
 		
 		Capture<LaneChangeEdge> captured = new Capture<LaneChangeEdge>();

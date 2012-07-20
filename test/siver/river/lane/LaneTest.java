@@ -25,6 +25,7 @@ import siver.context.LaneContext;
 import siver.river.River;
 import siver.river.RiverFactory;
 import siver.river.lane.Lane.CompletedLaneException;
+import siver.river.lane.Lane.NoNextNode;
 import siver.river.lane.Lane.UnstartedLaneException;
 
 /**
@@ -229,7 +230,7 @@ public class LaneTest {
 	}
 	
 	@Test
-	public void testGetNextNode() throws UnstartedLaneException, CompletedLaneException {
+	public void testGetNextNode() throws UnstartedLaneException, CompletedLaneException, NoNextNode {
 		startedL.extend(0);
 		LaneNode first = startedL.getStartNode();
 		LaneNode second = startedL.getNextEdge(first, false).getTarget();
@@ -244,8 +245,8 @@ public class LaneTest {
 		assertSame(first, startedL.getNextNode(second, true));
 	}
 	
-	@Test(expected = NullPointerException.class)
-	public void testGetNextNodeNoNode() throws UnstartedLaneException, CompletedLaneException {
+	@Test(expected = NoNextNode.class)
+	public void testGetNextNodeNoNode() throws UnstartedLaneException, CompletedLaneException, NoNextNode {
 		startedL.getNextNode(startedL.getStartNode(), false);
 	}
 	
@@ -261,7 +262,7 @@ public class LaneTest {
 	}
 	
 	@Test
-	public void testgetNthNodeAhead() {
+	public void testgetNthNodeAhead() throws NoNextNode {
 		River r = setupRiver();
 		Lane l = r.getUpstream();
 		LaneNode startNode = l.getStartNode();
@@ -276,8 +277,8 @@ public class LaneTest {
 		assertEquals(new Point2D.Double(110, 30), foundNode.getLocation());
 	}
 	
-	@Test(expected = NullPointerException.class)
-	public void testGetNthNodeAheadTooFar() {
+	@Test(expected = NoNextNode.class)
+	public void testGetNthNodeAheadTooFar() throws NoNextNode {
 		River r = setupRiver();
 		Lane l = r.getUpstream();
 		LaneNode startNode = l.getStartNode();

@@ -11,6 +11,8 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
+import repast.simphony.space.continuous.NdPoint;
+
 
 public class MoveToLaneOnLeftTest extends ChangeLaneTest {
 	@Override
@@ -44,21 +46,25 @@ public class MoveToLaneOnLeftTest extends ChangeLaneTest {
 	
 	@Test
 	public void testExecuteAlreadyInLeftMostLane() {
+		
+		expect(mockLocation.changingLane()).andReturn(false).once();
 		expect(mockLocation.getLane()).andReturn(river.getUpstream());
 		
 		executeWithMocks();
-		
 	}
 	
 	@Test
 	public void testExecuteNotEnoughSpaceBeforeRiverEnd() {
+		expect(mockBoat.getLocation()).andStubReturn(new NdPoint(150,200));
+		expect(mockLocation.changingLane()).andReturn(false).once();
+		expect(mockLocation.getLane()).andReturn(river.getMiddle());
 		
+		executeWithMocks();
 	}
 	
 	@Test
 	public void testExecuteAlreadyChangingLane() {
-		
-		
+		expect(mockLocation.changingLane()).andReturn(true).once();
+		executeWithMocks();
 	}
-
 }
