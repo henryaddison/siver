@@ -33,7 +33,7 @@ public class BoatHouse {
 		context.add(boat);
 		CoxAgent cox = new CoxAgent();
 		context.add(cox);
-		cox.launch(boat, getLaunchLane());
+		cox.launch(boat, getLaunchLane(), 4);
 	}
 	
 	public Lane getLaunchLane() {

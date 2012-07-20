@@ -70,7 +70,7 @@ public class CoxAgentTest {
 		replay(mockBoat);
 		replay(mockLane);
 		replay(mockSpace);
-		cox.launch(mockBoat, mockLane);
+		cox.launch(mockBoat, mockLane, 8);
 		verify(mockBoat);
 		verify(mockLane);
 		verify(mockSpace);

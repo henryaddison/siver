@@ -21,9 +21,11 @@ public class CoxAgent {
 	public CoxAgent() {
 	}
 	
-	public void launch(BoatAgent boat, Lane launchLane) {
+	public void launch(BoatAgent boat, Lane launchLane, int desGear) {
 		//save reference to boat launched in
 		this.boat = boat;
+		
+		this.desired_gear = desGear;
 		
 		//place the boat at the location of the first node of the lane
 		LaneNode launchNode = launchLane.getStartNode();
