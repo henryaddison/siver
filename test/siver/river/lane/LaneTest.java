@@ -285,4 +285,24 @@ public class LaneTest {
 		l.getNthNodeAhead(startNode, false, 100);
 	}
 	
+	@Test
+	public void testGetNearestEdge() throws NoNextNode {
+		River r = setupRiver();
+		Lane l = r.getMiddle();
+		LaneEdge<LaneNode> expEdge;
+		
+		expEdge = l.getNextEdge(l.getStartNode(), false);
+		LaneEdge<LaneNode> actualEdge = l.edgeNearest(new NdPoint(10,10));
+		assertSame(expEdge, actualEdge);
+		
+		expEdge = l.getNextEdge(l.getStartNode(), false);
+		actualEdge = l.edgeNearest(new NdPoint(-10,10));
+		assertSame(expEdge, actualEdge);
+		
+		expEdge = l.getNextEdge(l.getNthNodeAhead(l.getStartNode(), false, 3), false);
+		actualEdge = l.edgeNearest(new NdPoint(75,10));
+		assertSame(expEdge, actualEdge);
+		
+	}
+	
 }

@@ -194,6 +194,26 @@ public class Lane extends OutlinedArea {
 		return answer;
 	}
 	
+	public LaneEdge<LaneNode> edgeNearest(NdPoint pt) {
+		LaneEdge<LaneNode> answer = null;
+		
+		LaneNode oneEnd = nodeNearest(pt);
+		
+		LaneEdge<LaneNode> outEdge = getNextEdge(oneEnd, false);
+		LaneEdge<LaneNode> inEdge = getNextEdge(oneEnd, true);
+		
+		if(outEdge == null) return inEdge;
+		if(inEdge == null) return outEdge;
+		
+		double distanceToOutNode = outEdge.getTarget().distance(pt);
+		
+		if(inEdge.getSource().distance(pt) < distanceToOutNode) {
+			return inEdge;
+		} else {
+			return outEdge;
+		}
+	}
+	
 	//GETTERS & SETTERS
 	
 	/**
