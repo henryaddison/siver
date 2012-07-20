@@ -28,6 +28,8 @@ public class LaneChangeEdge<T extends LaneNode> extends LaneEdge<T> {
 		
 		destinationLane.getNet().removeEdge((RepastEdge<LaneNode>) this);
 		
+		//once the cox has left this edge then it will never be used again so we can safely remove 
+		//the edge from the network and the temporary endPoint from the Lane context
 		LaneNode endPoint;
 		endPoint = this.getSource();
 		if(endPoint.isTemporary())	destinationLane.getContext().remove(endPoint);
