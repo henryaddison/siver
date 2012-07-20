@@ -33,13 +33,7 @@ public class LandTest extends ActionTest {
 	public void testExecute() {
 		mockBoat.land();
 		expectLastCall().once();
-		replay(mockBoat);
-		replay(mockCox);
-		
-		action.execute();
-		
-		verify(mockBoat);
-		verify(mockCox);
+		executeWithMocks();
 	}
 
 	

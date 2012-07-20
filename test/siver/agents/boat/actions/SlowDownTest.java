@@ -31,15 +31,7 @@ public class SlowDownTest extends ActionTest {
 		mockBoat.shiftDown();
 		expectLastCall().once();
 		
-		replay(mockBoat);
-		replay(mockCox);
-		replay(mockLocation);
-		
-		action.execute();
-		
-		verify(mockBoat);
-		verify(mockCox);
-		verify(mockLocation);
+		executeWithMocks();
 	}
 
 	@Override

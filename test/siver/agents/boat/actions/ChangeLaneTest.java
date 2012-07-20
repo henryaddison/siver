@@ -66,16 +66,6 @@ public abstract class ChangeLaneTest extends ActionTest {
 	public void tearDown() throws Exception {
 	}
 	
-	protected void executeWithMocks() {
-		replay(mockLocation);
-		replay(mockBoat);
-		replay(mockCox);
-		action.execute();
-		verify(mockCox);
-		verify(mockBoat);
-		verify(mockLocation);
-	}
-	
 	protected void runExecute(Lane startingLane, Lane expDestLane, Point2D.Double expDestLocation) {
 		expect(mockBoat.getLocation()).andStubReturn(new NdPoint(15,20));
 		expect(mockLocation.changingLane()).andReturn(false).once();

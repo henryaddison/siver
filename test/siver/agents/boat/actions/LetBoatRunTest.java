@@ -35,13 +35,7 @@ public class LetBoatRunTest extends ActionTest {
 	
 	@Test
 	public void testExecute() {
-		replay(mockCox);
-		replay(mockLocation);
-		replay(mockBoat);
-		action.execute();
-		verify(mockCox);
-		verify(mockLocation);
-		verify(mockBoat);
+		executeWithMocks();
 		
 	}
 	

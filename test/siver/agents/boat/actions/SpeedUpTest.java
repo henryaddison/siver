@@ -28,15 +28,7 @@ public class SpeedUpTest extends ActionTest {
 		mockBoat.shiftUp();
 		expectLastCall().once();
 		
-		replay(mockBoat);
-		replay(mockCox);
-		replay(mockLocation);
-		
-		action.execute();
-		
-		verify(mockBoat);
-		verify(mockCox);
-		verify(mockLocation);
+		executeWithMocks();
 	}
 
 	@Override
