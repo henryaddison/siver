@@ -25,5 +25,10 @@ public class LaneChangeEdge<T extends LaneNode> extends LaneEdge<T> {
 		occupyingInStartLane.removeCox(cox);
 		occupyingInDestinationLane.removeCox(cox);
 	}
-
+	
+	
+	@Override
+	public void coxMoved(CoxAgent cox) {
+		
+	}
 }

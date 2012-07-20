@@ -57,11 +57,13 @@ public class CoxLocation {
 	public void moveToEdgeEnd() {
 		boat.move(till_edge_end);
 		till_edge_end = 0;
+		current_edge.coxMoved(cox);
 	}
 	
 	public void moveAlongEdge(double distance) {
 		boat.move(distance);
 		till_edge_end -= distance;
+		current_edge.coxMoved(cox);
 	}
 	
 	public boolean headingUpstream() {

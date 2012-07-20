@@ -17,6 +17,7 @@ import siver.agents.boat.actions.*;
 	RiverTest.class, 
 	LaneNodeTest.class, 
 	LaneEdgeTest.class, 
+	LaneChangeEdgeTest.class,
 	LaneEdgeCreatorTest.class, 
 	BoatHouseTest.class,
 	BoatAgentTest.class, 
@@ -28,7 +29,7 @@ import siver.agents.boat.actions.*;
 	SpeedUpTest.class,
 	SlowDownTest.class, 
 	MoveToLaneOnLeftTest.class,
-	MoveToLaneOnRightTest.class})
+	MoveToLaneOnRightTest.class,})
 public class AllTests {
 
 }

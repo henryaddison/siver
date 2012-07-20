@@ -56,4 +56,8 @@ public class LaneEdge<T extends LaneNode> extends RepastEdge<T> {
 	public boolean contains(CoxAgent cox) {
 		return coxesOnEdge.contains(cox);
 	}
+	
+	public void coxMoved(CoxAgent cox) {
+		
+	}
 }
