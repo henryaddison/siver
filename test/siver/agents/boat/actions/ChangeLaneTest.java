@@ -63,17 +63,28 @@ public abstract class ChangeLaneTest extends ActionTest {
 		
 		verify(mockCox);
 		reset(mockCox);
+		
+		expect(mockBoat.getRiver()).andStubReturn(river);
+		expect(mockBoat.getLocation()).andStubReturn(new NdPoint(15,20));
+		expect(mockLocation.headingUpstream()).andStubReturn(false);
 	}
 
 	@After
 	public void tearDown() throws Exception {
 	}
-
-	protected void runExecute(Lane expDestLane, Point2D.Double expDestLocation) {
-		expect(mockLocation.getLane()).andReturn(river.getMiddle());
-		expect(mockBoat.getRiver()).andStubReturn(river);
-		expect(mockBoat.getLocation()).andStubReturn(new NdPoint(15,20));
-		expect(mockLocation.headingUpstream()).andStubReturn(false);
+	
+	protected void executeWithMocks() {
+		replay(mockLocation);
+		replay(mockBoat);
+		replay(mockCox);
+		action.execute();
+		verify(mockCox);
+		verify(mockBoat);
+		verify(mockLocation);
+	}
+	
+	protected void runExecute(Lane startingLane, Lane expDestLane, Point2D.Double expDestLocation) {
+		expect(mockLocation.getLane()).andReturn(startingLane);
 		
 		Capture<LaneChangeEdge> captured = new Capture<LaneChangeEdge>();
 		
@@ -82,16 +93,12 @@ public abstract class ChangeLaneTest extends ActionTest {
 		mockBoat.steerToward(expDestLocation);
 		expectLastCall().once();
 		
-		replay(mockLocation);
-		replay(mockBoat);
-		replay(mockCox);
-		action.execute();
+		executeWithMocks();
+		
 		LaneNode srcNode = (LaneNode) captured.getValue().getSource();
 		assertTrue(srcNode.isTemporary());
 		assertEquals(river.getMiddle(), ((ChangeLane) action).getStartLane());
 		assertEquals(expDestLane, ((ChangeLane) action).getTargetLane());
-		verify(mockCox);
-		verify(mockBoat);
-		verify(mockLocation);
+		
 	}
 }

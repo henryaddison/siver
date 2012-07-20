@@ -39,7 +39,26 @@ public class MoveToLaneOnLeftTest extends ChangeLaneTest {
 
 	@Test
 	public void testExecute() {
-		runExecute(river.getUpstream(), new Point2D.Double(130,30));
+		runExecute(river.getMiddle(), river.getUpstream(), new Point2D.Double(130,30));
+	}
+	
+	@Test
+	public void testExecuteAlreadyInLeftMostLane() {
+		expect(mockLocation.getLane()).andReturn(river.getUpstream());
+		
+		executeWithMocks();
+		
+	}
+	
+	@Test
+	public void testExecuteNotEnoughSpaceBeforeRiverEnd() {
+		
+	}
+	
+	@Test
+	public void testExecuteAlreadyChangingLane() {
+		
+		
 	}
 
 }

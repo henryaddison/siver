@@ -39,8 +39,7 @@ public abstract class ChangeLane extends Action {
 		try {
 			directionSpecificSetup();
 		} catch (NoLaneFound e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			return;
 		}
 		
 		
@@ -52,7 +51,6 @@ public abstract class ChangeLane extends Action {
 		
 		LaneNode source = startingNode;
 		LaneNode target = destinationNode;
-		
 		if(location.headingUpstream()) {
 			source = destinationNode;
 			target = startingNode;
