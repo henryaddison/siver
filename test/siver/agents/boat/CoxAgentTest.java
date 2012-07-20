@@ -146,7 +146,7 @@ public class CoxAgentTest {
 		assertTrue(cox.belowDesiredSpeed());
 		verify(mockBoat);
 		reset(mockBoat);
-		expect(mockBoat.getGear()).andReturn(5).once();
+		expect(mockBoat.getGear()).andReturn(9).once();
 		replay(mockBoat);
 		assertFalse(cox.belowDesiredSpeed());
 		verify(mockBoat);
