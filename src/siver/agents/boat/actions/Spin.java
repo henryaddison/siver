@@ -37,6 +37,8 @@ public class Spin extends Action {
 		cox.setTickDistanceRemaining(0);
 		
 		if(countDown <= 0) {
+			//make sure the boat is on the destination node after spinning in case the spinning animation is slightly off
+			boat.moveTo(destinationNode.toNdPoint());
 			location.toggleUpstream();
 			LaneEdge<LaneNode> new_edge = destinationLane.getNextEdge(destinationNode, location.headingUpstream());
 			location.updateEdge(new_edge);
