@@ -20,6 +20,9 @@ import siver.river.lane.LaneNode;
  *
  */
 public class BoatAgent {
+	
+	private static final int MAX_GEAR  = 10;
+	
 	//the river the boat is on and the cox in the boat
 	private River river;
 	private CoxAgent cox;
@@ -105,7 +108,7 @@ public class BoatAgent {
 	public void setGear(int newValue) {
 		if(newValue < 0) {
 			gear = 0;
-		} else if(newValue > 10) {
+		} else if(newValue > MAX_GEAR) {
 			gear = 10;
 		} else {
 			gear = newValue;
