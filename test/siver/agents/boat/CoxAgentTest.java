@@ -91,7 +91,8 @@ public class CoxAgentTest {
 		LaneNode nextNode = new LaneNode(30,30, mockLane);
 		LaneNode furtherNode = new LaneNode(50,30, mockLane);
 		
-		expect(mockBoat.getSpeed()).andReturn(5.0).times(2);
+		expect(mockBoat.getSpeed()).andReturn(5.0).times(1);
+		expect(mockBoat.getGear()).andReturn(10).times(1);
 		mockBoat.run();
 		expectLastCall().once();
 		
@@ -140,12 +141,12 @@ public class CoxAgentTest {
 	public void testTravellingTooSlowly() {
 		launchCox();
 		reset(mockBoat);
-		expect(mockBoat.getSpeed()).andReturn(1.0).once();
+		expect(mockBoat.getGear()).andReturn(2).once();
 		replay(mockBoat);
 		assertTrue(cox.belowDesiredSpeed());
 		verify(mockBoat);
 		reset(mockBoat);
-		expect(mockBoat.getSpeed()).andReturn(5.0).once();
+		expect(mockBoat.getGear()).andReturn(5).once();
 		replay(mockBoat);
 		assertFalse(cox.belowDesiredSpeed());
 		verify(mockBoat);

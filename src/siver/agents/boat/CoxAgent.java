@@ -13,7 +13,7 @@ public class CoxAgent {
 	private double tick_distance_remaining;
 	
 	//how fast the boat would like to be travelling
-	private double desired_speed;
+	private int desired_gear;
 	
 	private Action action;
 	private CoxLocation location;
@@ -34,7 +34,7 @@ public class CoxAgent {
 		location = new CoxLocation(this, launchEdge, false);
 		boat.steerToward(location.getDestinationNode().getLocation());
 		
-		desired_speed = 4;
+		desired_gear = 4;
 	}
 	
 	//BEHAVIOUR
@@ -78,7 +78,7 @@ public class CoxAgent {
 	}
 	
 	public boolean belowDesiredSpeed() {
-		return boat.getSpeed() < desired_speed;
+		return boat.getGear() < desired_gear;
 	}
 	
 	/*
