@@ -2,14 +2,14 @@ package siver.agents.boat.actions;
 
 import siver.agents.boat.*;
 
-public class Land extends Action {
+public class Land extends SingleTickAction {
 	
 	public Land(CoxAgent cox) {
 		super(cox);
 	}
 	
 	@Override
-	public void execute() {
+	public void doExecute() {
 		boat.land();
 	}
 

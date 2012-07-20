@@ -27,8 +27,6 @@ import siver.river.lane.LaneNode;
 public abstract class ChangeLaneTest extends ActionTest {
 	protected River river;
 	
-	protected abstract String className();
-	
 	@BeforeClass
 	public static void setUpBeforeClass() throws Exception {
 	}
@@ -38,6 +36,7 @@ public abstract class ChangeLaneTest extends ActionTest {
 	}
 
 	@Before
+	@Override
 	public void setUp() throws Exception {
 		Context<Object> context = createMock(Context.class);
 		ContinuousSpace<Object> space = createMock(ContinuousSpace.class);
@@ -55,14 +54,9 @@ public abstract class ChangeLaneTest extends ActionTest {
 		reset(space);
 		reset(context);
 		
-		setUpMocks();
+		super.setUp();
 		
-		Class cl = Class.forName(className());
-		Constructor con = cl.getConstructor(CoxAgent.class);
-		action = (ChangeLane) con.newInstance(mockCox);
-		
-		verify(mockCox);
-		reset(mockCox);
+		action = (ChangeLane) action;
 		
 		expect(mockBoat.getRiver()).andStubReturn(river);
 		expect(mockLocation.headingUpstream()).andStubReturn(false);

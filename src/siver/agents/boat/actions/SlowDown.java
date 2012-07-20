@@ -2,12 +2,12 @@ package siver.agents.boat.actions;
 
 import siver.agents.boat.CoxAgent;
 
-public class SlowDown extends Action {	
+public class SlowDown extends SingleTickAction {	
 	public SlowDown(CoxAgent cox) {
 		super(cox);
 	}
 	@Override
-	public void execute() {
+	public void doExecute() {
 		boat.shiftDown();
 	}
 

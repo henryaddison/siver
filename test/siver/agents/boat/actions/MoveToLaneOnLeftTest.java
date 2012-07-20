@@ -27,13 +27,6 @@ public class MoveToLaneOnLeftTest extends ChangeLaneTest {
 	@AfterClass
 	public static void tearDownAfterClass() throws Exception {
 	}
-	
-	@Before
-	@Override
-	public void setUp() throws Exception {
-		super.setUp();
-	}
-	
 
 	@After
 	public void tearDown() throws Exception {

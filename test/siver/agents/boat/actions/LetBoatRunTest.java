@@ -14,7 +14,10 @@ import siver.river.lane.*;
 
 
 public class LetBoatRunTest extends ActionTest {
-
+	@Override
+	protected String className() {
+		return LetBoatRun.class.getName();
+	}
 	
 	
 	@BeforeClass
@@ -23,13 +26,6 @@ public class LetBoatRunTest extends ActionTest {
 
 	@AfterClass
 	public static void tearDownAfterClass() throws Exception {
-	}
-
-	@Before
-	public void setUp() throws Exception {
-		setUpMocks();
-		action = new LetBoatRun(mockCox);
-		reset(mockCox);
 	}
 
 	@After
@@ -69,7 +65,7 @@ public class LetBoatRunTest extends ActionTest {
 		LaneNode edge_end = new LaneNode(30,30,null);
 		LaneEdge<LaneNode> edge = new LaneEdge<LaneNode>(edge_start, edge_end); 
 		
-		mockCox.takeAction();
+		mockCox.chooseAction();
 		expectLastCall().once();
 		
 		replay(mockBoat);
@@ -113,5 +109,7 @@ public class LetBoatRunTest extends ActionTest {
 		mCox.setTickDistanceRemaining(0);
 		expectLastCall().once();
 	}
+
+	
 
 }

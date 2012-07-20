@@ -8,7 +8,7 @@ import siver.river.lane.LaneChangeEdge;
 import siver.river.lane.LaneNode;
 import siver.river.lane.TemporaryLaneNode;
 
-public abstract class ChangeLane extends Action {
+public abstract class ChangeLane extends SingleTickAction {
 	final protected static int nodes_ahead_to_aim_for = 6;
 	protected Lane targetLane;
 	protected Lane startLane;
@@ -35,7 +35,7 @@ public abstract class ChangeLane extends Action {
 	}
 	
 	@Override
-	public void execute() {
+	public void doExecute() {
 		if(location.changingLane()) return;
 		
 		setStartLane(location.getLane());
@@ -70,6 +70,8 @@ public abstract class ChangeLane extends Action {
 		targetLane.getNet().addEdge(edge);
 		location.updateEdge(edge, false);
 	}
+	
+	
 	
 	protected abstract void directionSpecificSetup() throws NoLaneFound;
 

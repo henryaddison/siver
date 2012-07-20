@@ -13,5 +13,12 @@ public abstract class Action {
 		this.location = cox.getLocation();
 	}
 	
-	public abstract void execute();
+	public void execute() {
+		if(typeSpecificExecute()) {
+			cox.clearAction();
+		}
+	}
+	
+	
+	public abstract boolean typeSpecificExecute();
 }

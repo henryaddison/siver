@@ -2,14 +2,14 @@ package siver.agents.boat.actions;
 
 import siver.agents.boat.CoxAgent;
 
-public class LetBoatRun extends Action {
+public class LetBoatRun extends SingleTickAction {
 	
 	public LetBoatRun(CoxAgent cox) {
 		super(cox);
 	}
 	
 	@Override
-	public void execute() {
+	public void doExecute() {
 		
 	}
 	

@@ -39,12 +39,15 @@ public class CoxAgent {
 	//BEHAVIOUR
 	@ScheduledMethod(start = 1, interval = 1, shuffle=true, priority=10)
 	public void step() {
-		takeAction();
+		if(action == null) {
+			chooseAction();
+		}
+		action.execute();
 		tick_distance_remaining = boat.getSpeed();
 		boat.run();
 	}
 	
-	public void takeAction() {
+	public void chooseAction() {
 		if(backAtBoatHouse()) {
 			action = new Land(this);
 		}
@@ -57,7 +60,6 @@ public class CoxAgent {
 		else if(true) {
 			action = new LetBoatRun(this);
 		}
-		action.execute();
 	}
 	
 	/*
@@ -83,6 +85,10 @@ public class CoxAgent {
 	 */
 	public Action getAction() {
 		return action;
+	}
+	
+	public void clearAction() {
+		action = null;
 	}
 	
 	public BoatAgent getBoat() {

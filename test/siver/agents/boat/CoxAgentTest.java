@@ -102,9 +102,10 @@ public class CoxAgentTest {
 		replay(mockLane);
 		replay(mockBoat);
 		cox.step();
-		assertTrue(cox.getAction() instanceof LetBoatRun);
 		verify(mockBoat);
 		verify(mockLane);
+		
+		assertNull(cox.getAction());
 	}
 	
 	@Test

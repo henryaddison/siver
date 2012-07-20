@@ -20,13 +20,6 @@ public class SpinTest extends ActionTest {
 	public static void tearDownAfterClass() throws Exception {
 	}
 
-	@Before
-	public void setUp() throws Exception {
-		setUpMocks();
-		action = new Spin(mockCox);
-		reset(mockCox);
-	}
-
 	@After
 	public void tearDown() throws Exception {
 	}
@@ -34,5 +27,10 @@ public class SpinTest extends ActionTest {
 	@Test
 	public void testExecute() {
 		fail("Not yet implemented");
+	}
+
+	@Override
+	protected String className() {
+		return Spin.class.getName();
 	}
 }

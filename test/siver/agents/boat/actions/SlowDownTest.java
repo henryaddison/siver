@@ -22,13 +22,6 @@ public class SlowDownTest extends ActionTest {
 	public static void tearDownAfterClass() throws Exception {
 	}
 
-	@Before
-	public void setUp() throws Exception {
-		setUpMocks();
-		action = new SlowDown(mockCox);
-		reset(mockCox);
-	}
-
 	@After
 	public void tearDown() throws Exception {
 	}
@@ -47,6 +40,11 @@ public class SlowDownTest extends ActionTest {
 		verify(mockBoat);
 		verify(mockCox);
 		verify(mockLocation);
+	}
+
+	@Override
+	protected String className() {
+		return SlowDown.class.getName();
 	}
 
 }

@@ -11,6 +11,11 @@ import org.junit.Test;
 
 public class LandTest extends ActionTest {
 	
+	@Override
+	protected String className() {
+		return Land.class.getName();
+	}
+	
 	@BeforeClass
 	public static void setUpBeforeClass() throws Exception {
 		
@@ -18,13 +23,6 @@ public class LandTest extends ActionTest {
 
 	@AfterClass
 	public static void tearDownAfterClass() throws Exception {
-	}
-
-	@Before
-	public void setUp() throws Exception {
-		setUpMocks();
-		action = new Land(mockCox);
-		reset(mockCox);
 	}
 
 	@After
@@ -43,5 +41,7 @@ public class LandTest extends ActionTest {
 		verify(mockBoat);
 		verify(mockCox);
 	}
+
+	
 
 }
