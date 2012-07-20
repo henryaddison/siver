@@ -23,6 +23,15 @@ import siver.ui.UserPanel;
  */
 public class SiverContextCreator implements ContextBuilder<Object> {
 	
+	private static Context<Object> mainContext;
+	public static Context<Object> getContext() {
+		return mainContext;
+	}
+	private static ContinuousSpace<Object> space;
+	public static ContinuousSpace<Object> getSpace() {
+		return space;
+	}
+	
 	/* (non-Javadoc)
 	 * @see repast.simphony.dataLoader.ContextBuilder#build(repast.simphony.context.Context)
 	 */
@@ -38,7 +47,7 @@ public class SiverContextCreator implements ContextBuilder<Object> {
 		// the context in which to place the space, border specification,
 		// random adder for populating the grid with agents,
 		// and the dimensions of the grid.
-		ContinuousSpace<Object> space = ContinuousSpaceFactoryFinder.createContinuousSpaceFactory(null)
+		space = ContinuousSpaceFactoryFinder.createContinuousSpaceFactory(null)
 		.createContinuousSpace("Continuous Space", context, new SimpleCartesianAdder<Object>(),
 				new repast.simphony.space.continuous.StrictBorders(), xdim, ydim);
 		
@@ -58,6 +67,8 @@ public class SiverContextCreator implements ContextBuilder<Object> {
 		
 		RSApplication.getRSApplicationInstance().removeCustomUserPanel();
 		RSApplication.getRSApplicationInstance().addCustomUserPanel(new UserPanel(boatHouse));
+		
+		mainContext = context;
 		
 		return context;
 	}

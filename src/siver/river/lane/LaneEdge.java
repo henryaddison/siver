@@ -7,6 +7,7 @@ import java.util.ArrayList;
 
 import repast.simphony.space.graph.RepastEdge;
 import siver.agents.boat.CoxAgent;
+import siver.context.SiverContextCreator;
 
 /**
  * A class to represent the edges in a Lane.
@@ -42,26 +43,26 @@ public class LaneEdge<T extends LaneNode> extends RepastEdge<LaneNode> {
 		}
 	}
 	
-	public void addCox(CoxAgent cox) {
+	public synchronized void addCox(CoxAgent cox) {
 		if(!contains(cox)) {
 			if(!isEmpty()) {
 				if(crash == null) {
 					crash = new Crash(this);
-//					cox.getBoat().getContext().add(crash);
-//					cox.getBoat().getSpace().moveTo(crash, cox.getBoat().getLocation().toDoubleArray(null));
+					SiverContextCreator.getContext().add(crash);
+					SiverContextCreator.getSpace().moveTo(crash, cox.getBoat().getLocation().toDoubleArray(null));
 				}
 			}
 			coxesOnEdge.add(cox);
 		}
 	}
 	
-	public void removeCox(CoxAgent cox) {
+	public synchronized void removeCox(CoxAgent cox) {
 		if(contains(cox)) {
 			coxesOnEdge.remove(cox);
 			if(coxesOnEdge.size() == 1) {
 				//TODO: may want to call some method on crash before nullifying it
+				SiverContextCreator.getContext().remove(crash);
 				crash = null;
-//				cox.getBoat().getContext().remove(crash);
 			}
 		}
 	}
