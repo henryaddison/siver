@@ -87,6 +87,10 @@ public class BoatAgent {
 		space.moveByVector(this, dist, heading, 0);
 	}
 	
+	public void moveTo(NdPoint pt) {
+		space.moveTo(this, pt.toDoubleArray(null));
+	}
+	
 	public void steerToward(Point2D.Double pt) {
 		NdPoint otherPoint = new NdPoint(pt.getX(), pt.getY());
 		double angle = SpatialMath.calcAngleFor2DMovement(space, getLocation(), otherPoint);
