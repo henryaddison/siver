@@ -79,4 +79,63 @@ public class LaneEdgeTest {
 		assertFalse(e.contains(cox2));
 	}
 	
+	@Test
+	public void testAddManyCoxes() {
+		CoxAgent cox1 = new CoxAgent();
+		CoxAgent cox2 = new CoxAgent();
+		
+		assertNull(e.getCrash());
+		
+		e.addCox(cox1);
+		
+		assertNull(e.getCrash());
+		
+		e.addCox(cox1);
+		
+		assertNull(e.getCrash());
+		
+		e.addCox(cox2);
+		Crash crash =  e.getCrash();
+		assertNotNull(crash);
+		assertSame(e, crash.getEdge());
+	}
+	
+	@Test
+	public void testAddCoxToCrashedLane() {
+		CoxAgent cox1 = new CoxAgent();
+		CoxAgent cox2 = new CoxAgent();
+		CoxAgent cox3 = new CoxAgent();
+		
+		e.addCox(cox1);
+		e.addCox(cox2);
+		
+		Crash crash =  e.getCrash();
+		assertNotNull(crash);
+		
+		e.addCox(cox3);
+		assertSame(crash, e.getCrash());
+	}
+	
+	@Test
+	public void testRemovingPenultimateCoxRemovesCrash() {
+		CoxAgent cox1 = new CoxAgent();
+		CoxAgent cox2 = new CoxAgent();
+		CoxAgent cox3 = new CoxAgent();
+		
+		e.addCox(cox1);
+		e.addCox(cox2);
+		e.addCox(cox3);
+		
+		assertNotNull(e.getCrash());
+		
+		e.removeCox(cox1);
+		assertNotNull(e.getCrash());
+		
+		e.removeCox(cox1);
+		assertNotNull(e.getCrash());
+		
+		e.removeCox(cox2);
+		assertNull(e.getCrash());
+	}
+	
 }

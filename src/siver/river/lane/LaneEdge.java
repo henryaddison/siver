@@ -18,9 +18,11 @@ import siver.agents.boat.CoxAgent;
  * @author henryaddison
  *
  */
-public class LaneEdge<T extends LaneNode> extends RepastEdge<T> {
+public class LaneEdge<T extends LaneNode> extends RepastEdge<LaneNode> {
 	
 	private ArrayList<CoxAgent> coxesOnEdge;
+	
+	private Crash crash;
 	
 	public LaneEdge(T source, T destination) {
 		//shall assume that LaneEdges are directed by default
@@ -29,6 +31,7 @@ public class LaneEdge<T extends LaneNode> extends RepastEdge<T> {
 		double w = source.distance(destination);
 		setWeight(w);
 		coxesOnEdge = new ArrayList<CoxAgent>();
+		crash = null;
 	}
 
 	public LaneNode getNextNode(boolean upstream) {
@@ -41,12 +44,26 @@ public class LaneEdge<T extends LaneNode> extends RepastEdge<T> {
 	
 	public void addCox(CoxAgent cox) {
 		if(!contains(cox)) {
+			if(!isEmpty()) {
+				if(crash == null) {
+					crash = new Crash(this);
+//					cox.getBoat().getContext().add(crash);
+//					cox.getBoat().getSpace().moveTo(crash, cox.getBoat().getLocation().toDoubleArray(null));
+				}
+			}
 			coxesOnEdge.add(cox);
 		}
 	}
 	
 	public void removeCox(CoxAgent cox) {
-		coxesOnEdge.remove(cox);
+		if(contains(cox)) {
+			coxesOnEdge.remove(cox);
+			if(coxesOnEdge.size() == 1) {
+				//TODO: may want to call some method on crash before nullifying it
+				crash = null;
+//				cox.getBoat().getContext().remove(crash);
+			}
+		}
 	}
 	
 	public boolean isEmpty() {
@@ -59,5 +76,9 @@ public class LaneEdge<T extends LaneNode> extends RepastEdge<T> {
 	
 	public void coxMoved(CoxAgent cox) {
 		
+	}
+	
+	public Crash getCrash() {
+		return crash;
 	}
 }
