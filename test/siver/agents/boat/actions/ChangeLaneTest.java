@@ -91,8 +91,6 @@ public abstract class ChangeLaneTest extends ActionTest {
 		
 		mockLocation.updateEdge(capture(captured), eq(false));
 		expectLastCall().once();
-		mockBoat.steerToward(expDestLocation);
-		expectLastCall().once();
 		
 		executeWithMocks();
 		

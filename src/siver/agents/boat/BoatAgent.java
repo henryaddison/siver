@@ -64,7 +64,6 @@ public class BoatAgent {
 		double distance_till_next_node = location.getTillEdgeEnd();
 		double distance_can_travel = cox.getTickDistanceRemaining();
 		if(distance_can_travel >= distance_till_next_node) {
-			this.move(distance_till_next_node);
 			location.moveToEdgeEnd();
 			cox.setTickDistanceRemaining(distance_can_travel - distance_till_next_node);
 			
@@ -73,10 +72,8 @@ public class BoatAgent {
 			LaneEdge<LaneNode> next_edge = lane.getNextEdge(steer_from, location.headingUpstream());
 			
 			location.updateEdge(next_edge);
-			this.steerToward(location.getDestinationNode().getLocation());
 			run();
 		} else {
-			this.move(distance_can_travel);
 			location.moveAlongEdge(distance_can_travel);
 			cox.setTickDistanceRemaining(0);
 		}

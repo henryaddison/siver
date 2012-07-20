@@ -50,10 +50,15 @@ public class CoxLocationTest {
 		lane = river.getMiddle();
 		edge = lane.getNextEdge(lane.getStartNode(), false);
 		cox = new TestCoxAgent();
-		cl = new CoxLocation(cox, edge, false);
-		cox.setLocation(cl);
 		BoatAgent boat = createMock(BoatAgent.class);
 		cox.setBoat(boat);
+		boat.steerToward(edge.getNextNode(false).getLocation());
+		expectLastCall().once();
+		replay(boat);
+		cl = new CoxLocation(cox, edge, false);
+		reset(boat);
+		cox.setLocation(cl);
+		
 	}
 
 	@After
@@ -62,6 +67,9 @@ public class CoxLocationTest {
 	
 	@Test
 	public void testCoxLocationWithoutDistance() {
+		cox.getBoat().steerToward(edge.getNextNode(true).getLocation());
+		expectLastCall().once();
+		replay(cox.getBoat());
 		CoxLocation cl = new CoxLocation(cox, edge, true);
 		assertTrue(cl instanceof CoxLocation);
 		assertEquals(lane, cl.getLane());
@@ -73,10 +81,13 @@ public class CoxLocationTest {
 	@Test
 	public void testUpdateEdge() throws UnstartedLaneException, CompletedLaneException {
 		LaneEdge<LaneNode> expEdge = lane.getNextEdge(edge.getTarget(), false);
-		CoxLocation cl = new CoxLocation(cox, edge, false);
+		cox.getBoat().steerToward(expEdge.getNextNode(false).getLocation());
+		expectLastCall().once();
 		assertTrue(edge.contains(cox));
 		assertTrue(!expEdge.contains(cox));
+		replay(cox.getBoat());
 		cl.updateEdge(expEdge);
+		verify(cox.getBoat());
 		assertEquals(expEdge, cl.getEdge());
 		assertEquals(20.0, cl.getTillEdgeEnd(), 1E-5);
 		
@@ -87,10 +98,16 @@ public class CoxLocationTest {
 	@Test
 	public void testUpdateEdgeDontUnoccupyCurrent() {
 		LaneEdge<LaneNode> expEdge = lane.getNextEdge(edge.getTarget(), false);
-		CoxLocation cl = new CoxLocation(cox, edge, false);
+		cox.getBoat().steerToward(expEdge.getNextNode(false).getLocation());
+		expectLastCall().once();
+		
 		assertTrue(edge.contains(cox));
 		assertTrue(!expEdge.contains(cox));
+		
+		replay(cox.getBoat());
 		cl.updateEdge(expEdge, false);
+		verify(cox.getBoat());
+		
 		assertEquals(expEdge, cl.getEdge());
 		assertEquals(20.0, cl.getTillEdgeEnd(), 1E-5);
 		
@@ -100,30 +117,41 @@ public class CoxLocationTest {
 	
 	@Test
 	public void testMoveToEdgeEnd() {
-		CoxLocation cl = new CoxLocation(cox, edge, false);
 		assertTrue(cl.getTillEdgeEnd() > 5);
+		cox.getBoat().move(20.0);
+		expectLastCall().once();
+		replay(cox.getBoat());
 		cl.moveToEdgeEnd();
+		verify(cox.getBoat());
 		assertEquals(0,cl.getTillEdgeEnd(),1E-5);
 	}
 	
 	@Test
 	public void testMoveAlongEdge() {
 		assertEquals(20, cl.getTillEdgeEnd(), 1E-5);
+		cox.getBoat().move(3.5);
+		expectLastCall().once();
+		replay(cox.getBoat());
 		cl.moveAlongEdge(3.5);
+		verify(cox.getBoat());
 		assertEquals(16.5, cl.getTillEdgeEnd(), 1E-5);
 	}
 	
 	@Test
 	public void testToggleUpstream() {
 		assertTrue(!cl.headingUpstream());
+		replay(cox.getBoat());
 		cl.toggleUpstream();
+		verify(cox.getBoat());
 		assertTrue(cl.headingUpstream());
 	}
 	
 	@Test
 	public void testGetDestinationNode() {
 		assertEquals(edge.getTarget(), cl.getDestinationNode());
+		replay(cox.getBoat());
 		cl.toggleUpstream();
+		verify(cox.getBoat());
 		assertEquals(edge.getSource(), cl.getDestinationNode());
 	}
 	
@@ -134,6 +162,8 @@ public class CoxLocationTest {
 		
 		BoatAgent boat = cox.getBoat();
 		expect(boat.getLocation()).andReturn(new NdPoint(15,20)).once();
+		boat.steerToward(change_edge.getNextNode(false).getLocation());
+		expectLastCall().once();
 		replay(boat);
 		cl.updateEdge(change_edge, false);
 		verify(cox.getBoat());

@@ -34,7 +34,6 @@ public class CoxAgent {
 		//and point the boat in the correct direction
 		LaneEdge<LaneNode> launchEdge = launchLane.getNextEdge(launchNode, false);
 		location = new CoxLocation(this, launchEdge, false);
-		boat.steerToward(location.getDestinationNode().getLocation());
 	}
 	
 	//BEHAVIOUR

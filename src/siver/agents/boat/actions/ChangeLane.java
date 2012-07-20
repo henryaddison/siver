@@ -69,7 +69,6 @@ public abstract class ChangeLane extends Action {
 		
 		targetLane.getNet().addEdge(edge);
 		location.updateEdge(edge, false);
-		boat.steerToward(destinationNode.getLocation());
 	}
 	
 	protected abstract void directionSpecificSetup() throws NoLaneFound;

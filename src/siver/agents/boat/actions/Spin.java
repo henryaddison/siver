@@ -32,7 +32,6 @@ public class Spin extends Action {
 		
 		LaneEdge<LaneNode> new_edge = spin_to.getNextEdge(spin_target, location.headingUpstream());
 		location.updateEdge(new_edge);
-		boat.steerToward(new_edge.getNextNode(location.headingUpstream()).getLocation());
 	}
 
 }

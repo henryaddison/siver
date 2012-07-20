@@ -18,8 +18,11 @@ public class CoxLocation {
 	//The cox object this location refers to
 	private CoxAgent cox;
 	
+	private BoatAgent boat;
+	
 	public CoxLocation(CoxAgent cox, LaneEdge<LaneNode> e, boolean up) {
 		this.cox = cox;
+		boat = cox.getBoat();
 		upstream = up;
 		updateEdge(e);
 	}
@@ -46,14 +49,18 @@ public class CoxLocation {
 		current_edge = new_edge;
 		till_edge_end = new_edge.getWeight();
 		
+		boat.steerToward(getDestinationNode().getLocation());
+		
 		new_edge.addCox(cox);
 	}
 	
 	public void moveToEdgeEnd() {
+		boat.move(till_edge_end);
 		till_edge_end = 0;
 	}
 	
 	public void moveAlongEdge(double distance) {
+		boat.move(distance);
 		till_edge_end -= distance;
 	}
 	
