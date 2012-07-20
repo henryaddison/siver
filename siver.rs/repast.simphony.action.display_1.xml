@@ -3,30 +3,38 @@
   <type>TWO_D</type>
   <styles>
     <entry>
-      <string>siver.river.River</string>
-      <string>siver.styles.RiverStyle</string>
-    </entry>
-    <entry>
       <string>siver.agents.boat.BoatAgent</string>
       <string>siver.styles.BoatStyle</string>
+    </entry>
+    <entry>
+      <string>siver.river.River</string>
+      <string>siver.styles.RiverStyle</string>
     </entry>
     <entry>
       <string>siver.agents.BoatHouse</string>
       <string>siver.styles.BoatHouseStyle</string>
     </entry>
+    <entry>
+      <string>siver.river.lane.Crash</string>
+      <string>repast.simphony.visualization.editedStyle.EditedStyle2D</string>
+    </entry>
   </styles>
   <editedStyles>
-    <entry>
-      <string>siver.river.River</string>
-      <null/>
-    </entry>
     <entry>
       <string>siver.agents.boat.BoatAgent</string>
       <null/>
     </entry>
     <entry>
+      <string>siver.river.River</string>
+      <null/>
+    </entry>
+    <entry>
       <string>siver.agents.BoatHouse</string>
       <null/>
+    </entry>
+    <entry>
+      <string>siver.river.lane.Crash</string>
+      <string>siver.river.lane.Crash.style_0.xml</string>
     </entry>
   </editedStyles>
   <netStyles/>
@@ -44,16 +52,20 @@
   <layoutInterval>0</layoutInterval>
   <layerOrder>
     <entry>
-      <string>siver.river.River</string>
-      <int>0</int>
-    </entry>
-    <entry>
       <string>siver.agents.boat.BoatAgent</string>
       <int>1</int>
     </entry>
     <entry>
+      <string>siver.river.River</string>
+      <int>0</int>
+    </entry>
+    <entry>
       <string>siver.agents.BoatHouse</string>
       <int>2</int>
+    </entry>
+    <entry>
+      <string>siver.river.lane.Crash</string>
+      <int>3</int>
     </entry>
   </layerOrder>
   <projections>
