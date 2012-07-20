@@ -8,7 +8,7 @@ import siver.agents.boat.actions.*;
 
 public class CoxAgent {
 	//The boat the cox is controlling.
-	private BoatAgent boat;
+	protected BoatAgent boat;
 	//distance that can be travelled this tick
 	private double tick_distance_remaining;
 	
@@ -16,7 +16,7 @@ public class CoxAgent {
 	private int desired_gear;
 	
 	private Action action;
-	private CoxLocation location;
+	protected CoxLocation location;
 	
 	public CoxAgent() {
 	}
@@ -38,8 +38,6 @@ public class CoxAgent {
 	}
 	
 	//BEHAVIOUR
-	
-	//Temporal behaviour method - how to react as time changes, i.e. at each tick.
 	@ScheduledMethod(start = 1, interval = 1, shuffle=true, priority=10)
 	public void step() {
 		takeAction();

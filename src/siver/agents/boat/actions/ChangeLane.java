@@ -64,11 +64,11 @@ public abstract class ChangeLane extends Action {
 			target = startingNode;
 		}
 		
-		LaneChangeEdge<LaneNode> edge = new LaneChangeEdge<LaneNode>(source, target);
+		LaneChangeEdge<LaneNode> edge = new LaneChangeEdge<LaneNode>(source, target, startLane);
 		targetLane.getContext().add(startingNode);
 		
 		targetLane.getNet().addEdge(edge);
-		location.updateEdge(edge);
+		location.updateEdge(edge, false);
 		boat.steerToward(destinationNode.getLocation());
 	}
 	

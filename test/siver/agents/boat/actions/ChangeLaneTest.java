@@ -89,14 +89,15 @@ public abstract class ChangeLaneTest extends ActionTest {
 		
 		Capture<LaneChangeEdge> captured = new Capture<LaneChangeEdge>();
 		
-		mockLocation.updateEdge(capture(captured));
+		mockLocation.updateEdge(capture(captured), eq(false));
 		expectLastCall().once();
 		mockBoat.steerToward(expDestLocation);
 		expectLastCall().once();
 		
 		executeWithMocks();
 		
-		LaneNode srcNode = (LaneNode) captured.getValue().getSource();
+		LaneChangeEdge newEdge = captured.getValue();
+		LaneNode srcNode = (LaneNode) newEdge.getSource();
 		assertTrue(srcNode.isTemporary());
 		assertEquals(river.getMiddle(), ((ChangeLane) action).getStartLane());
 		assertEquals(expDestLane, ((ChangeLane) action).getTargetLane());

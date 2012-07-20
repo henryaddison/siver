@@ -11,17 +11,30 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
+import repast.simphony.space.continuous.NdPoint;
 import siver.context.LaneContext;
+import siver.river.River;
 import siver.river.lane.*;
 import siver.river.lane.Lane.CompletedLaneException;
 import siver.river.lane.Lane.UnstartedLaneException;
 
 public class CoxLocationTest {
+	
+	public class TestCoxAgent extends CoxAgent {
+		public void setLocation(CoxLocation cl) {
+			location = cl;
+		}
+		
+		public void setBoat(BoatAgent b) {
+			boat = b;
+		}
+	}
+
 	private CoxLocation cl;
-	private CoxAgent cox;
+	private TestCoxAgent cox;
 	private LaneEdge<LaneNode> edge;
-	private LaneNode startNode, nextNode;
 	private Lane lane;
+	private River river;
 	
 	@BeforeClass
 	public static void setUpBeforeClass() throws Exception {
@@ -33,14 +46,14 @@ public class CoxLocationTest {
 
 	@Before
 	public void setUp() throws Exception {
-		lane = new Lane(new LaneContext("Test Context"), "Test Lane");
-		lane.start(new Point2D.Double(0,0));
-		lane.extend(0);
-		lane.extend(Math.PI/4.0);
-		startNode = lane.getStartNode();		
+		river = LaneTest.setupRiver();
+		lane = river.getMiddle();
 		edge = lane.getNextEdge(lane.getStartNode(), false);
-		cox = new CoxAgent();
+		cox = new TestCoxAgent();
 		cl = new CoxLocation(cox, edge, false);
+		cox.setLocation(cl);
+		BoatAgent boat = createMock(BoatAgent.class);
+		cox.setBoat(boat);
 	}
 
 	@After
@@ -117,8 +130,13 @@ public class CoxLocationTest {
 	@Test
 	public void testChangingLane() {
 		assertTrue(!cl.changingLane());
-		LaneChangeEdge<LaneNode> change_edge = new LaneChangeEdge<LaneNode>(new LaneNode(10,10,null), new LaneNode(30,20, null));
-		cl.updateEdge(change_edge);
+		LaneChangeEdge<LaneNode> change_edge = new LaneChangeEdge<LaneNode>(new LaneNode(10,10,river.getUpstream()), new LaneNode(30,20, river.getUpstream()), lane);
+		
+		BoatAgent boat = cox.getBoat();
+		expect(boat.getLocation()).andReturn(new NdPoint(15,20)).once();
+		replay(boat);
+		cl.updateEdge(change_edge, false);
+		verify(cox.getBoat());
 		assertTrue(cl.changingLane());
 	}
 }

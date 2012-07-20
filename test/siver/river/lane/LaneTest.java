@@ -183,7 +183,7 @@ public class LaneTest {
 		LaneNode first = startedL.getStartNode();
 		LaneNode second = startedL.getNextEdge(first, false).getTarget();
 		LaneNode tempNode = new LaneNode(50,50, startedL);
-		LaneChangeEdge<LaneNode> temp_edge = new LaneChangeEdge<LaneNode>(second, tempNode);
+		LaneChangeEdge<LaneNode> temp_edge = new LaneChangeEdge<LaneNode>(second, tempNode, null);
 		startedL.getContext().add(tempNode);
 		
 		startedL.getNet().addEdge(temp_edge);
@@ -217,7 +217,7 @@ public class LaneTest {
 		LaneNode third = startedL.getNextEdge(second, false).getTarget();
 		
 		LaneNode tempNode = new TemporaryLaneNode(50,50, startedL);
-		LaneChangeEdge<LaneNode> temp_edge = new LaneChangeEdge<LaneNode>(second, tempNode);
+		LaneChangeEdge<LaneNode> temp_edge = new LaneChangeEdge<LaneNode>(second, tempNode, null);
 		startedL.getContext().add(tempNode);		
 		startedL.getNet().addEdge(temp_edge);
 
@@ -235,7 +235,7 @@ public class LaneTest {
 		LaneNode first = startedL.getStartNode();
 		LaneNode second = startedL.getNextEdge(first, false).getTarget();
 		LaneNode tempNode = new LaneNode(50,50, startedL);
-		LaneChangeEdge<LaneNode> temp_edge = new LaneChangeEdge<LaneNode>(second, tempNode);
+		LaneChangeEdge<LaneNode> temp_edge = new LaneChangeEdge<LaneNode>(second, tempNode, startedL);
 		startedL.getContext().add(tempNode);
 		
 		startedL.getNet().addEdge(temp_edge);
