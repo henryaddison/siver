@@ -28,7 +28,7 @@ public class BoatAgent {
 	private CoxAgent cox;
 	
 	//the current gear and orientation
-	private double angle;
+	private double orientation;
 	private int gear;
 	private double gearMultiplier;
 	
@@ -45,7 +45,7 @@ public class BoatAgent {
 	
 	public void launch(CoxAgent cox, Point2D.Double pt) {
 		//initially the boat points straight up and is going at speed 10
-		this.angle = 0;
+		this.orientation = 0;
 		this.gear = 0;
 		this.cox = cox;
 		
@@ -83,7 +83,7 @@ public class BoatAgent {
 	}
 	
 	public void move(double dist) {
-		space.moveByVector(this, dist, angle, 0);
+		space.moveByVector(this, dist, orientation, 0);
 	}
 	
 	public void steerToward(Point2D.Double pt) {
@@ -94,11 +94,11 @@ public class BoatAgent {
 	
 	//GETTERS AND SETTERS
 	public double getAngle() {
-		return angle;
+		return orientation;
 	}
 	
 	public void setAngle(double angle) {
-		this.angle = angle;
+		this.orientation = angle;
 	}
 	
 	public int getGear() {
