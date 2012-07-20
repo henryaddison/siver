@@ -37,10 +37,16 @@ public class CoxLocation {
 	}
 	
 	public void updateEdge(LaneEdge<LaneNode> new_edge) {
-		if(current_edge != null) current_edge.removeCox(cox);
-		new_edge.addCox(cox);
+		updateEdge(new_edge, true);
+	}
+	
+	public void updateEdge(LaneEdge<LaneNode> new_edge, boolean unoccupy_current) {
+		if(unoccupy_current && (current_edge != null)) current_edge.removeCox(cox);
+		
 		current_edge = new_edge;
 		till_edge_end = new_edge.getWeight();
+		
+		new_edge.addCox(cox);
 	}
 	
 	public void moveToEdgeEnd() {

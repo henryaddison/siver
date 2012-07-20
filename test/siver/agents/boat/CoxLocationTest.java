@@ -1,5 +1,6 @@
 package siver.agents.boat;
 
+import static org.easymock.EasyMock.*;
 import static org.junit.Assert.*;
 
 import java.awt.geom.Point2D;
@@ -60,11 +61,29 @@ public class CoxLocationTest {
 	public void testUpdateEdge() throws UnstartedLaneException, CompletedLaneException {
 		LaneEdge<LaneNode> expEdge = lane.getNextEdge(edge.getTarget(), false);
 		CoxLocation cl = new CoxLocation(cox, edge, false);
+		assertTrue(edge.contains(cox));
+		assertTrue(!expEdge.contains(cox));
 		cl.updateEdge(expEdge);
 		assertEquals(expEdge, cl.getEdge());
 		assertEquals(20.0, cl.getTillEdgeEnd(), 1E-5);
+		
+		assertTrue(!edge.contains(cox));
+		assertTrue(expEdge.contains(cox));
 	}
 	
+	@Test
+	public void testUpdateEdgeDontUnoccupyCurrent() {
+		LaneEdge<LaneNode> expEdge = lane.getNextEdge(edge.getTarget(), false);
+		CoxLocation cl = new CoxLocation(cox, edge, false);
+		assertTrue(edge.contains(cox));
+		assertTrue(!expEdge.contains(cox));
+		cl.updateEdge(expEdge, false);
+		assertEquals(expEdge, cl.getEdge());
+		assertEquals(20.0, cl.getTillEdgeEnd(), 1E-5);
+		
+		assertTrue(edge.contains(cox));
+		assertTrue(expEdge.contains(cox));
+	}
 	
 	@Test
 	public void testMoveToEdgeEnd() {
