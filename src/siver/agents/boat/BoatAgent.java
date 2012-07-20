@@ -33,11 +33,11 @@ public class BoatAgent {
 	private ContinuousSpace<Object> space;
 	private Context<Object> context;
 	
-	public BoatAgent(River river, Context<Object> context, ContinuousSpace<Object> space) {
+	public BoatAgent(River river, Context<Object> context, ContinuousSpace<Object> space, double gearMult) {
 		this.river = river;
 		this.space = space;
 		this.context = context;
-		this.gearMultiplier = 0.5;
+		this.gearMultiplier = gearMult;
 	}
 	
 	public void launch(CoxAgent cox, Point2D.Double pt) {

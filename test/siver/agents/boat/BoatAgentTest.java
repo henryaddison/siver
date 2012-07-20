@@ -38,7 +38,7 @@ public class BoatAgentTest {
 		mockSpace = EasyMock.createMock(ContinuousSpace.class);
 		mockRiver = EasyMock.createMock(River.class);
 		mockCox = EasyMock.createMock(CoxAgent.class);
-		boat = new BoatAgent(mockRiver, mockContext, mockSpace);
+		boat = new BoatAgent(mockRiver, mockContext, mockSpace, 0.5);
 	}
 
 	@After
