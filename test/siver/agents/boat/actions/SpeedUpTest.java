@@ -32,7 +32,7 @@ public class SpeedUpTest extends ActionTest {
 
 	@Test
 	public void testExecute() {
-		mockBoat.alterSpeed(0.5);
+		mockBoat.shiftUp();
 		expectLastCall().once();
 		
 		replay(mockBoat);

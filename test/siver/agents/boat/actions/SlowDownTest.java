@@ -35,7 +35,7 @@ public class SlowDownTest extends ActionTest {
 
 	@Test
 	public void testExecute() {
-		mockBoat.alterSpeed(-1);
+		mockBoat.shiftDown();
 		expectLastCall().once();
 		
 		replay(mockBoat);

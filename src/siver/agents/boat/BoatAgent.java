@@ -24,9 +24,10 @@ public class BoatAgent {
 	private River river;
 	private CoxAgent cox;
 	
-	//the current speed, orientation
+	//the current gear and orientation
 	private double angle;
-	private double speed;
+	private int gear;
+	private double gearMultiplier;
 	
 	//keep a reference of the space the boat is in for easier movement
 	private ContinuousSpace<Object> space;
@@ -36,12 +37,13 @@ public class BoatAgent {
 		this.river = river;
 		this.space = space;
 		this.context = context;
+		this.gearMultiplier = 0.5;
 	}
 	
 	public void launch(CoxAgent cox, Point2D.Double pt) {
 		//initially the boat points straight up and is going at speed 10
 		this.angle = 0;
-		this.speed = 0;
+		this.gear = 0;
 		this.cox = cox;
 		
 		space.moveTo(this, pt.getX(), pt.getY());
@@ -96,16 +98,31 @@ public class BoatAgent {
 		this.angle = angle;
 	}
 	
+	public int getGear() {
+		return gear;
+	}
+	
+	public void setGear(int newValue) {
+		if(newValue < 0) {
+			gear = 0;
+		} else if(newValue > 10) {
+			gear = 10;
+		} else {
+			gear = newValue;
+		}
+		
+	}
+	
+	public void shiftUp() {
+		setGear(gear+1);
+	}
+	
+	public void shiftDown() {
+		setGear(gear-1);
+	}
+	
 	public double getSpeed() {
-		return speed;
-	}
-	
-	public void setSpeed(double new_speed) {
-		this.speed = new_speed;
-	}
-	
-	public void alterSpeed(double variation) {
-		speed += variation;
+		return gear*gearMultiplier;
 	}
 	
 	public NdPoint getLocation() {

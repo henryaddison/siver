@@ -13,7 +13,7 @@ public class Spin extends Action {
 	
 	@Override
 	public void execute() {		
-		boat.setSpeed(0);
+		boat.setGear(0);
 		cox.setTickDistanceRemaining(0);
 		
 		LaneNode spin_target = null;

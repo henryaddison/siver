@@ -104,22 +104,53 @@ public class BoatAgentTest {
 	}
 
 	@Test
-	public void testSetAndGetSpeed() {
-		boat.setSpeed(3);
-		assertEquals(3, boat.getSpeed(), 1E-5);
+	public void testGetSpeed() {
+		boat.setGear(3);
+		assertEquals(1.5, boat.getSpeed(), 1E-5);
 		
-		boat.setSpeed(5);
-		assertEquals(5, boat.getSpeed(), 1E-5);
+		boat.setGear(5);
+		assertEquals(2.5, boat.getSpeed(), 1E-5);
 	}
 	
 	@Test
-	public void alterSpeed() {
-		boat.setSpeed(3);
-		assertEquals(3, boat.getSpeed(), 1E-5);
-		boat.alterSpeed(0.5);
-		assertEquals(3.5, boat.getSpeed(), 1E-5);
-		boat.alterSpeed(-1);
-		assertEquals(2.5, boat.getSpeed(), 1E-5);
+	public void testSetAndGetGear() {
+		boat.setGear(3);
+		assertEquals(3, boat.getGear());
+		
+		boat.setGear(5);
+		assertEquals(5, boat.getGear());
+		
+		boat.setGear(-1);
+		assertEquals(0, boat.getGear());
+		
+		boat.setGear(11);
+		assertEquals(10, boat.getGear());
+	}
+	
+	@Test
+	public void testShiftGear() {
+		boat.setGear(3);
+		assertEquals(3, boat.getGear());
+		boat.shiftUp();
+		assertEquals(4, boat.getGear());
+		
+		boat.shiftDown();
+		assertEquals(3, boat.getGear());
+		
+		boat.setGear(0);
+		assertEquals(0, boat.getGear());
+		boat.shiftDown();
+		assertEquals(0, boat.getGear());
+		boat.shiftUp();
+		assertEquals(1, boat.getGear());
+		
+		
+		boat.setGear(10);
+		assertEquals(10, boat.getGear());
+		boat.shiftUp();
+		assertEquals(10, boat.getGear());
+		boat.shiftDown();
+		assertEquals(9, boat.getGear());
 	}
 	
 	@Test

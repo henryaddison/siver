@@ -8,11 +8,9 @@ public class SpeedUp extends Action {
 		super(cox);
 	}
 	
-	private static final double increment = 0.5;
-	
 	@Override
 	public void execute() {
-		boat.alterSpeed(increment);
+		boat.shiftUp();
 	}
 
 }
