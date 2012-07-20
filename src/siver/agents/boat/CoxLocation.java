@@ -1,6 +1,7 @@
 package siver.agents.boat;
 
 import siver.river.lane.Lane;
+import siver.river.lane.LaneChangeEdge;
 import siver.river.lane.LaneEdge;
 import siver.river.lane.LaneNode;
 
@@ -60,6 +61,10 @@ public class CoxLocation {
 	
 	public LaneNode getDestinationNode() {
 		return current_edge.getNextNode(upstream);
+	}
+	
+	public boolean changingLane() {
+		return (current_edge instanceof LaneChangeEdge);
 	}
 }
 

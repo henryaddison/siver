@@ -91,6 +91,16 @@ public class CoxLocationTest {
 	@Test
 	public void testGetDestinationNode() {
 		assertEquals(edge.getTarget(), cl.getDestinationNode());
+		cl.toggleUpstream();
+		assertEquals(edge.getSource(), cl.getDestinationNode());
+	}
+	
+	@Test
+	public void testChangingLane() {
+		assertTrue(!cl.changingLane());
+		LaneChangeEdge<LaneNode> change_edge = new LaneChangeEdge<LaneNode>(new LaneNode(10,10,null), new LaneNode(30,20, null));
+		cl.updateEdge(change_edge);
+		assertTrue(cl.changingLane());
 	}
 }
 
