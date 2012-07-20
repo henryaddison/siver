@@ -250,7 +250,7 @@ public class LaneTest {
 		startedL.getNextNode(startedL.getStartNode(), false);
 	}
 	
-	private River setupRiver() {
+	public static River setupRiver() {
 		Context<Object> context = new DefaultContext();
 		
 		ContinuousSpace<Object> space = ContinuousSpaceFactoryFinder.createContinuousSpaceFactory(null)
