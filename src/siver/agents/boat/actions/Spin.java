@@ -33,6 +33,7 @@ public class Spin extends Action {
 	
 	@Override
 	public boolean typeSpecificExecute() {
+		countDown--;
 		boat.setGear(0);
 		cox.setTickDistanceRemaining(0);
 		
@@ -54,7 +55,7 @@ public class Spin extends Action {
 		
 		boat.move(step_distance, angle);
 		
-		countDown--;
+		
 		return false;
 	}
 
