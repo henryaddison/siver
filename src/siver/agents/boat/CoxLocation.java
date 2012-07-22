@@ -46,12 +46,12 @@ public class CoxLocation {
 	public void updateEdge(LaneEdge<LaneNode> new_edge, boolean unoccupy_current) {
 		if(unoccupy_current && (current_edge != null)) current_edge.removeCox(cox);
 		
+		new_edge.addCox(cox);
+		
 		current_edge = new_edge;
 		till_edge_end = new_edge.getWeight();
 		
 		boat.steerToward(getDestinationNode().getLocation());
-		
-		new_edge.addCox(cox);
 	}
 	
 	public void moveToEdgeEnd() {
