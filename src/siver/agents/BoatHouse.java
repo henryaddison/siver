@@ -1,5 +1,8 @@
 package siver.agents;
 
+import java.lang.reflect.Constructor;
+import java.lang.reflect.InvocationTargetException;
+
 import repast.simphony.context.Context;
 import repast.simphony.random.RandomHelper;
 import repast.simphony.space.continuous.ContinuousSpace;
@@ -30,11 +33,41 @@ public class BoatHouse {
 	}
 	
 	public void launchBoat() {
+		launchBoat(CoxAgent.class.getName());
+	}
+	
+	public void launchBoat(String coxClassName) {
 		BoatAgent boat = new BoatAgent(river, context, space, 0.5);
 		context.add(boat);
-		CoxAgent cox = new CoxAgent();
-		context.add(cox);
-		cox.launch(boat, getLaunchLane(), RandomHelper.nextIntFromTo(1,10));
+		
+		try {
+			Class cl = Class.forName(coxClassName);
+			Constructor con = cl.getConstructor();
+			CoxAgent cox = (CoxAgent) con.newInstance();
+			context.add(cox);
+			cox.launch(boat, getLaunchLane(), RandomHelper.nextIntFromTo(1,10));
+		} catch (IllegalArgumentException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (InstantiationException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IllegalAccessException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (InvocationTargetException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (SecurityException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		} catch (NoSuchMethodException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		} catch (ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 	
 	public Lane getLaunchLane() {

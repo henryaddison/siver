@@ -1,9 +1,13 @@
 package siver.ui;
 
+import java.util.ArrayList;
+
+import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JPanel;
 
 import siver.agents.BoatHouse;
+import siver.agents.boat.*;
 
 public class UserPanel extends JPanel {
 	
@@ -16,22 +20,34 @@ public class UserPanel extends JPanel {
 	
 	private void initComponents() {
 		
+		setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
+		
 		setBackground(new java.awt.Color(255, 0, 0));
 		
-		JButton launchButton = new JButton();
+		ArrayList<String> coxClassNames = new ArrayList<String>();
+		coxClassNames.add(CoxAgent.class.getName());
+		coxClassNames.add(StartStopCox.class.getName());
+		coxClassNames.add(LaneChangeCox.class.getName());
 		
-		launchButton.setText("Launch Boat");
-		launchButton.setActionCommand("launchBoat");
-		launchButton.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-            	launchButtonActionPerformed(evt);
-            }
-        });
 		
-		add(launchButton);
+		for(String className : coxClassNames) {
+			final String coxClassName = className;
+			
+			JButton launchButton = new JButton();
+			
+			launchButton.setText("Launch Boat with " + coxClassName);
+			launchButton.setActionCommand("launchBoat");
+			launchButton.addActionListener(new java.awt.event.ActionListener() {
+	            public void actionPerformed(java.awt.event.ActionEvent evt) {
+	            	launchButtonActionPerformed(evt, coxClassName);
+	            }
+	        });
+			
+			add(launchButton);
+		}
 	}
 	
-	private void launchButtonActionPerformed(java.awt.event.ActionEvent evt) {
-		boathouse.launchBoat();
+	private void launchButtonActionPerformed(java.awt.event.ActionEvent evt, String coxClassName) {
+		boathouse.launchBoat(coxClassName);
 	}
 }

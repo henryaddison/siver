@@ -15,7 +15,7 @@ public class CoxAgent {
 	//how fast the boat would like to be travelling
 	private int desired_gear;
 	
-	private Action action;
+	protected Action action;
 	protected CoxLocation location;
 	
 	public CoxAgent() {
@@ -66,13 +66,13 @@ public class CoxAgent {
 	 * PREDICATES
 	 */	
 	
-	private boolean atRiversEnd() { 
+	protected boolean atRiversEnd() { 
 		LaneNode node = location.getDestinationNode();
 		LaneEdge<LaneNode> next_edge = node.getLane().getNextEdge(node, location.headingUpstream());
 		return next_edge == null;
 	}
 	
-	private boolean backAtBoatHouse() {
+	protected boolean backAtBoatHouse() {
 		return location.getDestinationNode().equals(location.getLane().getStartNode());
 	}
 	

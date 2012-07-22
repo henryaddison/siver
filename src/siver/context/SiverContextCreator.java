@@ -63,7 +63,7 @@ public class SiverContextCreator implements ContextBuilder<Object> {
 		ScheduleParameters params = ScheduleParameters.createRepeating(1, 100);
 
 		//Schedule the boathouse to launch a boat on the first tick only for now
-		schedule.schedule(params, boatHouse, "launchBoat");
+//		schedule.schedule(params, boatHouse, "launchBoat");
 		
 		RSApplication.getRSApplicationInstance().removeCustomUserPanel();
 		RSApplication.getRSApplicationInstance().addCustomUserPanel(new UserPanel(boatHouse));
