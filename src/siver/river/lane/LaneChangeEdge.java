@@ -17,6 +17,7 @@ public class LaneChangeEdge<T extends LaneNode> extends LaneEdge<T> {
 	
 	@Override
 	public void addCox(CoxAgent cox) {
+		occupyingInStartLane = cox.getLocation().getEdge();
 		occupyingInDestinationLane = destinationLane.edgeNearest(cox.getBoat().getLocation());
 		occupyingInDestinationLane.addCox(cox);
 	}
