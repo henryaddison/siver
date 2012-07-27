@@ -1,41 +1,99 @@
 package siver.river.lane;
 
+import repast.simphony.space.continuous.NdPoint;
 import repast.simphony.space.graph.RepastEdge;
 import siver.agents.boat.CoxAgent;
+import siver.river.lane.Lane.NoNextNode;
 
 public class LaneChangeEdge<T extends LaneNode> extends LaneEdge<T> {
 	private Lane startLane, destinationLane;
 	//need to keep track of which proper edges are currently being occupied while a boat traverses this lane
 	//fortunately can only have one boat on an edge like this at a time so 
-	private LaneEdge<LaneNode> occupyingInDestinationLane, occupyingInStartLane;
+	private LaneEdge<LaneNode> destinationLaneEdge, startLaneEdge;
 	
-	public LaneChangeEdge(T source, T destination, Lane sLane) {
+	
+	public static LaneChangeEdge createLaneChangeBranch(NdPoint startingFrom, LaneEdge<LaneNode> sLaneEdge, boolean upstream, Lane dLane) throws NoNextNode {
+		
+		LaneChangeEdge<LaneNode> return_value = null;
+		
+		LaneEdge<LaneNode> dLaneEdge = dLane.edgeNearest(startingFrom);
+		
+		LaneNode startNode = new TemporaryLaneNode(startingFrom, dLane);
+		dLane.getContext().add(startNode);
+		
+		LaneNode endNode;
+		LaneNode sLNode;
+		LaneNode dLNode;
+		
+		try {
+			dLane.getNthNodeAhead(dLane.nodeNearest(startingFrom), upstream, 6);
+			sLaneEdge.getNextNode(upstream).getLane().getNthNodeAhead(sLaneEdge.getNextNode(upstream), upstream, 6);
+		} catch (NoNextNode e) {
+			throw e;
+		}
+		
+		
+		for(int i = 1; i <= 5; i++) {
+			sLNode = sLaneEdge.getNextNode(upstream);
+			dLNode = dLaneEdge.getNextNode(upstream);
+			
+			
+			if(i < 5) {
+				double x = sLNode.getLocation().getX()*((5-i)/5.0) + dLNode.getLocation().getX()*(i/5.0);
+				double y = sLNode.getLocation().getY()*((5-i)/5.0) + dLNode.getLocation().getY()*(i/5.0);
+				
+				endNode = new TemporaryLaneNode(x,y,dLane);
+				dLane.getContext().add(endNode);
+			} else {
+				endNode = dLNode;
+			}
+			
+			LaneNode source = startNode;
+			LaneNode destination = endNode;
+			if(upstream) {
+				source = endNode;
+				destination = startNode;
+			}
+			
+			LaneChangeEdge<LaneNode> next_edge = new LaneChangeEdge(source, destination, sLaneEdge, dLaneEdge);
+			dLane.getNet().addEdge(next_edge);
+			
+			if(return_value == null) {
+				return_value = next_edge;
+			}
+			
+			dLaneEdge = dLane.getNextEdge(dLNode, upstream);
+			sLaneEdge = sLNode.getLane().getNextEdge(sLNode, upstream);
+			
+			startNode = endNode;
+		}
+		return return_value;
+	}
+	
+	public LaneChangeEdge(T source, T destination, LaneEdge<LaneNode> sLaneEdge, LaneEdge<LaneNode> dLaneEdge) {
 		super(source, destination);
-		this.startLane = sLane;
-		this.destinationLane = source.getLane();
+		this.startLaneEdge = sLaneEdge;
+		this.destinationLaneEdge = dLaneEdge;
+		this.destinationLane = destination.getLane();
 	}
 	
 	@Override
 	public void addCox(CoxAgent cox) {
-		occupyingInStartLane = cox.getLocation().getEdge();
-		occupyingInDestinationLane = destinationLane.edgeNearest(cox.getBoat().getLocation());
-		occupyingInDestinationLane.addCox(cox);
+		startLaneEdge.addCox(cox);
+		destinationLaneEdge.addCox(cox);
 	}
 	
 	@Override
 	public void removeCox(CoxAgent cox) {
-		occupyingInDestinationLane.removeCox(cox);
-		occupyingInStartLane.removeCox(cox);
-		
-		destinationLane.getNet().removeEdge((RepastEdge<LaneNode>) this);
+		startLaneEdge.removeCox(cox);
+		destinationLaneEdge.removeCox(cox);
+
 		
 		//once the cox has left this edge then it will never be used again so we can safely remove 
-		//the edge from the network and the temporary endPoint from the Lane context
-		LaneNode endPoint;
-		endPoint = this.getSource();
-		if(endPoint.isTemporary())	destinationLane.getContext().remove(endPoint);
-		endPoint = this.getTarget();
-		if(endPoint.isTemporary())	destinationLane.getContext().remove(endPoint);
+		//the edge from the network and the temporary Node that we started from on this edge (i.e. the next node in the reverse direction
+		destinationLane.getNet().removeEdge((RepastEdge<LaneNode>) this);
+		destinationLane.getContext().remove(getNextNode(!cox.getLocation().headingUpstream()));
+		
 	}
 	
 	
@@ -44,20 +102,6 @@ public class LaneChangeEdge<T extends LaneNode> extends LaneEdge<T> {
 	//since there's only one boat on this 
 	@Override
 	public void coxMoved(CoxAgent cox) {
-		LaneEdge<LaneNode> newOccupyingInDestinationLane = destinationLane.edgeNearest(cox.getBoat().getLocation());
-		if(newOccupyingInDestinationLane != occupyingInDestinationLane) {
-			occupyingInDestinationLane.removeCox(cox);
-			newOccupyingInDestinationLane.addCox(cox);
-			occupyingInDestinationLane = newOccupyingInDestinationLane;
-		}
-		
-		LaneEdge<LaneNode> newOccupyingInStartLane = startLane.edgeNearest(cox.getBoat().getLocation());
-		if(newOccupyingInStartLane != occupyingInStartLane) {
-			occupyingInStartLane.removeCox(cox);
-			newOccupyingInStartLane.addCox(cox);
-			occupyingInStartLane = newOccupyingInStartLane;
-		}
-		
 		
 	}
 }

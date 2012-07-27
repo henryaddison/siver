@@ -1,10 +1,12 @@
 package siver.agents.boat.actions;
 
+import repast.simphony.space.continuous.NdPoint;
 import siver.agents.boat.CoxAgent;
 import siver.river.River.NoLaneFound;
 import siver.river.lane.Lane;
 import siver.river.lane.Lane.NoNextNode;
 import siver.river.lane.LaneChangeEdge;
+import siver.river.lane.LaneEdge;
 import siver.river.lane.LaneNode;
 import siver.river.lane.TemporaryLaneNode;
 
@@ -45,29 +47,14 @@ public abstract class ChangeLane extends SingleTickAction {
 			return;
 		}
 		
+		LaneChangeEdge<LaneNode> edge;
 		
-		LaneNode startingNode = new TemporaryLaneNode(boat.getLocation(), targetLane);
-		
-		LaneNode nearestNode = targetLane.nodeNearest(boat.getLocation());
-		LaneNode destinationNode;
 		try {
-			destinationNode = targetLane.getNthNodeAhead(nearestNode, location.headingUpstream(), nodes_ahead_to_aim_for);
+			edge = LaneChangeEdge.createLaneChangeBranch(boat.getLocation(), location.getEdge(), location.headingUpstream(), targetLane);
 		} catch (NoNextNode e) {
 			return;
 		}
 		
-		
-		LaneNode source = startingNode;
-		LaneNode target = destinationNode;
-		if(location.headingUpstream()) {
-			source = destinationNode;
-			target = startingNode;
-		}
-		
-		LaneChangeEdge<LaneNode> edge = new LaneChangeEdge<LaneNode>(source, target, startLane);
-		targetLane.getContext().add(startingNode);
-		
-		targetLane.getNet().addEdge(edge);
 		location.updateEdge(edge, false);
 	}
 	
