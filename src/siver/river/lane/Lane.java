@@ -152,8 +152,8 @@ public class Lane extends OutlinedArea {
 		}
 		while(i.hasNext()) {
 			LaneEdge<LaneNode> next_edge = (LaneEdge<LaneNode>) i.next();
-			if(!(next_edge instanceof LaneChangeEdge)) return  next_edge;
-		} 
+			if(node.isTemporary() || !(next_edge instanceof LaneChangeEdge)) return next_edge;
+		}
 		return null;
 	}
 	
