@@ -67,7 +67,6 @@ public class RiverFactory {
 			
 			up.extend(PI/2.0);
 			middle.extend(PI/2.0);
-			middle.extend(PI/2.0);
 			down.extend(PI/2.0);
 			
 			for(int i = 1; i<= 12; i++) {
