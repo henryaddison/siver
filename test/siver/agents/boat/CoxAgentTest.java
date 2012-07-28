@@ -178,4 +178,20 @@ public class CoxAgentTest {
 		assertTrue(cox.isIncapcitated());
 	}
 	
+	@Test
+	public void testRecapcitate() {
+		launchCox();
+		reset(mockBoat);
+		mockBoat.deadStop();
+		expectLastCall().once();
+		
+		replay(mockBoat);
+		cox.incapcitate();
+		
+		assertTrue(cox.isIncapcitated());
+		
+		cox.recapcitate();
+		
+		assertTrue(!cox.isIncapcitated());
+	}
 }

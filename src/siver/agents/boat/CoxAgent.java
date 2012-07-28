@@ -107,6 +107,10 @@ public class CoxAgent {
 		incapcitated = true;
 	}
 	
+	public void recapcitate() {
+		incapcitated = false;
+	}
+	
 	public boolean isIncapcitated() {
 		return incapcitated;
 	}
