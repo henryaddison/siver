@@ -95,4 +95,9 @@ public class LaneChangeEdge<T extends LaneNode> extends LaneEdge<T> {
 		destinationLane.getContext().remove(getNextNode(!cox.getLocation().headingUpstream()));
 		
 	}
+	
+	@Override
+	public boolean isTemporary() {
+		return true;
+	}
 }

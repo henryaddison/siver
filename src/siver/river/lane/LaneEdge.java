@@ -78,4 +78,8 @@ public class LaneEdge<T extends LaneNode> extends RepastEdge<LaneNode> {
 	public Crash getCrash() {
 		return crash;
 	}
+	
+	public boolean isTemporary() {
+		return false;
+	}
 }

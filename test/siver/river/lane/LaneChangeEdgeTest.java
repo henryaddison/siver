@@ -8,8 +8,9 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
-public class LaneChangeEdgeTest {
-
+public class LaneChangeEdgeTest extends EdgeTester {
+	private LaneChangeEdge e;
+	
 	@BeforeClass
 	public static void setUpBeforeClass() throws Exception {
 	}
@@ -19,7 +20,13 @@ public class LaneChangeEdgeTest {
 	}
 
 	@Before
+	@Override
 	public void setUp() throws Exception {
+		super.setUp();
+		
+		LaneNode s = new LaneNode(0,0,null);
+		LaneNode d = new LaneNode(3,4,null);
+		e = new LaneChangeEdge<LaneNode>(s,d, null, null);
 	}
 
 	@After
@@ -39,6 +46,11 @@ public class LaneChangeEdgeTest {
 	@Test
 	public void testLaneChangeEdge() {
 		fail("Not yet implemented");
+	}
+	
+	@Test
+	public void testIsTemporary() {
+		assertTrue(e.isTemporary());
 	}
 
 }

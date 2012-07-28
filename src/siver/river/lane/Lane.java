@@ -152,7 +152,10 @@ public class Lane extends OutlinedArea {
 		}
 		while(i.hasNext()) {
 			LaneEdge<LaneNode> next_edge = (LaneEdge<LaneNode>) i.next();
-			if(node.isTemporary() || !(next_edge instanceof LaneChangeEdge)) return next_edge;
+			//return this next edge if we looking from a temporary node or if the edge isn't temporary
+			//a temporary node will only ever have one edge in and one edge out
+			//a non-temporary node will only have have one non-temporary edge in and out
+			if(node.isTemporary() || !(next_edge.isTemporary())) return next_edge;
 		}
 		return null;
 	}
