@@ -14,11 +14,11 @@ public class Spin extends Action {
 	
 	private int countDown;
 	
-	private static final int STEPS = 10;
+	private static final int STEPS = 60;
 	
 	public Spin(CoxAgent cox) {
 		super(cox);
-		countDown = 10;
+		countDown = STEPS;
 		if(location.headingUpstream()) {
 			destinationLane = boat.getRiver().getDownstream();
 		} else {

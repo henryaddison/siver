@@ -52,7 +52,7 @@ public class SpinTest extends ActionTest {
 	
 	@Test
 	public void testFinalExecute() {
-		runExecute(9);
+		runExecute(59);
 		
 		reset(mockCox);
 		reset(mockBoat);
@@ -96,16 +96,16 @@ public class SpinTest extends ActionTest {
 		
 		
 		for(int i = 1; i<= runs; i++) {
-			mockBoat.setAngle(i*Math.PI/10.0);
+			mockBoat.setAngle(eq(i*Math.PI/60.0, 1E-5));
 			expectLastCall().once();
 			
-			NdPoint boatLoc = new NdPoint(10,30-2.0*i);
+			NdPoint boatLoc = new NdPoint(10,30-(i*20.0/60.0));
 			expect(mockBoat.getLocation()).andReturn(boatLoc).once();
 			
-			expect(mockSpace.getDisplacement(boatLoc, new NdPoint(10,10))).andReturn(new double[]{0,-20+2.0*i}).once();
+			expect(mockSpace.getDisplacement(boatLoc, new NdPoint(10,10))).andReturn(new double[]{0,-20+(i*20.0/60.0)}).once();
 		}
 		
-		mockBoat.move(2.0, -Math.PI/2.0);
+		mockBoat.move(eq(20.0/60.0, 1E-5), eq(-Math.PI/2.0, 1E-5));
 		expectLastCall().times(runs);
 		
 		replay(mockSpace);
