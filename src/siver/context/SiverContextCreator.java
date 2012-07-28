@@ -27,9 +27,15 @@ public class SiverContextCreator implements ContextBuilder<Object> {
 	public static Context<Object> getContext() {
 		return mainContext;
 	}
+	public static void setContext(Context<Object> context) {
+		mainContext = context;
+	}
 	private static ContinuousSpace<Object> space;
 	public static ContinuousSpace<Object> getSpace() {
 		return space;
+	}
+	public static void setSpace(ContinuousSpace<Object> s) {
+		space = s;
 	}
 	
 	/* (non-Javadoc)
