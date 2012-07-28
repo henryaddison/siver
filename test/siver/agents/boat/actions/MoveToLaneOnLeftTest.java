@@ -48,9 +48,11 @@ public class MoveToLaneOnLeftTest extends ChangeLaneTest {
 	
 	@Test
 	public void testExecuteNotEnoughSpaceBeforeRiverEnd() {
-		expect(mockBoat.getLocation()).andStubReturn(new NdPoint(150,200));
+		NdPoint startLoc = new NdPoint(150,200);
+		expect(mockBoat.getLocation()).andStubReturn(startLoc);
 		expect(mockLocation.changingLane()).andReturn(false).once();
 		expect(mockLocation.getLane()).andReturn(river.getMiddle());
+		expect(mockLocation.getEdge()).andReturn(river.getMiddle().edgeNearest(startLoc));
 		
 		executeWithMocks();
 	}

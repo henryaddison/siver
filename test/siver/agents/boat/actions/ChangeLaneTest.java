@@ -67,9 +67,11 @@ public abstract class ChangeLaneTest extends ActionTest {
 	}
 	
 	protected void runExecute(Lane startingLane, Lane expDestLane, Point2D.Double expDestLocation) {
-		expect(mockBoat.getLocation()).andStubReturn(new NdPoint(15,20));
+		NdPoint startLoc = new NdPoint(15,20);
+		expect(mockBoat.getLocation()).andStubReturn(startLoc);
 		expect(mockLocation.changingLane()).andReturn(false).once();
 		expect(mockLocation.getLane()).andReturn(startingLane);
+		expect(mockLocation.getEdge()).andReturn(startingLane.edgeNearest(startLoc));
 		
 		Capture<LaneChangeEdge> captured = new Capture<LaneChangeEdge>();
 		
@@ -78,7 +80,7 @@ public abstract class ChangeLaneTest extends ActionTest {
 		
 		executeWithMocks();
 		
-		LaneChangeEdge newEdge = captured.getValue();
+		LaneChangeEdge<LaneNode> newEdge = captured.getValue();
 		LaneNode srcNode = (LaneNode) newEdge.getSource();
 		assertTrue(srcNode.isTemporary());
 		assertEquals(river.getMiddle(), ((ChangeLane) action).getStartLane());

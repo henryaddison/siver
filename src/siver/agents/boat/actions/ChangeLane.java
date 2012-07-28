@@ -1,14 +1,11 @@
 package siver.agents.boat.actions;
 
-import repast.simphony.space.continuous.NdPoint;
 import siver.agents.boat.CoxAgent;
 import siver.river.River.NoLaneFound;
 import siver.river.lane.Lane;
 import siver.river.lane.Lane.NoNextNode;
 import siver.river.lane.LaneChangeEdge;
-import siver.river.lane.LaneEdge;
 import siver.river.lane.LaneNode;
-import siver.river.lane.TemporaryLaneNode;
 
 public abstract class ChangeLane extends SingleTickAction {
 	final protected static int nodes_ahead_to_aim_for = 6;
