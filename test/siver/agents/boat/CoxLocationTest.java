@@ -157,16 +157,24 @@ public class CoxLocationTest {
 	
 	@Test
 	public void testChangingLane() {
+		LaneEdge<LaneNode> mockEdge= createMock(LaneEdge.class);
+		
 		assertTrue(!cl.changingLane());
-		LaneChangeEdge<LaneNode> change_edge = new LaneChangeEdge<LaneNode>(new LaneNode(10,10,river.getUpstream()), new LaneNode(30,20, river.getUpstream()), lane);
+		LaneChangeEdge<LaneNode> change_edge = new LaneChangeEdge<LaneNode>(new LaneNode(10,10,river.getUpstream()), new LaneNode(30,20, river.getUpstream()), mockEdge , mockEdge);
 		
 		BoatAgent boat = cox.getBoat();
-		expect(boat.getLocation()).andReturn(new NdPoint(15,20)).once();
 		boat.steerToward(change_edge.getNextNode(false).getLocation());
 		expectLastCall().once();
+		
+		mockEdge.addCox(cox);
+		expectLastCall().times(2);
+		
+		
 		replay(boat);
+		replay(mockEdge);
 		cl.updateEdge(change_edge, false);
 		verify(cox.getBoat());
+		verify(mockEdge);
 		assertTrue(cl.changingLane());
 	}
 }
