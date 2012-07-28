@@ -1,13 +1,21 @@
 package siver.river.lane;
 
-public class Crash<T extends LaneEdge> {
-	private T edge;
+import siver.agents.boat.CoxAgent;
+
+public class Crash {
+	private LaneEdge edge;
 	
-	public Crash(T e) {
+	public Crash(LaneEdge e) {
 		edge = e;
 	}
 	
-	public T getEdge() {
+	public void reset() {
+		for(CoxAgent c : edge.getCoxes()) {
+			c.incapcitate();
+		}
+	}
+	
+	public LaneEdge getEdge() {
 		return edge;
 	}
 }
