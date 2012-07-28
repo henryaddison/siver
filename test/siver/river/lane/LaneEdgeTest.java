@@ -9,6 +9,8 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
+import siver.agents.boat.CoxAgent;
+
 public class LaneEdgeTest extends EdgeTester{
 	
 	private LaneEdge e;
@@ -134,5 +136,29 @@ public class LaneEdgeTest extends EdgeTester{
 	@Test
 	public void testIsTemporary() {
 		assertTrue(!e.isTemporary());
+	}
+	
+	@Test
+	public void testCrashingCoxes() {
+		CoxAgent first = createMock(CoxAgent.class);
+		CoxAgent second = createMock(CoxAgent.class);
+		
+		replay(first);
+		e.addCox(first);
+		verify(first);
+		
+		reset(first);
+		
+		expect(first.getBoat()).andStubReturn(cox1.getBoat());
+		expect(second.getBoat()).andStubReturn(cox2.getBoat());
+		
+		second.incapcitate();
+		expectLastCall().once();
+		first.incapcitate();
+		expectLastCall().once();
+		
+		replay(first, second);
+		e.addCox(second);
+		verify(first, second);
 	}
 }

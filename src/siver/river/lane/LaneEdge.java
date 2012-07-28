@@ -53,6 +53,9 @@ public class LaneEdge extends RepastEdge<LaneNode> {
 				}
 			}
 			coxesOnEdge.add(cox);
+			if(crash != null) {
+				crash.reset();
+			}
 		}
 	}
 	
@@ -81,5 +84,9 @@ public class LaneEdge extends RepastEdge<LaneNode> {
 	
 	public boolean isTemporary() {
 		return false;
+	}
+	
+	public ArrayList<CoxAgent> getCoxes() {
+		return coxesOnEdge;
 	}
 }

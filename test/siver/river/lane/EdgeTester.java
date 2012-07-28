@@ -38,8 +38,14 @@ public class EdgeTester {
 		BoatAgent mockBoat = createMock(BoatAgent.class);
 		expect(mockBoat.getLocation()).andStubReturn(new NdPoint(10,20));
 		expect(cox1.getBoat()).andStubReturn(mockBoat);
+		cox1.incapcitate();
+		expectLastCall().anyTimes();
 		expect(cox2.getBoat()).andStubReturn(mockBoat);
+		cox2.incapcitate();
+		expectLastCall().anyTimes();
 		expect(cox3.getBoat()).andStubReturn(mockBoat);
+		cox3.incapcitate();
+		expectLastCall().anyTimes();
 		
 		replay(cox1, cox2, cox3, mockBoat, mockContext, mockSpace);
 	}
