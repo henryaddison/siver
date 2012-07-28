@@ -32,7 +32,7 @@ public class CoxLocationTest {
 
 	private CoxLocation cl;
 	private TestCoxAgent cox;
-	private LaneEdge<LaneNode> edge;
+	private LaneEdge edge;
 	private Lane lane;
 	private River river;
 	
@@ -80,7 +80,7 @@ public class CoxLocationTest {
 	
 	@Test
 	public void testUpdateEdge() throws UnstartedLaneException, CompletedLaneException {
-		LaneEdge<LaneNode> expEdge = lane.getNextEdge(edge.getTarget(), false);
+		LaneEdge expEdge = lane.getNextEdge(edge.getTarget(), false);
 		cox.getBoat().steerToward(expEdge.getNextNode(false).getLocation());
 		expectLastCall().once();
 		assertTrue(edge.contains(cox));
@@ -97,7 +97,7 @@ public class CoxLocationTest {
 	
 	@Test
 	public void testUpdateEdgeDontUnoccupyCurrent() {
-		LaneEdge<LaneNode> expEdge = lane.getNextEdge(edge.getTarget(), false);
+		LaneEdge expEdge = lane.getNextEdge(edge.getTarget(), false);
 		cox.getBoat().steerToward(expEdge.getNextNode(false).getLocation());
 		expectLastCall().once();
 		
@@ -157,10 +157,10 @@ public class CoxLocationTest {
 	
 	@Test
 	public void testChangingLane() {
-		LaneEdge<LaneNode> mockEdge= createMock(LaneEdge.class);
+		LaneEdge mockEdge= createMock(LaneEdge.class);
 		
 		assertTrue(!cl.changingLane());
-		LaneChangeEdge<LaneNode> change_edge = new LaneChangeEdge<LaneNode>(new LaneNode(10,10,river.getUpstream()), new LaneNode(30,20, river.getUpstream()), mockEdge , mockEdge);
+		LaneChangeEdge change_edge = new LaneChangeEdge(new LaneNode(10,10,river.getUpstream()), new LaneNode(30,20, river.getUpstream()), mockEdge , mockEdge);
 		
 		BoatAgent boat = cox.getBoat();
 		boat.steerToward(change_edge.getNextNode(false).getLocation());

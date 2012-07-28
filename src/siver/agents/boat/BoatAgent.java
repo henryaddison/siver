@@ -69,7 +69,7 @@ public class BoatAgent {
 			
 			LaneNode steer_from = location.getDestinationNode();
 			Lane lane = steer_from.getLane();
-			LaneEdge<LaneNode> next_edge = lane.getNextEdge(steer_from, location.headingUpstream());
+			LaneEdge next_edge = lane.getNextEdge(steer_from, location.headingUpstream());
 			
 			location.updateEdge(next_edge);
 			run();

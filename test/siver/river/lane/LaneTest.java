@@ -167,12 +167,12 @@ public class LaneTest {
 		startedL.extend(0);
 		
 		LaneNode sln = startedL.getStartNode();
-		LaneEdge<LaneNode> edge = startedL.getNextEdge(sln, false);
+		LaneEdge edge = startedL.getNextEdge(sln, false);
 		assertSame(sln, edge.getSource());
 		assertEquals(new Point2D.Double(20,10), edge.getTarget().getLocation());
 		
-		LaneEdge<LaneNode> same_edge = startedL.getNextEdge(edge.getTarget(), true);
-		LaneEdge<LaneNode> another_edge = startedL.getNextEdge(edge.getTarget(), false);
+		LaneEdge same_edge = startedL.getNextEdge(edge.getTarget(), true);
+		LaneEdge another_edge = startedL.getNextEdge(edge.getTarget(), false);
 		assertSame(same_edge, edge);
 		assertNotSame(another_edge, edge);
 	}
@@ -183,13 +183,13 @@ public class LaneTest {
 		LaneNode first = startedL.getStartNode();
 		LaneNode second = startedL.getNextEdge(first, false).getTarget();
 		LaneNode tempNode = new LaneNode(50,50, startedL);
-		LaneChangeEdge<LaneNode> temp_edge = new LaneChangeEdge<LaneNode>(second, tempNode, null, null);
+		LaneChangeEdge temp_edge = new LaneChangeEdge(second, tempNode, null, null);
 		startedL.getContext().add(tempNode);
 		
 		startedL.getNet().addEdge(temp_edge);
 		startedL.extend(0);
 		
-		LaneEdge<LaneNode> edge = startedL.getNextEdge(second, false);
+		LaneEdge edge = startedL.getNextEdge(second, false);
 		assertSame(second, edge.getSource());
 		assertEquals(new Point2D.Double(40,10), edge.getTarget().getLocation());
 		
@@ -217,7 +217,7 @@ public class LaneTest {
 		LaneNode third = startedL.getNextEdge(second, false).getTarget();
 		
 		LaneNode tempNode = new TemporaryLaneNode(50,50, startedL);
-		LaneChangeEdge<LaneNode> temp_edge = new LaneChangeEdge<LaneNode>(second, tempNode, null, null);
+		LaneChangeEdge temp_edge = new LaneChangeEdge(second, tempNode, null, null);
 		startedL.getContext().add(tempNode);		
 		startedL.getNet().addEdge(temp_edge);
 
@@ -235,7 +235,7 @@ public class LaneTest {
 		LaneNode first = startedL.getStartNode();
 		LaneNode second = startedL.getNextEdge(first, false).getTarget();
 		LaneNode tempNode = new LaneNode(50,50, startedL);
-		LaneChangeEdge<LaneNode> temp_edge = new LaneChangeEdge<LaneNode>(second, tempNode, null, null);
+		LaneChangeEdge temp_edge = new LaneChangeEdge(second, tempNode, null, null);
 		startedL.getContext().add(tempNode);
 		
 		startedL.getNet().addEdge(temp_edge);
@@ -289,10 +289,10 @@ public class LaneTest {
 	public void testGetNearestEdge() throws NoNextNode {
 		River r = setupRiver();
 		Lane l = r.getMiddle();
-		LaneEdge<LaneNode> expEdge;
+		LaneEdge expEdge;
 		
 		expEdge = l.getNextEdge(l.getStartNode(), false);
-		LaneEdge<LaneNode> actualEdge = l.edgeNearest(new NdPoint(10,10));
+		LaneEdge actualEdge = l.edgeNearest(new NdPoint(10,10));
 		assertSame(expEdge, actualEdge);
 		
 		expEdge = l.getNextEdge(l.getStartNode(), false);

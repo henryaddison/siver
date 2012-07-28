@@ -32,7 +32,7 @@ public class CoxAgent {
 		boat.launch(this, launchNode.getLocation());
 		
 		//and point the boat in the correct direction
-		LaneEdge<LaneNode> launchEdge = launchLane.getNextEdge(launchNode, false);
+		LaneEdge launchEdge = launchLane.getNextEdge(launchNode, false);
 		location = new CoxLocation(this, launchEdge, false);
 	}
 	
@@ -68,7 +68,7 @@ public class CoxAgent {
 	
 	protected boolean atRiversEnd() { 
 		LaneNode node = location.getDestinationNode();
-		LaneEdge<LaneNode> next_edge = node.getLane().getNextEdge(node, location.headingUpstream());
+		LaneEdge next_edge = node.getLane().getNextEdge(node, location.headingUpstream());
 		return next_edge == null;
 	}
 	

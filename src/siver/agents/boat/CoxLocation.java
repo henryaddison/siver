@@ -7,7 +7,7 @@ import siver.river.lane.LaneNode;
 
 public class CoxLocation {
 	// The part of a the lane the cox is currently travelling on.
-	private LaneEdge<LaneNode> current_edge;
+	private LaneEdge current_edge;
 	
 	// How much of the current edge is left before the cox reaches the end and then next node.
 	private double till_edge_end;
@@ -20,7 +20,7 @@ public class CoxLocation {
 	
 	private BoatAgent boat;
 	
-	public CoxLocation(CoxAgent cox, LaneEdge<LaneNode> e, boolean up) {
+	public CoxLocation(CoxAgent cox, LaneEdge e, boolean up) {
 		this.cox = cox;
 		boat = cox.getBoat();
 		upstream = up;
@@ -31,7 +31,7 @@ public class CoxLocation {
 		return current_edge.getSource().getLane();
 	}
 	
-	public LaneEdge<LaneNode> getEdge() {
+	public LaneEdge getEdge() {
 		return current_edge;
 	}
 	
@@ -39,11 +39,11 @@ public class CoxLocation {
 		return till_edge_end;
 	}
 	
-	public void updateEdge(LaneEdge<LaneNode> new_edge) {
+	public void updateEdge(LaneEdge new_edge) {
 		updateEdge(new_edge, true);
 	}
 	
-	public void updateEdge(LaneEdge<LaneNode> new_edge, boolean unoccupy_current) {
+	public void updateEdge(LaneEdge new_edge, boolean unoccupy_current) {
 		if(unoccupy_current && (current_edge != null)) current_edge.removeCox(cox);
 		
 		new_edge.addCox(cox);

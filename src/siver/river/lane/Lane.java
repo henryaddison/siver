@@ -143,7 +143,7 @@ public class Lane extends OutlinedArea {
 	}
 	
 	//GRAPH HELPERS
-	public LaneEdge<LaneNode> getNextEdge(LaneNode node, boolean upstream) {
+	public LaneEdge getNextEdge(LaneNode node, boolean upstream) {
 		Iterator<RepastEdge<LaneNode>> i;
 		if(upstream) {
 			i = net.getInEdges(node).iterator();
@@ -151,7 +151,7 @@ public class Lane extends OutlinedArea {
 			i = net.getOutEdges(node).iterator();
 		}
 		while(i.hasNext()) {
-			LaneEdge<LaneNode> next_edge = (LaneEdge<LaneNode>) i.next();
+			LaneEdge next_edge = (LaneEdge) i.next();
 			//return this next edge if we looking from a temporary node or if the edge isn't temporary
 			//a temporary node will only ever have one edge in and one edge out
 			//a non-temporary node will only have have one non-temporary edge in and out
@@ -161,7 +161,7 @@ public class Lane extends OutlinedArea {
 	}
 	
 	public LaneNode getNextNode(LaneNode after, boolean upstream) throws NoNextNode {
-		LaneEdge<LaneNode> edge = getNextEdge(after, upstream);
+		LaneEdge edge = getNextEdge(after, upstream);
 		if(edge == null) {
 			throw new NoNextNode("There is no node after the one at " + after.getLocation().toString() + 
 					"when travelling upstream is " + Boolean.toString(upstream));
@@ -197,13 +197,13 @@ public class Lane extends OutlinedArea {
 		return answer;
 	}
 	
-	public LaneEdge<LaneNode> edgeNearest(NdPoint pt) {
-		LaneEdge<LaneNode> answer = null;
+	public LaneEdge edgeNearest(NdPoint pt) {
+		LaneEdge answer = null;
 		
 		LaneNode oneEnd = nodeNearest(pt);
 		
-		LaneEdge<LaneNode> outEdge = getNextEdge(oneEnd, false);
-		LaneEdge<LaneNode> inEdge = getNextEdge(oneEnd, true);
+		LaneEdge outEdge = getNextEdge(oneEnd, false);
+		LaneEdge inEdge = getNextEdge(oneEnd, true);
 		
 		if(outEdge == null) return inEdge;
 		if(inEdge == null) return outEdge;

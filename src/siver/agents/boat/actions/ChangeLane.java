@@ -44,7 +44,7 @@ public abstract class ChangeLane extends SingleTickAction {
 			return;
 		}
 		
-		LaneChangeEdge<LaneNode> edge;
+		LaneChangeEdge edge;
 		
 		try {
 			edge = LaneChangeEdge.createLaneChangeBranch(boat.getLocation(), location.getEdge(), location.headingUpstream(), targetLane);

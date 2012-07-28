@@ -19,13 +19,13 @@ import siver.context.SiverContextCreator;
  * @author henryaddison
  *
  */
-public class LaneEdge<T extends LaneNode> extends RepastEdge<LaneNode> {
+public class LaneEdge extends RepastEdge<LaneNode> {
 	
 	private ArrayList<CoxAgent> coxesOnEdge;
 	
 	private Crash crash;
 	
-	public LaneEdge(T source, T destination) {
+	public LaneEdge(LaneNode source, LaneNode destination) {
 		//shall assume that LaneEdges are directed by default
 		super(source, destination, true);
 		//weight of an edge should be the distance between the two nodes

@@ -63,7 +63,7 @@ public class CoxAgentTest {
 		expect(mockLane.getStartNode()).andStubReturn(expNode);
 		mockBoat.launch(cox, expLoc);
 		expectLastCall().once();
-		expect(mockLane.getNextEdge(expNode, false)).andReturn(new LaneEdge<LaneNode>(expNode, nextNode)).once();
+		expect(mockLane.getNextEdge(expNode, false)).andReturn(new LaneEdge(expNode, nextNode)).once();
 		mockBoat.steerToward(nextNode.getLocation());
 		expectLastCall().once();
 		
@@ -97,7 +97,7 @@ public class CoxAgentTest {
 		expectLastCall().once();
 		
 		expect(mockLane.getStartNode()).andStubReturn(expNode);
-		expect(mockLane.getNextEdge(cox.getLocation().getDestinationNode(), false)).andReturn(new LaneEdge<LaneNode>(cox.getLocation().getDestinationNode(), furtherNode)).once();
+		expect(mockLane.getNextEdge(cox.getLocation().getDestinationNode(), false)).andReturn(new LaneEdge(cox.getLocation().getDestinationNode(), furtherNode)).once();
 		
 		replay(mockLane);
 		replay(mockBoat);

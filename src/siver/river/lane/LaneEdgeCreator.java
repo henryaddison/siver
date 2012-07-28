@@ -14,7 +14,7 @@ import repast.simphony.space.graph.EdgeCreator;
  * @author henryaddison
  *
  */
-public class LaneEdgeCreator<T extends LaneNode> implements EdgeCreator<LaneEdge<T>, T> {
+public class LaneEdgeCreator<T extends LaneNode> implements EdgeCreator<LaneEdge, T> {
 
 	@Override
 	public Class getEdgeType() {
@@ -22,9 +22,9 @@ public class LaneEdgeCreator<T extends LaneNode> implements EdgeCreator<LaneEdge
 	}
 
 	@Override
-	public LaneEdge<T> createEdge(T source, T target, boolean isDirected, double weight) {
+	public LaneEdge createEdge(T source, T target, boolean isDirected, double weight) {
 		//LaneEdgeCreator is only used for directed graphs where the weight is used to determine the distance between nodes.
-		return new LaneEdge<T>(source, target);
+		return new LaneEdge(source, target);
 	}
 
 }

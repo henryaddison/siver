@@ -1,6 +1,6 @@
 package siver.river.lane;
 
-public class Crash<T extends LaneEdge<LaneNode>> {
+public class Crash<T extends LaneEdge> {
 	private T edge;
 	
 	public Crash(T e) {

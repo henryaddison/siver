@@ -41,7 +41,7 @@ public class Spin extends Action {
 			//make sure the boat is on the destination node after spinning in case the spinning animation is slightly off
 			boat.moveTo(destinationNode.toNdPoint());
 			location.toggleUpstream();
-			LaneEdge<LaneNode> new_edge = destinationLane.getNextEdge(destinationNode, location.headingUpstream());
+			LaneEdge new_edge = destinationLane.getNextEdge(destinationNode, location.headingUpstream());
 			location.updateEdge(new_edge);
 			return true;
 		}

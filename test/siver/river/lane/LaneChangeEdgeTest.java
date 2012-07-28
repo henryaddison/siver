@@ -26,7 +26,7 @@ public class LaneChangeEdgeTest extends EdgeTester {
 		
 		LaneNode s = new LaneNode(0,0,null);
 		LaneNode d = new LaneNode(3,4,null);
-		e = new LaneChangeEdge<LaneNode>(s,d, null, null);
+		e = new LaneChangeEdge(s,d, null, null);
 	}
 
 	@After

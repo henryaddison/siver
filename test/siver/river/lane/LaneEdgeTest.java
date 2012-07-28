@@ -11,7 +11,7 @@ import org.junit.Test;
 
 public class LaneEdgeTest extends EdgeTester{
 	
-	private LaneEdge<LaneNode> e;
+	private LaneEdge e;
 	@BeforeClass
 	public static void setUpBeforeClass() throws Exception {
 		
@@ -28,7 +28,7 @@ public class LaneEdgeTest extends EdgeTester{
 		
 		LaneNode s = new LaneNode(0,0,null);
 		LaneNode d = new LaneNode(3,4,null);
-		e = new LaneEdge<LaneNode>(s,d);
+		e = new LaneEdge(s,d);
 	}
 
 	@After

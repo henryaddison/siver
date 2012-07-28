@@ -57,7 +57,7 @@ public class LetBoatRunTest extends ActionTest {
 		
 		LaneNode edge_start = new LaneNode(10,30,null);
 		LaneNode edge_end = new LaneNode(30,30,null);
-		LaneEdge<LaneNode> edge = new LaneEdge<LaneNode>(edge_start, edge_end); 
+		LaneEdge edge = new LaneEdge(edge_start, edge_end); 
 		
 		mockCox.chooseAction();
 		expectLastCall().once();

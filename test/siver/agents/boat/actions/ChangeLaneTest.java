@@ -80,7 +80,7 @@ public abstract class ChangeLaneTest extends ActionTest {
 		
 		executeWithMocks();
 		
-		LaneChangeEdge<LaneNode> newEdge = captured.getValue();
+		LaneChangeEdge newEdge = captured.getValue();
 		LaneNode srcNode = (LaneNode) newEdge.getSource();
 		assertTrue(srcNode.isTemporary());
 		assertEquals(river.getMiddle(), ((ChangeLane) action).getStartLane());

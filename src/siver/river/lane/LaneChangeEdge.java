@@ -5,18 +5,18 @@ import repast.simphony.space.graph.RepastEdge;
 import siver.agents.boat.CoxAgent;
 import siver.river.lane.Lane.NoNextNode;
 
-public class LaneChangeEdge<T extends LaneNode> extends LaneEdge<T> {
+public class LaneChangeEdge extends LaneEdge {
 	private Lane startLane, destinationLane;
 	//need to keep track of which proper edges are currently being occupied while a boat traverses this lane
 	//fortunately can only have one boat on an edge like this at a time so 
-	private LaneEdge<LaneNode> destinationLaneEdge, startLaneEdge;
+	private LaneEdge destinationLaneEdge, startLaneEdge;
 	
 	
-	public static LaneChangeEdge createLaneChangeBranch(NdPoint startingFrom, LaneEdge<LaneNode> sLaneEdge, boolean upstream, Lane dLane) throws NoNextNode {
+	public static LaneChangeEdge createLaneChangeBranch(NdPoint startingFrom, LaneEdge sLaneEdge, boolean upstream, Lane dLane) throws NoNextNode {
 		
-		LaneChangeEdge<LaneNode> return_value = null;
+		LaneChangeEdge return_value = null;
 		
-		LaneEdge<LaneNode> dLaneEdge = dLane.edgeNearest(startingFrom);
+		LaneEdge dLaneEdge = dLane.edgeNearest(startingFrom);
 		
 		LaneNode startNode = new TemporaryLaneNode(startingFrom, dLane);
 		dLane.getContext().add(startNode);
@@ -55,7 +55,7 @@ public class LaneChangeEdge<T extends LaneNode> extends LaneEdge<T> {
 				destination = startNode;
 			}
 			
-			LaneChangeEdge<LaneNode> next_edge = new LaneChangeEdge(source, destination, sLaneEdge, dLaneEdge);
+			LaneChangeEdge next_edge = new LaneChangeEdge(source, destination, sLaneEdge, dLaneEdge);
 			dLane.getNet().addEdge(next_edge);
 			
 			if(return_value == null) {
@@ -70,7 +70,7 @@ public class LaneChangeEdge<T extends LaneNode> extends LaneEdge<T> {
 		return return_value;
 	}
 	
-	public LaneChangeEdge(T source, T destination, LaneEdge<LaneNode> sLaneEdge, LaneEdge<LaneNode> dLaneEdge) {
+	public LaneChangeEdge(LaneNode source, LaneNode destination, LaneEdge sLaneEdge, LaneEdge dLaneEdge) {
 		super(source, destination);
 		this.startLaneEdge = sLaneEdge;
 		this.destinationLaneEdge = dLaneEdge;
