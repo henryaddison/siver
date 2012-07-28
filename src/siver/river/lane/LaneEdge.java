@@ -5,6 +5,7 @@ package siver.river.lane;
 
 import java.util.ArrayList;
 
+import repast.simphony.random.RandomHelper;
 import repast.simphony.space.graph.RepastEdge;
 import siver.agents.boat.CoxAgent;
 import siver.context.SiverContextCreator;
@@ -62,10 +63,11 @@ public class LaneEdge extends RepastEdge<LaneNode> {
 	public synchronized void removeCox(CoxAgent cox) {
 		if(contains(cox)) {
 			coxesOnEdge.remove(cox);
-			if(coxesOnEdge.size() == 1) {
-				//TODO: may want to call some method on crash before nullifying it
-				SiverContextCreator.getContext().remove(crash);
-				crash = null;
+			if(crash != null) {
+				crash.coxEscaped(cox);
+				if(coxesOnEdge.size() == 1) {
+					crash.clearUp();
+				}
 			}
 		}
 	}
@@ -88,5 +90,15 @@ public class LaneEdge extends RepastEdge<LaneNode> {
 	
 	public ArrayList<CoxAgent> getCoxes() {
 		return coxesOnEdge;
+	}
+	
+	public CoxAgent pickRandomCox() {
+		if(isEmpty()) return null;
+		int index = RandomHelper.nextIntFromTo(0, coxesOnEdge.size()-1);
+		return coxesOnEdge.get(index);
+	}
+	
+	public void clearCrash() {
+		crash = null;
 	}
 }

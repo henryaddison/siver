@@ -9,6 +9,7 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
+import repast.simphony.random.RandomHelper;
 import siver.agents.boat.CoxAgent;
 
 public class LaneEdgeTest extends EdgeTester{
@@ -59,6 +60,10 @@ public class LaneEdgeTest extends EdgeTester{
 		assertTrue(e.contains(cox1));
 		assertTrue(e.contains(cox2));
 		
+		reset(cox1, cox2);
+		expect(cox1.isIncapcitated()).andStubReturn(false);
+		expect(cox2.isIncapcitated()).andStubReturn(false);
+		replay(cox1, cox2);
 		e.removeCox(cox1);
 		
 		assertFalse(e.contains(cox1));
@@ -129,6 +134,10 @@ public class LaneEdgeTest extends EdgeTester{
 		e.removeCox(cox1);
 		assertNotNull(e.getCrash());
 		
+		
+		reset(cox3);
+		expect(cox3.isIncapcitated()).andStubReturn(false);
+		replay(cox3);
 		e.removeCox(cox2);
 		assertNull(e.getCrash());
 	}
@@ -160,5 +169,22 @@ public class LaneEdgeTest extends EdgeTester{
 		replay(first, second);
 		e.addCox(second);
 		verify(first, second);
+	}
+	
+	@Test
+	public void testWhenCoxLeavesNextCoxIsRecapcitated() {
+		
+	}
+	
+	@Test
+	public void testPickRandom() {
+		assertNull(e.pickRandomCox());
+		
+		e.addCox(cox1);
+		assertSame(cox1, e.pickRandomCox());
+		
+		e.addCox(cox2);
+		RandomHelper.setSeed(3);
+		assertSame(cox2, e.pickRandomCox());
 	}
 }
