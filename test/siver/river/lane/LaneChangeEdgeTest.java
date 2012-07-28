@@ -37,11 +37,6 @@ public class LaneChangeEdgeTest {
 	}
 
 	@Test
-	public void testCoxMovedAlong() {
-		fail("Not yet implemented");
-	}
-
-	@Test
 	public void testLaneChangeEdge() {
 		fail("Not yet implemented");
 	}

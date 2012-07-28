@@ -95,13 +95,4 @@ public class LaneChangeEdge<T extends LaneNode> extends LaneEdge<T> {
 		destinationLane.getContext().remove(getNextNode(!cox.getLocation().headingUpstream()));
 		
 	}
-	
-	
-	//when a boat moves along an edge like this we need to keep track of which real edges are actually being occupied by this boat
-	//we use this call back to update the edges occupied by this cox
-	//since there's only one boat on this 
-	@Override
-	public void coxMoved(CoxAgent cox) {
-		
-	}
 }

@@ -75,10 +75,6 @@ public class LaneEdge<T extends LaneNode> extends RepastEdge<LaneNode> {
 		return coxesOnEdge.contains(cox);
 	}
 	
-	public void coxMoved(CoxAgent cox) {
-		
-	}
-	
 	public Crash getCrash() {
 		return crash;
 	}
