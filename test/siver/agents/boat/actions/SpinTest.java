@@ -58,11 +58,8 @@ public class SpinTest extends ActionTest {
 		reset(mockBoat);
 		reset(mockLocation);
 		
-		mockBoat.setGear(0);
+		mockBoat.deadStop();
 		expectLastCall().once();
-		mockCox.setTickDistanceRemaining(0);
-		expectLastCall().once();
-		
 		
 		mockBoat.moveTo(new NdPoint(10,10));
 		expectLastCall().once();
@@ -84,10 +81,7 @@ public class SpinTest extends ActionTest {
 
 	
 	private void runExecute(int runs) {
-		mockBoat.setGear(0);
-		expectLastCall().times(runs);
-		
-		mockCox.setTickDistanceRemaining(0);
+		mockBoat.deadStop();
 		expectLastCall().times(runs);
 		
 		ContinuousSpace<Object> mockSpace = createMock(ContinuousSpace.class);

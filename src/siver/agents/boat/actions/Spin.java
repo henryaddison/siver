@@ -34,8 +34,7 @@ public class Spin extends Action {
 	@Override
 	public boolean typeSpecificExecute() {
 		countDown--;
-		boat.setGear(0);
-		cox.setTickDistanceRemaining(0);
+		boat.deadStop();
 		
 		if(countDown <= 0) {
 			//make sure the boat is on the destination node after spinning in case the spinning animation is slightly off

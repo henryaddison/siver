@@ -9,16 +9,17 @@ import siver.agents.boat.actions.*;
 public class CoxAgent {
 	//The boat the cox is controlling.
 	protected BoatAgent boat;
-	//distance that can be travelled this tick
-	private double tick_distance_remaining;
 	
 	//how fast the boat would like to be travelling
 	private int desired_gear;
+	
+	private boolean incapcitated;
 	
 	protected Action action;
 	protected CoxLocation location;
 	
 	public CoxAgent() {
+		incapcitated = false;
 	}
 	
 	public void launch(BoatAgent boat, Lane launchLane, int desGear) {
@@ -39,12 +40,14 @@ public class CoxAgent {
 	//BEHAVIOUR
 	@ScheduledMethod(start = 1, interval = 1, shuffle=true, priority=10)
 	public void step() {
-		if(action == null) {
-			chooseAction();
+		if(!incapcitated) {
+			if(action == null) {
+				chooseAction();
+			}
+			action.execute();
+			
+			boat.run();
 		}
-		action.execute();
-		tick_distance_remaining = boat.getSpeed();
-		boat.run();
 	}
 	
 	public void chooseAction() {
@@ -99,12 +102,13 @@ public class CoxAgent {
 		return location;
 	}
 	
-	public double getTickDistanceRemaining() {
-		return tick_distance_remaining;
+	public void incapcitate() {
+		boat.deadStop();
+		incapcitated = true;
 	}
 	
-	public void setTickDistanceRemaining(double value) {
-		tick_distance_remaining = value;
+	public boolean isIncapcitated() {
+		return incapcitated;
 	}
 	
 }

@@ -185,11 +185,23 @@ public class BoatAgentTest {
 	}
 	
 	@Test
-	public void testOnRiver() {
-		//TODO: HTF to test this? Is is worth it given we're not using it at the moment?
-		//fail("Not yet implemented");
+	public void testDeadStop() {
+		launchBoat();
+		boat.setGear(5);
+		replay(mockCox);
+		boat.deadStop();
+		verify(mockCox);
+		assertEquals(0,boat.getGear());
+		assertEquals(0,boat.getSpeed(), 1E-5);
+		assertEquals(0,boat.getTickDistanceRemaining(), 1E-5);
 	}
 	
-	
+	@Test
+	public void testGetAndSetTickDistanceRemaining() {
+		launchBoat();
+		assertEquals(0,boat.getTickDistanceRemaining(), 1E-5);
+		boat.setTickDistanceRemaining(15.0);
+		assertEquals(15,boat.getTickDistanceRemaining(), 1E-5);
+	}
 
 }

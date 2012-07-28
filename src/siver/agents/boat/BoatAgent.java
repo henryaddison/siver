@@ -32,6 +32,9 @@ public class BoatAgent {
 	private int gear;
 	private double gearMultiplier;
 	
+	//distance that can be travelled this tick
+	private double tick_distance_remaining;
+	
 	//keep a reference of the space the boat is in for easier movement
 	private ContinuousSpace<Object> space;
 	private Context<Object> context;
@@ -61,11 +64,11 @@ public class BoatAgent {
 	
 	public void run() {
 		CoxLocation location = cox.getLocation();
+		tick_distance_remaining = getSpeed();
 		double distance_till_next_node = location.getTillEdgeEnd();
-		double distance_can_travel = cox.getTickDistanceRemaining();
-		if(distance_can_travel >= distance_till_next_node) {
+		if(tick_distance_remaining >= distance_till_next_node) {
 			location.moveToEdgeEnd();
-			cox.setTickDistanceRemaining(distance_can_travel - distance_till_next_node);
+			tick_distance_remaining = tick_distance_remaining - distance_till_next_node;
 			
 			LaneNode steer_from = location.getDestinationNode();
 			Lane lane = steer_from.getLane();
@@ -74,8 +77,8 @@ public class BoatAgent {
 			location.updateEdge(next_edge);
 			run();
 		} else {
-			location.moveAlongEdge(distance_can_travel);
-			cox.setTickDistanceRemaining(0);
+			location.moveAlongEdge(tick_distance_remaining);
+			tick_distance_remaining = 0;
 		}
 	}
 	
@@ -147,6 +150,19 @@ public class BoatAgent {
 	
 	public River getRiver() {
 		return river;
+	}
+	
+	public void deadStop() {
+		setGear(0);
+		tick_distance_remaining = 0;
+	}
+	
+	public double getTickDistanceRemaining() {
+		return tick_distance_remaining;
+	}
+	
+	public void setTickDistanceRemaining(double value) {
+		tick_distance_remaining = value;
 	}
 	
 }

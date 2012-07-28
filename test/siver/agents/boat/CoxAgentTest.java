@@ -91,7 +91,6 @@ public class CoxAgentTest {
 		LaneNode nextNode = new LaneNode(30,30, mockLane);
 		LaneNode furtherNode = new LaneNode(50,30, mockLane);
 		
-		expect(mockBoat.getSpeed()).andReturn(5.0).times(1);
 		expect(mockBoat.getGear()).andReturn(10).times(1);
 		mockBoat.run();
 		expectLastCall().once();
@@ -106,6 +105,22 @@ public class CoxAgentTest {
 		verify(mockLane);
 		
 		assertNull(cox.getAction());
+	}
+	
+	@Test
+	public void testStepIncapcitated() {
+		launchCox();
+		
+		mockBoat.deadStop();
+		expectLastCall().once();
+		
+		replay(mockBoat);
+		cox.incapcitate();
+		verify(mockBoat);
+		reset(mockBoat);
+		replay(mockBoat);
+		cox.step();
+		verify(mockBoat);
 	}
 	
 	@Test
@@ -130,13 +145,7 @@ public class CoxAgentTest {
 		assertTrue(!cl.headingUpstream());
 	}
 	
-	@Test
-	public void testGetAndSetTickDistanceRemaining() {
-		launchCox();
-		assertEquals(0,cox.getTickDistanceRemaining(), 1E-5);
-		cox.setTickDistanceRemaining(15.0);
-		assertEquals(15,cox.getTickDistanceRemaining(), 1E-5);
-	}
+	
 	
 	@Test
 	public void testTravellingTooSlowly() {
@@ -151,6 +160,22 @@ public class CoxAgentTest {
 		replay(mockBoat);
 		assertFalse(cox.belowDesiredSpeed());
 		verify(mockBoat);
+	}
+	
+	@Test
+	public void testIncapcitate() {
+		launchCox();
+		assertTrue(!cox.isIncapcitated());
+		
+		reset(mockBoat);
+		mockBoat.deadStop();
+		expectLastCall().once();
+		
+		replay(mockBoat);
+		cox.incapcitate();
+		verify(mockBoat);
+		
+		assertTrue(cox.isIncapcitated());
 	}
 	
 }

@@ -114,8 +114,7 @@ public class LaneEdgeTest extends EdgeTester{
 	}
 	
 	@Test
-	public void testRemovingPenultimateCoxRemovesCrash() {
-		
+	public void testRemovingPenultimateCoxRemovesCrash() {		
 		e.addCox(cox1);
 		e.addCox(cox2);
 		e.addCox(cox3);
