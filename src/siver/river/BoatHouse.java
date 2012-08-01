@@ -1,4 +1,4 @@
-package siver.agents;
+package siver.river;
 
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
@@ -9,7 +9,6 @@ import repast.simphony.space.continuous.ContinuousSpace;
 import siver.agents.boat.BasicBrain;
 import siver.agents.boat.Boat;
 import siver.agents.boat.Cox;
-import siver.river.River;
 import siver.river.lane.Lane;
 
 /**

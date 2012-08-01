@@ -12,7 +12,7 @@ import repast.simphony.engine.schedule.ScheduleParameters;
 import repast.simphony.space.continuous.ContinuousSpace;
 import repast.simphony.space.continuous.SimpleCartesianAdder;
 import repast.simphony.ui.RSApplication;
-import siver.agents.BoatHouse;
+import siver.river.BoatHouse;
 import siver.river.River;
 import siver.river.RiverFactory;
 import siver.ui.UserPanel;
