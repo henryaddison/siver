@@ -18,7 +18,7 @@ import siver.river.lane.*;
 import siver.river.lane.Lane.CompletedLaneException;
 import siver.river.lane.Lane.UnstartedLaneException;
 
-public class CoxLocationTest {
+public class BoatNavigationTest {
 	
 	public class TestCoxAgent extends Cox {
 		public void setLocation(BoatNavigation cl) {

@@ -18,7 +18,7 @@ import siver.river.lane.Lane;
 import siver.river.lane.LaneEdge;
 import siver.river.lane.LaneNode;
 
-public class CoxAgentTest {
+public class CoxTest {
 	
 	private Cox cox;
 	private Boat mockBoat;

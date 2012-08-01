@@ -18,7 +18,7 @@ import repast.simphony.space.continuous.NdPoint;
 import siver.context.SiverContextCreator;
 import siver.river.River;
 
-public class BoatAgentTest {
+public class BoatTest {
 
 	private Context<Object> mockContext;
 	private ContinuousSpace<Object> mockSpace;
