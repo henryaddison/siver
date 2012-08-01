@@ -8,9 +8,9 @@ import org.junit.Before;
 
 import siver.boat.Boat;
 import siver.boat.BoatNavigation;
-import siver.boat.Cox;
 import siver.boat.actions.Action;
 import siver.boat.actions.SingleTickAction;
+import siver.cox.Cox;
 
 public abstract class ActionTest {
 	protected Boat mockBoat;

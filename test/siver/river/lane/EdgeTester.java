@@ -9,8 +9,8 @@ import repast.simphony.context.Context;
 import repast.simphony.space.continuous.ContinuousSpace;
 import repast.simphony.space.continuous.NdPoint;
 import siver.boat.Boat;
-import siver.boat.Cox;
 import siver.context.SiverContextCreator;
+import siver.cox.Cox;
 
 public class EdgeTester {
 	protected Context<Object> mockContext;

@@ -1,6 +1,6 @@
 package siver.boat.actions;
 
-import siver.boat.Cox;
+import siver.cox.Cox;
 
 public class LetBoatRun extends SingleTickAction {
 	

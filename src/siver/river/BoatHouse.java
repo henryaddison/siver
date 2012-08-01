@@ -8,7 +8,7 @@ import repast.simphony.random.RandomHelper;
 import repast.simphony.space.continuous.ContinuousSpace;
 import siver.boat.BasicBrain;
 import siver.boat.Boat;
-import siver.boat.Cox;
+import siver.cox.Cox;
 import siver.river.lane.Lane;
 
 /**

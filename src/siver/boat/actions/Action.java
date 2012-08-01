@@ -1,6 +1,7 @@
 package siver.boat.actions;
 
 import siver.boat.*;
+import siver.cox.Cox;
 
 public abstract class Action {
 	protected Cox cox;

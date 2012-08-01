@@ -1,5 +1,6 @@
 package siver.boat;
 
+import siver.cox.Cox;
 import siver.river.lane.Lane;
 import siver.river.lane.LaneChangeEdge;
 import siver.river.lane.LaneEdge;

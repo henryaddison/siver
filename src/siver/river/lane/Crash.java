@@ -1,8 +1,8 @@
 package siver.river.lane;
 
 import repast.simphony.engine.schedule.ScheduledMethod;
-import siver.boat.Cox;
 import siver.context.SiverContextCreator;
+import siver.cox.Cox;
 
 public class Crash {
 	public class CrashError extends RuntimeException {

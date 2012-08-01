@@ -15,7 +15,7 @@ import repast.simphony.space.continuous.ContinuousSpace;
 import repast.simphony.space.continuous.NdPoint;
 import siver.LanedTest;
 import siver.boat.Boat;
-import siver.boat.Cox;
+import siver.cox.Cox;
 import siver.river.BoatHouse;
 import siver.river.River;
 import siver.river.lane.Lane.UnstartedLaneException;

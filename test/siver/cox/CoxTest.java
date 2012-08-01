@@ -1,4 +1,4 @@
-package siver.boat;
+package siver.cox;
 
 import static org.easymock.EasyMock.*;
 import static org.junit.Assert.*;
@@ -16,8 +16,8 @@ import org.junit.Test;
 import repast.simphony.space.continuous.ContinuousSpace;
 import siver.boat.Boat;
 import siver.boat.BoatNavigation;
-import siver.boat.Cox;
 import siver.boat.actions.LetBoatRun;
+import siver.cox.Cox;
 import siver.river.lane.Lane;
 import siver.river.lane.LaneEdge;
 import siver.river.lane.LaneNode;

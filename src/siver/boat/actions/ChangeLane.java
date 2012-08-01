@@ -1,6 +1,6 @@
 package siver.boat.actions;
 
-import siver.boat.Cox;
+import siver.cox.Cox;
 import siver.river.River.NoLaneFound;
 import siver.river.lane.Lane;
 import siver.river.lane.Lane.NoNextNode;

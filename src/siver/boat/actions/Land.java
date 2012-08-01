@@ -2,6 +2,7 @@ package siver.boat.actions;
 
 import siver.boat.*;
 import siver.context.SiverContextCreator;
+import siver.cox.Cox;
 
 public class Land extends SingleTickAction {
 	

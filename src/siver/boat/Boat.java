@@ -8,6 +8,7 @@ import repast.simphony.engine.schedule.ScheduledMethod;
 import repast.simphony.space.SpatialMath;
 import repast.simphony.space.continuous.ContinuousSpace;
 import repast.simphony.space.continuous.NdPoint;
+import siver.cox.Cox;
 import siver.river.River;
 import siver.river.lane.Lane;
 import siver.river.lane.LaneEdge;

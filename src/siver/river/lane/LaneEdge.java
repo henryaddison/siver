@@ -7,8 +7,8 @@ import java.util.ArrayList;
 
 import repast.simphony.random.RandomHelper;
 import repast.simphony.space.graph.RepastEdge;
-import siver.boat.Cox;
 import siver.context.SiverContextCreator;
+import siver.cox.Cox;
 
 /**
  * A class to represent the edges in a Lane.

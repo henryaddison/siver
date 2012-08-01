@@ -11,8 +11,8 @@ import org.junit.Test;
 
 import siver.boat.Boat;
 import siver.boat.BoatNavigation;
-import siver.boat.Cox;
 import siver.boat.CoxObservations;
+import siver.cox.Cox;
 
 public class CoxObservationsTest {
 

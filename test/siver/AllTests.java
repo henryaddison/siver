@@ -8,6 +8,7 @@ import siver.river.*;
 import siver.river.lane.*;
 import siver.boat.*;
 import siver.boat.actions.*;
+import siver.cox.CoxTest;
 
 
 @RunWith(Suite.class)
