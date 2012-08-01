@@ -1,6 +1,6 @@
 package siver.boat;
 
-import siver.agents.boat.actions.*;
+import siver.boat.actions.*;
 
 public class StartStopCox extends CoxBrain {
 	public StartStopCox(CoxObservations obs) {

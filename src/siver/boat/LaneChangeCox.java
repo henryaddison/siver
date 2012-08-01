@@ -1,6 +1,6 @@
 package siver.boat;
 
-import siver.agents.boat.actions.*;
+import siver.boat.actions.*;
 
 public class LaneChangeCox extends CoxBrain {
 	public LaneChangeCox(CoxObservations obs) {

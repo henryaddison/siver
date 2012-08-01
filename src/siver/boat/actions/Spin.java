@@ -1,4 +1,4 @@
-package siver.agents.boat.actions;
+package siver.boat.actions;
 
 import repast.simphony.space.SpatialMath;
 import repast.simphony.space.continuous.NdPoint;

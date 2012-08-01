@@ -1,4 +1,4 @@
-package siver.agents.boat.actions;
+package siver.boat.actions;
 
 import siver.boat.*;
 import siver.context.SiverContextCreator;

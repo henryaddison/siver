@@ -14,10 +14,10 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 
 import repast.simphony.space.continuous.ContinuousSpace;
-import siver.agents.boat.actions.LetBoatRun;
 import siver.boat.Boat;
 import siver.boat.BoatNavigation;
 import siver.boat.Cox;
+import siver.boat.actions.LetBoatRun;
 import siver.river.lane.Lane;
 import siver.river.lane.LaneEdge;
 import siver.river.lane.LaneNode;

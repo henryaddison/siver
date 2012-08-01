@@ -7,7 +7,7 @@ import repast.simphony.engine.schedule.ScheduledMethod;
 import siver.river.lane.Lane;
 import siver.river.lane.LaneEdge;
 import siver.river.lane.LaneNode;
-import siver.agents.boat.actions.*;
+import siver.boat.actions.*;
 
 public class Cox {
 	//The boat the cox is controlling.

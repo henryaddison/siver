@@ -1,9 +1,9 @@
 package siver.boat;
 
-import siver.agents.boat.actions.Action;
-import siver.agents.boat.actions.LetBoatRun;
-import siver.agents.boat.actions.SpeedUp;
-import siver.agents.boat.actions.Spin;
+import siver.boat.actions.Action;
+import siver.boat.actions.LetBoatRun;
+import siver.boat.actions.SpeedUp;
+import siver.boat.actions.Spin;
 
 public class BasicBrain extends CoxBrain {
 	

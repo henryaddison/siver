@@ -1,4 +1,4 @@
-package siver.agents.boat.actions;
+package siver.boat.actions;
 
 import static org.easymock.EasyMock.*;
 import static org.junit.Assert.*;
@@ -10,6 +10,7 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 
 import siver.boat.*;
+import siver.boat.actions.LetBoatRun;
 import siver.river.lane.*;
 
 
