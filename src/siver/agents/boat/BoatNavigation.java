@@ -20,9 +20,9 @@ public class BoatNavigation {
 	
 	private Boat boat;
 	
-	public BoatNavigation(Cox cox, LaneEdge e, boolean up) {
+	public BoatNavigation(Cox cox, Boat boat, LaneEdge e, boolean up) {
 		this.cox = cox;
-		boat = cox.getBoat();
+		this.boat = boat;
 		upstream = up;
 		updateEdge(e);
 	}

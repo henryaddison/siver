@@ -29,7 +29,8 @@ import siver.agents.boat.actions.*;
 	SpeedUpTest.class,
 	SlowDownTest.class, 
 	MoveToLaneOnLeftTest.class,
-	MoveToLaneOnRightTest.class,})
+	MoveToLaneOnRightTest.class,
+	CoxObservationsTest.class})
 public class AllTests {
 
 }

@@ -38,6 +38,14 @@ public class SiverContextCreator implements ContextBuilder<Object> {
 		space = s;
 	}
 	
+	public static River river;
+	public static River getRiver() {
+		return river;
+	}
+	public static void setRiver(River r) {
+		river = r;
+	}
+	
 	/* (non-Javadoc)
 	 * @see repast.simphony.dataLoader.ContextBuilder#build(repast.simphony.context.Context)
 	 */
@@ -57,7 +65,7 @@ public class SiverContextCreator implements ContextBuilder<Object> {
 		.createContinuousSpace("Continuous Space", context, new SimpleCartesianAdder<Object>(),
 				new repast.simphony.space.continuous.StrictBorders(), xdim, ydim);
 		
-		River river = RiverFactory.Cam(context, space);
+		river = RiverFactory.Cam(context, space);
 		
 		BoatHouse boatHouse = new BoatHouse(river, context, space);
 		context.add(boatHouse);

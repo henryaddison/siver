@@ -7,7 +7,7 @@ public class StartStopCox extends Cox {
 	
 	@Override
 	public void chooseAction() {
-		if(atRiversEnd()) {
+		if(observations.atRiversEnd()) {
 			action = new Spin(this);
 		}
 		else if(boat.getGear() == 0) {

@@ -145,20 +145,7 @@ public class CoxTest {
 	
 	
 	
-	@Test
-	public void testTravellingTooSlowly() {
-		launchCox();
-		reset(mockBoat);
-		expect(mockBoat.getGear()).andReturn(2).once();
-		replay(mockBoat);
-		assertTrue(cox.belowDesiredSpeed());
-		verify(mockBoat);
-		reset(mockBoat);
-		expect(mockBoat.getGear()).andReturn(9).once();
-		replay(mockBoat);
-		assertFalse(cox.belowDesiredSpeed());
-		verify(mockBoat);
-	}
+
 	
 	@Test
 	public void testIncapcitate() {

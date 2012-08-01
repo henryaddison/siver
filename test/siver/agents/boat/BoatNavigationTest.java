@@ -35,6 +35,7 @@ public class BoatNavigationTest {
 	private LaneEdge edge;
 	private Lane lane;
 	private River river;
+	private Boat boat;
 	
 	@BeforeClass
 	public static void setUpBeforeClass() throws Exception {
@@ -50,12 +51,12 @@ public class BoatNavigationTest {
 		lane = river.getMiddle();
 		edge = lane.getNextEdge(lane.getStartNode(), false);
 		cox = new TestCoxAgent();
-		Boat boat = createMock(Boat.class);
+		boat = createMock(Boat.class);
 		cox.setBoat(boat);
 		boat.steerToward(edge.getNextNode(false).getLocation());
 		expectLastCall().once();
 		replay(boat);
-		cl = new BoatNavigation(cox, edge, false);
+		cl = new BoatNavigation(cox, boat, edge, false);
 		reset(boat);
 		cox.setLocation(cl);
 		
@@ -67,10 +68,10 @@ public class BoatNavigationTest {
 	
 	@Test
 	public void testCoxLocationWithoutDistance() {
-		cox.getBoat().steerToward(edge.getNextNode(true).getLocation());
+		boat.steerToward(edge.getNextNode(true).getLocation());
 		expectLastCall().once();
-		replay(cox.getBoat());
-		BoatNavigation cl = new BoatNavigation(cox, edge, true);
+		replay(boat);
+		BoatNavigation cl = new BoatNavigation(cox, boat, edge, true);
 		assertTrue(cl instanceof BoatNavigation);
 		assertEquals(lane, cl.getLane());
 		assertEquals(edge, cl.getEdge());

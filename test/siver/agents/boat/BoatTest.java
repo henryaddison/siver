@@ -36,7 +36,9 @@ public class BoatTest {
 	@Before
 	public void setUp() throws Exception {
 		mockContext = EasyMock.createMock(Context.class);
+		SiverContextCreator.setContext(mockContext);
 		mockSpace = EasyMock.createMock(ContinuousSpace.class);
+		SiverContextCreator.setSpace(mockSpace);
 		mockRiver = EasyMock.createMock(River.class);
 		mockCox = EasyMock.createMock(Cox.class);
 		boat = new Boat(mockRiver, mockContext, mockSpace, 0.5);

@@ -18,6 +18,8 @@ public class Cox {
 	protected Action action;
 	protected BoatNavigation navigator;
 	
+	protected CoxObservations observations;
+	
 	public Cox() {
 		incapcitated = false;
 	}
@@ -34,7 +36,8 @@ public class Cox {
 		
 		//and point the boat in the correct direction
 		LaneEdge launchEdge = launchLane.getNextEdge(launchNode, false);
-		navigator = new BoatNavigation(this, launchEdge, false);
+		navigator = new BoatNavigation(this, boat, launchEdge, false);
+		observations = new CoxObservations(this, boat, navigator);
 	}
 	
 	//BEHAVIOUR
@@ -54,10 +57,10 @@ public class Cox {
 	}
 	
 	public void chooseAction() {
-		if(atRiversEnd()) {
+		if(observations.atRiversEnd()) {
 			action = new Spin(this);
 		}
-		else if(belowDesiredSpeed()) {
+		else if(observations.belowDesiredSpeed()) {
 			action = new SpeedUp(this);
 		}
 		else if(true) {
@@ -69,19 +72,13 @@ public class Cox {
 	 * PREDICATES
 	 */	
 	
-	protected boolean atRiversEnd() { 
-		LaneNode node = navigator.getDestinationNode();
-		LaneEdge next_edge = node.getLane().getNextEdge(node, navigator.headingUpstream());
-		return next_edge == null;
-	}
+	
 	
 	protected boolean backAtBoatHouse() {
 		return navigator.getDestinationNode().equals(navigator.getLane().getStartNode());
 	}
 	
-	public boolean belowDesiredSpeed() {
-		return boat.getGear() < desired_gear;
-	}
+
 	
 	/*
 	 * HELPERS
@@ -113,6 +110,10 @@ public class Cox {
 	
 	public boolean isIncapcitated() {
 		return incapcitated;
+	}
+	
+	public int desired_gear() {
+		return desired_gear;
 	}
 	
 }
