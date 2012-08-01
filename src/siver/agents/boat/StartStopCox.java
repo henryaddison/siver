@@ -2,7 +2,7 @@ package siver.agents.boat;
 
 import siver.agents.boat.actions.*;
 
-public class StartStopCox extends CoxAgent {
+public class StartStopCox extends Cox {
 	private boolean speedUp = true;
 	
 	@Override

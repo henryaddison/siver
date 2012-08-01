@@ -11,12 +11,12 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
-import siver.agents.boat.CoxAgent;
+import siver.agents.boat.Cox;
 import siver.river.lane.Crash.CrashError;
 
 public class CrashTest {
 	private LaneEdge edge;
-	private ArrayList<CoxAgent> coxes;
+	private ArrayList<Cox> coxes;
 	@BeforeClass
 	public static void setUpBeforeClass() throws Exception {
 	}
@@ -28,10 +28,10 @@ public class CrashTest {
 	@Before
 	public void setUp() throws Exception {
 		edge = createMock(LaneEdge.class);
-		coxes = new ArrayList<CoxAgent>();
+		coxes = new ArrayList<Cox>();
 		for(int i=0;i<2;i++) {
-			coxes.add(createMock(CoxAgent.class));
-			coxes.add(createMock(CoxAgent.class));
+			coxes.add(createMock(Cox.class));
+			coxes.add(createMock(Cox.class));
 		}
 		
 	}
@@ -51,7 +51,7 @@ public class CrashTest {
 	public void setupCrash(Crash c) {
 		expect(edge.getCoxes()).andStubReturn(coxes);
 		replay(edge);
-		for(CoxAgent mockc : coxes) {
+		for(Cox mockc : coxes) {
 			mockc.incapcitate();
 			expectLastCall().once();
 		}
@@ -78,7 +78,7 @@ public class CrashTest {
 		}
 		assertEquals(1, c.ticksUntilRelease());
 		
-		CoxAgent toBeChosen = coxes.get(1);
+		Cox toBeChosen = coxes.get(1);
 		if(!repeat) {
 			expect(edge.pickRandomCox()).andReturn(toBeChosen).once();
 		}
@@ -115,7 +115,7 @@ public class CrashTest {
 		setupCrash(c);
 		completeCrash(c, true);
 		
-		CoxAgent chosen = coxes.get(1);
+		Cox chosen = coxes.get(1);
 		chosen.recapcitate();
 		expectLastCall().once();
 		c.step();

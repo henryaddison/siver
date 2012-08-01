@@ -7,7 +7,7 @@ import repast.simphony.context.Context;
 import repast.simphony.random.RandomHelper;
 import repast.simphony.space.continuous.ContinuousSpace;
 import siver.agents.boat.Boat;
-import siver.agents.boat.CoxAgent;
+import siver.agents.boat.Cox;
 import siver.river.River;
 import siver.river.lane.Lane;
 
@@ -33,7 +33,7 @@ public class BoatHouse {
 	}
 	
 	public void launchBoat() {
-		launchBoat(CoxAgent.class.getName());
+		launchBoat(Cox.class.getName());
 	}
 	
 	public void launchBoat(String coxClassName) {
@@ -43,7 +43,7 @@ public class BoatHouse {
 		try {
 			Class cl = Class.forName(coxClassName);
 			Constructor con = cl.getConstructor();
-			CoxAgent cox = (CoxAgent) con.newInstance();
+			Cox cox = (Cox) con.newInstance();
 			context.add(cox);
 			cox.launch(boat, getLaunchLane(), RandomHelper.nextIntFromTo(1,10));
 		} catch (IllegalArgumentException e) {

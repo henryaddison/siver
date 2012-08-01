@@ -1,10 +1,10 @@
 package siver.agents.boat.actions;
 
-import siver.agents.boat.CoxAgent;
+import siver.agents.boat.Cox;
 
 public abstract class SingleTickAction extends Action {
 
-	public SingleTickAction(CoxAgent cox) {
+	public SingleTickAction(Cox cox) {
 		super(cox);
 	}
 

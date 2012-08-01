@@ -16,11 +16,11 @@ public class BoatNavigation {
 	private boolean upstream;
 	
 	//The cox object this location refers to
-	private CoxAgent cox;
+	private Cox cox;
 	
 	private Boat boat;
 	
-	public BoatNavigation(CoxAgent cox, LaneEdge e, boolean up) {
+	public BoatNavigation(Cox cox, LaneEdge e, boolean up) {
 		this.cox = cox;
 		boat = cox.getBoat();
 		upstream = up;

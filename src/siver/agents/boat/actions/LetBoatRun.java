@@ -1,10 +1,10 @@
 package siver.agents.boat.actions;
 
-import siver.agents.boat.CoxAgent;
+import siver.agents.boat.Cox;
 
 public class LetBoatRun extends SingleTickAction {
 	
-	public LetBoatRun(CoxAgent cox) {
+	public LetBoatRun(Cox cox) {
 		super(cox);
 	}
 	

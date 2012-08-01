@@ -2,7 +2,7 @@ package siver.agents.boat;
 
 import siver.agents.boat.actions.*;
 
-public class LaneChangeCox extends CoxAgent {
+public class LaneChangeCox extends Cox {
 	private boolean move_to_left = true;
 	private int countDown = 10;
 	@Override

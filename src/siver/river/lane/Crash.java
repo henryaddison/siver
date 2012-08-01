@@ -1,7 +1,7 @@
 package siver.river.lane;
 
 import repast.simphony.engine.schedule.ScheduledMethod;
-import siver.agents.boat.CoxAgent;
+import siver.agents.boat.Cox;
 import siver.context.SiverContextCreator;
 
 public class Crash {
@@ -16,7 +16,7 @@ public class Crash {
 	//how many more ticks before a boat gets recapitated
 	private int holdUpCountDown;
 	//the boat chosen to be allowed to move
-	private CoxAgent chosenCox;
+	private Cox chosenCox;
 	
 	private final static int HOLD_UP = 10;
 	
@@ -26,7 +26,7 @@ public class Crash {
 	
 	public void reset() {
 		holdUpCountDown = HOLD_UP;
-		for(CoxAgent c : edge.getCoxes()) {
+		for(Cox c : edge.getCoxes()) {
 			c.incapcitate();
 		}
 	}
@@ -51,7 +51,7 @@ public class Crash {
 		return holdUpCountDown;
 	}
 	
-	public CoxAgent getChosenCox() {
+	public Cox getChosenCox() {
 		return chosenCox;
 	}
 	
@@ -68,7 +68,7 @@ public class Crash {
 		return !inProgress();
 	}
 	
-	public void coxEscaped(CoxAgent cox) {
+	public void coxEscaped(Cox cox) {
 		if(cox == chosenCox) {
 			chosenCox = null;
 			recapcitateCox();
@@ -77,7 +77,7 @@ public class Crash {
 	
 	public void clearUp() {
 		//all coxes should be recapcitated
-		for(CoxAgent c : edge.getCoxes()) {
+		for(Cox c : edge.getCoxes()) {
 			if(c.isIncapcitated()) throw new CrashError("trying to finish with a crash before all coxes have been recapcitated");
 		}
 		//can now safely remove this from the context

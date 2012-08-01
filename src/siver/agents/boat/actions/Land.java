@@ -5,7 +5,7 @@ import siver.context.SiverContextCreator;
 
 public class Land extends SingleTickAction {
 	
-	public Land(CoxAgent cox) {
+	public Land(Cox cox) {
 		super(cox);
 	}
 	

@@ -2,7 +2,7 @@ package siver.river.lane;
 
 import repast.simphony.space.continuous.NdPoint;
 import repast.simphony.space.graph.RepastEdge;
-import siver.agents.boat.CoxAgent;
+import siver.agents.boat.Cox;
 import siver.river.lane.Lane.NoNextNode;
 
 public class LaneChangeEdge extends LaneEdge {
@@ -78,13 +78,13 @@ public class LaneChangeEdge extends LaneEdge {
 	}
 	
 	@Override
-	public void addCox(CoxAgent cox) {
+	public void addCox(Cox cox) {
 		startLaneEdge.addCox(cox);
 		destinationLaneEdge.addCox(cox);
 	}
 	
 	@Override
-	public void removeCox(CoxAgent cox) {
+	public void removeCox(Cox cox) {
 		startLaneEdge.removeCox(cox);
 		destinationLaneEdge.removeCox(cox);
 

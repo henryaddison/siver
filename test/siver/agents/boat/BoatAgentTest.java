@@ -24,7 +24,7 @@ public class BoatAgentTest {
 	private ContinuousSpace<Object> mockSpace;
 	private River mockRiver;
 	private Boat boat;
-	private CoxAgent mockCox;
+	private Cox mockCox;
 	@BeforeClass
 	public static void setUpBeforeClass() throws Exception {
 	}
@@ -38,7 +38,7 @@ public class BoatAgentTest {
 		mockContext = EasyMock.createMock(Context.class);
 		mockSpace = EasyMock.createMock(ContinuousSpace.class);
 		mockRiver = EasyMock.createMock(River.class);
-		mockCox = EasyMock.createMock(CoxAgent.class);
+		mockCox = EasyMock.createMock(Cox.class);
 		boat = new Boat(mockRiver, mockContext, mockSpace, 0.5);
 	}
 

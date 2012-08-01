@@ -25,7 +25,7 @@ public class UserPanel extends JPanel {
 		setBackground(new java.awt.Color(255, 0, 0));
 		
 		ArrayList<String> coxClassNames = new ArrayList<String>();
-		coxClassNames.add(CoxAgent.class.getName());
+		coxClassNames.add(Cox.class.getName());
 		coxClassNames.add(StartStopCox.class.getName());
 		coxClassNames.add(LaneChangeCox.class.getName());
 		

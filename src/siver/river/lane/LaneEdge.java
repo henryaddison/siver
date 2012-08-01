@@ -7,7 +7,7 @@ import java.util.ArrayList;
 
 import repast.simphony.random.RandomHelper;
 import repast.simphony.space.graph.RepastEdge;
-import siver.agents.boat.CoxAgent;
+import siver.agents.boat.Cox;
 import siver.context.SiverContextCreator;
 
 /**
@@ -22,7 +22,7 @@ import siver.context.SiverContextCreator;
  */
 public class LaneEdge extends RepastEdge<LaneNode> {
 	
-	private ArrayList<CoxAgent> coxesOnEdge;
+	private ArrayList<Cox> coxesOnEdge;
 	
 	private Crash crash;
 	
@@ -32,7 +32,7 @@ public class LaneEdge extends RepastEdge<LaneNode> {
 		//weight of an edge should be the distance between the two nodes
 		double w = source.distance(destination);
 		setWeight(w);
-		coxesOnEdge = new ArrayList<CoxAgent>();
+		coxesOnEdge = new ArrayList<Cox>();
 		crash = null;
 	}
 
@@ -44,7 +44,7 @@ public class LaneEdge extends RepastEdge<LaneNode> {
 		}
 	}
 	
-	public synchronized void addCox(CoxAgent cox) {
+	public synchronized void addCox(Cox cox) {
 		if(!contains(cox)) {
 			if(!isEmpty()) {
 				if(crash == null) {
@@ -60,7 +60,7 @@ public class LaneEdge extends RepastEdge<LaneNode> {
 		}
 	}
 	
-	public synchronized void removeCox(CoxAgent cox) {
+	public synchronized void removeCox(Cox cox) {
 		if(contains(cox)) {
 			coxesOnEdge.remove(cox);
 			if(crash != null) {
@@ -76,7 +76,7 @@ public class LaneEdge extends RepastEdge<LaneNode> {
 		return coxesOnEdge.isEmpty();
 	}
 	
-	public boolean contains(CoxAgent cox) {
+	public boolean contains(Cox cox) {
 		return coxesOnEdge.contains(cox);
 	}
 	
@@ -88,11 +88,11 @@ public class LaneEdge extends RepastEdge<LaneNode> {
 		return false;
 	}
 	
-	public ArrayList<CoxAgent> getCoxes() {
+	public ArrayList<Cox> getCoxes() {
 		return coxesOnEdge;
 	}
 	
-	public CoxAgent pickRandomCox() {
+	public Cox pickRandomCox() {
 		if(isEmpty()) return null;
 		int index = RandomHelper.nextIntFromTo(0, coxesOnEdge.size()-1);
 		return coxesOnEdge.get(index);

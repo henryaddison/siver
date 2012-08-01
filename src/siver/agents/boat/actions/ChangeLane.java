@@ -1,6 +1,6 @@
 package siver.agents.boat.actions;
 
-import siver.agents.boat.CoxAgent;
+import siver.agents.boat.Cox;
 import siver.river.River.NoLaneFound;
 import siver.river.lane.Lane;
 import siver.river.lane.Lane.NoNextNode;
@@ -13,7 +13,7 @@ public abstract class ChangeLane extends SingleTickAction {
 	protected Lane startLane;
 	
 	
-	public ChangeLane(CoxAgent cox) {
+	public ChangeLane(Cox cox) {
 		super(cox);
 	}
 	

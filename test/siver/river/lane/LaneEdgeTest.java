@@ -10,7 +10,7 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 
 import repast.simphony.random.RandomHelper;
-import siver.agents.boat.CoxAgent;
+import siver.agents.boat.Cox;
 
 public class LaneEdgeTest extends EdgeTester{
 	
@@ -149,8 +149,8 @@ public class LaneEdgeTest extends EdgeTester{
 	
 	@Test
 	public void testCrashingCoxes() {
-		CoxAgent first = createMock(CoxAgent.class);
-		CoxAgent second = createMock(CoxAgent.class);
+		Cox first = createMock(Cox.class);
+		Cox second = createMock(Cox.class);
 		
 		replay(first);
 		e.addCox(first);

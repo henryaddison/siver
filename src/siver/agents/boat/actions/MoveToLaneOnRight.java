@@ -1,11 +1,11 @@
 package siver.agents.boat.actions;
 
-import siver.agents.boat.CoxAgent;
+import siver.agents.boat.Cox;
 import siver.river.River.NoLaneFound;
 
 public class MoveToLaneOnRight extends ChangeLane {
 	
-	public MoveToLaneOnRight(CoxAgent cox) {
+	public MoveToLaneOnRight(Cox cox) {
 		super(cox);
 	}
 

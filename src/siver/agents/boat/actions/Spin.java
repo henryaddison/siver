@@ -2,7 +2,7 @@ package siver.agents.boat.actions;
 
 import repast.simphony.space.SpatialMath;
 import repast.simphony.space.continuous.NdPoint;
-import siver.agents.boat.CoxAgent;
+import siver.agents.boat.Cox;
 import siver.river.lane.Lane;
 import siver.river.lane.LaneEdge;
 import siver.river.lane.LaneNode;
@@ -16,7 +16,7 @@ public class Spin extends Action {
 	
 	private static final int STEPS = 60;
 	
-	public Spin(CoxAgent cox) {
+	public Spin(Cox cox) {
 		super(cox);
 		countDown = STEPS;
 		if(location.headingUpstream()) {

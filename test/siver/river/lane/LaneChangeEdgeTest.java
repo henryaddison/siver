@@ -11,7 +11,7 @@ import org.junit.Test;
 
 import repast.simphony.space.graph.Network;
 import repast.simphony.space.graph.RepastEdge;
-import siver.agents.boat.CoxAgent;
+import siver.agents.boat.Cox;
 import siver.agents.boat.BoatNavigation;
 import siver.context.LaneContext;
 
@@ -55,7 +55,7 @@ public class LaneChangeEdgeTest extends EdgeTester {
 
 	@Test
 	public void testAddCox() {
-		CoxAgent cox = new CoxAgent();
+		Cox cox = new Cox();
 		
 		sLEdge.addCox(cox);
 		expectLastCall().once();
@@ -72,7 +72,7 @@ public class LaneChangeEdgeTest extends EdgeTester {
 
 	@Test
 	public void testRemoveCox() {
-		CoxAgent cox = createMock(CoxAgent.class);
+		Cox cox = createMock(Cox.class);
 		BoatNavigation mockLocation = createMock(BoatNavigation.class);
 		
 		expect(cox.getNavigator()).andStubReturn(mockLocation);

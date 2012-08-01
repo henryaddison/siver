@@ -26,7 +26,7 @@ public class Boat {
 	
 	//the river the boat is on and the cox in the boat
 	private River river;
-	private CoxAgent cox;
+	private Cox cox;
 	
 	//the current gear and orientation
 	private double orientation;
@@ -47,7 +47,7 @@ public class Boat {
 		this.gearMultiplier = gearMult;
 	}
 	
-	public void launch(CoxAgent cox, Point2D.Double pt) {
+	public void launch(Cox cox, Point2D.Double pt) {
 		//initially the boat points straight up and is going at speed 10
 		this.orientation = 0;
 		this.gear = 0;

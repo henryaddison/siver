@@ -3,11 +3,11 @@ package siver.agents.boat.actions;
 import siver.agents.boat.*;
 
 public abstract class Action {
-	protected CoxAgent cox;
+	protected Cox cox;
 	protected Boat boat;
 	protected BoatNavigation location;
 	
-	public Action(CoxAgent cox) {
+	public Action(Cox cox) {
 		this.cox = cox;
 		this.boat = cox.getBoat();
 		this.location = cox.getNavigator();

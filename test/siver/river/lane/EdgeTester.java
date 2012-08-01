@@ -9,15 +9,15 @@ import repast.simphony.context.Context;
 import repast.simphony.space.continuous.ContinuousSpace;
 import repast.simphony.space.continuous.NdPoint;
 import siver.agents.boat.Boat;
-import siver.agents.boat.CoxAgent;
+import siver.agents.boat.Cox;
 import siver.context.SiverContextCreator;
 
 public class EdgeTester {
 	protected Context<Object> mockContext;
 	protected ContinuousSpace<Object> mockSpace;
-	protected CoxAgent cox1;
-	protected CoxAgent cox2;
-	protected CoxAgent cox3;
+	protected Cox cox1;
+	protected Cox cox2;
+	protected Cox cox3;
 	
 	@Before
 	public void setUp() throws Exception {
@@ -31,9 +31,9 @@ public class EdgeTester {
 		expect(mockSpace.moveTo(anyObject(), eq(10.0), eq(20.0))).andStubReturn(true);
 		expect(mockContext.remove(anyObject())).andStubReturn(true);
 		
-		cox1 = createMock(CoxAgent.class);
-		cox2 = createMock(CoxAgent.class);
-		cox3 = createMock(CoxAgent.class);
+		cox1 = createMock(Cox.class);
+		cox2 = createMock(Cox.class);
+		cox3 = createMock(Cox.class);
 		
 		Boat mockBoat = createMock(Boat.class);
 		expect(mockBoat.getLocation()).andStubReturn(new NdPoint(10,20));

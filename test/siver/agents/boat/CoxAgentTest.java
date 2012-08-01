@@ -20,7 +20,7 @@ import siver.river.lane.LaneNode;
 
 public class CoxAgentTest {
 	
-	private CoxAgent cox;
+	private Cox cox;
 	private Boat mockBoat;
 	private Lane mockLane;
 	private ContinuousSpace<Object> mockSpace;
@@ -38,7 +38,7 @@ public class CoxAgentTest {
 		mockBoat = createMock(Boat.class);
 		mockLane = createMock(Lane.class);
 		mockSpace = createMock(ContinuousSpace.class);
-		cox = new CoxAgent();
+		cox = new Cox();
 	}
 
 	@After
@@ -48,7 +48,7 @@ public class CoxAgentTest {
 	@Test
 	public void testCoxAgent() {
 		assertNotNull(cox);
-		assertTrue(cox instanceof CoxAgent);
+		assertTrue(cox instanceof Cox);
 	}
 
 	@Test

@@ -7,18 +7,18 @@ import java.lang.reflect.Constructor;
 import org.junit.Before;
 
 import siver.agents.boat.Boat;
-import siver.agents.boat.CoxAgent;
+import siver.agents.boat.Cox;
 import siver.agents.boat.BoatNavigation;
 
 public abstract class ActionTest {
 	protected Boat mockBoat;
-	protected CoxAgent mockCox;
+	protected Cox mockCox;
 	protected Action action;
 	protected BoatNavigation mockLocation;
 	
 	protected void setUpMocks() {
 		mockBoat = createMock(Boat.class);
-		mockCox = createMock(CoxAgent.class);
+		mockCox = createMock(Cox.class);
 		mockLocation = createMock(BoatNavigation.class);
 		
 		expect(mockCox.getNavigator()).andStubReturn(mockLocation);
@@ -51,7 +51,7 @@ public abstract class ActionTest {
 		replay(mockBoat);
 		replay(mockLocation);
 		Class cl = Class.forName(className());
-		Constructor con = cl.getConstructor(CoxAgent.class);
+		Constructor con = cl.getConstructor(Cox.class);
 		action = (Action) con.newInstance(mockCox);
 		verify(mockCox);
 		verify(mockBoat);

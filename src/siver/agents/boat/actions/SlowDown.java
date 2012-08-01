@@ -1,9 +1,9 @@
 package siver.agents.boat.actions;
 
-import siver.agents.boat.CoxAgent;
+import siver.agents.boat.Cox;
 
 public class SlowDown extends SingleTickAction {	
-	public SlowDown(CoxAgent cox) {
+	public SlowDown(Cox cox) {
 		super(cox);
 	}
 	@Override

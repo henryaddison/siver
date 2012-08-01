@@ -6,7 +6,7 @@ import siver.river.lane.LaneEdge;
 import siver.river.lane.LaneNode;
 import siver.agents.boat.actions.*;
 
-public class CoxAgent {
+public class Cox {
 	//The boat the cox is controlling.
 	protected Boat boat;
 	
@@ -18,7 +18,7 @@ public class CoxAgent {
 	protected Action action;
 	protected BoatNavigation navigator;
 	
-	public CoxAgent() {
+	public Cox() {
 		incapcitated = false;
 	}
 	
