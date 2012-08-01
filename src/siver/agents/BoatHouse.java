@@ -6,7 +6,7 @@ import java.lang.reflect.InvocationTargetException;
 import repast.simphony.context.Context;
 import repast.simphony.random.RandomHelper;
 import repast.simphony.space.continuous.ContinuousSpace;
-import siver.agents.boat.BoatAgent;
+import siver.agents.boat.Boat;
 import siver.agents.boat.CoxAgent;
 import siver.river.River;
 import siver.river.lane.Lane;
@@ -37,7 +37,7 @@ public class BoatHouse {
 	}
 	
 	public void launchBoat(String coxClassName) {
-		BoatAgent boat = new BoatAgent(river, context, space, 0.5);
+		Boat boat = new Boat(river, context, space, 0.5);
 		context.add(boat);
 		
 		try {

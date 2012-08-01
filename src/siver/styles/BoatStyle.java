@@ -8,9 +8,9 @@ import repast.simphony.visualizationOGL2D.StyleOGL2D;
 import saf.v3d.ShapeFactory2D;
 import saf.v3d.scene.Position;
 import saf.v3d.scene.VSpatial;
-import siver.agents.boat.BoatAgent;
+import siver.agents.boat.Boat;
 
-public class BoatStyle implements StyleOGL2D<BoatAgent> {
+public class BoatStyle implements StyleOGL2D<Boat> {
 
 	private ShapeFactory2D shapeFactory;
 	
@@ -20,7 +20,7 @@ public class BoatStyle implements StyleOGL2D<BoatAgent> {
 	}
 	
 	@Override
-	public VSpatial getVSpatial(BoatAgent object, VSpatial spatial) {
+	public VSpatial getVSpatial(Boat object, VSpatial spatial) {
 		Path2D.Double boatOutline = new Path2D.Double();
 		boatOutline.moveTo(0, 8.5);
 		
@@ -66,7 +66,7 @@ public class BoatStyle implements StyleOGL2D<BoatAgent> {
 	}
 
 	@Override
-	public Color getColor(BoatAgent object) {
+	public Color getColor(Boat object) {
 //		if(object.onRiver()) {
 //			return Color.RED;
 //		} else {
@@ -76,59 +76,59 @@ public class BoatStyle implements StyleOGL2D<BoatAgent> {
 	}
 
 	@Override
-	public int getBorderSize(BoatAgent object) {
+	public int getBorderSize(Boat object) {
 		return 0;
 	}
 
 	@Override
-	public Color getBorderColor(BoatAgent object) {
+	public Color getBorderColor(Boat object) {
 		return null;
 	}
 
 	@Override
-	public float getRotation(BoatAgent object) {
+	public float getRotation(Boat object) {
 		double angle = object.getAngle();
 		float angleForView = (float)-(angle*180.0/Math.PI - 90.0);
 		return angleForView;
 	}
 
 	@Override
-	public float getScale(BoatAgent object) {
+	public float getScale(Boat object) {
 		return 15;
 	}
 
 	@Override
-	public String getLabel(BoatAgent object) {
+	public String getLabel(Boat object) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public Font getLabelFont(BoatAgent object) {
+	public Font getLabelFont(Boat object) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public float getLabelXOffset(BoatAgent object) {
+	public float getLabelXOffset(Boat object) {
 		// TODO Auto-generated method stub
 		return 0;
 	}
 
 	@Override
-	public float getLabelYOffset(BoatAgent object) {
+	public float getLabelYOffset(Boat object) {
 		// TODO Auto-generated method stub
 		return 0;
 	}
 
 	@Override
-	public Position getLabelPosition(BoatAgent object) {
+	public Position getLabelPosition(Boat object) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public Color getLabelColor(BoatAgent object) {
+	public Color getLabelColor(Boat object) {
 		// TODO Auto-generated method stub
 		return null;
 	}

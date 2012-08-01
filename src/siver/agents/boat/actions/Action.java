@@ -4,7 +4,7 @@ import siver.agents.boat.*;
 
 public abstract class Action {
 	protected CoxAgent cox;
-	protected BoatAgent boat;
+	protected Boat boat;
 	protected BoatNavigation location;
 	
 	public Action(CoxAgent cox) {

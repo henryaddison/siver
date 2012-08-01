@@ -20,7 +20,7 @@ import siver.river.lane.LaneNode;
  * @author henryaddison
  *
  */
-public class BoatAgent {
+public class Boat {
 	
 	private static final int MAX_GEAR  = 10;
 	
@@ -40,7 +40,7 @@ public class BoatAgent {
 	private ContinuousSpace<Object> space;
 	private Context<Object> context;
 	
-	public BoatAgent(River river, Context<Object> context, ContinuousSpace<Object> space, double gearMult) {
+	public Boat(River river, Context<Object> context, ContinuousSpace<Object> space, double gearMult) {
 		this.river = river;
 		this.space = space;
 		this.context = context;

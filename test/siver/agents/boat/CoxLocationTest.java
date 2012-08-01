@@ -25,7 +25,7 @@ public class CoxLocationTest {
 			navigator = cl;
 		}
 		
-		public void setBoat(BoatAgent b) {
+		public void setBoat(Boat b) {
 			boat = b;
 		}
 	}
@@ -50,7 +50,7 @@ public class CoxLocationTest {
 		lane = river.getMiddle();
 		edge = lane.getNextEdge(lane.getStartNode(), false);
 		cox = new TestCoxAgent();
-		BoatAgent boat = createMock(BoatAgent.class);
+		Boat boat = createMock(Boat.class);
 		cox.setBoat(boat);
 		boat.steerToward(edge.getNextNode(false).getLocation());
 		expectLastCall().once();
@@ -162,7 +162,7 @@ public class CoxLocationTest {
 		assertTrue(!cl.changingLane());
 		LaneChangeEdge change_edge = new LaneChangeEdge(new LaneNode(10,10,river.getUpstream()), new LaneNode(30,20, river.getUpstream()), mockEdge , mockEdge);
 		
-		BoatAgent boat = cox.getBoat();
+		Boat boat = cox.getBoat();
 		boat.steerToward(change_edge.getNextNode(false).getLocation());
 		expectLastCall().once();
 		

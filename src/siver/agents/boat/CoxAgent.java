@@ -8,7 +8,7 @@ import siver.agents.boat.actions.*;
 
 public class CoxAgent {
 	//The boat the cox is controlling.
-	protected BoatAgent boat;
+	protected Boat boat;
 	
 	//how fast the boat would like to be travelling
 	private int desired_gear;
@@ -22,7 +22,7 @@ public class CoxAgent {
 		incapcitated = false;
 	}
 	
-	public void launch(BoatAgent boat, Lane launchLane, int desGear) {
+	public void launch(Boat boat, Lane launchLane, int desGear) {
 		//save reference to boat launched in
 		this.boat = boat;
 		
@@ -92,7 +92,7 @@ public class CoxAgent {
 		action = null;
 	}
 	
-	public BoatAgent getBoat() {
+	public Boat getBoat() {
 		return boat;
 	}
 	

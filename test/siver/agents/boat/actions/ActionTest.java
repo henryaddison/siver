@@ -6,18 +6,18 @@ import java.lang.reflect.Constructor;
 
 import org.junit.Before;
 
-import siver.agents.boat.BoatAgent;
+import siver.agents.boat.Boat;
 import siver.agents.boat.CoxAgent;
 import siver.agents.boat.BoatNavigation;
 
 public abstract class ActionTest {
-	protected BoatAgent mockBoat;
+	protected Boat mockBoat;
 	protected CoxAgent mockCox;
 	protected Action action;
 	protected BoatNavigation mockLocation;
 	
 	protected void setUpMocks() {
-		mockBoat = createMock(BoatAgent.class);
+		mockBoat = createMock(Boat.class);
 		mockCox = createMock(CoxAgent.class);
 		mockLocation = createMock(BoatNavigation.class);
 		

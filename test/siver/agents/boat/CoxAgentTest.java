@@ -21,7 +21,7 @@ import siver.river.lane.LaneNode;
 public class CoxAgentTest {
 	
 	private CoxAgent cox;
-	private BoatAgent mockBoat;
+	private Boat mockBoat;
 	private Lane mockLane;
 	private ContinuousSpace<Object> mockSpace;
 	
@@ -35,7 +35,7 @@ public class CoxAgentTest {
 
 	@Before
 	public void setUp() throws Exception {
-		mockBoat = createMock(BoatAgent.class);
+		mockBoat = createMock(Boat.class);
 		mockLane = createMock(Lane.class);
 		mockSpace = createMock(ContinuousSpace.class);
 		cox = new CoxAgent();

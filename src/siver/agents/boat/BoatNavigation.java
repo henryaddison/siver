@@ -18,7 +18,7 @@ public class BoatNavigation {
 	//The cox object this location refers to
 	private CoxAgent cox;
 	
-	private BoatAgent boat;
+	private Boat boat;
 	
 	public BoatNavigation(CoxAgent cox, LaneEdge e, boolean up) {
 		this.cox = cox;

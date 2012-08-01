@@ -8,7 +8,7 @@ import org.junit.Before;
 import repast.simphony.context.Context;
 import repast.simphony.space.continuous.ContinuousSpace;
 import repast.simphony.space.continuous.NdPoint;
-import siver.agents.boat.BoatAgent;
+import siver.agents.boat.Boat;
 import siver.agents.boat.CoxAgent;
 import siver.context.SiverContextCreator;
 
@@ -35,7 +35,7 @@ public class EdgeTester {
 		cox2 = createMock(CoxAgent.class);
 		cox3 = createMock(CoxAgent.class);
 		
-		BoatAgent mockBoat = createMock(BoatAgent.class);
+		Boat mockBoat = createMock(Boat.class);
 		expect(mockBoat.getLocation()).andStubReturn(new NdPoint(10,20));
 		expect(cox1.getBoat()).andStubReturn(mockBoat);
 		cox1.incapcitate();
