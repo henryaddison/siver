@@ -41,6 +41,11 @@ public class Cox {
 	@ScheduledMethod(start = 1, interval = 1, priority=10)
 	public void step() {
 		if(!incapcitated) {
+			if(backAtBoatHouse()) {
+				new Land(this).execute();
+				return;
+			}
+			
 			if(action == null) {
 				chooseAction();
 			}
@@ -49,10 +54,7 @@ public class Cox {
 	}
 	
 	public void chooseAction() {
-		if(backAtBoatHouse()) {
-			action = new Land(this);
-		}
-		else if(atRiversEnd()) {
+		if(atRiversEnd()) {
 			action = new Spin(this);
 		}
 		else if(belowDesiredSpeed()) {

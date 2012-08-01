@@ -7,10 +7,7 @@ public class LaneChangeCox extends Cox {
 	private int countDown = 10;
 	@Override
 	public void chooseAction() {
-		if(backAtBoatHouse()) {
-			action = new Land(this);
-		}
-		else if(atRiversEnd()) {
+		if(atRiversEnd()) {
 			action = new Spin(this);
 		}
 		else if(belowDesiredSpeed()) {
