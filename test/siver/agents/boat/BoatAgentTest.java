@@ -15,6 +15,7 @@ import org.junit.Test;
 import repast.simphony.context.Context;
 import repast.simphony.space.continuous.ContinuousSpace;
 import repast.simphony.space.continuous.NdPoint;
+import siver.context.SiverContextCreator;
 import siver.river.River;
 
 public class BoatAgentTest {
@@ -71,15 +72,6 @@ public class BoatAgentTest {
 		launchBoat();
 		assertEquals(0,boat.getAngle(), 1E-5);
 		assertEquals(0,boat.getSpeed(), 1E-5);
-	}
-
-	@Test
-	public void testLand() {
-		expect(mockContext.remove(null)).andReturn(true).once();
-		expect(mockContext.remove(boat)).andReturn(true).once();
-		replay(mockContext);
-		boat.land();
-		verify(mockContext);
 	}
 
 	@Test

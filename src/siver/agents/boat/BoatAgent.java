@@ -4,6 +4,7 @@ package siver.agents.boat;
 import java.awt.geom.Point2D;
 
 import repast.simphony.context.Context;
+import repast.simphony.engine.schedule.ScheduledMethod;
 import repast.simphony.space.SpatialMath;
 import repast.simphony.space.continuous.ContinuousSpace;
 import repast.simphony.space.continuous.NdPoint;
@@ -55,13 +56,8 @@ public class BoatAgent {
 		space.moveTo(this, pt.getX(), pt.getY());
 	}
 	
-	public void land() {
-		context.remove(cox);
-		context.remove(this);
-	}
-	
 	//MOVEMENT
-	
+	@ScheduledMethod(start = 1, interval = 1, priority=1)
 	public void run() {
 		BoatNavigation location = cox.getNavigator();
 		tick_distance_remaining = getSpeed();

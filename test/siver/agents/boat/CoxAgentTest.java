@@ -92,8 +92,6 @@ public class CoxAgentTest {
 		LaneNode furtherNode = new LaneNode(50,30, mockLane);
 		
 		expect(mockBoat.getGear()).andReturn(10).times(1);
-		mockBoat.run();
-		expectLastCall().once();
 		
 		expect(mockLane.getStartNode()).andStubReturn(expNode);
 		expect(mockLane.getNextEdge(cox.getNavigator().getDestinationNode(), false)).andReturn(new LaneEdge(cox.getNavigator().getDestinationNode(), furtherNode)).once();

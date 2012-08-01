@@ -38,15 +38,13 @@ public class CoxAgent {
 	}
 	
 	//BEHAVIOUR
-	@ScheduledMethod(start = 1, interval = 1, shuffle=true, priority=10)
+	@ScheduledMethod(start = 1, interval = 1, priority=10)
 	public void step() {
 		if(!incapcitated) {
 			if(action == null) {
 				chooseAction();
 			}
 			action.execute();
-			
-			boat.run();
 		}
 	}
 	

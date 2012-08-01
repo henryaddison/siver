@@ -9,6 +9,10 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
+import repast.simphony.context.Context;
+import siver.context.SiverContextCreator;
+import siver.river.lane.LaneEdge;
+
 public class LandTest extends ActionTest {
 	
 	@Override
@@ -31,9 +35,22 @@ public class LandTest extends ActionTest {
 
 	@Test
 	public void testExecute() {
-		mockBoat.land();
+		Context<Object> mockContext = createMock(Context.class);
+		SiverContextCreator.setContext(mockContext);
+		
+		LaneEdge mockEdge = createMock(LaneEdge.class);
+		
+		expect(mockLocation.getEdge()).andReturn(mockEdge);
+		
+		mockEdge.removeCox(mockCox);
 		expectLastCall().once();
+		
+		expect(mockContext.remove(mockCox)).andReturn(true).once();
+		expect(mockContext.remove(mockBoat)).andReturn(true).once();
+
+		replay(mockContext);
 		executeWithMocks();
+		verify(mockContext);
 	}
 
 	
