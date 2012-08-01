@@ -88,7 +88,7 @@ public class LetBoatRunTest extends ActionTest {
 	}
 	
 	public static void setUpRunAlongEdgeExpectations(CoxAgent mCox, BoatAgent mBoat, BoatNavigation mLoc) {
-		expect(mCox.getLocation()).andStubReturn(mLoc);
+		expect(mCox.getNavigator()).andStubReturn(mLoc);
 		expect(mCox.getBoat()).andStubReturn(mBoat);
 		
 		expect(mLoc.getTillEdgeEnd()).andReturn(9.0).once();

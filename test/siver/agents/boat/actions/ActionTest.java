@@ -21,7 +21,7 @@ public abstract class ActionTest {
 		mockCox = createMock(CoxAgent.class);
 		mockLocation = createMock(BoatNavigation.class);
 		
-		expect(mockCox.getLocation()).andStubReturn(mockLocation);
+		expect(mockCox.getNavigator()).andStubReturn(mockLocation);
 		expect(mockCox.getBoat()).andStubReturn(mockBoat);
 	}
 	
@@ -67,7 +67,7 @@ public abstract class ActionTest {
 		}
 		
 		
-		expect(mockCox.getLocation()).andStubReturn(mockLocation);
+		expect(mockCox.getNavigator()).andStubReturn(mockLocation);
 		expect(mockCox.getBoat()).andStubReturn(mockBoat);
 	}
 	

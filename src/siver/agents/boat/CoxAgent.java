@@ -16,7 +16,7 @@ public class CoxAgent {
 	private boolean incapcitated;
 	
 	protected Action action;
-	protected BoatNavigation location;
+	protected BoatNavigation navigator;
 	
 	public CoxAgent() {
 		incapcitated = false;
@@ -34,7 +34,7 @@ public class CoxAgent {
 		
 		//and point the boat in the correct direction
 		LaneEdge launchEdge = launchLane.getNextEdge(launchNode, false);
-		location = new BoatNavigation(this, launchEdge, false);
+		navigator = new BoatNavigation(this, launchEdge, false);
 	}
 	
 	//BEHAVIOUR
@@ -70,13 +70,13 @@ public class CoxAgent {
 	 */	
 	
 	protected boolean atRiversEnd() { 
-		LaneNode node = location.getDestinationNode();
-		LaneEdge next_edge = node.getLane().getNextEdge(node, location.headingUpstream());
+		LaneNode node = navigator.getDestinationNode();
+		LaneEdge next_edge = node.getLane().getNextEdge(node, navigator.headingUpstream());
 		return next_edge == null;
 	}
 	
 	protected boolean backAtBoatHouse() {
-		return location.getDestinationNode().equals(location.getLane().getStartNode());
+		return navigator.getDestinationNode().equals(navigator.getLane().getStartNode());
 	}
 	
 	public boolean belowDesiredSpeed() {
@@ -98,8 +98,8 @@ public class CoxAgent {
 		return boat;
 	}
 	
-	public BoatNavigation getLocation() {
-		return location;
+	public BoatNavigation getNavigator() {
+		return navigator;
 	}
 	
 	public void incapcitate() {

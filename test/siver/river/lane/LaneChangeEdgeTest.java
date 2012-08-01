@@ -75,7 +75,7 @@ public class LaneChangeEdgeTest extends EdgeTester {
 		CoxAgent cox = createMock(CoxAgent.class);
 		BoatNavigation mockLocation = createMock(BoatNavigation.class);
 		
-		expect(cox.getLocation()).andStubReturn(mockLocation);
+		expect(cox.getNavigator()).andStubReturn(mockLocation);
 		expect(mockLocation.headingUpstream()).andReturn(false).once();
 		
 		mockNet.removeEdge((RepastEdge<LaneNode>) e);

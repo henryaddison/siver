@@ -10,7 +10,7 @@ public abstract class Action {
 	public Action(CoxAgent cox) {
 		this.cox = cox;
 		this.boat = cox.getBoat();
-		this.location = cox.getLocation();
+		this.location = cox.getNavigator();
 	}
 	
 	public void execute() {

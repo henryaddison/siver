@@ -22,7 +22,7 @@ public class CoxLocationTest {
 	
 	public class TestCoxAgent extends CoxAgent {
 		public void setLocation(BoatNavigation cl) {
-			location = cl;
+			navigator = cl;
 		}
 		
 		public void setBoat(BoatAgent b) {

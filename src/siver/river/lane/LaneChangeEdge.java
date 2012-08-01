@@ -92,7 +92,7 @@ public class LaneChangeEdge extends LaneEdge {
 		//once the cox has left this edge then it will never be used again so we can safely remove 
 		//the edge from the network and the temporary Node that we started from on this edge (i.e. the next node in the reverse direction
 		destinationLane.getNet().removeEdge((RepastEdge<LaneNode>) this);
-		destinationLane.getContext().remove(getNextNode(!cox.getLocation().headingUpstream()));
+		destinationLane.getContext().remove(getNextNode(!cox.getNavigator().headingUpstream()));
 		
 	}
 	

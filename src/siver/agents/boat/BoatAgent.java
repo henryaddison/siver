@@ -63,7 +63,7 @@ public class BoatAgent {
 	//MOVEMENT
 	
 	public void run() {
-		BoatNavigation location = cox.getLocation();
+		BoatNavigation location = cox.getNavigator();
 		tick_distance_remaining = getSpeed();
 		double distance_till_next_node = location.getTillEdgeEnd();
 		if(tick_distance_remaining >= distance_till_next_node) {
