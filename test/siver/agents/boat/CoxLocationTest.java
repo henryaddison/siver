@@ -21,7 +21,7 @@ import siver.river.lane.Lane.UnstartedLaneException;
 public class CoxLocationTest {
 	
 	public class TestCoxAgent extends CoxAgent {
-		public void setLocation(CoxLocation cl) {
+		public void setLocation(BoatNavigation cl) {
 			location = cl;
 		}
 		
@@ -30,7 +30,7 @@ public class CoxLocationTest {
 		}
 	}
 
-	private CoxLocation cl;
+	private BoatNavigation cl;
 	private TestCoxAgent cox;
 	private LaneEdge edge;
 	private Lane lane;
@@ -55,7 +55,7 @@ public class CoxLocationTest {
 		boat.steerToward(edge.getNextNode(false).getLocation());
 		expectLastCall().once();
 		replay(boat);
-		cl = new CoxLocation(cox, edge, false);
+		cl = new BoatNavigation(cox, edge, false);
 		reset(boat);
 		cox.setLocation(cl);
 		
@@ -70,8 +70,8 @@ public class CoxLocationTest {
 		cox.getBoat().steerToward(edge.getNextNode(true).getLocation());
 		expectLastCall().once();
 		replay(cox.getBoat());
-		CoxLocation cl = new CoxLocation(cox, edge, true);
-		assertTrue(cl instanceof CoxLocation);
+		BoatNavigation cl = new BoatNavigation(cox, edge, true);
+		assertTrue(cl instanceof BoatNavigation);
 		assertEquals(lane, cl.getLane());
 		assertEquals(edge, cl.getEdge());
 		assertEquals(20, cl.getTillEdgeEnd(), 1E-5);

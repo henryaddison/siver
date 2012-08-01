@@ -5,7 +5,7 @@ import siver.river.lane.LaneChangeEdge;
 import siver.river.lane.LaneEdge;
 import siver.river.lane.LaneNode;
 
-public class CoxLocation {
+public class BoatNavigation {
 	// The part of a the lane the cox is currently travelling on.
 	private LaneEdge current_edge;
 	
@@ -20,7 +20,7 @@ public class CoxLocation {
 	
 	private BoatAgent boat;
 	
-	public CoxLocation(CoxAgent cox, LaneEdge e, boolean up) {
+	public BoatNavigation(CoxAgent cox, LaneEdge e, boolean up) {
 		this.cox = cox;
 		boat = cox.getBoat();
 		upstream = up;

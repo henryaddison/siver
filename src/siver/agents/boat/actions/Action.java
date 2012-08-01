@@ -5,7 +5,7 @@ import siver.agents.boat.*;
 public abstract class Action {
 	protected CoxAgent cox;
 	protected BoatAgent boat;
-	protected CoxLocation location;
+	protected BoatNavigation location;
 	
 	public Action(CoxAgent cox) {
 		this.cox = cox;

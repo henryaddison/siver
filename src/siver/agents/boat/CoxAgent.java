@@ -16,7 +16,7 @@ public class CoxAgent {
 	private boolean incapcitated;
 	
 	protected Action action;
-	protected CoxLocation location;
+	protected BoatNavigation location;
 	
 	public CoxAgent() {
 		incapcitated = false;
@@ -34,7 +34,7 @@ public class CoxAgent {
 		
 		//and point the boat in the correct direction
 		LaneEdge launchEdge = launchLane.getNextEdge(launchNode, false);
-		location = new CoxLocation(this, launchEdge, false);
+		location = new BoatNavigation(this, launchEdge, false);
 	}
 	
 	//BEHAVIOUR
@@ -98,7 +98,7 @@ public class CoxAgent {
 		return boat;
 	}
 	
-	public CoxLocation getLocation() {
+	public BoatNavigation getLocation() {
 		return location;
 	}
 	

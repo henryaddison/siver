@@ -137,7 +137,7 @@ public class CoxAgentTest {
 	@Test
 	public void testGetLocation() {
 		launchCox();
-		CoxLocation cl = cox.getLocation();
+		BoatNavigation cl = cox.getLocation();
 		assertEquals(mockLane, cl.getLane());
 		assertEquals(new Point2D.Double(10,30), cl.getEdge().getSource().getLocation());
 		assertEquals(new Point2D.Double(30,30), cl.getEdge().getTarget().getLocation());
