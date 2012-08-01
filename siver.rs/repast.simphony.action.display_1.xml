@@ -1,9 +1,9 @@
 <repast.simphony.visualization.engine.DefaultDisplayDescriptor>
-  <name>Cont Space</name>
+  <name>River</name>
   <type>TWO_D</type>
   <styles>
     <entry>
-      <string>siver.agents.boat.Boat</string>
+      <string>siver.boat.Boat</string>
       <string>siver.styles.BoatStyle</string>
     </entry>
     <entry>
@@ -11,17 +11,13 @@
       <string>siver.styles.RiverStyle</string>
     </entry>
     <entry>
-      <string>siver.agents.BoatHouse</string>
+      <string>siver.river.BoatHouse</string>
       <string>siver.styles.BoatHouseStyle</string>
-    </entry>
-    <entry>
-      <string>siver.river.lane.Crash</string>
-      <string>repast.simphony.visualization.editedStyle.EditedStyle2D</string>
     </entry>
   </styles>
   <editedStyles>
     <entry>
-      <string>siver.agents.boat.Boat</string>
+      <string>siver.boat.Boat</string>
       <null/>
     </entry>
     <entry>
@@ -29,12 +25,8 @@
       <null/>
     </entry>
     <entry>
-      <string>siver.agents.BoatHouse</string>
+      <string>siver.river.BoatHouse</string>
       <null/>
-    </entry>
-    <entry>
-      <string>siver.river.lane.Crash</string>
-      <string>siver.river.lane.Crash.style_0.xml</string>
     </entry>
   </editedStyles>
   <netStyles/>
@@ -52,7 +44,7 @@
   <layoutInterval>0</layoutInterval>
   <layerOrder>
     <entry>
-      <string>siver.agents.boat.Boat</string>
+      <string>siver.boat.Boat</string>
       <int>1</int>
     </entry>
     <entry>
@@ -60,12 +52,8 @@
       <int>0</int>
     </entry>
     <entry>
-      <string>siver.agents.BoatHouse</string>
+      <string>siver.river.BoatHouse</string>
       <int>2</int>
-    </entry>
-    <entry>
-      <string>siver.river.lane.Crash</string>
-      <int>3</int>
     </entry>
   </layerOrder>
   <projections>
@@ -94,7 +82,7 @@
               </entry>
               <entry>
                 <string>SHOW</string>
-                <boolean>true</boolean>
+                <boolean>false</boolean>
               </entry>
               <entry>
                 <string>COLOR</string>
