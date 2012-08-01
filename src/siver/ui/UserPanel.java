@@ -8,8 +8,8 @@ import javax.swing.JPanel;
 
 import siver.boat.*;
 import siver.cox.BasicBrain;
-import siver.cox.LaneChangeCox;
-import siver.cox.StartStopCox;
+import siver.cox.LaneChangeBrain;
+import siver.cox.StartStopBrain;
 import siver.river.BoatHouse;
 
 public class UserPanel extends JPanel {
@@ -29,8 +29,8 @@ public class UserPanel extends JPanel {
 		
 		ArrayList<Class> coxBrainClassesNames = new ArrayList<Class>();
 		coxBrainClassesNames.add(BasicBrain.class);
-		coxBrainClassesNames.add(StartStopCox.class);
-		coxBrainClassesNames.add(LaneChangeCox.class);
+		coxBrainClassesNames.add(StartStopBrain.class);
+		coxBrainClassesNames.add(LaneChangeBrain.class);
 		
 		
 		for(Class klass : coxBrainClassesNames) {

@@ -2,8 +2,8 @@ package siver.cox;
 
 import siver.cox.actions.*;
 
-public class StartStopCox extends CoxBrain {
-	public StartStopCox(CoxObservations obs) {
+public class StartStopBrain extends CoxBrain {
+	public StartStopBrain(CoxObservations obs) {
 		super(obs);
 	}
 
