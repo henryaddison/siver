@@ -10,6 +10,8 @@ import siver.river.lane.LaneNode;
 import siver.boat.Boat;
 import siver.boat.BoatNavigation;
 import siver.cox.actions.*;
+import siver.cox.brains.BasicBrain;
+import siver.cox.brains.CoxBrain;
 
 public class Cox {
 	//The boat the cox is controlling.

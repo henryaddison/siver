@@ -1,5 +1,6 @@
-package siver.cox;
+package siver.cox.brains;
 
+import siver.cox.CoxObservations;
 import siver.cox.actions.Action;
 import siver.cox.actions.LetBoatRun;
 import siver.cox.actions.SpeedUp;

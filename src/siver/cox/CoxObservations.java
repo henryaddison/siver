@@ -16,7 +16,7 @@ public class CoxObservations {
 		this.navigator = navigator;
 	}
 	
-	protected boolean atRiversEnd() { 
+	public boolean atRiversEnd() { 
 		LaneNode node = navigator.getDestinationNode();
 		LaneEdge next_edge = node.getLane().getNextEdge(node, navigator.headingUpstream());
 		return next_edge == null;

@@ -7,9 +7,9 @@ import javax.swing.JButton;
 import javax.swing.JPanel;
 
 import siver.boat.*;
-import siver.cox.BasicBrain;
-import siver.cox.LaneChangeBrain;
-import siver.cox.StartStopBrain;
+import siver.cox.brains.BasicBrain;
+import siver.cox.brains.LaneChangeBrain;
+import siver.cox.brains.StartStopBrain;
 import siver.river.BoatHouse;
 
 public class UserPanel extends JPanel {

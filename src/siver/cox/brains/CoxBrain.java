@@ -1,4 +1,6 @@
-package siver.cox;
+package siver.cox.brains;
+
+import siver.cox.CoxObservations;
 
 public abstract class CoxBrain {
 	protected CoxObservations observations;
