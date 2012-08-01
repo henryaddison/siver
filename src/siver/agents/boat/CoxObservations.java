@@ -23,4 +23,8 @@ public class CoxObservations {
 	public boolean belowDesiredSpeed() {
 		return boat.getGear() < cox.desired_gear();
 	}
+	
+	public int boatGear() {
+		return boat.getGear();
+	}
 }

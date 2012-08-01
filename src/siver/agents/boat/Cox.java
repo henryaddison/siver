@@ -1,5 +1,8 @@
 package siver.agents.boat;
 
+import java.lang.reflect.Constructor;
+import java.lang.reflect.InvocationTargetException;
+
 import repast.simphony.engine.schedule.ScheduledMethod;
 import siver.river.lane.Lane;
 import siver.river.lane.LaneEdge;
@@ -20,11 +23,18 @@ public class Cox {
 	
 	protected CoxObservations observations;
 	
+	private CoxBrain brain;
+	
 	public Cox() {
-		incapcitated = false;
+		
 	}
 	
-	public void launch(Boat boat, Lane launchLane, int desGear) {
+	public void launch(Boat boat, Lane launchLane, int desGear) throws SecurityException, IllegalArgumentException, NoSuchMethodException, InstantiationException, IllegalAccessException, InvocationTargetException {
+		launch(BasicBrain.class, boat, launchLane, desGear);
+	}
+	
+	public void launch(Class brainType, Boat boat, Lane launchLane, int desGear) throws SecurityException, NoSuchMethodException, IllegalArgumentException, InstantiationException, IllegalAccessException, InvocationTargetException {
+		incapcitated = false;
 		//save reference to boat launched in
 		this.boat = boat;
 		
@@ -38,11 +48,13 @@ public class Cox {
 		LaneEdge launchEdge = launchLane.getNextEdge(launchNode, false);
 		navigator = new BoatNavigation(this, boat, launchEdge, false);
 		observations = new CoxObservations(this, boat, navigator);
+		Constructor<CoxBrain> cons = brainType.getConstructor(CoxObservations.class);
+		brain = cons.newInstance(observations);
 	}
 	
 	//BEHAVIOUR
 	@ScheduledMethod(start = 1, interval = 1, priority=10)
-	public void step() {
+	public void step() throws SecurityException, NoSuchMethodException, IllegalArgumentException, InstantiationException, IllegalAccessException, InvocationTargetException {
 		if(!incapcitated) {
 			if(backAtBoatHouse()) {
 				new Land(this).execute();
@@ -50,23 +62,14 @@ public class Cox {
 			}
 			
 			if(action == null) {
-				chooseAction();
+				Constructor<Action> cons = brain.chooseAction().getConstructor(Cox.class);
+				action = cons.newInstance(this);
 			}
 			action.execute();
 		}
 	}
 	
-	public void chooseAction() {
-		if(observations.atRiversEnd()) {
-			action = new Spin(this);
-		}
-		else if(observations.belowDesiredSpeed()) {
-			action = new SpeedUp(this);
-		}
-		else if(true) {
-			action = new LetBoatRun(this);
-		}
-	}
+	
 	
 	/*
 	 * PREDICATES

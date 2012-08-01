@@ -2,27 +2,32 @@ package siver.agents.boat;
 
 import siver.agents.boat.actions.*;
 
-public class StartStopCox extends Cox {
+public class StartStopCox extends CoxBrain {
+	public StartStopCox(CoxObservations obs) {
+		super(obs);
+	}
+
 	private boolean speedUp = true;
 	
 	@Override
-	public void chooseAction() {
+	public Class chooseAction() {
 		if(observations.atRiversEnd()) {
-			action = new Spin(this);
+			return Spin.class;
 		}
-		else if(boat.getGear() == 0) {
+		if(observations.boatGear() == 0) {
 			speedUp = true;
-			action = new SpeedUp(this);
+			return SpeedUp.class;
 		}
-		else if(boat.getGear() == 10) {
+		if(observations.boatGear() == 10) {
 			speedUp = false;
-			action = new SlowDown(this);
+			return SlowDown.class;
 		}
 		else if(speedUp) {
-			action = new SpeedUp(this);
+			return SpeedUp.class;
 		}
 		else if(true) {
-			action = new SlowDown(this);
+			return SlowDown.class;
 		}
+		throw new RuntimeException("No action chosen by brain. Something has gone very wrong");
 	}
 }

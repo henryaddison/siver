@@ -6,6 +6,7 @@ import java.lang.reflect.InvocationTargetException;
 import repast.simphony.context.Context;
 import repast.simphony.random.RandomHelper;
 import repast.simphony.space.continuous.ContinuousSpace;
+import siver.agents.boat.BasicBrain;
 import siver.agents.boat.Boat;
 import siver.agents.boat.Cox;
 import siver.river.River;
@@ -33,19 +34,17 @@ public class BoatHouse {
 	}
 	
 	public void launchBoat() {
-		launchBoat(Cox.class.getName());
+		launchBoat(BasicBrain.class);
 	}
 	
-	public void launchBoat(String coxClassName) {
+	public void launchBoat(Class coxBrainClass) {
 		Boat boat = new Boat(river, context, space, 0.5);
 		context.add(boat);
 		
 		try {
-			Class cl = Class.forName(coxClassName);
-			Constructor con = cl.getConstructor();
-			Cox cox = (Cox) con.newInstance();
+			Cox cox = new Cox();
 			context.add(cox);
-			cox.launch(boat, getLaunchLane(), RandomHelper.nextIntFromTo(1,10));
+			cox.launch(coxBrainClass, boat, getLaunchLane(), RandomHelper.nextIntFromTo(1,10));
 		} catch (IllegalArgumentException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -64,9 +63,6 @@ public class BoatHouse {
 		} catch (NoSuchMethodException e1) {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
-		} catch (ClassNotFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
 		}
 	}
 	

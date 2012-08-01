@@ -24,22 +24,22 @@ public class UserPanel extends JPanel {
 		
 		setBackground(new java.awt.Color(255, 0, 0));
 		
-		ArrayList<String> coxClassNames = new ArrayList<String>();
-		coxClassNames.add(Cox.class.getName());
-		coxClassNames.add(StartStopCox.class.getName());
-		coxClassNames.add(LaneChangeCox.class.getName());
+		ArrayList<Class> coxBrainClassesNames = new ArrayList<Class>();
+		coxBrainClassesNames.add(BasicBrain.class);
+		coxBrainClassesNames.add(StartStopCox.class);
+		coxBrainClassesNames.add(LaneChangeCox.class);
 		
 		
-		for(String className : coxClassNames) {
-			final String coxClassName = className;
+		for(Class klass : coxBrainClassesNames) {
+			final Class coxBrainClass = klass;
 			
 			JButton launchButton = new JButton();
 			
-			launchButton.setText("Launch Boat with " + coxClassName);
+			launchButton.setText("Launch Boat with " + coxBrainClass.getName());
 			launchButton.setActionCommand("launchBoat");
 			launchButton.addActionListener(new java.awt.event.ActionListener() {
 	            public void actionPerformed(java.awt.event.ActionEvent evt) {
-	            	launchButtonActionPerformed(evt, coxClassName);
+	            	launchButtonActionPerformed(evt, coxBrainClass);
 	            }
 	        });
 			
@@ -47,7 +47,7 @@ public class UserPanel extends JPanel {
 		}
 	}
 	
-	private void launchButtonActionPerformed(java.awt.event.ActionEvent evt, String coxClassName) {
-		boathouse.launchBoat(coxClassName);
+	private void launchButtonActionPerformed(java.awt.event.ActionEvent evt, Class coxBrainClass) {
+		boathouse.launchBoat(coxBrainClass);
 	}
 }

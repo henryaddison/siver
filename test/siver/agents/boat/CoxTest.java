@@ -4,6 +4,7 @@ import static org.easymock.EasyMock.*;
 import static org.junit.Assert.*;
 
 import java.awt.geom.Point2D;
+import java.lang.reflect.InvocationTargetException;
 
 
 import org.junit.After;
@@ -70,7 +71,13 @@ public class CoxTest {
 		replay(mockBoat);
 		replay(mockLane);
 		replay(mockSpace);
-		cox.launch(mockBoat, mockLane, 8);
+		try {
+			cox.launch(mockBoat, mockLane, 8);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			fail("error launching");
+		}
 		verify(mockBoat);
 		verify(mockLane);
 		verify(mockSpace);
@@ -83,7 +90,7 @@ public class CoxTest {
 	}
 
 	@Test
-	public void testStep() {
+	public void testStep() throws SecurityException, IllegalArgumentException, NoSuchMethodException, InstantiationException, IllegalAccessException, InvocationTargetException {
 		launchCox();
 		
 		Point2D.Double expLoc = new Point2D.Double(10,30);
@@ -106,7 +113,7 @@ public class CoxTest {
 	}
 	
 	@Test
-	public void testStepIncapcitated() {
+	public void testStepIncapcitated() throws SecurityException, IllegalArgumentException, NoSuchMethodException, InstantiationException, IllegalAccessException, InvocationTargetException {
 		launchCox();
 		
 		mockBoat.deadStop();

@@ -55,13 +55,6 @@ public class LetBoatRunTest extends ActionTest {
 		mockBoat.setTickDistanceRemaining(1.5);
 		expectLastCall().once();
 		
-		LaneNode edge_start = new LaneNode(10,30,null);
-		LaneNode edge_end = new LaneNode(30,30,null);
-		LaneEdge edge = new LaneEdge(edge_start, edge_end); 
-		
-		mockCox.chooseAction();
-		expectLastCall().once();
-		
 		replay(mockBoat);
 		replay(mockCox);
 		replay(mockLocation);

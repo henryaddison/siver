@@ -2,30 +2,37 @@ package siver.agents.boat;
 
 import siver.agents.boat.actions.*;
 
-public class LaneChangeCox extends Cox {
+public class LaneChangeCox extends CoxBrain {
+	public LaneChangeCox(CoxObservations obs) {
+		super(obs);
+	}
+
 	private boolean move_to_left = true;
 	private int countDown = 10;
+	
 	@Override
-	public void chooseAction() {
+	public Class chooseAction() {
 		if(observations.atRiversEnd()) {
-			action = new Spin(this);
+			return Spin.class;
 		}
-		else if(observations.belowDesiredSpeed()) {
-			action = new SpeedUp(this);
+		if(observations.belowDesiredSpeed()) {
+			return SpeedUp.class;
 		}
-		else if(move_to_left & countDown == 0) {
-			action = new MoveToLaneOnLeft(this);
+		if(move_to_left & countDown == 0) {
 			move_to_left = !move_to_left;
 			countDown = 50;
+			return  MoveToLaneOnLeft.class;
 		}
-		else if(!move_to_left & countDown == 0) {
-			action = new MoveToLaneOnRight(this);
+		if(!move_to_left & countDown == 0) {
 			move_to_left = !move_to_left;
 			countDown = 50;
+			return  MoveToLaneOnRight.class;
 		}
-		else if(true) {
-			action = new LetBoatRun(this);
+		if(true) {
 			countDown--;
+			return LetBoatRun.class;
 		}
+		
+		throw new RuntimeException("No action chosen by brain. Something has gone very wrong");
 	}
 }
