@@ -1,4 +1,4 @@
-package siver.boat;
+package siver.cox;
 
 import static org.easymock.EasyMock.*;
 import static org.junit.Assert.*;
@@ -11,7 +11,6 @@ import org.junit.Test;
 
 import siver.boat.Boat;
 import siver.boat.BoatNavigation;
-import siver.boat.CoxObservations;
 import siver.cox.Cox;
 
 public class CoxObservationsTest {

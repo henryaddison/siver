@@ -1,6 +1,7 @@
-package siver.boat;
+package siver.cox;
 
-import siver.cox.Cox;
+import siver.boat.Boat;
+import siver.boat.BoatNavigation;
 import siver.river.lane.LaneEdge;
 import siver.river.lane.LaneNode;
 

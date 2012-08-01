@@ -7,11 +7,8 @@ import repast.simphony.engine.schedule.ScheduledMethod;
 import siver.river.lane.Lane;
 import siver.river.lane.LaneEdge;
 import siver.river.lane.LaneNode;
-import siver.boat.BasicBrain;
 import siver.boat.Boat;
 import siver.boat.BoatNavigation;
-import siver.boat.CoxBrain;
-import siver.boat.CoxObservations;
 import siver.boat.actions.*;
 
 public class Cox {

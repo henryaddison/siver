@@ -1,4 +1,4 @@
-package siver.boat;
+package siver.cox;
 
 public abstract class CoxBrain {
 	protected CoxObservations observations;
