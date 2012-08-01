@@ -11,7 +11,7 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
-import siver.agents.boat.Cox;
+import siver.boat.Cox;
 import siver.river.lane.Crash.CrashError;
 
 public class CrashTest {

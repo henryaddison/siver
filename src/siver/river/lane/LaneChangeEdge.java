@@ -2,7 +2,7 @@ package siver.river.lane;
 
 import repast.simphony.space.continuous.NdPoint;
 import repast.simphony.space.graph.RepastEdge;
-import siver.agents.boat.Cox;
+import siver.boat.Cox;
 import siver.river.lane.Lane.NoNextNode;
 
 public class LaneChangeEdge extends LaneEdge {

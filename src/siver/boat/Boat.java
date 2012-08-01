@@ -1,4 +1,4 @@
-package siver.agents.boat;
+package siver.boat;
 
 
 import java.awt.geom.Point2D;

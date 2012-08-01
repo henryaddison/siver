@@ -11,8 +11,8 @@ import org.junit.Test;
 
 import repast.simphony.space.graph.Network;
 import repast.simphony.space.graph.RepastEdge;
-import siver.agents.boat.Cox;
-import siver.agents.boat.BoatNavigation;
+import siver.boat.BoatNavigation;
+import siver.boat.Cox;
 import siver.context.LaneContext;
 
 public class LaneChangeEdgeTest extends EdgeTester {

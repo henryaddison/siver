@@ -7,7 +7,7 @@ import java.util.ArrayList;
 
 import repast.simphony.random.RandomHelper;
 import repast.simphony.space.graph.RepastEdge;
-import siver.agents.boat.Cox;
+import siver.boat.Cox;
 import siver.context.SiverContextCreator;
 
 /**

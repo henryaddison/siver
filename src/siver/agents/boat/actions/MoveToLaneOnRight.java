@@ -1,6 +1,6 @@
 package siver.agents.boat.actions;
 
-import siver.agents.boat.Cox;
+import siver.boat.Cox;
 import siver.river.River.NoLaneFound;
 
 public class MoveToLaneOnRight extends ChangeLane {

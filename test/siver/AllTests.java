@@ -5,10 +5,10 @@ import org.junit.runners.Suite;
 import org.junit.runners.Suite.SuiteClasses;
 
 import siver.agents.*;
-import siver.agents.boat.*;
 import siver.river.*;
 import siver.river.lane.*;
 import siver.agents.boat.actions.*;
+import siver.boat.*;
 
 
 @RunWith(Suite.class)

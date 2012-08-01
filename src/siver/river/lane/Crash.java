@@ -1,7 +1,7 @@
 package siver.river.lane;
 
 import repast.simphony.engine.schedule.ScheduledMethod;
-import siver.agents.boat.Cox;
+import siver.boat.Cox;
 import siver.context.SiverContextCreator;
 
 public class Crash {

@@ -2,7 +2,7 @@ package siver.agents.boat.actions;
 
 import repast.simphony.space.SpatialMath;
 import repast.simphony.space.continuous.NdPoint;
-import siver.agents.boat.Cox;
+import siver.boat.Cox;
 import siver.river.lane.Lane;
 import siver.river.lane.LaneEdge;
 import siver.river.lane.LaneNode;

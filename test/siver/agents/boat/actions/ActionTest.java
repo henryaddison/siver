@@ -6,9 +6,9 @@ import java.lang.reflect.Constructor;
 
 import org.junit.Before;
 
-import siver.agents.boat.Boat;
-import siver.agents.boat.Cox;
-import siver.agents.boat.BoatNavigation;
+import siver.boat.Boat;
+import siver.boat.BoatNavigation;
+import siver.boat.Cox;
 
 public abstract class ActionTest {
 	protected Boat mockBoat;

@@ -6,9 +6,9 @@ import java.lang.reflect.InvocationTargetException;
 import repast.simphony.context.Context;
 import repast.simphony.random.RandomHelper;
 import repast.simphony.space.continuous.ContinuousSpace;
-import siver.agents.boat.BasicBrain;
-import siver.agents.boat.Boat;
-import siver.agents.boat.Cox;
+import siver.boat.BasicBrain;
+import siver.boat.Boat;
+import siver.boat.Cox;
 import siver.river.lane.Lane;
 
 /**

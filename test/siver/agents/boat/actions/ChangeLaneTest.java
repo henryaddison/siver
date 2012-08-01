@@ -16,7 +16,7 @@ import org.junit.Test;
 import repast.simphony.context.Context;
 import repast.simphony.space.continuous.ContinuousSpace;
 import repast.simphony.space.continuous.NdPoint;
-import siver.agents.boat.Cox;
+import siver.boat.Cox;
 import siver.context.LaneContext;
 import siver.river.River;
 import siver.river.RiverFactory;

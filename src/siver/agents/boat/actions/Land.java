@@ -1,6 +1,6 @@
 package siver.agents.boat.actions;
 
-import siver.agents.boat.*;
+import siver.boat.*;
 import siver.context.SiverContextCreator;
 
 public class Land extends SingleTickAction {

@@ -1,4 +1,4 @@
-package siver.agents.boat;
+package siver.boat;
 
 import static org.easymock.EasyMock.*;
 import static org.junit.Assert.*;
@@ -15,6 +15,8 @@ import org.junit.Test;
 import repast.simphony.context.Context;
 import repast.simphony.space.continuous.ContinuousSpace;
 import repast.simphony.space.continuous.NdPoint;
+import siver.boat.Boat;
+import siver.boat.Cox;
 import siver.context.SiverContextCreator;
 import siver.river.River;
 

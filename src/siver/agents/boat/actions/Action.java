@@ -1,6 +1,6 @@
 package siver.agents.boat.actions;
 
-import siver.agents.boat.*;
+import siver.boat.*;
 
 public abstract class Action {
 	protected Cox cox;

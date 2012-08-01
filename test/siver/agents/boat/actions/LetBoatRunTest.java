@@ -9,7 +9,7 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
-import siver.agents.boat.*;
+import siver.boat.*;
 import siver.river.lane.*;
 
 

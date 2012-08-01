@@ -10,7 +10,7 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 
 import repast.simphony.random.RandomHelper;
-import siver.agents.boat.Cox;
+import siver.boat.Cox;
 
 public class LaneEdgeTest extends EdgeTester{
 	

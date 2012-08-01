@@ -8,8 +8,8 @@ import org.junit.Before;
 import repast.simphony.context.Context;
 import repast.simphony.space.continuous.ContinuousSpace;
 import repast.simphony.space.continuous.NdPoint;
-import siver.agents.boat.Boat;
-import siver.agents.boat.Cox;
+import siver.boat.Boat;
+import siver.boat.Cox;
 import siver.context.SiverContextCreator;
 
 public class EdgeTester {

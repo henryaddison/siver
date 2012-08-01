@@ -1,4 +1,4 @@
-package siver.agents.boat;
+package siver.boat;
 
 import siver.river.lane.Lane;
 import siver.river.lane.LaneChangeEdge;

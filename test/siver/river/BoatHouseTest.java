@@ -1,4 +1,4 @@
-package siver.agents;
+package siver.river;
 
 import static org.easymock.EasyMock.*;
 import static org.junit.Assert.*;
@@ -14,8 +14,8 @@ import repast.simphony.context.Context;
 import repast.simphony.space.continuous.ContinuousSpace;
 import repast.simphony.space.continuous.NdPoint;
 import siver.LanedTest;
-import siver.agents.boat.Boat;
-import siver.agents.boat.Cox;
+import siver.boat.Boat;
+import siver.boat.Cox;
 import siver.river.BoatHouse;
 import siver.river.River;
 import siver.river.lane.Lane.UnstartedLaneException;

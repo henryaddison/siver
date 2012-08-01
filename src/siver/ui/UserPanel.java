@@ -6,7 +6,7 @@ import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JPanel;
 
-import siver.agents.boat.*;
+import siver.boat.*;
 import siver.river.BoatHouse;
 
 public class UserPanel extends JPanel {

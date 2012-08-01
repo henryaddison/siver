@@ -1,4 +1,4 @@
-package siver.agents.boat;
+package siver.boat;
 
 import siver.agents.boat.actions.Action;
 import siver.agents.boat.actions.LetBoatRun;
