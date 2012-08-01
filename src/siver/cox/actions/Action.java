@@ -1,4 +1,4 @@
-package siver.boat.actions;
+package siver.cox.actions;
 
 import siver.boat.*;
 import siver.cox.Cox;

@@ -9,7 +9,7 @@ import siver.river.lane.LaneEdge;
 import siver.river.lane.LaneNode;
 import siver.boat.Boat;
 import siver.boat.BoatNavigation;
-import siver.boat.actions.*;
+import siver.cox.actions.*;
 
 public class Cox {
 	//The boat the cox is controlling.

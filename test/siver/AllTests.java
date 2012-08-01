@@ -7,9 +7,9 @@ import org.junit.runners.Suite.SuiteClasses;
 import siver.river.*;
 import siver.river.lane.*;
 import siver.boat.*;
-import siver.boat.actions.*;
 import siver.cox.CoxObservationsTest;
 import siver.cox.CoxTest;
+import siver.cox.actions.*;
 
 
 @RunWith(Suite.class)

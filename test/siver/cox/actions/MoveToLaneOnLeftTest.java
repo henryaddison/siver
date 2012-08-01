@@ -1,4 +1,4 @@
-package siver.boat.actions;
+package siver.cox.actions;
 
 import static org.easymock.EasyMock.*;
 import static org.junit.Assert.*;
@@ -12,7 +12,7 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 
 import repast.simphony.space.continuous.NdPoint;
-import siver.boat.actions.MoveToLaneOnLeft;
+import siver.cox.actions.MoveToLaneOnLeft;
 
 
 public class MoveToLaneOnLeftTest extends ChangeLaneTest {

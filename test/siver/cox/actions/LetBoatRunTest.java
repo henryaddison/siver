@@ -1,4 +1,4 @@
-package siver.boat.actions;
+package siver.cox.actions;
 
 import static org.easymock.EasyMock.*;
 import static org.junit.Assert.*;
@@ -10,8 +10,8 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 
 import siver.boat.*;
-import siver.boat.actions.LetBoatRun;
 import siver.cox.Cox;
+import siver.cox.actions.LetBoatRun;
 import siver.river.lane.*;
 
 

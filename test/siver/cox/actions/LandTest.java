@@ -1,4 +1,4 @@
-package siver.boat.actions;
+package siver.cox.actions;
 
 import static org.easymock.EasyMock.*;
 import static org.junit.Assert.*;
@@ -10,8 +10,8 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 
 import repast.simphony.context.Context;
-import siver.boat.actions.Land;
 import siver.context.SiverContextCreator;
+import siver.cox.actions.Land;
 import siver.river.lane.LaneEdge;
 
 public class LandTest extends ActionTest {

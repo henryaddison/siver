@@ -1,4 +1,4 @@
-package siver.boat.actions;
+package siver.cox.actions;
 
 import static org.easymock.EasyMock.*;
 
@@ -8,9 +8,9 @@ import org.junit.Before;
 
 import siver.boat.Boat;
 import siver.boat.BoatNavigation;
-import siver.boat.actions.Action;
-import siver.boat.actions.SingleTickAction;
 import siver.cox.Cox;
+import siver.cox.actions.Action;
+import siver.cox.actions.SingleTickAction;
 
 public abstract class ActionTest {
 	protected Boat mockBoat;

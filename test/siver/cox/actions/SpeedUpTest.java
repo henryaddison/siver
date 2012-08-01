@@ -1,9 +1,6 @@
-package siver.boat.actions;
+package siver.cox.actions;
 
-import static org.easymock.EasyMock.expectLastCall;
-import static org.easymock.EasyMock.replay;
-import static org.easymock.EasyMock.reset;
-import static org.easymock.EasyMock.verify;
+import static org.easymock.EasyMock.*;
 import static org.junit.Assert.*;
 
 import org.junit.After;
@@ -12,9 +9,9 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
-import siver.boat.actions.SlowDown;
+import siver.cox.actions.SpeedUp;
 
-public class SlowDownTest extends ActionTest {
+public class SpeedUpTest extends ActionTest {
 
 	@BeforeClass
 	public static void setUpBeforeClass() throws Exception {
@@ -30,7 +27,7 @@ public class SlowDownTest extends ActionTest {
 
 	@Test
 	public void testExecute() {
-		mockBoat.shiftDown();
+		mockBoat.shiftUp();
 		expectLastCall().once();
 		
 		executeWithMocks();
@@ -38,7 +35,7 @@ public class SlowDownTest extends ActionTest {
 
 	@Override
 	protected String className() {
-		return SlowDown.class.getName();
+		return SpeedUp.class.getName();
 	}
 
 }

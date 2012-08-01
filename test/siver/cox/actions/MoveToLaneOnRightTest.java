@@ -1,4 +1,4 @@
-package siver.boat.actions;
+package siver.cox.actions;
 
 import static org.junit.Assert.*;
 
@@ -10,7 +10,7 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
-import siver.boat.actions.MoveToLaneOnRight;
+import siver.cox.actions.MoveToLaneOnRight;
 
 public class MoveToLaneOnRightTest extends ChangeLaneTest {
 	@Override
