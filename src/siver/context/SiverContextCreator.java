@@ -49,6 +49,8 @@ public class SiverContextCreator implements ContextBuilder<Object> {
 	
 	private static final Integer EXPERIMENT_ID = null;
 	
+	private static final double TICK_TIMEOUT = 1000;
+	
 	/* (non-Javadoc)
 	 * @see repast.simphony.dataLoader.ContextBuilder#build(repast.simphony.context.Context)
 	 */
@@ -83,10 +85,19 @@ public class SiverContextCreator implements ContextBuilder<Object> {
 	
 	public void initializeExperiment() {
 		InprogressExperiment.start(EXPERIMENT_ID);
-		//also schedule a method to run when the simulation ends
+		
+		//schedule a method to run when the simulation ends so we can flush all collected data to database
 		ISchedule schedule = RunEnvironment.getInstance().getCurrentSchedule();
 		ScheduleParameters params = ScheduleParameters.createOneTime(ScheduleParameters.END);
 		schedule.schedule(params, this, "endExperiment");
+		
+		//set up a scheduled method to run when after a certain number of ticks has passed so experiments don't take too long
+		ScheduleParameters simTimeoutParams = ScheduleParameters.createOneTime(TICK_TIMEOUT);
+		schedule.schedule(simTimeoutParams, this, "endSim");
+	}
+	
+	public void endSim() {
+		RunEnvironment.getInstance().getCurrentSchedule().setFinishing(true);
 	}
 	
 	public void endExperiment() {
