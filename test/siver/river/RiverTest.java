@@ -11,7 +11,6 @@ import org.junit.Test;
 import siver.LanedTest;
 import siver.river.River;
 import siver.river.River.NoLaneFound;
-import siver.river.lane.Lane.UnstartedLaneException;
 
 public class RiverTest extends LanedTest {
 	

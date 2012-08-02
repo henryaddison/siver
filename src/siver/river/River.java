@@ -1,7 +1,5 @@
 package siver.river;
 
-import org.junit.Test;
-
 import siver.river.lane.Lane;
 
 /**

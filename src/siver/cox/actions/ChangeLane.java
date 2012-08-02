@@ -5,7 +5,6 @@ import siver.river.River.NoLaneFound;
 import siver.river.lane.Lane;
 import siver.river.lane.Lane.NoNextNode;
 import siver.river.lane.LaneChangeEdge;
-import siver.river.lane.LaneNode;
 
 public abstract class ChangeLane extends SingleTickAction {
 	final protected static int nodes_ahead_to_aim_for = 6;

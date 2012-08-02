@@ -9,13 +9,10 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
-import repast.simphony.space.SpatialMath;
 import repast.simphony.space.continuous.ContinuousSpace;
 import repast.simphony.space.continuous.NdPoint;
 import siver.cox.actions.Spin;
 import siver.river.River;
-import siver.river.lane.LaneEdge;
-import siver.river.lane.LaneNode;
 import siver.river.lane.LaneTest;
 
 public class SpinTest extends ActionTest {

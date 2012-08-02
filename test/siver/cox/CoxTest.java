@@ -17,7 +17,6 @@ import repast.simphony.space.continuous.ContinuousSpace;
 import siver.boat.Boat;
 import siver.boat.BoatNavigation;
 import siver.cox.Cox;
-import siver.cox.actions.LetBoatRun;
 import siver.river.lane.Lane;
 import siver.river.lane.LaneEdge;
 import siver.river.lane.LaneNode;
@@ -98,7 +97,6 @@ public class CoxTest {
 		
 		Point2D.Double expLoc = new Point2D.Double(10,30);
 		LaneNode expNode = new LaneNode(expLoc, mockLane);
-		LaneNode nextNode = new LaneNode(30,30, mockLane);
 		LaneNode furtherNode = new LaneNode(50,30, mockLane);
 		
 		expect(mockBoat.getGear()).andReturn(10).times(1);

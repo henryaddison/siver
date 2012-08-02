@@ -32,11 +32,11 @@ public class CoxObservationsTest {
 	}
 
 	@Test
-	public void test() {
+	public void testCoxObservations() {
 		Boat mboat = createMock(Boat.class);
 		Cox mcox = createMock(Cox.class);
 		BoatNavigation mnav = createMock(BoatNavigation.class);
-		CoxObservations obs = new CoxObservations(mcox, mboat, mnav);
+		new CoxObservations(mcox, mboat, mnav);
 	}
 	
 	@Test

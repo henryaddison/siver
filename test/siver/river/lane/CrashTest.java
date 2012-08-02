@@ -12,7 +12,6 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 
 import siver.cox.Cox;
-import siver.river.lane.Crash.CrashError;
 
 public class CrashTest {
 	private LaneEdge edge;

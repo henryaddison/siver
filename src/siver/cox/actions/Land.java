@@ -1,6 +1,5 @@
 package siver.cox.actions;
 
-import siver.boat.*;
 import siver.context.SiverContextCreator;
 import siver.cox.Cox;
 

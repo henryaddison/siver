@@ -4,20 +4,17 @@ import static org.easymock.EasyMock.*;
 import static org.junit.Assert.*;
 
 import java.awt.geom.Point2D;
-import java.lang.reflect.Constructor;
 
 import org.easymock.Capture;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
 import org.junit.BeforeClass;
-import org.junit.Test;
 
 import repast.simphony.context.Context;
 import repast.simphony.space.continuous.ContinuousSpace;
 import repast.simphony.space.continuous.NdPoint;
 import siver.context.LaneContext;
-import siver.cox.Cox;
 import siver.cox.actions.ChangeLane;
 import siver.river.River;
 import siver.river.RiverFactory;

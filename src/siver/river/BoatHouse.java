@@ -1,6 +1,5 @@
 package siver.river;
 
-import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
 
 import repast.simphony.context.Context;

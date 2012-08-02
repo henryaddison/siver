@@ -85,6 +85,9 @@ public class LaneNodeTest {
 		
 		assertEquals(0, ln.distance(ln.toNdPoint()), 1E-5);
 		assertEquals(5, ln.distance(pt), 1E-5);
+		
+		assertEquals(5, ln.distance(otherpt), 1E-5);
+		assertEquals(10, ln.distance(anotherpt), 1E-5);
 	}
 	
 	@Test

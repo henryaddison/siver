@@ -12,7 +12,6 @@ import org.junit.Test;
 import siver.boat.*;
 import siver.cox.Cox;
 import siver.cox.actions.LetBoatRun;
-import siver.river.lane.*;
 
 
 public class LetBoatRunTest extends ActionTest {

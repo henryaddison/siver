@@ -18,7 +18,6 @@ import repast.simphony.context.Context;
 import repast.simphony.context.DefaultContext;
 import repast.simphony.context.space.continuous.ContinuousSpaceFactoryFinder;
 import repast.simphony.space.continuous.ContinuousSpace;
-import repast.simphony.space.continuous.DefaultContinuousSpace;
 import repast.simphony.space.continuous.NdPoint;
 import repast.simphony.space.continuous.SimpleCartesianAdder;
 import siver.context.LaneContext;
@@ -251,7 +250,7 @@ public class LaneTest {
 	}
 	
 	public static River setupRiver() {
-		Context<Object> context = new DefaultContext();
+		Context<Object> context = new DefaultContext<Object>();
 		
 		ContinuousSpace<Object> space = ContinuousSpaceFactoryFinder.createContinuousSpaceFactory(null)
 				.createContinuousSpace("Continuous Space", context, new SimpleCartesianAdder<Object>(),
