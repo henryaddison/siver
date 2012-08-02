@@ -71,8 +71,10 @@ public class SiverContextCreator implements ContextBuilder<Object> {
 		
 		initializeExperiment();
 		
-		RSApplication.getRSApplicationInstance().removeCustomUserPanel();
-		RSApplication.getRSApplicationInstance().addCustomUserPanel(new UserPanel(boatHouse));
+		if(!InprogressExperiment.instance().isAutomated()) {
+			RSApplication.getRSApplicationInstance().removeCustomUserPanel();
+			RSApplication.getRSApplicationInstance().addCustomUserPanel(new UserPanel(boatHouse));
+		}
 		
 		mainContext = context;
 		

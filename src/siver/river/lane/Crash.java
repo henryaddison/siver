@@ -3,6 +3,7 @@ package siver.river.lane;
 import repast.simphony.engine.schedule.ScheduledMethod;
 import siver.context.SiverContextCreator;
 import siver.cox.Cox;
+import siver.experiments.InprogressExperiment;
 
 public class Crash {
 	public class CrashError extends RuntimeException {
@@ -29,6 +30,7 @@ public class Crash {
 		for(Cox c : edge.getCoxes()) {
 			c.incapcitate();
 		}
+		InprogressExperiment.incrementCrashCount();
 	}
 	
 	public LaneEdge getEdge() {

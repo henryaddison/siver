@@ -7,7 +7,7 @@ CREATE TABLE schedules (
 CREATE TABLE experiments (
 	id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
 	random_seed INT NOT NULL,
-	schedule_id INT DEFAULT NULL,
+	schedule_id INT NOT NULL,
 	CONSTRAINT experiment_schedule_fk FOREIGN KEY (schedule_id) REFERENCES schedules(id)
 ) ENGINE=innodb;
 
@@ -24,7 +24,8 @@ CREATE TABLE experiment_runs (
 	id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
 	experiment_id INT DEFAULT NULL,
 	started_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-	crash_count INT NOT NULL,
+	crash_count INT,
+	tick_count INT,
 	random_seed INT NOT NULL,
 	flushed BOOLEAN DEFAULT FALSE,
 	all_boats_finished BOOLEAN DEFAULT FALSE,
