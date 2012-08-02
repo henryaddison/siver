@@ -12,6 +12,7 @@ import repast.simphony.engine.schedule.ScheduleParameters;
 import repast.simphony.space.continuous.ContinuousSpace;
 import repast.simphony.space.continuous.SimpleCartesianAdder;
 import repast.simphony.ui.RSApplication;
+import siver.experiments.InprogressExperiment;
 import siver.river.BoatHouse;
 import siver.river.River;
 import siver.river.RiverFactory;
@@ -46,6 +47,8 @@ public class SiverContextCreator implements ContextBuilder<Object> {
 		river = r;
 	}
 	
+	private static final Integer EXPERIMENT_ID = null;
+	
 	/* (non-Javadoc)
 	 * @see repast.simphony.dataLoader.ContextBuilder#build(repast.simphony.context.Context)
 	 */
@@ -55,12 +58,7 @@ public class SiverContextCreator implements ContextBuilder<Object> {
 		
 		int xdim = 2200;   // The x dimension of the physical space
 		int ydim = 1000;   // The y dimension of the physical space
-
-		// Create a new 2D continuous space to model the physical space on which the sheep
-		// and wolves will move.  The inputs to the Space Factory include the space name, 
-		// the context in which to place the space, border specification,
-		// random adder for populating the grid with agents,
-		// and the dimensions of the grid.
+		
 		space = ContinuousSpaceFactoryFinder.createContinuousSpaceFactory(null)
 		.createContinuousSpace("Continuous Space", context, new SimpleCartesianAdder<Object>(),
 				new repast.simphony.space.continuous.StrictBorders(), xdim, ydim);
@@ -71,13 +69,7 @@ public class SiverContextCreator implements ContextBuilder<Object> {
 		context.add(boatHouse);
 		space.moveTo(boatHouse, 0, 20);
 		
-		ISchedule schedule = RunEnvironment.getInstance().getCurrentSchedule();
-		//Specify that the action should start at tick 1 and execute every other tick
-//		ScheduleParameters params = ScheduleParameters.createOneTime(1);
-		ScheduleParameters params = ScheduleParameters.createRepeating(1, 100);
-
-		//Schedule the boathouse to launch a boat on the first tick only for now
-//		schedule.schedule(params, boatHouse, "launchBoat");
+		initializeExperiment();
 		
 		RSApplication.getRSApplicationInstance().removeCustomUserPanel();
 		RSApplication.getRSApplicationInstance().addCustomUserPanel(new UserPanel(boatHouse));
@@ -85,5 +77,17 @@ public class SiverContextCreator implements ContextBuilder<Object> {
 		mainContext = context;
 		
 		return context;
+	}
+	
+	public void initializeExperiment() {
+		InprogressExperiment.start(EXPERIMENT_ID);
+		//also schedule a method to run when the simulation ends
+		ISchedule schedule = RunEnvironment.getInstance().getCurrentSchedule();
+		ScheduleParameters params = ScheduleParameters.createOneTime(ScheduleParameters.END);
+		schedule.schedule(params, this, "endExperiment");
+	}
+	
+	public void endExperiment() {
+		InprogressExperiment.end();
 	}
 }
