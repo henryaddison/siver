@@ -4,11 +4,14 @@ package siver.boat;
 import java.awt.geom.Point2D;
 
 import repast.simphony.context.Context;
+import repast.simphony.engine.environment.RunEnvironment;
 import repast.simphony.engine.schedule.ScheduledMethod;
 import repast.simphony.space.SpatialMath;
 import repast.simphony.space.continuous.ContinuousSpace;
 import repast.simphony.space.continuous.NdPoint;
+import siver.context.SiverContextCreator;
 import siver.cox.Cox;
+import siver.experiments.BoatRecord;
 import siver.river.River;
 import siver.river.lane.Lane;
 import siver.river.lane.LaneEdge;
@@ -41,6 +44,9 @@ public class Boat {
 	private ContinuousSpace<Object> space;
 	private Context<Object> context;
 	
+	//to keep track of statistics about boat
+	private BoatRecord record; 
+	
 	public Boat(River river, Context<Object> context, ContinuousSpace<Object> space, double gearMult) {
 		this.river = river;
 		this.space = space;
@@ -53,8 +59,19 @@ public class Boat {
 		this.orientation = 0;
 		this.gear = 0;
 		this.cox = cox;
-		
 		space.moveTo(this, pt.getX(), pt.getY());
+	}
+	
+	public void launchComplete(Integer launch_schedule_id) {
+		this.record = new BoatRecord(launch_schedule_id, SiverContextCreator.getTickCount(), cox.desired_gear(), gearMultiplier, cox.brain_type());
+	}
+	
+	public void land() {
+		context.remove(this);
+		if(this.record != null) {
+			this.record.landed(SiverContextCreator.getTickCount());
+			this.record.flush();
+		}
 	}
 	
 	//MOVEMENT
@@ -65,6 +82,7 @@ public class Boat {
 		double distance_till_next_node = location.getTillEdgeEnd();
 		if(tick_distance_remaining >= distance_till_next_node) {
 			location.moveToEdgeEnd();
+			record.moved(tick_distance_remaining - distance_till_next_node, getGear());
 			tick_distance_remaining = tick_distance_remaining - distance_till_next_node;
 			
 			LaneNode steer_from = location.getDestinationNode();
@@ -74,6 +92,7 @@ public class Boat {
 			location.updateEdge(next_edge);
 			run();
 		} else {
+			record.moved(tick_distance_remaining, getGear());
 			location.moveAlongEdge(tick_distance_remaining);
 			tick_distance_remaining = 0;
 		}

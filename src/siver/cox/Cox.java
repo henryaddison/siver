@@ -9,6 +9,7 @@ import siver.river.lane.LaneEdge;
 import siver.river.lane.LaneNode;
 import siver.boat.Boat;
 import siver.boat.BoatNavigation;
+import siver.context.SiverContextCreator;
 import siver.cox.actions.*;
 import siver.cox.brains.BasicBrain;
 import siver.cox.brains.CoxBrain;
@@ -33,34 +34,44 @@ public class Cox {
 		
 	}
 	
-	public void launch(Boat boat, Lane launchLane, int desGear) throws SecurityException, IllegalArgumentException, NoSuchMethodException, InstantiationException, IllegalAccessException, InvocationTargetException {
-		launch(BasicBrain.class, boat, launchLane, desGear);
+	public void launch(Boat boat, Lane launchLane, int desGear, Integer launch_schedule_id) throws SecurityException, IllegalArgumentException, NoSuchMethodException, InstantiationException, IllegalAccessException, InvocationTargetException {
+		launch(BasicBrain.class, boat, launchLane, desGear, launch_schedule_id);
 	}
 	
-	public void launch(Class brainType, Boat boat, Lane launchLane, int desGear) throws SecurityException, NoSuchMethodException, IllegalArgumentException, InstantiationException, IllegalAccessException, InvocationTargetException {
-		incapcitated = false;
+	public void launch(Class brainType, Boat boat, Lane launchLane, int desGear, Integer launch_schedule_id) throws SecurityException, NoSuchMethodException, IllegalArgumentException, InstantiationException, IllegalAccessException, InvocationTargetException {
 		//save reference to boat launched in
 		this.boat = boat;
-		
-		this.desired_gear = desGear;
-		
 		//place the boat at the location of the first node of the lane
 		LaneNode launchNode = launchLane.getStartNode();
-		boat.launch(this, launchNode.getLocation());
 		
 		//and point the boat in the correct direction
 		LaneEdge launchEdge = launchLane.getNextEdge(launchNode, false);
+		boat.launch(this, launchNode.getLocation());
+		
 		navigator = new BoatNavigation(this, boat, launchEdge, false);
 		observations = new CoxObservations(this, boat, navigator);
+		
 		Constructor<CoxBrain> cons = brainType.getConstructor(CoxObservations.class);
 		brain = cons.newInstance(observations);
+		
+		incapcitated = false;
+		
+		this.desired_gear = desGear;
+		
+		boat.launchComplete(launch_schedule_id);
+	}
+	
+	public void land() {
+		getNavigator().getEdge().removeCox(this);
+		boat.land();
+		SiverContextCreator.getContext().remove(this);
 	}
 	
 	//BEHAVIOUR
 	@ScheduledMethod(start = 1, interval = 1, priority=10)
 	public void step() throws SecurityException, NoSuchMethodException, IllegalArgumentException, InstantiationException, IllegalAccessException, InvocationTargetException {
 		if(!incapcitated) {
-			if(backAtBoatHouse()) {
+			if(outingOver()) {
 				new Land(this).execute();
 				return;
 			}
@@ -79,9 +90,7 @@ public class Cox {
 	 * PREDICATES
 	 */	
 	
-	
-	
-	protected boolean backAtBoatHouse() {
+	protected boolean outingOver() {
 		return navigator.getDestinationNode().equals(navigator.getLane().getStartNode());
 	}
 	
@@ -123,4 +132,7 @@ public class Cox {
 		return desired_gear;
 	}
 	
+	public String brain_type() {
+		return this.brain.getClass().getName();
+	}
 }

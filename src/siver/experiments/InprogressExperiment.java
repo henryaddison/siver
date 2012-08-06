@@ -1,18 +1,16 @@
 package siver.experiments;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
 import repast.simphony.engine.environment.RunEnvironment;
 import repast.simphony.random.RandomHelper;
+import siver.context.SiverContextCreator;
 
-public class InprogressExperiment {
-	private final static String URL = "jdbc:mysql://localhost:3306/siver_development";
+public class InprogressExperiment extends ExperimentalDatum {
+	
 	private static InprogressExperiment instance;
-	private static Connection conn = null;;
 	private Integer experiment_id;
 	private int experiment_run_id;
 	private int crash_count;
@@ -25,7 +23,7 @@ public class InprogressExperiment {
 		}
 		
 		initializeDBConnection();
-		
+		BoatRecord.initializeDBConnection();
 		try {
 			instance().create_experiment_run();
 		} catch (SQLException e) {
@@ -44,39 +42,12 @@ public class InprogressExperiment {
 		} finally {
 			instance = null;
 			closeDBConnection();
+			BoatRecord.closeDBConnection();
 		}
 	}
 	
 	public static InprogressExperiment instance() {
 		return instance;
-	}
-	
-	private static void initializeDBConnection() {
-		if(conn == null) {
-			try {
-				Class.forName("com.mysql.jdbc.Driver");
-			} catch (ClassNotFoundException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-	        try {
-				conn = DriverManager.getConnection(URL, "siver", "");
-			} catch (SQLException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-		}
-	}
-	
-	private static void closeDBConnection() {
-		if(conn != null) {
-			try {
-				conn.close();
-			} catch (SQLException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-		}
 	}
 	
 	private void create_experiment_run() throws SQLException {
@@ -114,6 +85,10 @@ public class InprogressExperiment {
 		return experiment_id != null;
 	}
 	
+	public int experiment_run_id() {
+		return this.experiment_run_id;
+	}
+	
 	private void flush() throws SQLException {
 		PreparedStatement finishExperimentRun = null;
 		String sql = "UPDATE experiment_runs " +
@@ -127,7 +102,7 @@ public class InprogressExperiment {
 		}
 		finishExperimentRun.setBoolean(1, true);
 		finishExperimentRun.setInt(2, crash_count);
-		finishExperimentRun.setInt(3, (int)Math.floor(RunEnvironment.getInstance().getCurrentSchedule().getTickCount()));
+		finishExperimentRun.setInt(3, SiverContextCreator.getTickCount());
 		finishExperimentRun.setInt(4, experiment_run_id);
 		finishExperimentRun.executeUpdate();
 	    finishExperimentRun.close();

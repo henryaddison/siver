@@ -31,18 +31,18 @@ public class BoatHouse {
 		this.space = space;
 	}
 	
-	public void launchBoat() {
-		launchBoat(BasicBrain.class);
+	public void manualLaunch() {
+		manualLaunch(BasicBrain.class);
 	}
 	
-	public void launchBoat(Class coxBrainClass) {
+	public void manualLaunch(Class coxBrainClass) {
 		Boat boat = new Boat(river, context, space, 0.5);
 		context.add(boat);
 		
 		try {
 			Cox cox = new Cox();
 			context.add(cox);
-			cox.launch(coxBrainClass, boat, getLaunchLane(), RandomHelper.nextIntFromTo(1,10));
+			cox.launch(coxBrainClass, boat, getLaunchLane(), RandomHelper.nextIntFromTo(1,10), null);
 		} catch (IllegalArgumentException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

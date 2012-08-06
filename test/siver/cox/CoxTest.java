@@ -13,9 +13,11 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
+import repast.simphony.context.Context;
 import repast.simphony.space.continuous.ContinuousSpace;
 import siver.boat.Boat;
 import siver.boat.BoatNavigation;
+import siver.context.SiverContextCreator;
 import siver.cox.Cox;
 import siver.river.lane.Lane;
 import siver.river.lane.LaneEdge;
@@ -59,12 +61,36 @@ public class CoxTest {
 		launchCox();
 	}
 	
+	@Test
+	public void testLand() {
+		launchCox();
+		
+		Context<Object> mockContext = createMock(Context.class);
+		SiverContextCreator.setContext(mockContext);
+		
+		expect(mockContext.remove(cox)).andReturn(true).once();
+		mockBoat.land();
+		expectLastCall().once();
+		
+		assertTrue(cox.getNavigator().getEdge().contains(cox));
+		
+		replay(mockContext);
+		replay(mockBoat);
+		cox.land();
+		verify(mockContext);
+		verify(mockBoat);
+		
+		assertTrue(!cox.getNavigator().getEdge().contains(cox));
+	}
+	
 	private void launchCox() {
 		Point2D.Double expLoc = new Point2D.Double(10,30);
 		LaneNode expNode = new LaneNode(expLoc, mockLane);
 		LaneNode nextNode = new LaneNode(30,30, mockLane);
 		expect(mockLane.getStartNode()).andStubReturn(expNode);
 		mockBoat.launch(cox, expLoc);
+		expectLastCall().once();
+		mockBoat.launchComplete(null);
 		expectLastCall().once();
 		expect(mockLane.getNextEdge(expNode, false)).andReturn(new LaneEdge(expNode, nextNode)).once();
 		mockBoat.steerToward(nextNode.getLocation());
@@ -74,7 +100,7 @@ public class CoxTest {
 		replay(mockLane);
 		replay(mockSpace);
 		try {
-			cox.launch(mockBoat, mockLane, 8);
+			cox.launch(mockBoat, mockLane, 8, null);
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

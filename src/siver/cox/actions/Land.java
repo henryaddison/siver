@@ -1,6 +1,5 @@
 package siver.cox.actions;
 
-import siver.context.SiverContextCreator;
 import siver.cox.Cox;
 
 public class Land extends SingleTickAction {
@@ -11,9 +10,7 @@ public class Land extends SingleTickAction {
 	
 	@Override
 	public void doExecute() {
-		cox.getNavigator().getEdge().removeCox(cox);
-		SiverContextCreator.getContext().remove(cox);
-		SiverContextCreator.getContext().remove(boat);
+		cox.land();
 	}
 
 }

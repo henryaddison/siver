@@ -36,22 +36,9 @@ public class LandTest extends ActionTest {
 
 	@Test
 	public void testExecute() {
-		Context<Object> mockContext = createMock(Context.class);
-		SiverContextCreator.setContext(mockContext);
-		
-		LaneEdge mockEdge = createMock(LaneEdge.class);
-		
-		expect(mockLocation.getEdge()).andReturn(mockEdge);
-		
-		mockEdge.removeCox(mockCox);
+		mockCox.land();
 		expectLastCall().once();
-		
-		expect(mockContext.remove(mockCox)).andReturn(true).once();
-		expect(mockContext.remove(mockBoat)).andReturn(true).once();
-
-		replay(mockContext);
 		executeWithMocks();
-		verify(mockContext);
 	}
 
 	

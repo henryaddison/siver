@@ -67,7 +67,7 @@ public class BoatHouseTest extends LanedTest {
 		replay(mockSpace);
 		
 		BoatHouse bh = new BoatHouse(r, mockContext, mockSpace);
-		bh.launchBoat();
+		bh.manualLaunch();
 		
 		verify(mockContext);
 		verify(mockSpace);

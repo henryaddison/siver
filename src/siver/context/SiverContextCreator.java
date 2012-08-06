@@ -47,9 +47,20 @@ public class SiverContextCreator implements ContextBuilder<Object> {
 		river = r;
 	}
 	
+	public static int getTickCount() {
+		RunEnvironment re = RunEnvironment.getInstance();
+		
+		if(re != null && re.getCurrentSchedule() != null) {
+			return (int) re.getCurrentSchedule().getTickCount();
+		} else {
+			return -1;
+		}
+		
+	}
+	
 	private static final Integer EXPERIMENT_ID = null;
 	
-	private static final double TICK_TIMEOUT = 1000;
+	private static final double TICK_TIMEOUT = 12*60*60; // a 12 hour day is experiment maximum
 	
 	/* (non-Javadoc)
 	 * @see repast.simphony.dataLoader.ContextBuilder#build(repast.simphony.context.Context)

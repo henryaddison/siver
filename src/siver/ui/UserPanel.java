@@ -51,6 +51,6 @@ public class UserPanel extends JPanel {
 	}
 	
 	private void launchButtonActionPerformed(java.awt.event.ActionEvent evt, Class coxBrainClass) {
-		boathouse.launchBoat(coxBrainClass);
+		boathouse.manualLaunch(coxBrainClass);
 	}
 }
