@@ -22,6 +22,7 @@ public class BoatRecord extends ExperimentalDatum {
 			this.experiment_run_id = InprogressExperiment.instance().experiment_run_id();
 		}
 		this.land_tick = null;
+		InprogressExperiment.addBoatRecord(this);
 	}
 	
 	public void moved(double distance, int gear) {
@@ -31,6 +32,8 @@ public class BoatRecord extends ExperimentalDatum {
 	
 	public void landed(int land_tick) {
 		this.land_tick = land_tick;
+		flush();
+		InprogressExperiment.removeBoatRecord(this);
 	}
 	
 	public void flush() {

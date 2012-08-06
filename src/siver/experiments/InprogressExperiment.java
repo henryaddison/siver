@@ -3,6 +3,7 @@ package siver.experiments;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 
 import repast.simphony.engine.environment.RunEnvironment;
 import repast.simphony.random.RandomHelper;
@@ -14,6 +15,7 @@ public class InprogressExperiment extends ExperimentalDatum {
 	private Integer experiment_id;
 	private int experiment_run_id;
 	private int crash_count;
+	private ArrayList<BoatRecord> inprogress_records;
 	
 	public static void start(Integer experiment_id) {
 		if(instance() == null) {
@@ -35,6 +37,9 @@ public class InprogressExperiment extends ExperimentalDatum {
 	
 	public static void end() {
 		try {
+			for(BoatRecord br : instance().inprogress_records) {
+				br.flush();
+			}
 			instance().flush();
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
@@ -73,6 +78,19 @@ public class InprogressExperiment extends ExperimentalDatum {
 	private InprogressExperiment(Integer experiment_id) {
 		this.experiment_id = experiment_id;
 		crash_count = 0;
+		this.inprogress_records = new ArrayList<BoatRecord>();
+	}
+	
+	public static void addBoatRecord(BoatRecord br) {
+		if(instance()!= null) {
+			instance().inprogress_records.add(br);
+		}
+	}
+	
+	public static void removeBoatRecord(BoatRecord br) {
+		if(instance()!= null) {
+			instance().inprogress_records.remove(br);
+		}
 	}
 	
 	public static void incrementCrashCount() {

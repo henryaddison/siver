@@ -70,7 +70,6 @@ public class Boat {
 		context.remove(this);
 		if(this.record != null) {
 			this.record.landed(SiverContextCreator.getTickCount());
-			this.record.flush();
 		}
 	}
 	
