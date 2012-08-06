@@ -53,7 +53,7 @@ public class SiverContextCreator implements ContextBuilder<Object> {
 		if(re != null && re.getCurrentSchedule() != null) {
 			return (int) re.getCurrentSchedule().getTickCount();
 		} else {
-			return -1;
+			return 0;
 		}
 		
 	}
