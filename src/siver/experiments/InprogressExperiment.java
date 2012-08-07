@@ -6,16 +6,19 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 
 import repast.simphony.engine.environment.RunEnvironment;
+import repast.simphony.engine.schedule.ISchedule;
+import repast.simphony.engine.schedule.ScheduleParameters;
 import repast.simphony.random.RandomHelper;
 import siver.context.SiverContextCreator;
 
 public class InprogressExperiment extends ExperimentalDatum {
 	
 	private static InprogressExperiment instance;
-	private Integer experiment_id;
+	private Integer experiment_id, schedule_id;
 	private int experiment_run_id;
 	private int crash_count;
 	private ArrayList<BoatRecord> inprogress_records;
+	private int random_seed;
 	
 	public static void start(Integer experiment_id) {
 		if(instance() == null) {
@@ -27,7 +30,9 @@ public class InprogressExperiment extends ExperimentalDatum {
 		initializeDBConnection();
 		BoatRecord.initializeDBConnection();
 		try {
+			instance().findRandomSeedAndScheduleId();
 			instance().create_experiment_run();
+			instance().scheduleLaunches();
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -65,7 +70,7 @@ public class InprogressExperiment extends ExperimentalDatum {
 		} else {
 			insertExperimentRun.setNull(1, java.sql.Types.INTEGER);
 		}
-	    insertExperimentRun.setInt(2, RandomHelper.getSeed());
+	    insertExperimentRun.setInt(2, random_seed);
 	    insertExperimentRun.setInt(3, 0);
 	    insertExperimentRun.executeUpdate();
 	    ResultSet keys = insertExperimentRun.getGeneratedKeys();
@@ -79,6 +84,29 @@ public class InprogressExperiment extends ExperimentalDatum {
 		this.experiment_id = experiment_id;
 		crash_count = 0;
 		this.inprogress_records = new ArrayList<BoatRecord>();
+	}
+	
+	private void findRandomSeedAndScheduleId() {
+		if(isAutomated()) {
+			PreparedStatement getRandomSeed = null;
+			String sql = "SELECT random_seed, schedule_id FROM experiments WHERE ID = ?";
+			try {
+				getRandomSeed = conn.prepareStatement(sql);
+				getRandomSeed.setInt(1, experiment_id);
+				ResultSet rseed = getRandomSeed.executeQuery();
+				rseed.first();
+				random_seed = rseed.getInt(1);
+				schedule_id = rseed.getInt(2);
+				getRandomSeed.close();
+				RandomHelper.setSeed(random_seed);
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		} else {
+			random_seed = RandomHelper.getSeed();
+			schedule_id = null;
+		}
 	}
 	
 	public static void addBoatRecord(BoatRecord br) {
@@ -125,5 +153,36 @@ public class InprogressExperiment extends ExperimentalDatum {
 		finishExperimentRun.executeUpdate();
 	    finishExperimentRun.close();
                 
+	}
+	
+	private void scheduleLaunches() {
+		if(isAutomated()) {
+			PreparedStatement stmt = null;
+			String sql = "SELECT launch_tick, desired_gear, speed_multiplier, distance_to_cover, brain_type, id " +
+						"FROM scheduled_launches WHERE schedule_id = ?";
+			try {
+				stmt = conn.prepareStatement(sql);
+				stmt.setInt(1, schedule_id);
+				ResultSet launchData = stmt.executeQuery();
+				ISchedule schedule = RunEnvironment.getInstance().getCurrentSchedule();
+				while(launchData.next()) {
+					int launch_tick = launchData.getInt(1);
+					int desired_gear = launchData.getInt(2);
+					double speed_multiplier = launchData.getDouble(3);
+					double distance_to_cover = launchData.getDouble(4);
+					String brainType = launchData.getString(5);
+					int schedule_launch_id = launchData.getInt(6);
+					
+					ScheduleParameters params = ScheduleParameters.createOneTime(launch_tick);
+					schedule.schedule(params, SiverContextCreator.getBoatHouse(), "automaticLaunch", 
+							schedule_launch_id,desired_gear, speed_multiplier, distance_to_cover, brainType);
+				}
+				stmt.close();
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			
+		}
 	}
 }
