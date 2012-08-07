@@ -96,7 +96,7 @@ public class Boat {
 			LaneEdge next_edge = lane.getNextEdge(steer_from, location.headingUpstream());
 			
 			location.updateEdge(next_edge);
-			run();
+			moveBoat();
 		} else {
 			location.moveAlongEdge(tick_distance_remaining);
 			total_distance_covered += tick_distance_remaining;
