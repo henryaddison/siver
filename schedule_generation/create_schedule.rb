@@ -12,7 +12,7 @@ require './scheduled_launch'
 
 schedule_name = nil
 experiment_name = nil
-random_seed = Random.new_seed
+random_seed = rand(2**31)
 
 optparse = OptionParser.new do|opts|
   opts.on( '-s', '--schedule-name SNAME', "Schedule name" ) do |sn|
