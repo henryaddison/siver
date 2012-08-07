@@ -24,6 +24,10 @@ import siver.ui.UserPanel;
  */
 public class SiverContextCreator implements ContextBuilder<Object> {
 	
+	private static final Integer EXPERIMENT_ID = null;
+	
+	private static final double TICK_TIMEOUT = 12*60*60; // a 12 hour day is experiment maximum
+	
 	private static Context<Object> mainContext;
 	public static Context<Object> getContext() {
 		return mainContext;
@@ -66,10 +70,6 @@ public class SiverContextCreator implements ContextBuilder<Object> {
 		}
 		
 	}
-	
-	private static final Integer EXPERIMENT_ID = null;
-	
-	private static final double TICK_TIMEOUT = 12*60*60; // a 12 hour day is experiment maximum
 	
 	/* (non-Javadoc)
 	 * @see repast.simphony.dataLoader.ContextBuilder#build(repast.simphony.context.Context)
