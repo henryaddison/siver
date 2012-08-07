@@ -94,9 +94,12 @@ public class Boat {
 			LaneNode steer_from = location.getDestinationNode();
 			Lane lane = steer_from.getLane();
 			LaneEdge next_edge = lane.getNextEdge(steer_from, location.headingUpstream());
-			
-			location.updateEdge(next_edge);
-			moveBoat();
+			if(next_edge != null) {
+				location.updateEdge(next_edge);
+				moveBoat(); 
+			} else {
+				deadStop();
+			}
 		} else {
 			location.moveAlongEdge(tick_distance_remaining);
 			total_distance_covered += tick_distance_remaining;
