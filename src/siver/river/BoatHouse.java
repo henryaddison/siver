@@ -35,6 +35,43 @@ public class BoatHouse {
 		manualLaunch(BasicBrain.class);
 	}
 	
+	public void automaticLaunch(Integer scheduled_launch_id, Integer desired_gear, Double speed_multiplier, Double distance_to_cover, String coxBrainClassName) {
+		Boat boat = new Boat(river, context, space, speed_multiplier);
+		context.add(boat);
+		
+		Cox cox = new Cox();
+		context.add(cox);
+		
+		if(!coxBrainClassName.startsWith("siver.")) {
+			coxBrainClassName = BasicBrain.class.getPackage().getName()+"."+coxBrainClassName;
+		}
+		
+		try {
+			cox.launch(Class.forName(coxBrainClassName), boat, getLaunchLane(), desired_gear, speed_multiplier, distance_to_cover, scheduled_launch_id);
+		} catch (SecurityException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IllegalArgumentException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (NoSuchMethodException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (InstantiationException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IllegalAccessException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (InvocationTargetException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	
 	public void manualLaunch(Class coxBrainClass) {
 		Boat boat = new Boat(river, context, space, 0.5);
 		context.add(boat);
