@@ -13,6 +13,7 @@ require './scheduled_launch'
 schedule_name = nil
 experiment_name = nil
 random_seed = rand(2**31)
+brain_type = "BasicBrain"
 
 optparse = OptionParser.new do|opts|
   opts.on( '-s', '--schedule-name SNAME', "Schedule name" ) do |sn|
@@ -23,6 +24,9 @@ optparse = OptionParser.new do|opts|
     random_seed = rs
   end
   
+  opts.on('-b', '--brain-type BRAIN_TYPE', "Brain class name") do |bt|
+    brain_type = bt
+  end
 end
 
 optparse.parse!
@@ -39,6 +43,6 @@ Schedule.transaction do
   experiment = Experiment.create!(:schedule => schedule, :random_seed => random_seed)
   
   100.times do |i|
-    ScheduledLaunch.create!(:schedule => schedule, :desired_gear => rand(10)+1, :speed_multiplier => 0.5, :distance_to_cover => 4000, :launch_tick => i*10, :brain_type => "BasicBrain")
+    ScheduledLaunch.create!(:schedule => schedule, :desired_gear => rand(10)+1, :speed_multiplier => 0.5, :distance_to_cover => 4000, :launch_tick => i*60, :brain_type => brain_type)
   end
 end
