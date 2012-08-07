@@ -59,6 +59,7 @@ public class Cox {
 		
 		this.desired_gear = desGear;
 		this.distance_to_cover = distance_to_cover;
+
 		
 		boat.launchComplete(launch_schedule_id);
 	}
@@ -93,7 +94,7 @@ public class Cox {
 	 */	
 	
 	protected boolean outingOver() {
-		return navigator.getDestinationNode().equals(navigator.getLane().getStartNode());
+		return (boat.total_distance_covered() >= distance_to_cover) && (navigator.getDestinationNode().equals(navigator.getLane().getStartNode()));
 	}
 	
 

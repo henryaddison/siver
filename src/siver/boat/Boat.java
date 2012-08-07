@@ -39,6 +39,7 @@ public class Boat {
 	
 	//distance that can be travelled this tick
 	private double tick_distance_remaining;
+	private double total_distance_covered;
 	
 	//keep a reference of the space the boat is in for easier movement
 	private ContinuousSpace<Object> space;
@@ -60,6 +61,7 @@ public class Boat {
 		this.gear = 0;
 		this.cox = cox;
 		space.moveTo(this, pt.getX(), pt.getY());
+		this.total_distance_covered = 0;
 	}
 	
 	public void launchComplete(Integer launch_schedule_id) {
@@ -76,12 +78,17 @@ public class Boat {
 	//MOVEMENT
 	@ScheduledMethod(start = 1, interval = 1, priority=10)
 	public void run() {
-		BoatNavigation location = cox.getNavigator();
 		tick_distance_remaining = getSpeed();
+		moveBoat();
+	}
+	
+	private void moveBoat() {
+		BoatNavigation location = cox.getNavigator();
 		double distance_till_next_node = location.getTillEdgeEnd();
 		if(tick_distance_remaining >= distance_till_next_node) {
 			location.moveToEdgeEnd();
-			record.moved(tick_distance_remaining - distance_till_next_node, getGear());
+			total_distance_covered += distance_till_next_node;
+			record.moved(distance_till_next_node, getGear());
 			tick_distance_remaining = tick_distance_remaining - distance_till_next_node;
 			
 			LaneNode steer_from = location.getDestinationNode();
@@ -91,8 +98,9 @@ public class Boat {
 			location.updateEdge(next_edge);
 			run();
 		} else {
-			record.moved(tick_distance_remaining, getGear());
 			location.moveAlongEdge(tick_distance_remaining);
+			total_distance_covered += tick_distance_remaining;
+			record.moved(tick_distance_remaining, getGear());
 			tick_distance_remaining = 0;
 		}
 	}
@@ -178,6 +186,10 @@ public class Boat {
 	
 	public void setTickDistanceRemaining(double value) {
 		tick_distance_remaining = value;
+	}
+	
+	public double total_distance_covered() {
+		return total_distance_covered;
 	}
 	
 }
