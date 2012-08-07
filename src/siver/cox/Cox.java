@@ -70,7 +70,7 @@ public class Cox {
 	}
 	
 	//BEHAVIOUR
-	@ScheduledMethod(start = 1, interval = 1, priority=10)
+	@ScheduledMethod(start = 1, interval = 1, priority=100)
 	public void step() throws SecurityException, NoSuchMethodException, IllegalArgumentException, InstantiationException, IllegalAccessException, InvocationTargetException {
 		if(!incapcitated) {
 			if(outingOver()) {

@@ -74,7 +74,7 @@ public class Boat {
 	}
 	
 	//MOVEMENT
-	@ScheduledMethod(start = 1, interval = 1, priority=1)
+	@ScheduledMethod(start = 1, interval = 1, priority=10)
 	public void run() {
 		BoatNavigation location = cox.getNavigator();
 		tick_distance_remaining = getSpeed();

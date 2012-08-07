@@ -37,7 +37,7 @@ public class Crash {
 		return edge;
 	}
 	
-	@ScheduledMethod(start = 1, interval = 1, priority=100)
+	@ScheduledMethod(start = 1, interval = 1, priority=1000)
 	public void step() {
 		//only do anything if the count down is currently > 0
 		if(inProgress()) {
