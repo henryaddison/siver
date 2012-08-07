@@ -1,0 +1,6 @@
+source :rubygems
+source :rubyforge
+source :gemcutter
+
+gem "activerecord", :require => "active_record"
+gem 'mysql2'
