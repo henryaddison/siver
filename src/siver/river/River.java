@@ -53,14 +53,16 @@ public class River extends OutlinedArea {
 	}
 	
 	public Lane getLaneToLeftOf(Lane current, boolean upstream) throws NoLaneFound {
+		int lane_index = lanes.indexOf(current);
 		if(!upstream) {
-			if(current == downstream_lane()) return middle_lane();
-			if(current == middle_lane()) return upstream_lane();
+			lane_index--;
 		} else {
-			if(current == upstream_lane()) return middle_lane();
-			if(current == middle_lane()) return downstream_lane();
+			lane_index++;
 		}
-		throw new NoLaneFound();
+		if(lane_index < 0 || lane_index >= lanes.size()) {
+			throw new NoLaneFound();
+		}
+		return lanes.get(lane_index);
 	}
 	
 	public Lane getLaneToRightOf(Lane current, boolean upstream) throws NoLaneFound {
