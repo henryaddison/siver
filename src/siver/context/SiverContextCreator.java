@@ -47,6 +47,15 @@ public class SiverContextCreator implements ContextBuilder<Object> {
 		river = r;
 	}
 	
+	private static BoatHouse boatHouse;
+	public static BoatHouse getBoatHouse() {
+		return boatHouse;
+	}
+	public static void setBoatHouse(BoatHouse bh) {
+		boatHouse = bh;
+	}
+	
+	
 	public static int getTickCount() {
 		RunEnvironment re = RunEnvironment.getInstance();
 		
@@ -78,7 +87,7 @@ public class SiverContextCreator implements ContextBuilder<Object> {
 		
 		river = RiverFactory.Cam(context, space);
 		
-		BoatHouse boatHouse = new BoatHouse(river, context, space);
+		boatHouse = new BoatHouse(river, context, space);
 		context.add(boatHouse);
 		space.moveTo(boatHouse, 0, 20);
 		
