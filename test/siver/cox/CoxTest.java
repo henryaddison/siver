@@ -128,6 +128,7 @@ public class CoxTest {
 		expect(mockBoat.getGear()).andReturn(10).times(1);
 		
 		expect(mockLane.getStartNode()).andStubReturn(expNode);
+		expect(mockBoat.total_distance_covered()).andReturn(10.0).once();
 		expect(mockLane.getNextEdge(cox.getNavigator().getDestinationNode(), false)).andReturn(new LaneEdge(cox.getNavigator().getDestinationNode(), furtherNode)).once();
 		
 		replay(mockLane);
