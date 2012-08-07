@@ -1,5 +1,7 @@
 package siver.cox.actions;
 
+import java.util.ArrayList;
+
 import repast.simphony.space.SpatialMath;
 import repast.simphony.space.continuous.NdPoint;
 import siver.cox.Cox;
@@ -11,6 +13,9 @@ public class Spin extends Action {
 	private double startOrientation, currentOrientation, step_distance;
 	private Lane destinationLane;
 	private LaneNode destinationNode;
+	
+	private LaneEdge startEdge, destinationEdge;
+	private ArrayList<LaneEdge> middleEdges;
 	
 	private int countDown;
 	
@@ -25,6 +30,17 @@ public class Spin extends Action {
 			destinationLane = boat.getRiver().upstream_lane();
 		}
 		destinationNode = destinationLane.nodeNearest(boat.getLocation());
+		
+		startEdge = location.getEdge();
+		destinationEdge = destinationLane.getNextEdge(destinationNode, !location.headingUpstream());
+		destinationEdge.addCox(cox);
+		
+		middleEdges = new ArrayList<LaneEdge>();
+		for(Lane lane : boat.getRiver().getLanes()) {
+			LaneEdge edge = lane.edgeNearest(boat.getLocation());  
+			middleEdges.add(edge);
+			lane.edgeNearest(boat.getLocation()).addCox(cox);
+		}
 		startOrientation = cox.getBoat().getAngle();
 		currentOrientation = startOrientation;
 		
@@ -37,11 +53,15 @@ public class Spin extends Action {
 		boat.deadStop();
 		
 		if(countDown <= 0) {
+			for(LaneEdge edge : middleEdges) {
+				if(edge != destinationEdge) {
+					edge.removeCox(cox);
+				}
+			}
 			//make sure the boat is on the destination node after spinning in case the spinning animation is slightly off
 			boat.moveTo(destinationNode.toNdPoint());
 			location.toggleUpstream();
-			LaneEdge new_edge = destinationLane.getNextEdge(destinationNode, location.headingUpstream());
-			location.updateEdge(new_edge);
+			location.updateEdge(destinationEdge);
 			return true;
 		}
 		

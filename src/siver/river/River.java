@@ -52,6 +52,10 @@ public class River extends OutlinedArea {
 		return lanes.get(1);
 	}
 	
+	public ArrayList<Lane> getLanes() {
+		return lanes;
+	}
+	
 	public Lane getLaneToLeftOf(Lane current, boolean upstream) throws NoLaneFound {
 		int lane_index = lanes.indexOf(current);
 		if(!upstream) {

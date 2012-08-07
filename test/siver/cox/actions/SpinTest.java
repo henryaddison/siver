@@ -34,9 +34,10 @@ public class SpinTest extends ActionTest {
 	protected void preNewActionSetup() {
 		r = LaneTest.setupRiver();
 		expect(mockBoat.getRiver()).andStubReturn(r);
-		expect(mockBoat.getLocation()).andReturn(new NdPoint(10,30)).times(2);
+		expect(mockBoat.getLocation()).andReturn(new NdPoint(10,30)).times(8);
 		expect(mockBoat.getAngle()).andReturn(0.0).once();
-		expect(mockLocation.headingUpstream()).andReturn(true).once();
+		expect(mockLocation.headingUpstream()).andReturn(true).times(2);
+		expect(mockLocation.getEdge()).andReturn(r.upstream_lane().edgeNearest(new NdPoint(10,30))).once();
 	}
 	
 	@After
@@ -64,8 +65,6 @@ public class SpinTest extends ActionTest {
 		
 		mockLocation.toggleUpstream();
 		expectLastCall().once();
-		
-		expect(mockLocation.headingUpstream()).andReturn(false).once();
 		
 		mockLocation.updateEdge(r.downstream_lane().getNextEdge(r.downstream_lane().getStartNode(), false));
 		expectLastCall().once();
