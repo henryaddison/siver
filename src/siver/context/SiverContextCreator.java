@@ -39,7 +39,7 @@ public class SiverContextCreator implements ContextBuilder<Object> {
 		space = s;
 	}
 	
-	public static River river;
+	private static River river;
 	public static River getRiver() {
 		return river;
 	}
