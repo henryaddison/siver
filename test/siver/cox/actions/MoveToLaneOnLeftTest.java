@@ -35,14 +35,14 @@ public class MoveToLaneOnLeftTest extends ChangeLaneTest {
 
 	@Test
 	public void testExecute() {
-		runExecute(river.getMiddle(), river.getUpstream(), new Point2D.Double(130,30));
+		runExecute(river.middle_lane(), river.upstream_lane(), new Point2D.Double(130,30));
 	}
 	
 	@Test
 	public void testExecuteAlreadyInLeftMostLane() {
 		
 		expect(mockLocation.changingLane()).andReturn(false).once();
-		expect(mockLocation.getLane()).andReturn(river.getUpstream());
+		expect(mockLocation.getLane()).andReturn(river.upstream_lane());
 		
 		executeWithMocks();
 	}
@@ -52,8 +52,8 @@ public class MoveToLaneOnLeftTest extends ChangeLaneTest {
 		NdPoint startLoc = new NdPoint(150,200);
 		expect(mockBoat.getLocation()).andStubReturn(startLoc);
 		expect(mockLocation.changingLane()).andReturn(false).once();
-		expect(mockLocation.getLane()).andReturn(river.getMiddle());
-		expect(mockLocation.getEdge()).andReturn(river.getMiddle().edgeNearest(startLoc));
+		expect(mockLocation.getLane()).andReturn(river.middle_lane());
+		expect(mockLocation.getEdge()).andReturn(river.middle_lane().edgeNearest(startLoc));
 		
 		executeWithMocks();
 	}

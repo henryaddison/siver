@@ -44,9 +44,9 @@ public class RiverTest extends LanedTest {
 	
 	@Test
 	public void testLaneGetters() {
-		assertEquals(up, r.getUpstream());
-		assertEquals(mid, r.getMiddle());
-		assertEquals(down, r.getDownstream());
+		assertEquals(up, r.upstream_lane());
+		assertEquals(mid, r.middle_lane());
+		assertEquals(down, r.downstream_lane());
 	}
 	
 	@Test

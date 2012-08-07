@@ -47,7 +47,7 @@ public class BoatNavigationTest {
 	@Before
 	public void setUp() throws Exception {
 		river = LaneTest.setupRiver();
-		lane = river.getMiddle();
+		lane = river.middle_lane();
 		edge = lane.getNextEdge(lane.getStartNode(), false);
 		cox = new TestCoxAgent();
 		boat = createMock(Boat.class);
@@ -160,7 +160,7 @@ public class BoatNavigationTest {
 		LaneEdge mockEdge= createMock(LaneEdge.class);
 		
 		assertTrue(!cl.changingLane());
-		LaneChangeEdge change_edge = new LaneChangeEdge(new LaneNode(10,10,river.getUpstream()), new LaneNode(30,20, river.getUpstream()), mockEdge , mockEdge);
+		LaneChangeEdge change_edge = new LaneChangeEdge(new LaneNode(10,10,river.upstream_lane()), new LaneNode(30,20, river.upstream_lane()), mockEdge , mockEdge);
 		
 		Boat boat = cox.getBoat();
 		boat.steerToward(change_edge.getNextNode(false).getLocation());

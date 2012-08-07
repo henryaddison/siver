@@ -102,6 +102,6 @@ public class BoatHouse {
 	}
 	
 	public Lane getLaunchLane() {
-		return river.getDownstream();
+		return river.downstream_lane();
 	}
 }

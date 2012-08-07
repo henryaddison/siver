@@ -20,9 +20,9 @@ public class Spin extends Action {
 		super(cox);
 		countDown = STEPS;
 		if(location.headingUpstream()) {
-			destinationLane = boat.getRiver().getDownstream();
+			destinationLane = boat.getRiver().downstream_lane();
 		} else {
-			destinationLane = boat.getRiver().getUpstream();
+			destinationLane = boat.getRiver().upstream_lane();
 		}
 		destinationNode = destinationLane.nodeNearest(boat.getLocation());
 		startOrientation = cox.getBoat().getAngle();

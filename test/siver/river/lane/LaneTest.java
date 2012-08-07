@@ -263,7 +263,7 @@ public class LaneTest {
 	@Test
 	public void testgetNthNodeAhead() throws NoNextNode {
 		River r = setupRiver();
-		Lane l = r.getUpstream();
+		Lane l = r.upstream_lane();
 		LaneNode startNode = l.getStartNode();
 		
 		LaneNode foundNode = l.getNthNodeAhead(startNode, false, 0);
@@ -279,7 +279,7 @@ public class LaneTest {
 	@Test(expected = NoNextNode.class)
 	public void testGetNthNodeAheadTooFar() throws NoNextNode {
 		River r = setupRiver();
-		Lane l = r.getUpstream();
+		Lane l = r.upstream_lane();
 		LaneNode startNode = l.getStartNode();
 		l.getNthNodeAhead(startNode, false, 100);
 	}
@@ -287,7 +287,7 @@ public class LaneTest {
 	@Test
 	public void testGetNearestEdge() throws NoNextNode {
 		River r = setupRiver();
-		Lane l = r.getMiddle();
+		Lane l = r.middle_lane();
 		LaneEdge expEdge;
 		
 		expEdge = l.getNextEdge(l.getStartNode(), false);

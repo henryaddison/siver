@@ -67,7 +67,7 @@ public class SpinTest extends ActionTest {
 		
 		expect(mockLocation.headingUpstream()).andReturn(false).once();
 		
-		mockLocation.updateEdge(r.getDownstream().getNextEdge(r.getDownstream().getStartNode(), false));
+		mockLocation.updateEdge(r.downstream_lane().getNextEdge(r.downstream_lane().getStartNode(), false));
 		expectLastCall().once();
 		
 		

@@ -32,6 +32,6 @@ public class MoveToLaneOnRightTest extends ChangeLaneTest {
 
 	@Test
 	public void testExecute() {
-		runExecute(river.getMiddle(), river.getDownstream(), new Point2D.Double(130,10));
+		runExecute(river.middle_lane(), river.downstream_lane(), new Point2D.Double(130,10));
 	}
 }

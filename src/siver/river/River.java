@@ -1,5 +1,7 @@
 package siver.river;
 
+import java.util.ArrayList;
+
 import siver.river.lane.Lane;
 
 /**
@@ -24,38 +26,39 @@ public class River extends OutlinedArea {
 
 	}
 
-	private Lane upstream, middle, downstream;
+	private ArrayList<Lane> lanes;// upstream, middle, downstream;
 	
 	public River(Lane u, Lane m, Lane d) {
-		upstream = u;
-		middle = m;
-		downstream = d;
+		lanes = new ArrayList<Lane>();
+		lanes.add(u);
+		lanes.add(m);
+		lanes.add(d);
 		
-		top = upstream.getTop();
-		bottom = downstream.getBottom();
+		top = upstream_lane().getTop();
+		bottom = downstream_lane().getBottom();
 		complete();
 	}
 	
 	//GETTERS
-	public Lane getUpstream() {
-		return upstream;
+	public Lane upstream_lane() {
+		return lanes.get(0);
 	}
 	
-	public Lane getDownstream() {
-		return downstream;
+	public Lane downstream_lane() {
+		return lanes.get(2);
 	}
 	
-	public Lane getMiddle() {
-		return middle;
+	public Lane middle_lane() {
+		return lanes.get(1);
 	}
 	
 	public Lane getLaneToLeftOf(Lane current, boolean upstream) throws NoLaneFound {
 		if(!upstream) {
-			if(current == downstream) return middle;
-			if(current == middle) return this.upstream;
+			if(current == downstream_lane()) return middle_lane();
+			if(current == middle_lane()) return upstream_lane();
 		} else {
-			if(current == this.upstream) return middle;
-			if(current == middle) return downstream;
+			if(current == upstream_lane()) return middle_lane();
+			if(current == middle_lane()) return downstream_lane();
 		}
 		throw new NoLaneFound();
 	}
