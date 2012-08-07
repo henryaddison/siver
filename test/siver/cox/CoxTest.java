@@ -100,7 +100,7 @@ public class CoxTest {
 		replay(mockLane);
 		replay(mockSpace);
 		try {
-			cox.launch(mockBoat, mockLane, 8, null);
+			cox.launch(mockBoat, mockLane, 8, 0.5, 4000, null);
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

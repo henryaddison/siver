@@ -20,6 +20,7 @@ public class Cox {
 	
 	//how fast the boat would like to be travelling
 	private int desired_gear;
+	private double distance_to_cover;
 	
 	private boolean incapcitated;
 	
@@ -34,11 +35,11 @@ public class Cox {
 		
 	}
 	
-	public void launch(Boat boat, Lane launchLane, int desGear, Integer launch_schedule_id) throws SecurityException, IllegalArgumentException, NoSuchMethodException, InstantiationException, IllegalAccessException, InvocationTargetException {
-		launch(BasicBrain.class, boat, launchLane, desGear, launch_schedule_id);
+	public void launch(Boat boat, Lane launchLane, int desGear, double speedMult, double distance_to_cover, Integer launch_schedule_id) throws SecurityException, IllegalArgumentException, NoSuchMethodException, InstantiationException, IllegalAccessException, InvocationTargetException {
+		launch(BasicBrain.class, boat, launchLane, desGear, speedMult, distance_to_cover, launch_schedule_id);
 	}
 	
-	public void launch(Class brainType, Boat boat, Lane launchLane, int desGear, Integer launch_schedule_id) throws SecurityException, NoSuchMethodException, IllegalArgumentException, InstantiationException, IllegalAccessException, InvocationTargetException {
+	public void launch(Class brainType, Boat boat, Lane launchLane, int desGear, double speedMult, double distance_to_cover, Integer launch_schedule_id) throws SecurityException, NoSuchMethodException, IllegalArgumentException, InstantiationException, IllegalAccessException, InvocationTargetException {
 		//save reference to boat launched in
 		this.boat = boat;
 		//place the boat at the location of the first node of the lane
@@ -57,6 +58,7 @@ public class Cox {
 		incapcitated = false;
 		
 		this.desired_gear = desGear;
+		this.distance_to_cover = distance_to_cover;
 		
 		boat.launchComplete(launch_schedule_id);
 	}

@@ -42,7 +42,7 @@ public class BoatHouse {
 		try {
 			Cox cox = new Cox();
 			context.add(cox);
-			cox.launch(coxBrainClass, boat, getLaunchLane(), RandomHelper.nextIntFromTo(1,10), null);
+			cox.launch(coxBrainClass, boat, getLaunchLane(), RandomHelper.nextIntFromTo(1,10), 0.5, 4000, null);
 		} catch (IllegalArgumentException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
