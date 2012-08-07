@@ -64,9 +64,10 @@ public class LaneEdge extends RepastEdge<LaneNode> {
 		if(contains(cox)) {
 			coxesOnEdge.remove(cox);
 			if(crash != null) {
-				crash.coxEscaped(cox);
-				if(coxesOnEdge.size() == 1) {
+				if(isEmpty()) {
 					crash.clearUp();
+				} else {
+					crash.coxEscaped(cox);
 				}
 			}
 		}

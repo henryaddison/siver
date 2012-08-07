@@ -121,7 +121,7 @@ public class LaneEdgeTest extends EdgeTester{
 	}
 	
 	@Test
-	public void testRemovingPenultimateCoxRemovesCrash() {		
+	public void testRemovingAllCoxesRemovesCrash() {		
 		e.addCox(cox1);
 		e.addCox(cox2);
 		e.addCox(cox3);
@@ -134,11 +134,8 @@ public class LaneEdgeTest extends EdgeTester{
 		e.removeCox(cox1);
 		assertNotNull(e.getCrash());
 		
-		
-		reset(cox3);
-		expect(cox3.isIncapcitated()).andStubReturn(false);
-		replay(cox3);
 		e.removeCox(cox2);
+		e.removeCox(cox3);
 		assertNull(e.getCrash());
 	}
 
