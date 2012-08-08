@@ -67,12 +67,7 @@ public class BoatStyle implements StyleOGL2D<Boat> {
 
 	@Override
 	public Color getColor(Boat object) {
-//		if(object.onRiver()) {
-//			return Color.RED;
-//		} else {
-//			return Color.BLACK;
-//		}
-		return Color.RED;
+		return object.getColour();
 	}
 
 	@Override
