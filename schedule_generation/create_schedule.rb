@@ -40,9 +40,9 @@ ActiveRecord::Base.establish_connection(
 Schedule.transaction do
 
   schedule = Schedule.create!(:name => schedule_name)
-  experiment = Experiment.create!(:schedule => schedule, :random_seed => random_seed)
+  experiment = Experiment.create!(:schedule => schedule, :random_seed => random_seed, :brain_type => brain_type)
   
   100.times do |i|
-    ScheduledLaunch.create!(:schedule => schedule, :desired_gear => rand(10)+1, :speed_multiplier => 0.5, :distance_to_cover => 4000, :launch_tick => i*60, :brain_type => brain_type)
+    ScheduledLaunch.create!(:schedule => schedule, :desired_gear => rand(10)+1, :speed_multiplier => 0.5, :distance_to_cover => 4000, :launch_tick => i*600)
   end
 end

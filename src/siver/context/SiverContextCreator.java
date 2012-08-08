@@ -24,7 +24,7 @@ import siver.ui.UserPanel;
  */
 public class SiverContextCreator implements ContextBuilder<Object> {
 	
-	private static final Integer EXPERIMENT_ID = 6;
+	private static final Integer EXPERIMENT_ID = 1;
 	
 	private static final double TICK_TIMEOUT = 12*60*60; // a 12 hour day is experiment maximum
 	
