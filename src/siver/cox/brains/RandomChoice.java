@@ -14,8 +14,19 @@ public class RandomChoice extends CoxBrain {
 	
 	@Override
 	public Class chooseAction() {
-		int index = RandomHelper.nextIntFromTo(0, possible_actions.length-1);
-		return possible_actions[index];
+		if(true) {
+			return chooseRandomAction();
+		}
+		return null;
+	}
+	
+	protected Class[] possible_actions() {
+		return possible_actions;
+	}
+	
+	protected Class chooseRandomAction() {
+		int index = RandomHelper.nextIntFromTo(0, possible_actions().length-1);
+		return possible_actions()[index];
 	}
 
 }
