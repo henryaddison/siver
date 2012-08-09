@@ -25,7 +25,6 @@ public class BoatNavigation {
 		this.cox = cox;
 		this.boat = boat;
 		upstream = up;
-		updateEdge(e);
 	}
 	
 	public Lane getLane() {

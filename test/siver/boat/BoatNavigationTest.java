@@ -56,6 +56,7 @@ public class BoatNavigationTest {
 		expectLastCall().once();
 		replay(boat);
 		cl = new BoatNavigation(cox, boat, edge, false);
+		cl.updateEdge(edge);
 		reset(boat);
 		cox.setLocation(cl);
 		
@@ -71,6 +72,7 @@ public class BoatNavigationTest {
 		expectLastCall().once();
 		replay(boat);
 		BoatNavigation cl = new BoatNavigation(cox, boat, edge, true);
+		cl.updateEdge(edge);
 		assertTrue(cl instanceof BoatNavigation);
 		assertEquals(lane, cl.getLane());
 		assertEquals(edge, cl.getEdge());
