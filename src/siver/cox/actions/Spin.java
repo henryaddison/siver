@@ -21,8 +21,34 @@ public class Spin extends Action {
 	
 	private static final int STEPS = 60;
 	
+	private boolean initialized = false;
+	
 	public Spin(Cox cox) {
 		super(cox);
+	}
+	
+	@Override
+	public boolean typeSpecificExecute() {
+		if(!initialized) {
+			setupSpin();
+			//if for some reason we couldn't set up the spin properly (no edge to spin too), then do nothing
+			if(!initialized) {
+				return true;
+			}
+		}
+		countDown--;
+		boat.deadStop();
+		
+		if(countDown <= 0) {
+			completeSpin();
+			return true;
+		}
+		
+		rotateAndMoveBoat();
+		return false;
+	}
+	
+	private void setupSpin() {
 		countDown = STEPS;
 		if(location.headingUpstream()) {
 			destinationLane = boat.getRiver().downstream_lane();
@@ -33,6 +59,9 @@ public class Spin extends Action {
 		
 		startEdge = location.getEdge();
 		destinationEdge = destinationLane.getNextEdge(destinationNode, !location.headingUpstream());
+		if(destinationEdge == null) {
+			return;
+		}
 		destinationEdge.addCox(cox);
 		
 		middleEdges = new ArrayList<LaneEdge>();
@@ -45,26 +74,22 @@ public class Spin extends Action {
 		currentOrientation = startOrientation;
 		
 		step_distance = destinationNode.distance(boat.getLocation())/STEPS;
+		initialized = true;
 	}
 	
-	@Override
-	public boolean typeSpecificExecute() {
-		countDown--;
-		boat.deadStop();
-		
-		if(countDown <= 0) {
-			for(LaneEdge edge : middleEdges) {
-				if(edge != destinationEdge) {
-					edge.removeCox(cox);
-				}
+	private void completeSpin() {
+		for(LaneEdge edge : middleEdges) {
+			if(edge != destinationEdge) {
+				edge.removeCox(cox);
 			}
-			//make sure the boat is on the destination node after spinning in case the spinning animation is slightly off
-			boat.moveTo(destinationNode.toNdPoint());
-			location.toggleUpstream();
-			location.updateEdge(destinationEdge);
-			return true;
 		}
-		
+		//make sure the boat is on the destination node after spinning in case the spinning animation is slightly off
+		boat.moveTo(destinationNode.toNdPoint());
+		location.toggleUpstream();
+		location.updateEdge(destinationEdge);
+	}
+	
+	private void rotateAndMoveBoat() {
 		currentOrientation += Math.PI/STEPS;
 		boat.setAngle(currentOrientation);
 
@@ -73,9 +98,6 @@ public class Spin extends Action {
 		double angle = SpatialMath.calcAngleFor2DMovement(boat.getSpace(), boat.getLocation(), otherPoint);
 		
 		boat.move(step_distance, angle);
-		
-		
-		return false;
 	}
 
 }

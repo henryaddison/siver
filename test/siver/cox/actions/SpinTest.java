@@ -30,8 +30,7 @@ public class SpinTest extends ActionTest {
 	public static void tearDownAfterClass() throws Exception {
 	}
 	
-	@Override
-	protected void preNewActionSetup() {
+	private void mockSpinSetup() {
 		r = LaneTest.setupRiver();
 		expect(mockBoat.getRiver()).andStubReturn(r);
 		expect(mockBoat.getLocation()).andReturn(new NdPoint(10,30)).times(8);
@@ -50,7 +49,7 @@ public class SpinTest extends ActionTest {
 	}
 	
 	@Test
-	public void testFinalExecute() {
+	public void testFinalExecute() {		
 		runExecute(59);
 		
 		reset(mockCox);
@@ -78,6 +77,7 @@ public class SpinTest extends ActionTest {
 
 	
 	private void runExecute(int runs) {
+		mockSpinSetup();
 		mockBoat.deadStop();
 		expectLastCall().times(runs);
 		
@@ -113,6 +113,25 @@ public class SpinTest extends ActionTest {
 		verify(mockSpace);
 	}
 
-	
+	@Test
+	public void testExecuteNoDestinationEdge() {
+		//nowhere to spin to
+		r = LaneTest.setupRiver();
+		expect(mockBoat.getRiver()).andStubReturn(r);
+		expect(mockBoat.getLocation()).andReturn(new NdPoint(5,30)).times(1);
+		expect(mockLocation.headingUpstream()).andReturn(false).times(2);
+		expect(mockLocation.getEdge()).andReturn(r.upstream_lane().edgeNearest(new NdPoint(5,30))).once();
+		
+		mockCox.clearAction();
+		expectLastCall().once();
+		
+		replay(mockLocation);
+		replay(mockBoat);
+		replay(mockCox);
+		action.execute();
+		verify(mockCox);
+		verify(mockBoat);
+		verify(mockLocation);
+	}
 	
 }
