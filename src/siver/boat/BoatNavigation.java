@@ -29,7 +29,7 @@ public class BoatNavigation {
 	}
 	
 	public Lane getLane() {
-		return current_edge.getSource().getLane();
+		return getDestinationNode().getLane();
 	}
 	
 	public LaneEdge getEdge() {
