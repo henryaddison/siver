@@ -3,16 +3,22 @@ package siver.boat;
 import static org.easymock.EasyMock.*;
 import static org.junit.Assert.*;
 
+import org.easymock.EasyMock;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
+import repast.simphony.context.Context;
+import repast.simphony.space.continuous.ContinuousSpace;
+import repast.simphony.space.continuous.NdPoint;
 import siver.boat.Boat;
 import siver.boat.BoatNavigation;
+import siver.context.SiverContextCreator;
 import siver.cox.Cox;
 import siver.river.River;
+import siver.river.RiverFactory;
 import siver.river.lane.*;
 import siver.river.lane.Lane.CompletedLaneException;
 import siver.river.lane.Lane.UnstartedLaneException;
@@ -178,6 +184,23 @@ public class BoatNavigationTest {
 		verify(cox.getBoat());
 		verify(mockEdge);
 		assertTrue(cl.changingLane());
+	}
+	
+	@Test
+	public void testLaunch() {
+		cl = new BoatNavigation(cox, boat, false);
+		lane = river.downstream_lane();
+		LaneEdge exp_edge = lane.getNextEdge(lane.getStartNode(), false);
+		boat.steerToward(exp_edge.getTarget().getLocation());
+		expectLastCall().once();
+		boat.moveTo(new NdPoint(10,10));
+		expectLastCall().once();
+
+		replay(boat);
+		cl.launch(lane);
+		verify(boat);
+
+		assertSame(exp_edge, cl.getEdge());
 	}
 }
 

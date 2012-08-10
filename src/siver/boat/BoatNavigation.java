@@ -27,6 +27,16 @@ public class BoatNavigation {
 		upstream = up;
 	}
 	
+	public void launch(Lane launchLane) {
+		//place the boat at the location of the first node of the lane
+		LaneNode launchNode = launchLane.getStartNode();
+		boat.moveTo(launchNode.toNdPoint());
+		
+		//and point the boat in the correct direction
+		LaneEdge launchEdge = launchLane.getNextEdge(launchNode, false);
+		updateEdge(launchEdge);
+	}
+	
 	public Lane getLane() {
 		return getDestinationNode().getLane();
 	}
