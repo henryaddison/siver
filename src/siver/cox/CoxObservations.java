@@ -48,4 +48,8 @@ public class CoxObservations {
 		
 		return false;
 	}
+	
+	public boolean outingOver() {
+		return cox.outingOver();
+	}
 }

@@ -1,19 +1,13 @@
 package siver.cox.brains;
 
-import siver.cox.CoxObservations;
 import siver.cox.actions.*;
 
 public class RandomMovement extends RandomChoice {
-	
 	private static final Class[] possible_actions = {LetBoatRun.class, MoveToLaneOnLeft.class, MoveToLaneOnRight.class, SpeedUp.class, SlowDown.class};
 	
-	public RandomMovement(CoxObservations obs) {
-		super(obs);
-	}
-	
 	@Override
-	public Class<? extends Action> chooseAction() {
-		if(observations.atRiversEnd()) {
+	public Class<? extends Action> typeSpecificActionChoice() {
+		if(latestObservations.atRiversEnd()) {
 			return Spin.class;
 		}
 		if(true) {

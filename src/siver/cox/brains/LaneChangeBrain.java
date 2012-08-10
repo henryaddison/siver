@@ -1,22 +1,17 @@
 package siver.cox.brains;
 
-import siver.cox.CoxObservations;
 import siver.cox.actions.*;
 
 public class LaneChangeBrain extends CoxBrain {
-	public LaneChangeBrain(CoxObservations obs) {
-		super(obs);
-	}
-
 	private boolean move_to_left = true;
 	private int countDown = 10;
 	
 	@Override
-	public Class<? extends Action> chooseAction() {
-		if(observations.atRiversEnd()) {
+	public Class<? extends Action> typeSpecificActionChoice() {
+		if(latestObservations.atRiversEnd()) {
 			return Spin.class;
 		}
-		if(observations.belowDesiredSpeed()) {
+		if(latestObservations.belowDesiredSpeed()) {
 			return SpeedUp.class;
 		}
 		if(move_to_left & countDown == 0) {

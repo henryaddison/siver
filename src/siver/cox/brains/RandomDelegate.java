@@ -13,12 +13,11 @@ public class RandomDelegate extends CoxBrain {
 	
 	private CoxBrain delegate;
 	public RandomDelegate(CoxObservations obs) {
-		super(obs);
 		int index = RandomHelper.nextIntFromTo(0, possible_brains.length-1);
 		Constructor<? extends CoxBrain> cons;
 		try {
-			cons = possible_brains[index].getConstructor(CoxObservations.class);
-			delegate = cons.newInstance(obs);
+			cons = possible_brains[index].getConstructor();
+			delegate = cons.newInstance();
 		} catch (SecurityException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -41,7 +40,7 @@ public class RandomDelegate extends CoxBrain {
 	}
 
 	@Override
-	public Class<? extends Action> chooseAction() {
+	protected Class<? extends Action> typeSpecificActionChoice() {
 		return delegate.chooseAction();
 	}
 	

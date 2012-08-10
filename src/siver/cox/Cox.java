@@ -27,8 +27,6 @@ public class Cox {
 	protected Action action;
 	protected BoatNavigation navigator;
 	
-	protected CoxObservations observations;
-	
 	private CoxBrain brain;
 	
 	public Cox() {
@@ -51,10 +49,8 @@ public class Cox {
 		navigator = new BoatNavigation(this, boat, false);
 		navigator.updateEdge(launchEdge);
 		
-		observations = new CoxObservations(this, boat, navigator);
-		
-		Constructor<? extends CoxBrain> cons = brainType.getConstructor(CoxObservations.class);
-		brain = cons.newInstance(observations);
+		Constructor<? extends CoxBrain> cons = brainType.getConstructor();
+		brain = cons.newInstance();
 		
 		incapcitated = false;
 		
@@ -74,21 +70,28 @@ public class Cox {
 	//BEHAVIOUR
 	@ScheduledMethod(start = 1, interval = 1, priority=100)
 	public void step() throws SecurityException, NoSuchMethodException, IllegalArgumentException, InstantiationException, IllegalAccessException, InvocationTargetException {
-		if(!incapcitated) {
-			if(outingOver()) {
-				new Land(this).execute();
-				return;
-			}
-			
-			if(action == null) {
-				Constructor<? extends Action> cons = brain.chooseAction().getConstructor(Cox.class);
-				action = cons.newInstance(this);
-			}
-			action.execute();
+		makeObservations();
+		if(incapcitated) { return; } //cox can only look around if incapcitated, not allowed to carry out an action (and so there is no point choosing an action)
+		chooseAction();
+		executeAction();
+	}
+	
+	private void makeObservations() {
+		CoxObservations observations = new CoxObservations(this, boat, navigator);
+		brain.updateObservations(observations);
+	}
+	
+	private void chooseAction() throws SecurityException, NoSuchMethodException, IllegalArgumentException, InstantiationException, IllegalAccessException, InvocationTargetException {
+		if(action == null) {
+			//have brain pick a new action if the cox isn't in the middle of one at the moment
+			Constructor<? extends Action> cons = brain.chooseAction().getConstructor(Cox.class);
+			action = cons.newInstance(this);
 		}
 	}
 	
-	
+	private void executeAction() {
+		action.execute();
+	}
 	
 	/*
 	 * PREDICATES

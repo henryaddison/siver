@@ -1,23 +1,14 @@
 package siver.cox.brains;
 
-import siver.cox.CoxObservations;
-import siver.cox.actions.Action;
-import siver.cox.actions.LetBoatRun;
-import siver.cox.actions.SpeedUp;
-import siver.cox.actions.Spin;
+import siver.cox.actions.*;
 
 public class BasicBrain extends CoxBrain {
-	
-	public BasicBrain(CoxObservations obs) {
-		super(obs);
-	}
-	
 	@Override
-	public Class<? extends Action> chooseAction() {
-		if(observations.atRiversEnd()) {
+	protected Class<? extends Action> typeSpecificActionChoice() {
+		if(latestObservations.atRiversEnd()) {
 			return Spin.class;
 		}
-		if(observations.belowDesiredSpeed()) {
+		if(latestObservations.belowDesiredSpeed()) {
 			return SpeedUp.class;
 		}
 		if(true) {

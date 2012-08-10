@@ -1,25 +1,20 @@
 package siver.cox.brains;
 
-import siver.cox.CoxObservations;
 import siver.cox.actions.*;
 
 public class StartStopBrain extends CoxBrain {
-	public StartStopBrain(CoxObservations obs) {
-		super(obs);
-	}
-
 	private boolean speedUp = true;
 	
 	@Override
-	public Class<? extends Action> chooseAction() {
-		if(observations.atRiversEnd()) {
+	public Class<? extends Action> typeSpecificActionChoice() {
+		if(latestObservations.atRiversEnd()) {
 			return Spin.class;
 		}
-		if(observations.boatGear() == 0) {
+		if(latestObservations.boatGear() == 0) {
 			speedUp = true;
 			return SpeedUp.class;
 		}
-		if(observations.boatGear() == 10) {
+		if(latestObservations.boatGear() == 10) {
 			speedUp = false;
 			return SlowDown.class;
 		}
