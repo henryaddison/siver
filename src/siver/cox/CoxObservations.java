@@ -50,6 +50,6 @@ public class CoxObservations {
 	}
 	
 	public boolean outingOver() {
-		return cox.outingOver();
+		return (boat.total_distance_covered() >= cox.getGoalDistance()) && (navigator.getDestinationNode().equals(navigator.getLane().getStartNode()));
 	}
 }

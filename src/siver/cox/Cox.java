@@ -94,16 +94,6 @@ public class Cox {
 	}
 	
 	/*
-	 * PREDICATES
-	 */	
-	
-	protected boolean outingOver() {
-		return (boat.total_distance_covered() >= distance_to_cover) && (navigator.getDestinationNode().equals(navigator.getLane().getStartNode()));
-	}
-	
-
-	
-	/*
 	 * HELPERS
 	 */
 	public Action getAction() {
@@ -141,5 +131,9 @@ public class Cox {
 	
 	public String brain_type() {
 		return this.brain.getClass().getName();
+	}
+	
+	public double getGoalDistance() {
+		return distance_to_cover;
 	}
 }

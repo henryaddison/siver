@@ -12,17 +12,24 @@ import org.junit.Test;
 import siver.boat.Boat;
 import siver.boat.BoatNavigation;
 import siver.cox.Cox;
+import siver.river.River;
+import siver.river.RiverFactory;
 import siver.river.lane.Lane;
+import siver.river.lane.Lane.NoNextNode;
 import siver.river.lane.LaneEdge;
 import siver.river.lane.LaneNode;
+import siver.river.lane.LaneTest;
 
 public class CoxObservationsTest {
 	Boat mboat;
 	Cox mcox;
 	BoatNavigation mnav;
 	CoxObservations obs;
+	private static River r;	
+	
 	@BeforeClass
 	public static void setUpBeforeClass() throws Exception {
+		r = LaneTest.setupRiver();
 	}
 
 	@AfterClass
@@ -35,6 +42,7 @@ public class CoxObservationsTest {
 		mcox = createMock(Cox.class);
 		mnav = createMock(BoatNavigation.class);
 		obs = new CoxObservations(mcox, mboat, mnav);
+		
 	}
 
 	@After
@@ -149,5 +157,45 @@ public class CoxObservationsTest {
 		assertFalse(obs.nearbyBoatInfront());
 		verifyAndResetMocks();
 		verify(mnode, medge, mlane);
+	}
+	
+	@Test
+	public void testOutingOverNotCoveredDistance() throws NoNextNode {
+		expect(mcox.getGoalDistance()).andReturn(1000.0).once();
+		expect(mboat.total_distance_covered()).andReturn(0.0).once();
+		
+		replayMocks();
+		assertFalse(obs.outingOver());
+		verifyAndResetMocks();
+	}
+	
+	@Test
+	public void testOutingOverNotBackAtBoatHouse() throws NoNextNode {
+		expect(mcox.getGoalDistance()).andReturn(1000.0).once();
+		expect(mboat.total_distance_covered()).andReturn(2000.0).once();
+		Lane l = r.downstream_lane();
+		LaneNode n = l.getNextNode(l.getStartNode(), false);
+				
+		expect(mnav.getDestinationNode()).andReturn(n);
+		expect(mnav.getLane()).andReturn(l);
+		
+		replayMocks();
+		assertFalse(obs.outingOver());
+		verifyAndResetMocks();
+	}
+	
+	@Test
+	public void testOutingOver() {
+		expect(mcox.getGoalDistance()).andReturn(1000.0).once();
+		expect(mboat.total_distance_covered()).andReturn(2000.0).once();
+		Lane l = r.downstream_lane();
+		LaneNode n = l.getStartNode();
+				
+		expect(mnav.getDestinationNode()).andReturn(n);
+		expect(mnav.getLane()).andReturn(l);
+		
+		replayMocks();
+		assertTrue(obs.outingOver());
+		verifyAndResetMocks();
 	}
 }
