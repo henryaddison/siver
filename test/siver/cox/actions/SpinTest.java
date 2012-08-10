@@ -36,7 +36,6 @@ public class SpinTest extends ActionTest {
 		expect(mockBoat.getLocation()).andReturn(new NdPoint(10,30)).times(8);
 		expect(mockBoat.getAngle()).andReturn(0.0).once();
 		expect(mockLocation.headingUpstream()).andReturn(true).times(2);
-		expect(mockLocation.getEdge()).andReturn(r.upstream_lane().edgeNearest(new NdPoint(10,30))).once();
 	}
 	
 	@After
@@ -120,7 +119,6 @@ public class SpinTest extends ActionTest {
 		expect(mockBoat.getRiver()).andStubReturn(r);
 		expect(mockBoat.getLocation()).andReturn(new NdPoint(5,30)).times(1);
 		expect(mockLocation.headingUpstream()).andReturn(false).times(2);
-		expect(mockLocation.getEdge()).andReturn(r.upstream_lane().edgeNearest(new NdPoint(5,30))).once();
 		
 		mockCox.clearAction();
 		expectLastCall().once();
