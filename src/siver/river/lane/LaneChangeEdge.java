@@ -6,7 +6,7 @@ import siver.cox.Cox;
 import siver.river.lane.Lane.NoNextNode;
 
 public class LaneChangeEdge extends LaneEdge {
-	private Lane startLane, destinationLane;
+	private Lane destinationLane;
 	//need to keep track of which proper edges are currently being occupied while a boat traverses this lane
 	//fortunately can only have one boat on an edge like this at a time so 
 	private LaneEdge destinationLaneEdge, startLaneEdge;
