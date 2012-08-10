@@ -8,6 +8,7 @@ import repast.simphony.space.continuous.ContinuousSpace;
 import siver.boat.Boat;
 import siver.cox.Cox;
 import siver.cox.brains.BasicBrain;
+import siver.cox.brains.CoxBrain;
 import siver.river.lane.Lane;
 
 /**
@@ -35,7 +36,7 @@ public class BoatHouse {
 		manualLaunch(BasicBrain.class);
 	}
 	
-	public void launch(Integer scheduled_launch_id, Integer desired_gear, Double speed_multiplier, Double distance_to_cover, Class coxBrainClass) {
+	public void launch(Integer scheduled_launch_id, Integer desired_gear, Double speed_multiplier, Double distance_to_cover, Class<? extends CoxBrain> coxBrainClass) {
 		Boat boat = new Boat(river, context, space, speed_multiplier);
 		context.add(boat);
 		
@@ -65,7 +66,7 @@ public class BoatHouse {
 		}
 	}
 	
-	public void manualLaunch(Class coxBrainClass) {
+	public void manualLaunch(Class<? extends CoxBrain> coxBrainClass) {
 		launch(null, RandomHelper.nextIntFromTo(1,10), 0.5, 5000.0, coxBrainClass);
 	}
 	
