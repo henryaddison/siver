@@ -63,10 +63,9 @@ public class BoatTest {
 	}
 	
 	private void launchBoat() {
-		expect(mockSpace.moveTo(boat, 0,0)).andReturn(true).times(1);
 		replay(mockContext);
 		replay(mockSpace);
-		boat.launch(mockCox, new Point2D.Double(0,0));
+		boat.launch(mockCox);
 		verify(mockContext);
 		verify(mockSpace);
 	}

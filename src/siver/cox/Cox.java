@@ -47,14 +47,9 @@ public class Cox {
 		Constructor<? extends CoxBrain> cons = brainType.getConstructor();
 		brain = cons.newInstance();
 		
-		//place the boat at the location of the first node of the lane
-		LaneNode launchNode = launchLane.getStartNode();
-		
-		//and point the boat in the correct direction
-		LaneEdge launchEdge = launchLane.getNextEdge(launchNode, false);
-		boat.launch(this, launchNode.getLocation());
+		boat.launch(this);
 		navigator = new BoatNavigation(this, boat, false);
-		navigator.updateEdge(launchEdge);
+		navigator.launch(launchLane);
 		
 		boat.launchComplete(launch_schedule_id);
 	}

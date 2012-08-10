@@ -88,7 +88,9 @@ public class CoxTest {
 		LaneNode expNode = new LaneNode(expLoc, mockLane);
 		LaneNode nextNode = new LaneNode(30,30, mockLane);
 		expect(mockLane.getStartNode()).andStubReturn(expNode);
-		mockBoat.launch(cox, expLoc);
+		mockBoat.moveTo(expNode.toNdPoint());
+		expectLastCall().once();
+		mockBoat.launch(cox);
 		expectLastCall().once();
 		mockBoat.launchComplete(null);
 		expectLastCall().once();

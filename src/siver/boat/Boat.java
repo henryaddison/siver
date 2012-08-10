@@ -56,12 +56,11 @@ public class Boat {
 		this.gearMultiplier = gearMult;
 	}
 	
-	public void launch(Cox cox, Point2D.Double pt) {
+	public void launch(Cox cox) {
 		//initially the boat points straight up and is going at speed 10
 		this.orientation = 0;
 		this.gear = 0;
 		this.cox = cox;
-		space.moveTo(this, pt.getX(), pt.getY());
 		this.total_distance_covered = 0;
 	}
 	
