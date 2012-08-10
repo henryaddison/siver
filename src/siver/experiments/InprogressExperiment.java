@@ -12,6 +12,7 @@ import repast.simphony.random.RandomHelper;
 import repast.simphony.ui.RSApplication;
 import siver.context.SiverContextCreator;
 import siver.cox.brains.BasicBrain;
+import siver.cox.brains.CoxBrain;
 import siver.ui.UserPanel;
 
 public class InprogressExperiment extends ExperimentalDatum {
@@ -24,7 +25,7 @@ public class InprogressExperiment extends ExperimentalDatum {
 	private int crash_count;
 	private ArrayList<BoatRecord> inprogress_records;
 	private int random_seed;
-	private Class brain_type;
+	private Class<? extends CoxBrain> brain_type;
 	
 	public static void start() {
 		if(instance() == null) {
@@ -116,7 +117,7 @@ public class InprogressExperiment extends ExperimentalDatum {
 				if(!coxBrainClassName.startsWith("siver.")) {
 					coxBrainClassName = BasicBrain.class.getPackage().getName()+"."+coxBrainClassName;
 				}
-				brain_type = Class.forName(coxBrainClassName);
+				brain_type = (Class<? extends CoxBrain>) Class.forName(coxBrainClassName);
 				
 				getRandomSeed.close();
 				RandomHelper.setSeed(random_seed);
