@@ -3,6 +3,9 @@ package siver.experiments;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
+import siver.boat.Boat;
+import siver.cox.Cox;
+
 public class BoatRecord extends ExperimentalDatum {
 	private Integer scheduled_launch_id, land_tick;
 	private int launch_tick, desired_gear, aggregate_gear_difference, experiment_run_id;
@@ -10,12 +13,12 @@ public class BoatRecord extends ExperimentalDatum {
 	private String brain_type;
 	
 	
-	public BoatRecord(Integer scheduled_launch_id, int launch_tick, int desired_gear, double speed_multiplier, String brain_type) {
+	public BoatRecord(Integer scheduled_launch_id, int launch_tick, Boat boat, Cox cox) {
 		this.scheduled_launch_id = scheduled_launch_id;
 		this.launch_tick = launch_tick;
-		this.desired_gear = desired_gear;
-		this.speed_multiplier = speed_multiplier;
-		this.brain_type = brain_type;
+		this.desired_gear = cox.desired_gear();
+		this.speed_multiplier = boat.getSpeedMultiplier();
+		this.brain_type = cox.brain_type();
 		this.distance_covered = 0;
 		this.aggregate_gear_difference = 0;
 		if(InprogressExperiment.instance() != null) {

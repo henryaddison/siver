@@ -62,7 +62,7 @@ public class Boat {
 		this.gear = 0;
 		this.cox = cox;
 		this.total_distance_covered = 0;
-		this.record = new BoatRecord(launch_schedule_id, SiverContextCreator.getTickCount(), cox.desired_gear(), gearMultiplier, cox.brain_type());
+		this.record = new BoatRecord(launch_schedule_id, SiverContextCreator.getTickCount(), this, cox);
 	}
 	
 	public void land() {
@@ -145,6 +145,10 @@ public class Boat {
 			gear = newValue;
 		}
 		
+	}
+	
+	public double getSpeedMultiplier() {
+		return gearMultiplier;
 	}
 	
 	public void shiftUp() {
