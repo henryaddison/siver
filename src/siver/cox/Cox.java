@@ -40,6 +40,13 @@ public class Cox {
 	public void launch(Class<? extends CoxBrain> brainType, Boat boat, Lane launchLane, int desGear, double speedMult, double distance_to_cover, Integer launch_schedule_id) throws SecurityException, NoSuchMethodException, IllegalArgumentException, InstantiationException, IllegalAccessException, InvocationTargetException {
 		//save reference to boat launched in
 		this.boat = boat;
+		this.incapcitated = false;
+		this.desired_gear = desGear;
+		this.distance_to_cover = distance_to_cover;
+		
+		Constructor<? extends CoxBrain> cons = brainType.getConstructor();
+		brain = cons.newInstance();
+		
 		//place the boat at the location of the first node of the lane
 		LaneNode launchNode = launchLane.getStartNode();
 		
@@ -48,15 +55,6 @@ public class Cox {
 		boat.launch(this, launchNode.getLocation());
 		navigator = new BoatNavigation(this, boat, false);
 		navigator.updateEdge(launchEdge);
-		
-		Constructor<? extends CoxBrain> cons = brainType.getConstructor();
-		brain = cons.newInstance();
-		
-		incapcitated = false;
-		
-		this.desired_gear = desGear;
-		this.distance_to_cover = distance_to_cover;
-
 		
 		boat.launchComplete(launch_schedule_id);
 	}
