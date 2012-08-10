@@ -14,6 +14,8 @@ import siver.cox.brains.BasicBrain;
 
 public class InprogressExperiment extends ExperimentalDatum {
 	
+	private static final Integer EXPERIMENT_ID = 1;
+	
 	private static InprogressExperiment instance;
 	private Integer experiment_id, schedule_id;
 	private int experiment_run_id;
@@ -22,11 +24,11 @@ public class InprogressExperiment extends ExperimentalDatum {
 	private int random_seed;
 	private Class brain_type;
 	
-	public static void start(Integer experiment_id) {
+	public static void start() {
 		if(instance() == null) {
-			instance = new InprogressExperiment(experiment_id);
+			instance = new InprogressExperiment(EXPERIMENT_ID);
 		} else {
-			throw new RuntimeException("Trying to setup new Inprogress Experiment while one is already in progress.");
+			throw new RuntimeException("Trying to start new Inprogress Experiment while one is already in progress.");
 		}
 		
 		initializeDBConnection();

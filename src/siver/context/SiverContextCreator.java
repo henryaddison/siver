@@ -24,7 +24,7 @@ import siver.ui.UserPanel;
  */
 public class SiverContextCreator implements ContextBuilder<Object> {
 	
-	private static final Integer EXPERIMENT_ID = 1;
+	
 	
 	private static final double TICK_TIMEOUT = 12*60*60; // a 12 hour day is experiment maximum
 	
@@ -104,7 +104,7 @@ public class SiverContextCreator implements ContextBuilder<Object> {
 	}
 	
 	public void initializeExperiment() {
-		InprogressExperiment.start(EXPERIMENT_ID);
+		InprogressExperiment.start();
 		
 		//schedule a method to run when the simulation ends so we can flush all collected data to database
 		ISchedule schedule = RunEnvironment.getInstance().getCurrentSchedule();
