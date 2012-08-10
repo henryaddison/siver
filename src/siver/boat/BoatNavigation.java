@@ -21,7 +21,7 @@ public class BoatNavigation {
 	
 	private Boat boat;
 	
-	public BoatNavigation(Cox cox, Boat boat, LaneEdge e, boolean up) {
+	public BoatNavigation(Cox cox, Boat boat, boolean up) {
 		this.cox = cox;
 		this.boat = boat;
 		upstream = up;

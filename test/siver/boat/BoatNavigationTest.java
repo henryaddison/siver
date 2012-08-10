@@ -55,7 +55,7 @@ public class BoatNavigationTest {
 		boat.steerToward(edge.getNextNode(false).getLocation());
 		expectLastCall().once();
 		replay(boat);
-		cl = new BoatNavigation(cox, boat, edge, false);
+		cl = new BoatNavigation(cox, boat, false);
 		cl.updateEdge(edge);
 		reset(boat);
 		cox.setLocation(cl);
@@ -71,7 +71,7 @@ public class BoatNavigationTest {
 		boat.steerToward(edge.getNextNode(true).getLocation());
 		expectLastCall().once();
 		replay(boat);
-		BoatNavigation cl = new BoatNavigation(cox, boat, edge, true);
+		BoatNavigation cl = new BoatNavigation(cox, boat, true);
 		cl.updateEdge(edge);
 		assertTrue(cl instanceof BoatNavigation);
 		assertEquals(lane, cl.getLane());
