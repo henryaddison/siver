@@ -15,7 +15,7 @@ import siver.cox.brains.BasicBrain;
 import siver.ui.UserPanel;
 
 public class InprogressExperiment extends ExperimentalDatum {
-	private static final Integer EXPERIMENT_ID = 1;
+	private static final Integer EXPERIMENT_ID = null;
 	private static final double TICK_TIMEOUT = 12*60*60; // a 12 hour day is experiment maximum
 	
 	private static InprogressExperiment instance;

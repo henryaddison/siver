@@ -31,18 +31,14 @@ public class SiverContextCreator implements ContextBuilder<Object> {
 		context.setId("siver");
 		mainContext = context;
 		
-		int xdim = 2200;   // The x dimension of the physical space
-		int ydim = 1000;   // The y dimension of the physical space
+		int xdim = 2200;   // The width of the physical space
+		int ydim = 1000;   // The height of the physical space
 		
 		space = ContinuousSpaceFactoryFinder.createContinuousSpaceFactory(null)
 		.createContinuousSpace("Continuous Space", context, new SimpleCartesianAdder<Object>(),
 				new repast.simphony.space.continuous.StrictBorders(), xdim, ydim);
 		
 		river = RiverFactory.Cam(context, space);
-		
-		boatHouse = new BoatHouse(river, context, space);
-		context.add(boatHouse);
-		space.moveTo(boatHouse, 0, 20);
 		
 		initializeDataCollection();
 		
@@ -102,11 +98,10 @@ public class SiverContextCreator implements ContextBuilder<Object> {
 		river = r;
 	}
 	
-	private static BoatHouse boatHouse;
 	public static BoatHouse getBoatHouse() {
-		return boatHouse;
+		return river.getBoathouse();
 	}
 	public static void setBoatHouse(BoatHouse bh) {
-		boatHouse = bh;
+		river.setBoathouse(bh);
 	}
 }

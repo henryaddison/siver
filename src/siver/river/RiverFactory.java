@@ -120,6 +120,11 @@ public class RiverFactory {
 		context.add(river);
 		space.moveTo(river, 0,0);
 		
+		BoatHouse boatHouse = new BoatHouse(river, context, space);
+		context.add(boatHouse);
+		space.moveTo(boatHouse, 0, 20);
+		river.setBoathouse(boatHouse);
+		
 		return river;
 	}
 	
@@ -170,6 +175,11 @@ public class RiverFactory {
 		
 		context.add(river);
 		space.moveTo(river, 0,0);
+		
+		BoatHouse boatHouse = new BoatHouse(river, context, space);
+		context.add(boatHouse);
+		space.moveTo(boatHouse, 0, 20);
+		river.setBoathouse(boatHouse);
 		
 		return river;
 	}

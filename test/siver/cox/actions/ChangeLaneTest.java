@@ -16,6 +16,7 @@ import repast.simphony.space.continuous.ContinuousSpace;
 import repast.simphony.space.continuous.NdPoint;
 import siver.context.LaneContext;
 import siver.cox.actions.ChangeLane;
+import siver.river.BoatHouse;
 import siver.river.River;
 import siver.river.RiverFactory;
 import siver.river.lane.Lane;
@@ -43,6 +44,9 @@ public abstract class ChangeLaneTest extends ActionTest {
 		expectLastCall().times(3);
 		expect(context.add(anyObject(River.class))).andReturn(true).once();
 		expect(space.moveTo(anyObject(River.class), eq(0.0),eq(0.0))).andReturn(true).once();
+		expect(context.add(anyObject(BoatHouse.class))).andReturn(true).once();
+		expect(space.moveTo(anyObject(BoatHouse.class), eq(0.0),eq(20.0))).andReturn(true).once();
+		
 		replay(context);
 		replay(space);
 		river = RiverFactory.Test(context, space);

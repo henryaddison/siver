@@ -27,6 +27,7 @@ public class River extends OutlinedArea {
 	}
 
 	private ArrayList<Lane> lanes;// upstream, middle, downstream;
+	private BoatHouse boathouse;
 	
 	public River(Lane u, Lane m, Lane d) {
 		lanes = new ArrayList<Lane>();
@@ -37,6 +38,14 @@ public class River extends OutlinedArea {
 		top = upstream_lane().getTop();
 		bottom = downstream_lane().getBottom();
 		complete();
+	}
+	
+	public void setBoathouse(BoatHouse bh) {
+		boathouse = bh;
+	}
+	
+	public BoatHouse getBoathouse() {
+		return boathouse;
 	}
 	
 	//GETTERS
