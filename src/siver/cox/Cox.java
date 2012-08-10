@@ -47,11 +47,9 @@ public class Cox {
 		Constructor<? extends CoxBrain> cons = brainType.getConstructor();
 		brain = cons.newInstance();
 		
-		boat.launch(this);
+		boat.launch(this, launch_schedule_id);
 		navigator = new BoatNavigation(this, boat, false);
 		navigator.launch(launchLane);
-		
-		boat.launchComplete(launch_schedule_id);
 	}
 	
 	public void land() {

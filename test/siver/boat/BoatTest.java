@@ -63,11 +63,16 @@ public class BoatTest {
 	}
 	
 	private void launchBoat() {
+		expect(mockCox.desired_gear()).andStubReturn(5);
+		expect(mockCox.brain_type()).andStubReturn("TestBrain");
 		replay(mockContext);
 		replay(mockSpace);
-		boat.launch(mockCox);
+		replay(mockCox);
+		boat.launch(mockCox, null);
 		verify(mockContext);
 		verify(mockSpace);
+		verify(mockCox);
+		reset(mockCox);
 	}
 	
 	@Test

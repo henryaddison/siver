@@ -56,15 +56,12 @@ public class Boat {
 		this.gearMultiplier = gearMult;
 	}
 	
-	public void launch(Cox cox) {
+	public void launch(Cox cox, Integer launch_schedule_id) {
 		//initially the boat points straight up and is going at speed 10
 		this.orientation = 0;
 		this.gear = 0;
 		this.cox = cox;
 		this.total_distance_covered = 0;
-	}
-	
-	public void launchComplete(Integer launch_schedule_id) {
 		this.record = new BoatRecord(launch_schedule_id, SiverContextCreator.getTickCount(), cox.desired_gear(), gearMultiplier, cox.brain_type());
 	}
 	

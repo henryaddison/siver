@@ -90,9 +90,7 @@ public class CoxTest {
 		expect(mockLane.getStartNode()).andStubReturn(expNode);
 		mockBoat.moveTo(expNode.toNdPoint());
 		expectLastCall().once();
-		mockBoat.launch(cox);
-		expectLastCall().once();
-		mockBoat.launchComplete(null);
+		mockBoat.launch(cox, null);
 		expectLastCall().once();
 		expect(mockLane.getNextEdge(expNode, false)).andReturn(new LaneEdge(expNode, nextNode)).once();
 		mockBoat.steerToward(nextNode.getLocation());
