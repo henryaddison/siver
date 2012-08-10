@@ -5,7 +5,6 @@ import java.awt.Color;
 import java.awt.geom.Point2D;
 
 import repast.simphony.context.Context;
-import repast.simphony.engine.environment.RunEnvironment;
 import repast.simphony.engine.schedule.ScheduledMethod;
 import repast.simphony.random.RandomHelper;
 import repast.simphony.space.SpatialMath;
