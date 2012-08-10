@@ -14,7 +14,7 @@ public class Spin extends Action {
 	private Lane destinationLane;
 	private LaneNode destinationNode;
 	
-	private LaneEdge startEdge, destinationEdge;
+	private LaneEdge destinationEdge;
 	private ArrayList<LaneEdge> middleEdges;
 	
 	private int countDown;
@@ -57,7 +57,6 @@ public class Spin extends Action {
 		}
 		destinationNode = destinationLane.nodeNearest(boat.getLocation());
 		
-		startEdge = location.getEdge();
 		destinationEdge = destinationLane.getNextEdge(destinationNode, !location.headingUpstream());
 		if(destinationEdge == null) {
 			return;
