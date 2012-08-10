@@ -198,8 +198,6 @@ public class Lane extends OutlinedArea {
 	}
 	
 	public LaneEdge edgeNearest(NdPoint pt) {
-		LaneEdge answer = null;
-		
 		LaneNode oneEnd = nodeNearest(pt);
 		
 		LaneEdge outEdge = getNextEdge(oneEnd, false);
