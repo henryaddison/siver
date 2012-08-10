@@ -39,7 +39,7 @@ public class Cox {
 		launch(BasicBrain.class, boat, launchLane, desGear, speedMult, distance_to_cover, launch_schedule_id);
 	}
 	
-	public void launch(Class brainType, Boat boat, Lane launchLane, int desGear, double speedMult, double distance_to_cover, Integer launch_schedule_id) throws SecurityException, NoSuchMethodException, IllegalArgumentException, InstantiationException, IllegalAccessException, InvocationTargetException {
+	public void launch(Class<? extends CoxBrain> brainType, Boat boat, Lane launchLane, int desGear, double speedMult, double distance_to_cover, Integer launch_schedule_id) throws SecurityException, NoSuchMethodException, IllegalArgumentException, InstantiationException, IllegalAccessException, InvocationTargetException {
 		//save reference to boat launched in
 		this.boat = boat;
 		//place the boat at the location of the first node of the lane
@@ -53,7 +53,7 @@ public class Cox {
 		
 		observations = new CoxObservations(this, boat, navigator);
 		
-		Constructor<CoxBrain> cons = brainType.getConstructor(CoxObservations.class);
+		Constructor<? extends CoxBrain> cons = brainType.getConstructor(CoxObservations.class);
 		brain = cons.newInstance(observations);
 		
 		incapcitated = false;
@@ -81,7 +81,7 @@ public class Cox {
 			}
 			
 			if(action == null) {
-				Constructor<Action> cons = brain.chooseAction().getConstructor(Cox.class);
+				Constructor<? extends Action> cons = brain.chooseAction().getConstructor(Cox.class);
 				action = cons.newInstance(this);
 			}
 			action.execute();
