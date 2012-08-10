@@ -7,17 +7,14 @@ import javax.swing.JButton;
 import javax.swing.JPanel;
 
 import siver.boat.*;
+import siver.context.SiverContextCreator;
 import siver.cox.brains.BasicBrain;
 import siver.cox.brains.LaneChangeBrain;
 import siver.cox.brains.StartStopBrain;
 import siver.river.BoatHouse;
 
 public class UserPanel extends JPanel {
-	
-	private BoatHouse boathouse;
-	
-	public UserPanel(BoatHouse bh)  {
-		boathouse = bh;
+	public UserPanel()  {
 		initComponents();
 	}
 	
@@ -51,6 +48,6 @@ public class UserPanel extends JPanel {
 	}
 	
 	private void launchButtonActionPerformed(java.awt.event.ActionEvent evt, Class coxBrainClass) {
-		boathouse.manualLaunch(coxBrainClass);
+		SiverContextCreator.getBoatHouse().manualLaunch(coxBrainClass);
 	}
 }

@@ -9,12 +9,14 @@ import repast.simphony.engine.environment.RunEnvironment;
 import repast.simphony.engine.schedule.ISchedule;
 import repast.simphony.engine.schedule.ScheduleParameters;
 import repast.simphony.random.RandomHelper;
+import repast.simphony.ui.RSApplication;
 import siver.context.SiverContextCreator;
 import siver.cox.brains.BasicBrain;
+import siver.ui.UserPanel;
 
 public class InprogressExperiment extends ExperimentalDatum {
-	
 	private static final Integer EXPERIMENT_ID = 1;
+	private static final double TICK_TIMEOUT = 12*60*60; // a 12 hour day is experiment maximum
 	
 	private static InprogressExperiment instance;
 	private Integer experiment_id, schedule_id;
@@ -37,6 +39,12 @@ public class InprogressExperiment extends ExperimentalDatum {
 			instance().findRandomSeedScheduleIdAndBrainType();
 			instance().create_experiment_run();
 			instance().scheduleLaunches();
+			if(instance().isAutomated()) {
+				//set up a scheduled method to run when after a certain number of ticks has passed so experiments don't take too long
+				ISchedule schedule = RunEnvironment.getInstance().getCurrentSchedule();
+				ScheduleParameters simTimeoutParams = ScheduleParameters.createOneTime(TICK_TIMEOUT);
+				schedule.schedule(simTimeoutParams, instance(), "endSim");
+			}
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -45,6 +53,7 @@ public class InprogressExperiment extends ExperimentalDatum {
 	}
 	
 	public static void end() {
+		//flush any remaining boat records to the database
 		try {
 			for(BoatRecord br : instance().inprogress_records) {
 				br.flush();
@@ -54,6 +63,7 @@ public class InprogressExperiment extends ExperimentalDatum {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} finally {
+			//make sure all DB connections are closed and set the instance to null
 			instance = null;
 			closeDBConnection();
 			BoatRecord.closeDBConnection();
@@ -141,7 +151,7 @@ public class InprogressExperiment extends ExperimentalDatum {
 		}
 	}
 	
-	public boolean isAutomated() {
+	private boolean isAutomated() {
 		return experiment_id != null;
 	}
 	
@@ -170,6 +180,8 @@ public class InprogressExperiment extends ExperimentalDatum {
 	}
 	
 	private void scheduleLaunches() {
+		//remove any old user control panel that may be there to prevent manual launches mid automated experiment run
+		RSApplication.getRSApplicationInstance().removeCustomUserPanel(); 
 		if(isAutomated()) {
 			PreparedStatement stmt = null;
 			String sql = "SELECT launch_tick, desired_gear, speed_multiplier, distance_to_cover, id " +
@@ -196,6 +208,14 @@ public class InprogressExperiment extends ExperimentalDatum {
 				e.printStackTrace();
 			}
 			
+		} else {
+			//if the experiment run does not have an automated schedule
+			//then add a control panel so boat's may be launched manually
+			RSApplication.getRSApplicationInstance().addCustomUserPanel(new UserPanel()); //and add a new one
 		}
+	}
+	
+	public void stopSim() {
+		SiverContextCreator.stopSim();
 	}
 }

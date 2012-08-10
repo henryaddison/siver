@@ -23,11 +23,6 @@ import siver.ui.UserPanel;
  *
  */
 public class SiverContextCreator implements ContextBuilder<Object> {
-	
-	
-	
-	private static final double TICK_TIMEOUT = 12*60*60; // a 12 hour day is experiment maximum
-	
 	private static Context<Object> mainContext;
 	public static Context<Object> getContext() {
 		return mainContext;
@@ -77,6 +72,7 @@ public class SiverContextCreator implements ContextBuilder<Object> {
 	@Override
 	public Context build(Context<Object> context) {
 		context.setId("siver");
+		mainContext = context;
 		
 		int xdim = 2200;   // The x dimension of the physical space
 		int ydim = 1000;   // The y dimension of the physical space
@@ -91,32 +87,21 @@ public class SiverContextCreator implements ContextBuilder<Object> {
 		context.add(boatHouse);
 		space.moveTo(boatHouse, 0, 20);
 		
-		initializeExperiment();
-		
-		if(!InprogressExperiment.instance().isAutomated()) {
-			RSApplication.getRSApplicationInstance().removeCustomUserPanel();
-			RSApplication.getRSApplicationInstance().addCustomUserPanel(new UserPanel(boatHouse));
-		}
-		
-		mainContext = context;
+		initializeDataCollection();
 		
 		return context;
 	}
 	
-	public void initializeExperiment() {
+	public void initializeDataCollection() {
 		InprogressExperiment.start();
 		
 		//schedule a method to run when the simulation ends so we can flush all collected data to database
 		ISchedule schedule = RunEnvironment.getInstance().getCurrentSchedule();
 		ScheduleParameters params = ScheduleParameters.createOneTime(ScheduleParameters.END);
 		schedule.schedule(params, this, "endExperiment");
-		
-		//set up a scheduled method to run when after a certain number of ticks has passed so experiments don't take too long
-		ScheduleParameters simTimeoutParams = ScheduleParameters.createOneTime(TICK_TIMEOUT);
-		schedule.schedule(simTimeoutParams, this, "endSim");
 	}
 	
-	public void endSim() {
+	public static void stopSim() {
 		RunEnvironment.getInstance().getCurrentSchedule().setFinishing(true);
 	}
 	
