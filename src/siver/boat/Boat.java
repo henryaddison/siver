@@ -77,6 +77,7 @@ public class Boat {
 	public void run() {
 		tick_distance_remaining = getSpeed();
 		moveBoat();
+		record.updateStats(total_distance_covered(), getGear());
 	}
 	
 	private void moveBoat() {
@@ -85,7 +86,6 @@ public class Boat {
 		if(tick_distance_remaining >= distance_till_next_node) {
 			location.moveToEdgeEnd();
 			total_distance_covered += distance_till_next_node;
-			record.moved(distance_till_next_node, getGear());
 			tick_distance_remaining = tick_distance_remaining - distance_till_next_node;
 			
 			LaneNode steer_from = location.getDestinationNode();
@@ -100,7 +100,6 @@ public class Boat {
 		} else {
 			location.moveAlongEdge(tick_distance_remaining);
 			total_distance_covered += tick_distance_remaining;
-			record.moved(tick_distance_remaining, getGear());
 			tick_distance_remaining = 0;
 		}
 	}

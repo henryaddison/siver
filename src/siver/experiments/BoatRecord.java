@@ -3,6 +3,7 @@ package siver.experiments;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
+import repast.simphony.engine.schedule.ScheduledMethod;
 import siver.boat.Boat;
 import siver.cox.Cox;
 
@@ -11,7 +12,6 @@ public class BoatRecord extends ExperimentalDatum {
 	private int launch_tick, desired_gear, aggregate_gear_difference, experiment_run_id;
 	private double speed_multiplier, distance_covered;
 	private String brain_type;
-	
 	
 	public BoatRecord(Integer scheduled_launch_id, int launch_tick, Boat boat, Cox cox) {
 		this.scheduled_launch_id = scheduled_launch_id;
@@ -28,9 +28,9 @@ public class BoatRecord extends ExperimentalDatum {
 		InprogressExperiment.addBoatRecord(this);
 	}
 	
-	public void moved(double distance, int gear) {
-		distance_covered += distance;
-		aggregate_gear_difference += Math.abs(gear - desired_gear);
+	public void updateStats(double distance_travelled, int gear) {
+		aggregate_gear_difference += Math.abs(gear - this.desired_gear);
+		distance_covered = distance_travelled;
 	}
 	
 	public void landed(int land_tick) {
