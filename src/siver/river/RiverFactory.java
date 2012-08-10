@@ -23,30 +23,9 @@ public class RiverFactory {
 	 * @return completed River object based on the test coordinates
 	 */
 	public static River Cam(Context<Object> context, ContinuousSpace<Object> space) {
-		LaneContext lane_context = new LaneContext("Upstream Context");
-		context.addSubContext(lane_context);
-		Lane up = new Lane(lane_context, "Upstream Lane");
-		
-		
-		lane_context = new LaneContext("Middle Context");
-		context.addSubContext(lane_context);
-		Lane middle = new Lane(lane_context, "Middle Lane");
-		
-		lane_context = new LaneContext("Downstream Context");
-		context.addSubContext(lane_context);
-		Lane down = new Lane(lane_context, "Downstream Lane");
-		
-		up.start(new Point2D.Double(10, 30));
-		context.add(up);
-		space.moveTo(up, 10, 30);
-		
-		middle.start(new Point2D.Double(10, 20));
-		context.add(middle);
-		space.moveTo(middle, 10, 20);
-		
-		down.start(new Point2D.Double(10, 10));
-		context.add(down);
-		space.moveTo(up, 10, 10);
+		Lane up = createLane("Upstream", context, space, new Point2D.Double(10, 30));
+		Lane middle = createLane("Middle", context, space, new Point2D.Double(10, 20));
+		Lane down = createLane("Downstream", context, space, new Point2D.Double(10, 10));
 		
 		try {
 			for(int i = 1; i <= 70; i++) {
@@ -128,29 +107,15 @@ public class RiverFactory {
 		return river;
 	}
 	
+	
+	
 	public static River Test(Context<Object> context, ContinuousSpace<Object> space) {
-		LaneContext lane_context = new LaneContext("Upstream Context");
-		context.addSubContext(lane_context);
-		Lane up = new Lane(lane_context, "Upstream Lane");
-		
-		lane_context = new LaneContext("Middle Context");
-		context.addSubContext(lane_context);
-		Lane middle = new Lane(lane_context, "Middle Lane");
-		
-		lane_context = new LaneContext("Downstream Context");
-		context.addSubContext(lane_context);
-		Lane down = new Lane(lane_context, "Downstream Lane");
-		
-		up.start(new Point2D.Double(10, 30));
-		
-		middle.start(new Point2D.Double(10, 20));
-		
-		down.start(new Point2D.Double(10, 10));
-		
+		Lane up = createLane("Upstream", context, space, new Point2D.Double(10, 30));
+		Lane middle = createLane("Middle", context, space, new Point2D.Double(10, 20));
+		Lane down = createLane("Downstream", context, space, new Point2D.Double(10, 10));
 		
 		try {
 			for(int i=1; i<=10; i++) {
-				
 				up.extend(0);
 				middle.extend(0);
 				down.extend(0);
@@ -182,5 +147,17 @@ public class RiverFactory {
 		river.setBoathouse(boatHouse);
 		
 		return river;
+	}
+	
+	private static Lane createLane(String name, Context<Object> context, ContinuousSpace<Object> space, Point2D.Double start_point) {
+		LaneContext lane_context = new LaneContext(name+" Context");
+		context.addSubContext(lane_context);
+		Lane lane = new Lane(lane_context, name+" Lane");
+		context.add(lane);
+		
+		lane.start(start_point);
+		space.moveTo(lane, start_point.getX(), start_point.getY());
+		
+		return lane;
 	}
 }

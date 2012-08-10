@@ -42,8 +42,15 @@ public abstract class ChangeLaneTest extends ActionTest {
 		
 		context.addSubContext(anyObject(LaneContext.class));
 		expectLastCall().times(3);
+		
+		expect(context.add(anyObject(Lane.class))).andReturn(true).times(3);
+		expect(space.moveTo(anyObject(Lane.class), eq(10.0),eq(10.0))).andReturn(true).once();
+		expect(space.moveTo(anyObject(Lane.class), eq(10.0),eq(20.0))).andReturn(true).once();
+		expect(space.moveTo(anyObject(Lane.class), eq(10.0),eq(30.0))).andReturn(true).once();
+		
 		expect(context.add(anyObject(River.class))).andReturn(true).once();
 		expect(space.moveTo(anyObject(River.class), eq(0.0),eq(0.0))).andReturn(true).once();
+		
 		expect(context.add(anyObject(BoatHouse.class))).andReturn(true).once();
 		expect(space.moveTo(anyObject(BoatHouse.class), eq(0.0),eq(20.0))).andReturn(true).once();
 		
