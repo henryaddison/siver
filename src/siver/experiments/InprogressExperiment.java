@@ -43,7 +43,7 @@ public class InprogressExperiment extends ExperimentalDatum {
 				//set up a scheduled method to run when after a certain number of ticks has passed so experiments don't take too long
 				ISchedule schedule = RunEnvironment.getInstance().getCurrentSchedule();
 				ScheduleParameters simTimeoutParams = ScheduleParameters.createOneTime(TICK_TIMEOUT);
-				schedule.schedule(simTimeoutParams, instance(), "endSim");
+				schedule.schedule(simTimeoutParams, instance(), "stopSim");
 			}
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
