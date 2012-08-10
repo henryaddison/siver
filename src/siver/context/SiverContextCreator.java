@@ -62,7 +62,7 @@ public class SiverContextCreator implements ContextBuilder<Object> {
 		schedule.schedule(params, this, "stopDataCollection");
 	}
 	
-	private void stopDataCollection() {
+	public void stopDataCollection() {
 		InprogressExperiment.end();
 	}
 	
