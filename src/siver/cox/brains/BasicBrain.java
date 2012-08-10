@@ -13,7 +13,7 @@ public class BasicBrain extends CoxBrain {
 	}
 	
 	@Override
-	public Class chooseAction() {
+	public Class<? extends Action> chooseAction() {
 		if(observations.atRiversEnd()) {
 			return Spin.class;
 		}

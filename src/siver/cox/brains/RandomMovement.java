@@ -12,14 +12,14 @@ public class RandomMovement extends RandomChoice {
 	}
 	
 	@Override
-	public Class chooseAction() {
+	public Class<? extends Action> chooseAction() {
 		if(observations.atRiversEnd()) {
 			return Spin.class;
 		}
 		if(true) {
 			return chooseRandomAction();
 		}
-		return null;
+		throw new RuntimeException("No action chosen by brain. Something has gone very wrong");
 	}
 	
 	@Override

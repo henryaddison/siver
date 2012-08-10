@@ -13,18 +13,18 @@ public class RandomChoice extends CoxBrain {
 	private static final Class[] possible_actions = {LetBoatRun.class, MoveToLaneOnLeft.class, MoveToLaneOnRight.class, SpeedUp.class, SlowDown.class, Spin.class};
 	
 	@Override
-	public Class chooseAction() {
+	public Class<? extends Action> chooseAction() {
 		if(true) {
 			return chooseRandomAction();
 		}
-		return null;
+		throw new RuntimeException("No action chosen by brain. Something has gone very wrong");
 	}
 	
-	protected Class[] possible_actions() {
+	protected Class<? extends Action>[] possible_actions() {
 		return possible_actions;
 	}
 	
-	protected Class chooseRandomAction() {
+	protected Class<? extends Action> chooseRandomAction() {
 		int index = RandomHelper.nextIntFromTo(0, possible_actions().length-1);
 		return possible_actions()[index];
 	}

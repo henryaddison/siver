@@ -10,7 +10,7 @@ public class ConservativeBrain extends CoxBrain {
 	}
 
 	@Override
-	public Class chooseAction() {
+	public Class<? extends Action> chooseAction() {
 		if(observations.atRiversEnd()) {
 			return Spin.class;
 		}
@@ -23,7 +23,7 @@ public class ConservativeBrain extends CoxBrain {
 		if(true) {
 			return LetBoatRun.class;
 		}
-		return null;
+		throw new RuntimeException("No action chosen by brain. Something has gone very wrong");
 	}
 
 }

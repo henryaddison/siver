@@ -15,7 +15,7 @@ public class RandomDelegate extends CoxBrain {
 	public RandomDelegate(CoxObservations obs) {
 		super(obs);
 		int index = RandomHelper.nextIntFromTo(0, possible_brains.length-1);
-		Constructor<CoxBrain> cons;
+		Constructor<? extends CoxBrain> cons;
 		try {
 			cons = possible_brains[index].getConstructor(CoxObservations.class);
 			delegate = cons.newInstance(obs);
@@ -41,7 +41,7 @@ public class RandomDelegate extends CoxBrain {
 	}
 
 	@Override
-	public Class chooseAction() {
+	public Class<? extends Action> chooseAction() {
 		return delegate.chooseAction();
 	}
 	

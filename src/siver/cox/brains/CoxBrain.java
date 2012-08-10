@@ -1,6 +1,7 @@
 package siver.cox.brains;
 
 import siver.cox.CoxObservations;
+import siver.cox.actions.Action;
 
 public abstract class CoxBrain {
 	protected CoxObservations observations;
@@ -9,5 +10,5 @@ public abstract class CoxBrain {
 		observations = obs;	
 	}
 	
-	public abstract Class chooseAction();
+	public abstract Class<? extends Action> chooseAction();
 }

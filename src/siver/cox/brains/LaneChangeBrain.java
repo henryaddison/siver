@@ -12,7 +12,7 @@ public class LaneChangeBrain extends CoxBrain {
 	private int countDown = 10;
 	
 	@Override
-	public Class chooseAction() {
+	public Class<? extends Action> chooseAction() {
 		if(observations.atRiversEnd()) {
 			return Spin.class;
 		}
