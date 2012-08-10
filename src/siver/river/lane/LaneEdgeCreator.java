@@ -17,7 +17,7 @@ import repast.simphony.space.graph.EdgeCreator;
 public class LaneEdgeCreator<T extends LaneNode> implements EdgeCreator<LaneEdge, T> {
 
 	@Override
-	public Class getEdgeType() {
+	public Class<? extends LaneEdge> getEdgeType() {
 		return LaneEdge.class;
 	}
 
