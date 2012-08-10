@@ -35,7 +35,7 @@ public class BoatHouse {
 		manualLaunch(BasicBrain.class);
 	}
 	
-	public void automaticLaunch(Integer scheduled_launch_id, Integer desired_gear, Double speed_multiplier, Double distance_to_cover, Class coxBrainClass) {
+	public void launch(Integer scheduled_launch_id, Integer desired_gear, Double speed_multiplier, Double distance_to_cover, Class coxBrainClass) {
 		Boat boat = new Boat(river, context, space, speed_multiplier);
 		context.add(boat);
 		
@@ -66,32 +66,7 @@ public class BoatHouse {
 	}
 	
 	public void manualLaunch(Class coxBrainClass) {
-		Boat boat = new Boat(river, context, space, 0.5);
-		context.add(boat);
-		
-		try {
-			Cox cox = new Cox();
-			context.add(cox);
-			cox.launch(coxBrainClass, boat, getLaunchLane(), RandomHelper.nextIntFromTo(1,10), 0.5, 4000, null);
-		} catch (IllegalArgumentException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (InstantiationException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (IllegalAccessException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (InvocationTargetException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (SecurityException e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
-		} catch (NoSuchMethodException e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
-		}
+		launch(null, RandomHelper.nextIntFromTo(1,10), 0.5, 5000.0, coxBrainClass);
 	}
 	
 	public Lane getLaunchLane() {

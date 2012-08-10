@@ -185,7 +185,7 @@ public class InprogressExperiment extends ExperimentalDatum {
 					int schedule_launch_id = launchData.getInt(5);
 					
 					ScheduleParameters params = ScheduleParameters.createOneTime(launch_tick);
-					schedule.schedule(params, SiverContextCreator.getBoatHouse(), "automaticLaunch", 
+					schedule.schedule(params, SiverContextCreator.getBoatHouse(), "launch", 
 							schedule_launch_id,desired_gear, speed_multiplier, distance_to_cover, brain_type);
 				}
 				stmt.close();
