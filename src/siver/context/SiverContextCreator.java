@@ -11,12 +11,10 @@ import repast.simphony.engine.schedule.ISchedule;
 import repast.simphony.engine.schedule.ScheduleParameters;
 import repast.simphony.space.continuous.ContinuousSpace;
 import repast.simphony.space.continuous.SimpleCartesianAdder;
-import repast.simphony.ui.RSApplication;
 import siver.experiments.InprogressExperiment;
 import siver.river.BoatHouse;
 import siver.river.River;
 import siver.river.RiverFactory;
-import siver.ui.UserPanel;
 
 /**
  * @author hja11
@@ -27,7 +25,7 @@ public class SiverContextCreator implements ContextBuilder<Object> {
 	 * @see repast.simphony.dataLoader.ContextBuilder#build(repast.simphony.context.Context)
 	 */
 	@Override
-	public Context build(Context<Object> context) {
+	public Context<Object> build(Context<Object> context) {
 		context.setId("siver");
 		mainContext = context;
 		
