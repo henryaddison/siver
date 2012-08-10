@@ -13,3 +13,6 @@
 debug.log
 velocity.log*
 Repast.Settings
+
+# Mac OS files
+.DS_Store
