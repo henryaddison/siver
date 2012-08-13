@@ -5,8 +5,6 @@ import java.lang.reflect.InvocationTargetException;
 
 import repast.simphony.engine.schedule.ScheduledMethod;
 import siver.river.lane.Lane;
-import siver.river.lane.LaneEdge;
-import siver.river.lane.LaneNode;
 import siver.boat.Boat;
 import siver.boat.BoatNavigation;
 import siver.context.SiverContextCreator;
