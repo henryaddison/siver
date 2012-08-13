@@ -122,6 +122,11 @@ public class Boat {
 		setAngle(angle);
 	}
 	
+	public void deadStop() {
+		setGear(0);
+		tick_distance_remaining = 0;
+	}
+	
 	//GETTERS AND SETTERS
 	public double getAngle() {
 		return orientation;
@@ -176,11 +181,6 @@ public class Boat {
 	
 	public River getRiver() {
 		return river;
-	}
-	
-	public void deadStop() {
-		setGear(0);
-		tick_distance_remaining = 0;
 	}
 	
 	public double getTickDistanceRemaining() {
