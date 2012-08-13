@@ -14,9 +14,6 @@ import siver.context.SiverContextCreator;
 import siver.cox.Cox;
 import siver.experiments.BoatRecord;
 import siver.river.River;
-import siver.river.lane.Lane;
-import siver.river.lane.LaneEdge;
-import siver.river.lane.LaneNode;
 
 /** 
  * BoatAgent is a dumb agent, at each step it will carry on moving in the direction it is facing and at the speed it was set to
@@ -38,10 +35,6 @@ public class Boat {
 	private int gear;
 	private double gearMultiplier;
 	
-	//distance that can be travelled this tick
-	private double tick_distance_remaining;
-	private double total_distance_covered;
-	
 	//keep a reference of the space the boat is in for easier movement
 	private ContinuousSpace<Object> space;
 	private Context<Object> context;
@@ -61,7 +54,6 @@ public class Boat {
 		this.orientation = 0;
 		this.gear = 0;
 		this.cox = cox;
-		this.total_distance_covered = 0;
 		this.record = new BoatRecord(launch_schedule_id, SiverContextCreator.getTickCount(), this, cox);
 	}
 	
@@ -75,33 +67,8 @@ public class Boat {
 	//MOVEMENT
 	@ScheduledMethod(start = 1, interval = 1, priority=10)
 	public void run() {
-		tick_distance_remaining = getSpeed();
-		moveBoat();
+		cox.getNavigator().continueForward();
 		record.updateStats(total_distance_covered(), getGear());
-	}
-	
-	private void moveBoat() {
-		BoatNavigation location = cox.getNavigator();
-		double distance_till_next_node = location.getTillEdgeEnd();
-		if(tick_distance_remaining >= distance_till_next_node) {
-			location.moveToEdgeEnd();
-			total_distance_covered += distance_till_next_node;
-			tick_distance_remaining = tick_distance_remaining - distance_till_next_node;
-			
-			LaneNode steer_from = location.getDestinationNode();
-			Lane lane = steer_from.getLane();
-			LaneEdge next_edge = lane.getNextEdge(steer_from, location.headingUpstream());
-			if(next_edge != null) {
-				location.updateEdge(next_edge);
-				moveBoat(); 
-			} else {
-				deadStop();
-			}
-		} else {
-			location.moveAlongEdge(tick_distance_remaining);
-			total_distance_covered += tick_distance_remaining;
-			tick_distance_remaining = 0;
-		}
 	}
 	
 	public void move(double dist) {
@@ -124,7 +91,6 @@ public class Boat {
 	
 	public void deadStop() {
 		setGear(0);
-		tick_distance_remaining = 0;
 	}
 	
 	//GETTERS AND SETTERS
@@ -183,16 +149,8 @@ public class Boat {
 		return river;
 	}
 	
-	public double getTickDistanceRemaining() {
-		return tick_distance_remaining;
-	}
-	
-	public void setTickDistanceRemaining(double value) {
-		tick_distance_remaining = value;
-	}
-	
 	public double total_distance_covered() {
-		return total_distance_covered;
+		return cox.getNavigator().getTotalDistanceCovered();
 	}
 	
 	

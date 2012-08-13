@@ -193,15 +193,6 @@ public class BoatTest {
 		verify(mockCox);
 		assertEquals(0,boat.getGear());
 		assertEquals(0,boat.getSpeed(), 1E-5);
-		assertEquals(0,boat.getTickDistanceRemaining(), 1E-5);
-	}
-	
-	@Test
-	public void testGetAndSetTickDistanceRemaining() {
-		launchBoat();
-		assertEquals(0,boat.getTickDistanceRemaining(), 1E-5);
-		boat.setTickDistanceRemaining(15.0);
-		assertEquals(15,boat.getTickDistanceRemaining(), 1E-5);
 	}
 
 }

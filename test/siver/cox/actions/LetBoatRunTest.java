@@ -45,15 +45,10 @@ public class LetBoatRunTest extends ActionTest {
 		
 		expect(mockLocation.getTillEdgeEnd()).andReturn(exp_distance_travelled).once();
 		
-		expect(mockBoat.getTickDistanceRemaining()).andReturn(5.0).once();
-		
 		mockBoat.move(exp_distance_travelled);
 		expectLastCall().once();
 		
 		mockLocation.moveToEdgeEnd();
-		expectLastCall().once();
-		
-		mockBoat.setTickDistanceRemaining(1.5);
 		expectLastCall().once();
 		
 		replay(mockBoat);
@@ -86,15 +81,11 @@ public class LetBoatRunTest extends ActionTest {
 		expect(mCox.getBoat()).andStubReturn(mBoat);
 		
 		expect(mLoc.getTillEdgeEnd()).andReturn(9.0).once();
-		expect(mBoat.getTickDistanceRemaining()).andReturn(5.0).once();
 		
 		mBoat.move(5.0);
 		expectLastCall().once();
 		
 		mLoc.moveAlongEdge(5.0);
-		expectLastCall().once();
-		
-		mBoat.setTickDistanceRemaining(0);
 		expectLastCall().once();
 	}
 
