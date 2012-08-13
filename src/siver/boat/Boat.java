@@ -1,12 +1,10 @@
 package siver.boat;
 
 
-import java.awt.Color;
 import java.awt.geom.Point2D;
 
 import repast.simphony.context.Context;
 import repast.simphony.engine.schedule.ScheduledMethod;
-import repast.simphony.random.RandomHelper;
 import repast.simphony.space.SpatialMath;
 import repast.simphony.space.continuous.ContinuousSpace;
 import repast.simphony.space.continuous.NdPoint;
@@ -152,16 +150,4 @@ public class Boat {
 	public double total_distance_covered() {
 		return cox.getNavigator().getTotalDistanceCovered();
 	}
-	
-	
-	private Color colour;
-	private static final Color[] available_colours = {Color.RED, Color.YELLOW, Color.GREEN};
-	public Color getColour() {
-		if(this.colour == null) {
-			int colour_index = RandomHelper.nextIntFromTo(0, available_colours.length-1);
-			this.colour = available_colours[colour_index];
-		}
-		return this.colour;
-	}
-	
 }

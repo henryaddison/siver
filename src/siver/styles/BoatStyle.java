@@ -3,7 +3,9 @@ package siver.styles;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.geom.Path2D;
+import java.util.HashMap;
 
+import repast.simphony.random.RandomHelper;
 import repast.simphony.visualizationOGL2D.StyleOGL2D;
 import saf.v3d.ShapeFactory2D;
 import saf.v3d.scene.Position;
@@ -64,10 +66,22 @@ public class BoatStyle implements StyleOGL2D<Boat> {
 		if (spatial == null) return shapeFactory.createShape(boatOutline);
 	    return spatial;
 	}
-
+	
+	private static final Color[] available_colors = {Color.RED, Color.YELLOW, Color.GREEN};
+	private static HashMap<Boat,Color> colorMap = new HashMap<Boat,Color>();
+	
 	@Override
 	public Color getColor(Boat object) {
-		return object.getColour();
+		Color color = colorMap.get(object);
+		
+		if(color == null) {
+			int color_index = RandomHelper.nextIntFromTo(0, available_colors.length-1);
+			color = available_colors[color_index];
+			colorMap.put(object, color);
+		}
+		
+		return color;
+		
 	}
 
 	@Override
