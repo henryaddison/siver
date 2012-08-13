@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import repast.simphony.engine.environment.RunEnvironment;
 import repast.simphony.engine.schedule.ISchedule;
 import repast.simphony.engine.schedule.ScheduleParameters;
+import repast.simphony.parameter.Parameters;
 import repast.simphony.random.RandomHelper;
 import repast.simphony.ui.RSApplication;
 import siver.context.SiverContextCreator;
@@ -16,7 +17,6 @@ import siver.cox.brains.CoxBrain;
 import siver.ui.UserPanel;
 
 public class InprogressExperiment extends ExperimentalDatum {
-	private static final Integer EXPERIMENT_ID = null;
 	private static final double TICK_TIMEOUT = 12*60*60; // a 12 hour day is experiment maximum
 	
 	private static InprogressExperiment instance;
@@ -29,7 +29,7 @@ public class InprogressExperiment extends ExperimentalDatum {
 	
 	public static void start() {
 		if(instance() == null) {
-			instance = new InprogressExperiment(EXPERIMENT_ID);
+			instance = new InprogressExperiment();
 		} else {
 			throw new RuntimeException("Trying to start new Inprogress Experiment while one is already in progress.");
 		}
@@ -95,8 +95,10 @@ public class InprogressExperiment extends ExperimentalDatum {
 	    insertExperimentRun.close();
 	}
 	
-	private InprogressExperiment(Integer experiment_id) {
-		this.experiment_id = experiment_id;
+	private InprogressExperiment() {
+		Parameters params = RunEnvironment.getInstance().getParameters(); 
+		this.experiment_id = (Integer)params.getValue("ExperimentId");
+		if(this.experiment_id <= 0) this.experiment_id = null;
 		crash_count = 0;
 		this.inprogress_records = new ArrayList<BoatRecord>();
 	}
