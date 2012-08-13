@@ -3,7 +3,6 @@ package siver.experiments;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
-import repast.simphony.engine.schedule.ScheduledMethod;
 import siver.boat.Boat;
 import siver.cox.Cox;
 
