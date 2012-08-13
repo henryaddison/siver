@@ -9,40 +9,38 @@ require 'optparse'
 require './schedule'
 require './experiment'
 require './scheduled_launch'
+require './db_connect'
 
 schedule_name = nil
-experiment_name = nil
-random_seed = rand(2**31)
-brain_type = "BasicBrain"
+launch_delay = nil
+boat_count = 100
 
 optparse = OptionParser.new do|opts|
   opts.on( '-s', '--schedule-name SNAME', "Schedule name" ) do |sn|
     schedule_name = sn
   end
   
-  opts.on('-r', '--random-seed RSEED', "Random seed") do |rs|
-    random_seed = rs
+  opts.on( '-b', '--boat-count BOAT_COUNT', "Boat count") do |bc|
+    boat_count = bc
   end
   
-  opts.on('-b', '--brain-type BRAIN_TYPE', "Brain class name") do |bt|
-    brain_type = bt
+  opts.on( '-d', '--launch-delay LAUNCH_DELAY', "Launch delay") do |ld|
+    launch_delay = ld
   end
 end
 
 optparse.parse!
 
-ActiveRecord::Base.establish_connection(
-   :adapter  => "mysql2",
-   :username => "siver",
-   :database => "siver_development"
-)
-
 Schedule.transaction do
-
   schedule = Schedule.create!(:name => schedule_name)
-  experiment = Experiment.create!(:schedule => schedule, :random_seed => random_seed, :brain_type => brain_type)
-  
-  100.times do |i|
-    ScheduledLaunch.create!(:schedule => schedule, :desired_gear => rand(10)+1, :speed_multiplier => 0.5, :distance_to_cover => 4000, :launch_tick => i*600)
+  boat_count.times do |i|
+    ScheduledLaunch.create!(
+      :schedule => schedule, 
+      :desired_gear => rand(10)+1, 
+      :launch_tick => i*launch_delay,
+      # speed multiplier and distance to cover are not being varied in experiments currently
+      :speed_multiplier => 0.5, 
+      :distance_to_cover => 5000
+      )
   end
 end
