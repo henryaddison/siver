@@ -132,7 +132,7 @@ public class BoatNavigation {
 		return tick_distance_remaining;
 	}
 
-	private void setTickDistanceRemaining(double tick_distance_remaining) {
+	protected void setTickDistanceRemaining(double tick_distance_remaining) {
 		this.tick_distance_remaining = tick_distance_remaining;
 	}
 

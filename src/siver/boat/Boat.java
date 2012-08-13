@@ -67,7 +67,9 @@ public class Boat {
 	//MOVEMENT
 	@ScheduledMethod(start = 1, interval = 1, priority=10)
 	public void run() {
+		//have the navigator move the boat forward along the current lane
 		cox.getNavigator().continueForward();
+		//update the stats
 		record.updateStats(total_distance_covered(), getGear());
 	}
 	
@@ -91,6 +93,8 @@ public class Boat {
 	
 	public void deadStop() {
 		setGear(0);
+		//prevent any further movement this turn
+		cox.getNavigator().setTickDistanceRemaining(0);
 	}
 	
 	//GETTERS AND SETTERS

@@ -50,7 +50,6 @@ public class LaneEdge extends RepastEdge<LaneNode> {
 				if(crash == null) {
 					crash = new Crash(this);
 					SiverContextCreator.getContext().add(crash);
-					SiverContextCreator.getSpace().moveTo(crash, cox.getBoat().getLocation().toDoubleArray(null));
 				}
 			}
 			coxesOnEdge.add(cox);

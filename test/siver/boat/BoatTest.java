@@ -188,11 +188,14 @@ public class BoatTest {
 	public void testDeadStop() {
 		launchBoat();
 		boat.setGear(5);
+		BoatNavigation bn = new BoatNavigation(mockCox, boat, false);
+		expect(mockCox.getNavigator()).andReturn(bn);
 		replay(mockCox);
 		boat.deadStop();
 		verify(mockCox);
 		assertEquals(0,boat.getGear());
 		assertEquals(0,boat.getSpeed(), 1E-5);
+		assertEquals(0.0, bn.getTickDistanceRemaining(), 1E-5);
 	}
 
 }

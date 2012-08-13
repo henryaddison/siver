@@ -4,6 +4,7 @@ import static org.easymock.EasyMock.*;
 import static org.junit.Assert.*;
 
 import java.awt.geom.Point2D;
+import java.lang.reflect.InvocationTargetException;
 
 import org.easymock.EasyMock;
 import org.junit.After;
@@ -267,6 +268,54 @@ public class BoatNavigationTest {
 //		assertEquals(0.0, cl.getTickDistanceRemaining(), 1E-5);
 		assertEquals(10.0, cl.getTotalDistanceCovered(), 1E-5);
 		assertSame(startEdge, cl.getEdge());
+	}
+	
+	@Test
+	public void testContinueForwardIntoOccupiedEdge() throws SecurityException, IllegalArgumentException, NoSuchMethodException, InstantiationException, IllegalAccessException, InvocationTargetException {
+		river = LaneTest.setupRiver();
+		Context<Object> mcontext = createMock(Context.class);
+		SiverContextCreator.setContext(mcontext);
+		ContinuousSpace<Object> mspace = createMock(ContinuousSpace.class);
+		SiverContextCreator.setSpace(mspace);
+		
+		cox = new TestCoxAgent();
+		boat = new Boat(river, mcontext, mspace, 2.5);
+		
+		expect(mspace.moveTo(boat, 10,20)).andReturn(true);
+		expect(mspace.getLocation(boat)).andReturn(new NdPoint(10.0,20.0));
+		expect(mspace.getDisplacement(new NdPoint(10.0,20.0), new NdPoint(30.0,20.0))).andReturn(new double[]{20,0}).once();
+		
+		replay(mspace, mcontext);
+		cox.launch(boat, river.middle_lane(), 10, 2.5, 5400, null);
+		verify(mspace, mcontext);
+		reset(mspace, mcontext);
+		
+		cl = cox.getNavigator();
+		
+		LaneEdge startEdge = cl.getEdge();
+		LaneEdge endEdge = river.middle_lane().getNextEdge(startEdge.getTarget(), false);
+		//make sure the next edge is occupied so a crash will occur
+		Cox mcox = createMock(Cox.class);
+		endEdge.addCox(mcox);
+		
+		expect(mspace.moveByVector(boat, 20, 0, 0)).andReturn(new NdPoint(20,0));
+		expect(mcontext.add(anyObject(Crash.class))).andReturn(true);
+		mcox.incapcitate();
+		expectLastCall().once();
+		expect(mspace.getLocation(boat)).andReturn(new NdPoint(30.0,20.0));
+		expect(mspace.getDisplacement(new NdPoint(30.0,20.0), new NdPoint(50.0,20.0))).andReturn(new double[]{20,0}).once();
+		expect(mspace.moveByVector(boat, 0, 0, 0)).andReturn(new NdPoint(0,0));
+		
+		boat.setGear(10);
+		
+		replay(mspace, mcontext, mcox);
+		cl.continueForward();
+		verify(mspace, mcontext, mcox);
+		
+		assertEquals(20.0, cl.getTillEdgeEnd(), 1E-5);
+		assertEquals(0.0, cl.getTickDistanceRemaining(), 1E-5);
+		assertEquals(20.0, cl.getTotalDistanceCovered(), 1E-5);
+		assertSame(endEdge, cl.getEdge());
 	}
 }
 
