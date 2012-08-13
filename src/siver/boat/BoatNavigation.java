@@ -21,6 +21,9 @@ public class BoatNavigation {
 	
 	private Boat boat;
 	
+	private double tick_distance_remaining;
+	private double total_distance_covered;
+	
 	public BoatNavigation(Cox cox, Boat boat, boolean up) {
 		this.cox = cox;
 		this.boat = boat;
@@ -28,6 +31,8 @@ public class BoatNavigation {
 	}
 	
 	public void launch(Lane launchLane) {
+		total_distance_covered = 0;
+		
 		//place the boat at the location of the first node of the lane
 		LaneNode launchNode = launchLane.getStartNode();
 		boat.moveTo(launchNode.toNdPoint());
@@ -66,12 +71,14 @@ public class BoatNavigation {
 	
 	public void moveToEdgeEnd() {
 		boat.move(till_edge_end);
+		travelled(till_edge_end);
 		till_edge_end = 0;
 	}
 	
 	public void moveAlongEdge(double distance) {
 		boat.move(distance);
 		till_edge_end -= distance;
+		travelled(distance);
 	}
 	
 	public boolean headingUpstream() {
@@ -79,6 +86,9 @@ public class BoatNavigation {
 	}
 	
 	public void toggleUpstream() {
+		//this also means that the distance the boat has to travel is what it had previously used up of the edge 
+		till_edge_end = (current_edge.getWeight() - getTillEdgeEnd());
+		//then upstream flag gets toggled
 		upstream = !upstream;
 	}
 	
@@ -88,6 +98,50 @@ public class BoatNavigation {
 	
 	public boolean changingLane() {
 		return (current_edge instanceof LaneChangeEdge);
+	}
+	
+	public void continueForward() {
+		setTickDistanceRemaining(boat.getSpeed());
+		moveBoat();
+	}
+
+	private void moveBoat() {
+		double distance_till_next_node = getTillEdgeEnd();
+		if(distance_till_next_node > tick_distance_remaining) {
+			moveAlongEdge(tick_distance_remaining);
+			setTickDistanceRemaining(0);
+		} else {
+			moveToEdgeEnd();
+			
+			setTickDistanceRemaining(getTickDistanceRemaining()-distance_till_next_node);
+			LaneNode steer_from = getDestinationNode();
+			Lane lane = steer_from.getLane();
+			LaneEdge next_edge = lane.getNextEdge(steer_from, headingUpstream());
+			
+			if(next_edge != null) {
+				updateEdge(next_edge);
+				moveBoat(); 
+			} else {
+				// no next edge - assume we have hit the end of the river so stop the boat instantly
+				boat.deadStop();
+			}
+		}
+	}
+	
+	public double getTickDistanceRemaining() {
+		return tick_distance_remaining;
+	}
+
+	private void setTickDistanceRemaining(double tick_distance_remaining) {
+		this.tick_distance_remaining = tick_distance_remaining;
+	}
+
+	public double getTotalDistanceCovered() {
+		return total_distance_covered;
+	}
+
+	private void travelled(double distance) {
+		this.total_distance_covered += distance;
 	}
 }
 

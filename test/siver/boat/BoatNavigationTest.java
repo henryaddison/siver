@@ -3,6 +3,8 @@ package siver.boat;
 import static org.easymock.EasyMock.*;
 import static org.junit.Assert.*;
 
+import java.awt.geom.Point2D;
+
 import org.easymock.EasyMock;
 import org.junit.After;
 import org.junit.AfterClass;
@@ -132,6 +134,7 @@ public class BoatNavigationTest {
 		cl.moveToEdgeEnd();
 		verify(cox.getBoat());
 		assertEquals(0,cl.getTillEdgeEnd(),1E-5);
+		assertEquals(20.0, cl.getTotalDistanceCovered(), 1E-5);
 	}
 	
 	@Test
@@ -143,6 +146,7 @@ public class BoatNavigationTest {
 		cl.moveAlongEdge(3.5);
 		verify(cox.getBoat());
 		assertEquals(16.5, cl.getTillEdgeEnd(), 1E-5);
+		assertEquals(3.5, cl.getTotalDistanceCovered(), 1E-5);
 	}
 	
 	@Test
@@ -201,6 +205,68 @@ public class BoatNavigationTest {
 		verify(boat);
 
 		assertSame(exp_edge, cl.getEdge());
+	}
+	
+	@Test
+	public void testContinueForward() {
+		expect(boat.getSpeed()).andReturn(5.0).once();
+		boat.move(5.0);
+		expectLastCall().once();
+		LaneEdge startEdge = cl.getEdge();
+		
+		replay(boat);
+		cl.continueForward();
+		verify(boat);
+		
+		assertEquals(15.0, cl.getTillEdgeEnd(), 1E-5);
+		assertEquals(0.0, cl.getTickDistanceRemaining(), 1E-5);
+		assertEquals(5.0, cl.getTotalDistanceCovered(), 1E-5);
+		assertSame(startEdge, cl.getEdge());
+	}
+	
+	@Test
+	public void testContinueForwardReachEdgeEnd() {
+		expect(boat.getSpeed()).andReturn(28.0).once();
+		boat.move(20.0);
+		expectLastCall().once();
+		boat.steerToward(new Point2D.Double(50,20));
+		boat.move(8.0);
+		expectLastCall().once();
+		
+		LaneEdge startEdge = cl.getEdge();
+		LaneEdge endEdge = river.middle_lane().getNextEdge(startEdge.getTarget(), false);
+		replay(boat);
+		cl.continueForward();
+		verify(boat);
+		
+		assertEquals(12.0, cl.getTillEdgeEnd(), 1E-5);
+		assertEquals(0.0, cl.getTickDistanceRemaining(), 1E-5);
+		assertEquals(28.0, cl.getTotalDistanceCovered(), 1E-5);
+		assertSame(endEdge, cl.getEdge());
+		
+	}
+	
+	@Test
+	public void testContinueForwardIntoRiverEnd() {
+		testContinueForward();
+		reset(boat);
+		cl.toggleUpstream();
+		
+		expect(boat.getSpeed()).andReturn(7.0).once();
+		boat.move(5.0);
+		expectLastCall().once();
+		boat.deadStop();
+		expectLastCall().once();
+		LaneEdge startEdge = cl.getEdge();
+		
+		replay(boat);
+		cl.continueForward();
+		verify(boat);
+		
+		assertEquals(0.0, cl.getTillEdgeEnd(), 1E-5);
+//		assertEquals(0.0, cl.getTickDistanceRemaining(), 1E-5);
+		assertEquals(10.0, cl.getTotalDistanceCovered(), 1E-5);
+		assertSame(startEdge, cl.getEdge());
 	}
 }
 
