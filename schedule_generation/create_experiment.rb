@@ -37,9 +37,6 @@ optparse.parse!
 
 schedules = Schedule.find(schedule_ids)
 
-puts brain_types
-puts schedule_ids
-
 Experiment.transaction do
   brain_types.each do |brain|
     schedules.each do |sch|
