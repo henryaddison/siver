@@ -12,30 +12,41 @@ require './scheduled_launch'
 require './db_connect'
 
 random_seed = rand(2**31)
-brain_type = "BasicBrain"
-schedule_id = nil
+brain_types = ["BasicBrain"]
+schedule_ids = []
 
 optparse = OptionParser.new do|opts|
-  opts.on( '-s', "Schedule ID" ) do |sid|
-    schedule_id = sid
+  opts.on( '-s', Array, "Schedule IDs" ) do |sids|
+    schedule_ids = sid
+  end
+  
+  opts.on('--all-schedules') do 
+    schedule_ids = Schedule.all.collect(&:id)
   end
   
   opts.on('-r', '--random-seed RSEED', "Random seed") do |rs|
     random_seed = rs
   end
   
-  opts.on('-b', '--brain-type BRAIN_TYPE', "Brain class name") do |bt|
-    brain_type = bt
+  opts.on('-b', '--brain-types BRAIN_TYPES', Array, "List of brain class names") do |bts|
+    brain_types = bts
   end
 end
 
 optparse.parse!
 
-schedule = Schedule.find(schedule_id)
+schedules = Schedule.find(schedule_ids)
+
+puts brain_types
+puts schedule_ids
 
 Experiment.transaction do
-  experiment = Experiment.create!(
-    :schedule => schedule, 
-    :random_seed => random_seed, 
-    :brain_type => brain_type)
+  brain_types.each do |brain|
+    schedules.each do |sch|
+      experiment = Experiment.create!(
+        :schedule => sch, 
+        :random_seed => random_seed, 
+        :brain_type => brain)
+      end
+  end
 end

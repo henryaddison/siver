@@ -20,11 +20,11 @@ optparse = OptionParser.new do|opts|
     schedule_name = sn
   end
   
-  opts.on( '-b', '--boat-count BOAT_COUNT', "Boat count") do |bc|
+  opts.on( '-b', '--boat-count BOAT_COUNT', Integer, "Boat count") do |bc|
     boat_count = bc
   end
   
-  opts.on( '-d', '--launch-delay LAUNCH_DELAY', "Launch delay") do |ld|
+  opts.on( '-d', '--launch-delay LAUNCH_DELAY', Integer, "Launch delay") do |ld|
     launch_delay = ld
   end
 end
