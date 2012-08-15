@@ -6,7 +6,7 @@ import java.sql.SQLException;
 
 public abstract class ExperimentalDatum {
 	protected static Connection conn = null;
-	private final static String URL = "jdbc:mysql://localhost:3306/siver_development";
+	private final static String URL = "jdbc:mysql://localhost:3306/siver_";
 	
 	protected static void initializeDBConnection() {
 		if(conn == null) {
@@ -17,7 +17,9 @@ public abstract class ExperimentalDatum {
 				e.printStackTrace();
 			}
 	        try {
-				conn = DriverManager.getConnection(URL, "siver", "");
+	        	String db_env = System.getenv("DB_ENV");
+	        	if(db_env.isEmpty()) db_env = "development";
+				conn = DriverManager.getConnection(URL+db_env, "siver", "");
 			} catch (SQLException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
