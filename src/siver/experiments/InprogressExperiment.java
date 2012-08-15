@@ -184,7 +184,10 @@ public class InprogressExperiment extends ExperimentalDatum {
 	
 	private void scheduleLaunches() {
 		//remove any old user control panel that may be there to prevent manual launches mid automated experiment run
-		RSApplication.getRSApplicationInstance().removeCustomUserPanel(); 
+		if(RSApplication.getRSApplicationInstance() != null) {
+			//make sure we're in a mode where there is an RS Application instance (so not running in batch mode)
+			RSApplication.getRSApplicationInstance().removeCustomUserPanel();
+		}
 		if(isAutomated()) {
 			PreparedStatement stmt = null;
 			String sql = "SELECT launch_tick, desired_gear, speed_multiplier, distance_to_cover, id " +
