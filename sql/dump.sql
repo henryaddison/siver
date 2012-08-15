@@ -32,12 +32,13 @@ CREATE TABLE `boat_records` (
   `speed_multiplier` double NOT NULL DEFAULT '0.5',
   `distance_covered` double NOT NULL,
   `aggregate_gear_difference` int(11) NOT NULL,
+  `brain_type` varchar(255) NOT NULL DEFAULT 'BasicBrain',
   PRIMARY KEY (`id`),
   KEY `boat_record_launch_fk` (`scheduled_launch_id`),
   KEY `boat_record_experiment_run_fk` (`experiment_run_id`),
-  CONSTRAINT `boat_record_launch_fk` FOREIGN KEY (`scheduled_launch_id`) REFERENCES `scheduled_launches` (`id`),
-  CONSTRAINT `boat_record_experiment_run_fk` FOREIGN KEY (`experiment_run_id`) REFERENCES `experiment_runs` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+  CONSTRAINT `boat_record_experiment_run_fk` FOREIGN KEY (`experiment_run_id`) REFERENCES `experiment_runs` (`id`),
+  CONSTRAINT `boat_record_launch_fk` FOREIGN KEY (`scheduled_launch_id`) REFERENCES `scheduled_launches` (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -69,7 +70,7 @@ CREATE TABLE `experiment_runs` (
   PRIMARY KEY (`id`),
   KEY `experiment_run_schedule_fk` (`experiment_id`),
   CONSTRAINT `experiment_run_schedule_fk` FOREIGN KEY (`experiment_id`) REFERENCES `experiments` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=57 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -174,4 +175,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2012-08-15 14:02:55
+-- Dump completed on 2012-08-15 14:58:28
