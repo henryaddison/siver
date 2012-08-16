@@ -50,3 +50,9 @@ CREATE TABLE boat_records (
 	CONSTRAINT boat_record_launch_fk FOREIGN KEY (scheduled_launch_id) REFERENCES scheduled_launches(id),
 	CONSTRAINT boat_record_experiment_run_fk FOREIGN KEY (experiment_run_id) REFERENCES experiment_runs(id)
 ) ENGINE=innodb;
+
+CREATE TABLE migrations (
+	version INT NOT NULL PRIMARY KEY
+) ENGINE=innodb;
+
+INSERT INTO migrations VALUES (0);
