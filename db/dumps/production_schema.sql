@@ -127,7 +127,7 @@ CREATE TABLE `schedules` (
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2012-08-16 13:03:29
+-- Dump completed on 2012-08-16 13:06:43
 -- MySQL dump 10.13  Distrib 5.1.57, for apple-darwin10.3.0 (i386)
 --
 -- Host: localhost    Database: siver_production
@@ -177,4 +177,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2012-08-16 13:03:31
+-- Dump completed on 2012-08-16 13:06:43
