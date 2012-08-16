@@ -43,7 +43,7 @@ CREATE TABLE boat_records (
 	launch_tick INT NOT NULL,
 	land_tick INT DEFAULT NULL,
 	desired_gear INT NOT NULL,
-	speed_multiplier DOUBLE NOT NULL DEFAULT 0.5,
+	speed_multiplier DOUBLE NOT NULL,
 	distance_covered DOUBLE NOT NULL,
 	aggregate_gear_difference INT NOT NULL,
 	brain_type varchar(255) NOT NULL DEFAULT 'BasicBrain',
