@@ -4,11 +4,12 @@ import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
 import siver.boat.Boat;
+import siver.context.SiverContextCreator;
 import siver.cox.Cox;
 
 public class BoatRecord extends ExperimentalDatum {
 	private Integer scheduled_launch_id, land_tick;
-	private int launch_tick, desired_gear, aggregate_gear_difference, experiment_run_id;
+	private int launch_tick, desired_gear, aggregate_gear_difference, experiment_run_id, aggregate_tenth_tick_gear_difference;
 	private double speed_multiplier, distance_covered;
 	private String brain_type;
 	
@@ -20,6 +21,7 @@ public class BoatRecord extends ExperimentalDatum {
 		this.brain_type = cox.brain_type();
 		this.distance_covered = 0;
 		this.aggregate_gear_difference = 0;
+		this.aggregate_tenth_tick_gear_difference = 0;
 		if(InprogressExperiment.instance() != null) {
 			this.experiment_run_id = InprogressExperiment.instance().experiment_run_id();
 		}
@@ -27,8 +29,12 @@ public class BoatRecord extends ExperimentalDatum {
 		InprogressExperiment.addBoatRecord(this);
 	}
 	
-	public void updateStats(double distance_travelled, int gear) {
-		aggregate_gear_difference += Math.abs(gear - this.desired_gear);
+	public void updateStats(double distance_travelled, int gear, int tick) {
+		int gear_difference = Math.abs(gear - this.desired_gear);
+		aggregate_gear_difference += gear_difference;
+		if(tick % 10 == 0) {
+			aggregate_tenth_tick_gear_difference += gear_difference;
+		}
 		distance_covered = distance_travelled;
 	}
 	
@@ -41,8 +47,8 @@ public class BoatRecord extends ExperimentalDatum {
 	public void flush() {
 		PreparedStatement insertBoatRecord = null;
 		
-		String sql = "INSERT INTO boat_records(scheduled_launch_id, experiment_run_id, launch_tick, land_tick, desired_gear, speed_multiplier, distance_covered, aggregate_gear_difference, brain_type)"
-                + "VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?)";
+		String sql = "INSERT INTO boat_records(scheduled_launch_id, experiment_run_id, launch_tick, land_tick, desired_gear, speed_multiplier, distance_covered, aggregate_gear_difference, aggregate_tenth_tick_gear_difference, brain_type)"
+                + "VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
         try {
 			insertBoatRecord = conn.prepareStatement(sql);
 			
@@ -54,7 +60,8 @@ public class BoatRecord extends ExperimentalDatum {
 			insertBoatRecord.setDouble(6, speed_multiplier);
 			insertBoatRecord.setDouble(7, distance_covered);
 			insertBoatRecord.setInt(8, aggregate_gear_difference);
-			insertBoatRecord.setString(9, brain_type);
+			insertBoatRecord.setInt(9, aggregate_tenth_tick_gear_difference);
+			insertBoatRecord.setString(10, brain_type);
 		    insertBoatRecord.executeUpdate();
 		    insertBoatRecord.close();
 		} catch (SQLException e) {

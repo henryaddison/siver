@@ -68,7 +68,7 @@ public class Boat {
 		//have the navigator move the boat forward along the current lane
 		cox.getNavigator().continueForward();
 		//update the stats
-		record.updateStats(total_distance_covered(), getGear());
+		record.updateStats(total_distance_covered(), getGear(), SiverContextCreator.getTickCount());
 	}
 	
 	public void move(double dist) {
