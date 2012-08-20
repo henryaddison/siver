@@ -31,8 +31,9 @@ CREATE TABLE `boat_records` (
   `desired_gear` int(11) NOT NULL,
   `speed_multiplier` double NOT NULL DEFAULT '0.5',
   `distance_covered` double NOT NULL,
-  `aggregate_gear_difference` int(11) NOT NULL,
-  `brain_type` varchar(255) NOT NULL DEFAULT 'BasicBrain',
+  `aggregate_gear_difference` int(11) DEFAULT NULL,
+  `brain_type` varchar(255) DEFAULT NULL,
+  `aggregate_tenth_tick_gear_difference` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `boat_record_launch_fk` (`scheduled_launch_id`),
   KEY `boat_record_experiment_run_fk` (`experiment_run_id`),
@@ -54,10 +55,10 @@ CREATE TABLE `experiment_runs` (
   `started_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `crash_count` int(11) DEFAULT NULL,
   `tick_count` int(11) DEFAULT NULL,
-  `random_seed` int(11) NOT NULL,
+  `random_seed` int(11) DEFAULT NULL,
   `flushed` tinyint(1) DEFAULT '0',
   `all_boats_finished` tinyint(1) DEFAULT '0',
-  `brain_type` varchar(255) NOT NULL DEFAULT 'BasicBrain',
+  `brain_type` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `experiment_run_schedule_fk` (`experiment_id`),
   CONSTRAINT `experiment_run_schedule_fk` FOREIGN KEY (`experiment_id`) REFERENCES `experiments` (`id`)
@@ -79,7 +80,7 @@ CREATE TABLE `experiments` (
   PRIMARY KEY (`id`),
   KEY `experiment_schedule_fk` (`schedule_id`),
   CONSTRAINT `experiment_schedule_fk` FOREIGN KEY (`schedule_id`) REFERENCES `schedules` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=1521 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=1901 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -127,7 +128,7 @@ CREATE TABLE `schedules` (
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2012-08-16 13:06:43
+-- Dump completed on 2012-08-20 13:20:35
 -- MySQL dump 10.13  Distrib 5.1.57, for apple-darwin10.3.0 (i386)
 --
 -- Host: localhost    Database: siver_production
@@ -164,7 +165,7 @@ CREATE TABLE `migrations` (
 
 LOCK TABLES `migrations` WRITE;
 /*!40000 ALTER TABLE `migrations` DISABLE KEYS */;
-INSERT INTO `migrations` VALUES (0);
+INSERT INTO `migrations` VALUES (0),(1),(2);
 /*!40000 ALTER TABLE `migrations` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -177,4 +178,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2012-08-16 13:06:43
+-- Dump completed on 2012-08-20 13:20:35
