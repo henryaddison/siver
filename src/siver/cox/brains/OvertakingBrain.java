@@ -22,14 +22,8 @@ public class OvertakingBrain extends CoxBrain {
 			overtaking = true;
 			return MoveToLaneOnLeft.class;
 		}
-		if(latestObservations.nearbyBoatInfront()) {
-			return SlowDown.class;
-		}
-		if(latestObservations.belowDesiredSpeed()) {
-			return SpeedUp.class;
-		}
 		if(true) {
-			return LetBoatRun.class;
+			return continueInLaneChoice();
 		}
 		throw new RuntimeException("No action chosen by brain. Something has gone very wrong");
 	}
@@ -40,7 +34,20 @@ public class OvertakingBrain extends CoxBrain {
 			return MoveToLaneOnRight.class;
 		}
 		if(true) {
+			return continueInLaneChoice();
+		}
+		throw new RuntimeException("No action chosen by brain. Something has gone very wrong");
+	}
+	
+	private Class<? extends Action> continueInLaneChoice() {
+		if(latestObservations.nearbyBoatInfront()) {
+			return SlowDown.class;
+		}
+		if(latestObservations.belowDesiredSpeed()) {
 			return SpeedUp.class;
+		}
+		if(true) {
+			return LetBoatRun.class;
 		}
 		throw new RuntimeException("No action chosen by brain. Something has gone very wrong");
 	}
