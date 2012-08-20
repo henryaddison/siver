@@ -87,7 +87,11 @@ public class InprogressExperiment extends ExperimentalDatum {
 		}
 	    insertExperimentRun.setInt(2, random_seed);
 	    insertExperimentRun.setInt(3, 0);
-	    insertExperimentRun.setString(4, brain_type.getSimpleName());
+	    if(brain_type != null) {
+	    	insertExperimentRun.setString(4, brain_type.getSimpleName());
+	    } else {
+	    	insertExperimentRun.setNull(4, java.sql.Types.VARCHAR);
+	    }
 	    insertExperimentRun.executeUpdate();
 	    ResultSet keys = insertExperimentRun.getGeneratedKeys();
 	    keys.first();
