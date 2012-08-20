@@ -77,8 +77,8 @@ public class InprogressExperiment extends ExperimentalDatum {
 	
 	private void create_experiment_run() throws SQLException {
 		PreparedStatement insertExperimentRun = null;
-		String sql = "INSERT INTO experiment_runs(experiment_id, random_seed, crash_count)"
-                + "VALUES(?, ?, ?)";
+		String sql = "INSERT INTO experiment_runs(experiment_id, random_seed, crash_count, brain_type)"
+                + "VALUES(?, ?, ?, ?)";
         insertExperimentRun = conn.prepareStatement(sql);
 		if(isAutomated()) {
 			insertExperimentRun.setInt(1, experiment_id);
@@ -87,6 +87,7 @@ public class InprogressExperiment extends ExperimentalDatum {
 		}
 	    insertExperimentRun.setInt(2, random_seed);
 	    insertExperimentRun.setInt(3, 0);
+	    insertExperimentRun.setString(4, brain_type.getSimpleName());
 	    insertExperimentRun.executeUpdate();
 	    ResultSet keys = insertExperimentRun.getGeneratedKeys();
 	    keys.first();
@@ -115,13 +116,12 @@ public class InprogressExperiment extends ExperimentalDatum {
 				random_seed = rseed.getInt(1);
 				schedule_id = rseed.getInt(2);
 				String coxBrainClassName =  rseed.getString(3);
+				getRandomSeed.close();
 				
 				if(!coxBrainClassName.startsWith("siver.")) {
 					coxBrainClassName = BasicBrain.class.getPackage().getName()+"."+coxBrainClassName;
 				}
 				brain_type = (Class<? extends CoxBrain>) Class.forName(coxBrainClassName);
-				
-				getRandomSeed.close();
 				RandomHelper.setSeed(random_seed);
 			} catch (SQLException e) {
 				// TODO Auto-generated catch block
