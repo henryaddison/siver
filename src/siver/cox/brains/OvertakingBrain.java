@@ -40,9 +40,6 @@ public class OvertakingBrain extends CoxBrain {
 	}
 	
 	private Class<? extends Action> continueInLaneChoice() {
-		if(latestObservations.nearbyBoatInfront()) {
-			return SlowDown.class;
-		}
 		if(latestObservations.belowDesiredSpeed()) {
 			return SpeedUp.class;
 		}
