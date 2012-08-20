@@ -70,13 +70,11 @@ public class BoatRecord extends ExperimentalDatum {
 		}
 	}
 	
-	public void intOrNullParam(PreparedStatement stmt, int param_index, Integer value) throws SQLException {
+	private void intOrNullParam(PreparedStatement stmt, int param_index, Integer value) throws SQLException {
 		if(value != null) {
 			stmt.setInt(param_index, value);
 		} else {
 			stmt.setNull(param_index, java.sql.Types.INTEGER);
 		}
 	}
-	
-	
 }
