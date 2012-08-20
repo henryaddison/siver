@@ -6,11 +6,6 @@ require "bundler/setup"
 require 'active_record'
 require 'optparse'
 
-require './schedule'
-require './experiment'
-require './scheduled_launch'
-require './db_connect'
-
 schedule_name = nil
 launch_delay = nil
 boat_count = 100
@@ -27,9 +22,19 @@ optparse = OptionParser.new do|opts|
   opts.on( '-d', '--launch-delay LAUNCH_DELAY', Integer, "Launch delay") do |ld|
     launch_delay = ld
   end
+  
+  opts.on_tail("-h", "--help", "Show this message") do
+     puts opts
+     exit
+   end
 end
 
 optparse.parse!
+
+require './schedule'
+require './experiment'
+require './scheduled_launch'
+require './db_connect'
 
 Schedule.transaction do
   schedule = Schedule.create!(:name => schedule_name)

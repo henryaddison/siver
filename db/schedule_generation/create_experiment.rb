@@ -6,11 +6,6 @@ require "bundler/setup"
 require 'active_record'
 require 'optparse'
 
-require './schedule'
-require './experiment'
-require './scheduled_launch'
-require './db_connect'
-
 random_seed = rand(2**31)
 brain_types = ["BasicBrain"]
 schedule_ids = []
@@ -21,7 +16,7 @@ optparse = OptionParser.new do|opts|
   end
   
   opts.on('--all-schedules') do 
-    schedule_ids = Schedule.all.collect(&:id)
+    schedule_ids = :all
   end
   
   opts.on('-r', '--random-seed RSEED', "Random seed") do |rs|
@@ -31,9 +26,19 @@ optparse = OptionParser.new do|opts|
   opts.on('-b', '--brain-types BRAIN_TYPES', Array, "List of brain class names") do |bts|
     brain_types = bts
   end
+  
+  opts.on("-h", "--help", "Show this message") do
+     puts opts
+     exit
+   end
 end
 
 optparse.parse!
+
+require './schedule'
+require './experiment'
+require './scheduled_launch'
+require './db_connect'
 
 schedules = Schedule.find(schedule_ids)
 
