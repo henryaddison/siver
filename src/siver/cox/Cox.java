@@ -119,7 +119,7 @@ public class Cox {
 	}
 	
 	public String brain_type() {
-		return this.brain.getClass().getName();
+		return this.brain.getClass().getSimpleName();
 	}
 	
 	public double getGoalDistance() {
