@@ -1,5 +1,7 @@
 package siver.cox;
 
+import java.util.HashMap;
+
 import siver.boat.Boat;
 import siver.boat.BoatNavigation;
 import siver.river.River.NoLaneFound;
@@ -11,8 +13,11 @@ public class CoxObservations {
 	private Cox cox;
 	private Boat boat;
 	private BoatNavigation navigator;
-	private static final int VIEWING_DISTANCE = 3;
+	private static final int MAX_VIEWING_DISTANCE = 4;
+	private static final int CLEAR_BOUNDARY = 3;
 	private static final double OVERTAKING_SPEED_DIFFERENCE = 1.0;
+	private static final String BLOCKED_EDGE_KEY = "blocked_edge";
+	private static final String VISION_DISTANCE_KEY = "vision_distance";
 	
 	public CoxObservations(Cox cox, Boat boat, BoatNavigation navigator) {
 		this.cox = cox;
@@ -39,31 +44,54 @@ public class CoxObservations {
 	}
 	
 	public boolean nearbyBoatInfront() {
-		return (nearbyOccupiedEdge(navigator.getDestinationNode(), navigator.headingUpstream()) != null);
+		//check that cannot see as far as CLEAR_BOUNDARY and that the limiting factor is a blocked edge (not the end of the river)
+		HashMap<String,Object> vision = look(navigator.getLane(), true);
+		return ((Integer) vision.get(VISION_DISTANCE_KEY) < CLEAR_BOUNDARY) && 
+				((LaneEdge) vision.get(BLOCKED_EDGE_KEY) != null);
 	}
 	
-	private LaneEdge nearbyOccupiedEdge(LaneNode node, boolean infront) {
-		int edges_ahead = 1;
-		while(edges_ahead <= VIEWING_DISTANCE) {
-			LaneEdge edge = node.getLane().getNextEdge(node, infront);
-			//if there is no further edge then there is no boat in front in viewing distance (though there is the end of the river)
-			if(edge == null) return null;
-			//as soon as we find an empty edge in front we can return false
-			if(!edge.isEmpty()) return edge;
-			//otherwise move on to next edge
-			node = edge.getNextNode(infront);
-			edges_ahead++;
+	private HashMap<String,Object> look(Lane lane, boolean infront) {
+		LaneNode nodeToCheckFrom;
+		
+		if(lane == navigator.getLane() ) {
+			//for our current lane, just check from the node ahead
+			nodeToCheckFrom = navigator.getDestinationNode();
+		} else {
+			//for another lane, check from the start (i.e. next node in reverse direction) of the nearest edge (so this will include the nearest edge)
+			nodeToCheckFrom = lane.edgeNearest(boat.getLocation()).getNextNode(!navigator.headingUpstream());
 		}
-		return null;
+		HashMap<String,Object> vision = new HashMap<String,Object>();
+		
+		Integer edges_ahead = 0;
+		LaneNode node = nodeToCheckFrom;
+		
+		vision.put(BLOCKED_EDGE_KEY, null);
+		vision.put(VISION_DISTANCE_KEY, edges_ahead);
+		while(edges_ahead < MAX_VIEWING_DISTANCE) {
+			LaneEdge edge = node.getLane().getNextEdge(node, (infront == navigator.headingUpstream()));
+			//if there is no further edge then there is no boat in front in viewing distance (though there is the end of the river)
+			vision.put(BLOCKED_EDGE_KEY, edge);
+			
+			if(edge == null) {
+				return vision;
+			}
+			
+			//as soon as we find an empty edge in front we can return false
+			if(!edge.isEmpty()) return vision;
+			//otherwise move on to next edge
+			node = edge.getNextNode((infront == navigator.headingUpstream()));
+			edges_ahead++;
+			vision.put(VISION_DISTANCE_KEY, edges_ahead);
+		}
+		return vision;
 	}
 	
 	public boolean slowBoatInfront() {
-		if(!nearbyBoatInfront()) {
-			// return false is there is no boat at all in front
+		LaneEdge occupiedEdgeAhead = (LaneEdge) look(navigator.getLane(), navigator.headingUpstream()).get(BLOCKED_EDGE_KEY);
+		if(occupiedEdgeAhead == null) {
+			// return false is there is no occupied edge ahead
 			return false;
 		}
-		
-		LaneEdge occupiedEdgeAhead = nearbyOccupiedEdge(navigator.getDestinationNode(), navigator.headingUpstream());
 		
 		for(Cox coxInfront : occupiedEdgeAhead.getCoxes()) {			
 			if(cox.getNavigator().headingUpstream() == coxInfront.getNavigator().headingUpstream()) {
@@ -99,10 +127,10 @@ public class CoxObservations {
 	}
 	
 	private boolean laneIsClear(Lane lane) {
-		LaneNode nearestNodeInLane = lane.nodeNearest(boat.getLocation());
 		//return true only if there's nothing ahead and nothing behind
 		//very simplistic at the moment, only checks existence, not relative speed
-		return (nearbyOccupiedEdge(nearestNodeInLane, true) == null) && (nearbyOccupiedEdge(nearestNodeInLane, false) == null);
+		return (((Integer) look(navigator.getLane(), true).get(VISION_DISTANCE_KEY)) >= CLEAR_BOUNDARY) && 
+				(((Integer) look(navigator.getLane(), false).get(VISION_DISTANCE_KEY)) >= CLEAR_BOUNDARY);
 	}
 	
 	public boolean changingLane() {

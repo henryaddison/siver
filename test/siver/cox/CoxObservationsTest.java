@@ -94,15 +94,35 @@ public class CoxObservationsTest {
 		
 		expect(mnav.headingUpstream()).andStubReturn(false);
 		expect(mnav.getDestinationNode()).andReturn(mnode).times(1);
+		expect(mnav.getLane()).andStubReturn(mlane);
 	}
+	
 	@Test
 	public void testNearbyBoatInfrontNoBoatsInfront() {
 		setupMocksForNearbyBoatInfront();
 		
-		expect(mnode.getLane()).andReturn(mlane).times(3);
-		expect(mlane.getNextEdge(mnode, false)).andReturn(medge).times(3);
+		expect(mnav.getLane()).andReturn(mlane).once();
+		expect(mnode.getLane()).andReturn(mlane).times(4);
+		expect(mlane.getNextEdge(mnode, false)).andReturn(medge).times(4);
+		expect(medge.getNextNode(false)).andReturn(mnode).times(4);
+		expect(medge.isEmpty()).andReturn(true).times(4);
+		
+		replay(mnode, medge, mlane);
+		replayMocks();
+		assertFalse(obs.nearbyBoatInfront());
+		verifyAndResetMocks();
+		verify(mnode, medge, mlane);
+	}
+	
+	@Test
+	public void testNearbyBoatInfrontNoBoatsNearInfront() {
+		setupMocksForNearbyBoatInfront();
+		
+		expect(mnav.getLane()).andReturn(mlane).once();
+		expect(mnode.getLane()).andReturn(mlane).times(4);
+		expect(mlane.getNextEdge(mnode, false)).andReturn(medge).times(4);
 		expect(medge.getNextNode(false)).andReturn(mnode).times(3);
-		expect(medge.isEmpty()).andReturn(true).times(3);
+		expect(medge.isEmpty()).andReturn(true).times(3).andReturn(false).once();
 		
 		replay(mnode, medge, mlane);
 		replayMocks();
