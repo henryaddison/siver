@@ -22,5 +22,5 @@ xlab='Delay between launched in seconds',
 ylab='Average aggregate 10th tick gear difference',
 xlim=c(0,600),
 ylim=c(0,4500),
-main_title="Average aggregate gear difference recorded every 10th tick\n per brain type for experiments with %i boats launched")
+main_title="Average aggregate gear difference recorded every 10th tick per brain type for experiments with %i boats launched")
 

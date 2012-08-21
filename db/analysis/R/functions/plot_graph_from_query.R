@@ -9,11 +9,13 @@ plot_graph_from_query <- function(query, xlab, ylab, xlim, ylim, main_title) {
 	
 	for(launched in launched_options) {
 		#dev.new()
+		
 		interpolated_main_title = sprintf(main_title, launched)
+		
 		pdf(paste("images/", interpolated_main_title, ".pdf", sep=""))
 		plot(list(), list(), xlim=xlim, ylim=ylim, xlab=xlab, ylab=ylab)
 		
-		title(main=interpolated_main_title)
+		title(main=paste(strwrap(interpolated_main_title, width=60), collapse="\n"))
 		legend("topright", inset=.05, title="Brain Type", brain_types, col=brain_types_to_colour_map[brain_types], pch=1)
 		
 		for (brain_type in brain_types) {
