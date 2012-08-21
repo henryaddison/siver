@@ -1,6 +1,6 @@
 library(RMySQL)
 
-source('plot_graph_from_query.R')
+source('functions/plot_graph_from_query.R')
 
 query = "select 
 count(boat_records.id)/count(distinct experiment_runs.id) as boats_launched,

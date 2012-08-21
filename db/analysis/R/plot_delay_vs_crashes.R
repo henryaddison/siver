@@ -1,6 +1,6 @@
 library(RMySQL)
 
-source('plot_graph_from_query.R')
+source('functions/plot_graph_from_query.R')
 
 query = "select 
 sum(experiment_runs.crash_count)/count(distinct experiment_runs.id) as ycol,
