@@ -8,7 +8,7 @@ SELECT
   experiment_runs.brain_type,
   boats_launched,
   AVG(boats_landed),
-  AVG(experiment_runs.crash_count) as ycol,
+  AVG(aggregate_crash_records.crash_count) as ycol,
   delay as xcol
 FROM experiment_runs
 JOIN (SELECT 
@@ -19,6 +19,12 @@ JOIN (SELECT
   FROM boat_records
   GROUP BY experiment_run_id
 ) AS aggregate_boat_records ON aggregate_boat_records.experiment_run_id = experiment_runs.id
+LEFT JOIN (SELECT
+  experiment_run_id,
+  COUNT(crash_records.id) as crash_count
+  FROM crash_records
+  GROUP BY experiment_run_id
+) AS aggregate_crash_records ON aggregate_crash_records.experiment_run_id = experiment_runs.id
 JOIN experiments ON experiments.id = experiment_runs.experiment_id
 JOIN schedules ON schedules.id = experiments.schedule_id
 WHERE experiment_runs.brain_type = '%s'

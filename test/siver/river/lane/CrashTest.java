@@ -55,7 +55,7 @@ public class CrashTest {
 			expectLastCall().once();
 		}
 		replay(coxes.toArray());
-		c.reset();
+		c.reset(coxes.get(0));
 		verify(coxes.toArray());
 		
 		reset(coxes.toArray());

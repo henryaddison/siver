@@ -54,7 +54,7 @@ public class LaneEdge extends RepastEdge<LaneNode> {
 			}
 			coxesOnEdge.add(cox);
 			if(crash != null) {
-				crash.reset();
+				crash.reset(cox);
 			}
 		}
 	}

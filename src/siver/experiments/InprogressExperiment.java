@@ -22,7 +22,6 @@ public class InprogressExperiment extends ExperimentalDatum {
 	private static InprogressExperiment instance;
 	private Integer experiment_id, schedule_id;
 	private int experiment_run_id;
-	private int crash_count;
 	private ArrayList<BoatRecord> inprogress_records;
 	private int random_seed;
 	private Class<? extends CoxBrain> brain_type;
@@ -77,8 +76,8 @@ public class InprogressExperiment extends ExperimentalDatum {
 	
 	private void create_experiment_run() throws SQLException {
 		PreparedStatement insertExperimentRun = null;
-		String sql = "INSERT INTO experiment_runs(experiment_id, random_seed, crash_count, brain_type)"
-                + "VALUES(?, ?, ?, ?)";
+		String sql = "INSERT INTO experiment_runs(experiment_id, random_seed, brain_type)"
+                + "VALUES(?, ?, ?)";
         insertExperimentRun = conn.prepareStatement(sql);
 		if(isAutomated()) {
 			insertExperimentRun.setInt(1, experiment_id);
@@ -86,11 +85,10 @@ public class InprogressExperiment extends ExperimentalDatum {
 			insertExperimentRun.setNull(1, java.sql.Types.INTEGER);
 		}
 	    insertExperimentRun.setInt(2, random_seed);
-	    insertExperimentRun.setInt(3, 0);
 	    if(brain_type != null) {
-	    	insertExperimentRun.setString(4, brain_type.getSimpleName());
+	    	insertExperimentRun.setString(3, brain_type.getSimpleName());
 	    } else {
-	    	insertExperimentRun.setNull(4, java.sql.Types.VARCHAR);
+	    	insertExperimentRun.setNull(3, java.sql.Types.VARCHAR);
 	    }
 	    insertExperimentRun.executeUpdate();
 	    ResultSet keys = insertExperimentRun.getGeneratedKeys();
@@ -104,7 +102,6 @@ public class InprogressExperiment extends ExperimentalDatum {
 		Parameters params = RunEnvironment.getInstance().getParameters(); 
 		this.experiment_id = (Integer)params.getValue("ExperimentId");
 		if(this.experiment_id <= 0) this.experiment_id = null;
-		crash_count = 0;
 		this.inprogress_records = new ArrayList<BoatRecord>();
 	}
 	
@@ -152,9 +149,9 @@ public class InprogressExperiment extends ExperimentalDatum {
 		}
 	}
 	
-	public static void incrementCrashCount() {
+	public static void incrementCrashCount(boolean middle_lane, double relative_velocity, int boats_count) {
 		if(instance() != null) {
-			instance().crash_count++;
+			CrashRecord.create(middle_lane, relative_velocity, boats_count);
 		}
 	}
 	
@@ -169,7 +166,7 @@ public class InprogressExperiment extends ExperimentalDatum {
 	private void flush() throws SQLException {
 		PreparedStatement finishExperimentRun = null;
 		String sql = "UPDATE experiment_runs " +
-				     "SET flushed = ?, crash_count = ?, tick_count = ? " + 
+				     "SET flushed = ?, tick_count = ? " + 
 					 "WHERE id = ?";
 		finishExperimentRun = conn.prepareStatement(sql);
 		if(isAutomated()) {
@@ -178,9 +175,8 @@ public class InprogressExperiment extends ExperimentalDatum {
 			finishExperimentRun.setNull(1, java.sql.Types.INTEGER);
 		}
 		finishExperimentRun.setBoolean(1, true);
-		finishExperimentRun.setInt(2, crash_count);
-		finishExperimentRun.setInt(3, SiverContextCreator.getTickCount());
-		finishExperimentRun.setInt(4, experiment_run_id);
+		finishExperimentRun.setInt(2, SiverContextCreator.getTickCount());
+		finishExperimentRun.setInt(3, experiment_run_id);
 		finishExperimentRun.executeUpdate();
 	    finishExperimentRun.close();
                 

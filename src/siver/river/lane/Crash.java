@@ -25,12 +25,19 @@ public class Crash {
 		edge = e;
 	}
 	
-	public void reset() {
+	public void reset(Cox addedCox) {
 		holdUpCountDown = HOLD_UP;
+		double relative_velocity = 0;
 		for(Cox c : edge.getCoxes()) {
+			if(c.getNavigator().headingUpstream() == addedCox.getNavigator().headingUpstream()) {
+				relative_velocity += Math.abs((c.getBoat().getSpeed() - addedCox.getBoat().getSpeed())); 
+			} else {
+				relative_velocity += Math.abs((c.getBoat().getSpeed() + addedCox.getBoat().getSpeed()));
+			}
 			c.incapcitate();
 		}
-		InprogressExperiment.incrementCrashCount();
+		boolean in_middle_lane = edge.getSource().getLane() == SiverContextCreator.getRiver().middle_lane();
+		InprogressExperiment.incrementCrashCount(in_middle_lane, relative_velocity, edge.getCoxes().size());
 	}
 	
 	public LaneEdge getEdge() {
