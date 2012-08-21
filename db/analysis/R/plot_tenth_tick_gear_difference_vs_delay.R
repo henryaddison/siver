@@ -18,10 +18,10 @@ having boats_launched = %d
 ORDER BY xcol"
 
 plot_graph_from_query(query,
-xlab='Delay between launched', 
+xlab='Delay between launched in seconds', 
 ylab='Average aggregate 10th tick gear difference',
 xlim=c(0,600),
 ylim=c(0,4500),
-launched=10,
+main_title="Average aggregate gear difference recorded every 10th tick\n per brain type for experiments with %i boats launched",
 db_group="siver_development")
 
