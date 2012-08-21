@@ -16,3 +16,6 @@ Repast.Settings
 
 # Mac OS files
 .DS_Store
+
+# R app files
+.Rapp.history
