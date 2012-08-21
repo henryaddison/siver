@@ -21,7 +21,7 @@ plot_graph_from_query(query,
 xlab='Delay between launched', 
 ylab='Average aggregate gear difference',
 xlim=c(0,600),
-ylim=c(0,30000),
+ylim=c(0,45000),
 launched=10,
 db_group="siver_development")
 
