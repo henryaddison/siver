@@ -19,3 +19,6 @@ Repast.Settings
 
 # R app files
 .Rapp.history
+
+# Graphs automatically generated
+db/analysis/R/images/
