@@ -1,5 +1,5 @@
 plot_graph_from_query <- function(query, xlab, ylab, xlim, ylim, main_title) {
-	con <- dbConnect("MySQL", group = "siver_production")
+	con <- dbConnect("MySQL", user="siver", host="localhost", dbname="siver_production")
 	brain_types <- c("BasicBrain", "ConservativeBrain", "OvertakingBrain", "RandomMovement")
 
 	brain_types_to_colour_map = c(BasicBrain="black", OvertakingBrain="green", RandomMovement="blue", ConservativeBrain="red")
