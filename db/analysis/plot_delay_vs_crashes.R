@@ -1,5 +1,6 @@
 library(RMySQL)
-con <- dbConnect("MySQL", group = "siver_development")
+
+source('plot_graph_from_query.R')
 
 query = "select 
 sum(experiment_runs.crash_count)/count(distinct experiment_runs.id) as ycol,
@@ -15,26 +16,11 @@ and experiment_runs.brain_type = '%s'
 group by schedules.name, experiment_runs.brain_type
 having boats_launched = %d
 ORDER BY xcol"
-launched <- 10
-xlab='Delay between launched'
-ylab='Average number of crashes'
 
-
-plot(list(), list(), ylim=c(0,3000), xlim=c(0,600), xlab=xlab, ylab=ylab)
-
-brain_types <- c("BasicBrain", "ConservativeBrain", "OvertakingBrain", "RandomMovement")
-
-brain_types_to_colour_map = c(BasicBrain="black", ConservativeBrain="red", OvertakingBrain="green", RandomMovement="blue")
-
-for (brain_type in brain_types) {
-
-	interpolated_query = sprintf(query, brain_type, launched)
-
-	res <- dbSendQuery(con, interpolated_query)
-	
-	brain_data = fetch(res, -1)
-
-	points(x=brain_data$xcol, y=brain_data$ycol, col=brain_types_to_colour_map[brain_type])
-}
-
-dbDisconnect(con)
+plot_graph_from_query(query,
+xlab='Delay between launched', 
+ylab='Average number of crashes',
+xlim=c(0,600),
+ylim=c(0,3000),
+launched=10,
+db_group="siver_development")
