@@ -22,5 +22,4 @@ xlab='Delay between launched',
 ylab='Average number of crashes',
 xlim=c(0,600),
 ylim=c(0,51000),
-main_title="Average aggregate gear difference recorded ever tick\n per brain type for experiments with %i boats launched",
-db_group="siver_development")
+main_title="Average aggregate gear difference recorded ever tick\n per brain type for experiments with %i boats launched")
