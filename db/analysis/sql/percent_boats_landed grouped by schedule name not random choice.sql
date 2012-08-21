@@ -1,5 +1,5 @@
 SELECT
-experiment_runs.brain_type,
+schedules.name,
 AVG(boats_landed/boats_launched*100) as percent_boats_returned
 FROM (
 SELECT 
@@ -14,6 +14,5 @@ JOIN experiment_runs ON experiment_runs.id = aggregate_boat_records.experiment_r
 JOIN experiments ON experiments.id = experiment_runs.experiment_id
 JOIN schedules ON schedules.id = experiments.schedule_id
 WHERE experiment_runs.brain_type != 'RandomChoice'
-AND delay < 600
-GROUP BY experiment_runs.brain_type
+GROUP BY schedules.name
 ORDER BY experiment_runs.brain_type, boats_launched, delay, schedules.name, schedules.version
