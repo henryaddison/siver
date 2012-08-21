@@ -2,19 +2,28 @@ library(RMySQL)
 
 source('functions/plot_graph_from_query.R')
 
-query = "select 
-count(boat_records.id)/count(distinct experiment_runs.id) as boats_launched,
-max(boat_records.launch_tick)/(count(boat_records.id)/count(distinct experiment_runs.id) - 1) as xcol,
-sum(if(boat_records.land_tick IS NOT NULL, boat_records.aggregate_tenth_tick_gear_difference, 0))/sum(if(boat_records.land_tick IS NOT NULL, 1, 0)) as ycol
-from experiment_runs
-join boat_records on boat_records.experiment_run_id = experiment_runs.id
-join experiments on experiments.id = experiment_runs.experiment_id
-join schedules on schedules.id = experiments.schedule_id
-where
-experiment_runs.brain_type != 'RandomChoice'
-and experiment_runs.brain_type = '%s'
-group by schedules.name, experiment_runs.brain_type
-having boats_launched = %d
+query = "
+SELECT
+  schedules.name,
+  experiment_runs.brain_type,
+  boats_launched,
+  delay as xcol,
+  AVG(avg_landed_tenth_tick_gear_difference_in_run) as ycol
+FROM experiment_runs
+JOIN (SELECT 
+  experiment_run_id,
+  COUNT(boat_records.id) as boats_launched,
+  SUM(IF(boat_records.land_tick IS NOT NULL, 1, 0)) as boats_landed,
+  MAX(boat_records.launch_tick)/(COUNT(boat_records.id)-1) as delay,
+  SUM(IF(boat_records.land_tick IS NOT NULL, boat_records.aggregate_tenth_tick_gear_difference,0))/SUM(IF(boat_records.land_tick IS NOT NULL, 1, 0)) as avg_landed_tenth_tick_gear_difference_in_run
+  FROM boat_records
+  GROUP BY experiment_run_id
+) AS aggregate_boat_records ON aggregate_boat_records.experiment_run_id = experiment_runs.id
+JOIN experiments ON experiments.id = experiment_runs.experiment_id
+JOIN schedules ON schedules.id = experiments.schedule_id
+WHERE experiment_runs.brain_type = '%s'
+AND boats_launched = %d
+GROUP BY schedules.name
 ORDER BY xcol"
 
 plot_graph_from_query(query,

@@ -13,7 +13,7 @@ plot_graph_from_query <- function(query, xlab, ylab, xlim, ylim, main_title) {
 		interpolated_main_title = sprintf(main_title, launched)
 		
 		pdf(paste("images/", interpolated_main_title, ".pdf", sep=""))
-		plot(list(), list(), xlim=xlim, ylim=ylim, xlab=xlab, ylab=ylab)
+		plot(list(), list(), xlim=xlim, ylim=ylim, xlab=xlab, ylab=ylab, xaxs = "i", yaxs = "i")
 		
 		title(main=paste(strwrap(interpolated_main_title, width=60), collapse="\n"))
 		legend("topright", inset=.05, title="Brain Type", brain_types, col=brain_types_to_colour_map[brain_types], pch=1)
