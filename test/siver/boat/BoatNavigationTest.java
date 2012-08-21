@@ -273,6 +273,7 @@ public class BoatNavigationTest {
 	@Test
 	public void testContinueForwardIntoOccupiedEdge() throws SecurityException, IllegalArgumentException, NoSuchMethodException, InstantiationException, IllegalAccessException, InvocationTargetException {
 		river = LaneTest.setupRiver();
+		SiverContextCreator.setRiver(river);
 		Context<Object> mcontext = createMock(Context.class);
 		SiverContextCreator.setContext(mcontext);
 		ContinuousSpace<Object> mspace = createMock(ContinuousSpace.class);
@@ -296,10 +297,17 @@ public class BoatNavigationTest {
 		LaneEdge endEdge = river.middle_lane().getNextEdge(startEdge.getTarget(), false);
 		//make sure the next edge is occupied so a crash will occur
 		Cox mcox = createMock(Cox.class);
+		BoatNavigation mnav = createMock(BoatNavigation.class);
+		expect(mnav.headingUpstream()).andStubReturn(false);
+		Boat mboat = createMock(Boat.class);
+		expect(mboat.getSpeed()).andStubReturn(0.0);
+		
 		endEdge.addCox(mcox);
 		
 		expect(mspace.moveByVector(boat, 20, 0, 0)).andReturn(new NdPoint(20,0));
 		expect(mcontext.add(anyObject(Crash.class))).andReturn(true);
+		expect(mcox.getNavigator()).andStubReturn(mnav);
+		expect(mcox.getBoat()).andStubReturn(mboat);
 		mcox.incapcitate();
 		expectLastCall().once();
 		expect(mspace.getLocation(boat)).andReturn(new NdPoint(30.0,20.0));
@@ -308,9 +316,9 @@ public class BoatNavigationTest {
 		
 		boat.setGear(10);
 		
-		replay(mspace, mcontext, mcox);
+		replay(mspace, mcontext, mcox, mnav, mboat);
 		cl.continueForward();
-		verify(mspace, mcontext, mcox);
+		verify(mspace, mcontext, mcox, mnav, mboat);
 		
 		assertEquals(20.0, cl.getTillEdgeEnd(), 1E-5);
 		assertEquals(0.0, cl.getTickDistanceRemaining(), 1E-5);

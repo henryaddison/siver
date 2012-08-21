@@ -157,6 +157,8 @@ public class LaneEdgeTest extends EdgeTester{
 		
 		expect(first.getBoat()).andStubReturn(cox1.getBoat());
 		expect(second.getBoat()).andStubReturn(cox2.getBoat());
+		expect(first.getNavigator()).andStubReturn(cox1.getNavigator());
+		expect(second.getNavigator()).andStubReturn(cox2.getNavigator());
 		
 		second.incapcitate();
 		expectLastCall().once();
