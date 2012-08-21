@@ -69,15 +69,16 @@ public class CoxObservations {
 		vision.put(VISION_DISTANCE_KEY, edges_ahead);
 		while(edges_ahead < MAX_VIEWING_DISTANCE) {
 			LaneEdge edge = node.getLane().getNextEdge(node, (infront == navigator.headingUpstream()));
-			//if there is no further edge then there is no boat in front in viewing distance (though there is the end of the river)
-			vision.put(BLOCKED_EDGE_KEY, edge);
-			
+			//if there is no further edge then there no blocked edge infront but viewing distance is restricted (because we're at the end of the river)
 			if(edge == null) {
 				return vision;
 			}
 			
-			//as soon as we find an empty edge in front we can return false
-			if(!edge.isEmpty()) return vision;
+			//as soon as we find an empty edge in front we can set the blocked edge to it and return
+			if(!edge.isEmpty()) {
+				vision.put(BLOCKED_EDGE_KEY, edge);
+				return vision;
+			}
 			//otherwise move on to next edge
 			node = edge.getNextNode((infront == navigator.headingUpstream()));
 			edges_ahead++;
@@ -87,7 +88,7 @@ public class CoxObservations {
 	}
 	
 	public boolean slowBoatInfront() {
-		LaneEdge occupiedEdgeAhead = (LaneEdge) look(navigator.getLane(), navigator.headingUpstream()).get(BLOCKED_EDGE_KEY);
+		LaneEdge occupiedEdgeAhead = (LaneEdge) look(navigator.getLane(), true).get(BLOCKED_EDGE_KEY);
 		if(occupiedEdgeAhead == null) {
 			// return false is there is no occupied edge ahead
 			return false;
@@ -129,8 +130,8 @@ public class CoxObservations {
 	private boolean laneIsClear(Lane lane) {
 		//return true only if there's nothing ahead and nothing behind
 		//very simplistic at the moment, only checks existence, not relative speed
-		return (((Integer) look(navigator.getLane(), true).get(VISION_DISTANCE_KEY)) >= CLEAR_BOUNDARY) && 
-				(((Integer) look(navigator.getLane(), false).get(VISION_DISTANCE_KEY)) >= CLEAR_BOUNDARY);
+		return (((Integer) look(lane, true).get(VISION_DISTANCE_KEY)) >= CLEAR_BOUNDARY) && 
+				(((Integer) look(lane, false).get(VISION_DISTANCE_KEY)) >= CLEAR_BOUNDARY);
 	}
 	
 	public boolean changingLane() {
