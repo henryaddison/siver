@@ -5,7 +5,7 @@ source('functions/plot_graph_from_query.R')
 query = "
 SELECT
   schedules.name,
-  simulation_runs.brain_type,
+  simulation_runs.control_policy,
   boats_launched,
   AVG(boats_landed),
   AVG(aggregate_crash_records.crash_count) as ycol,
@@ -27,14 +27,14 @@ LEFT JOIN (SELECT
 ) AS aggregate_crash_records ON aggregate_crash_records.simulation_run_id = simulation_runs.id
 JOIN simulation_parameters ON simulation_parameters.id = simulation_runs.simulation_parameters_id
 JOIN schedules ON schedules.id = simulation_parameters.schedule_id
-WHERE simulation_runs.brain_type = '%s'
+WHERE simulation_runs.control_policy = '%s'
 AND boats_launched = %d
-GROUP BY boats_launched, delay, simulation_runs.brain_type
+GROUP BY boats_launched, delay, simulation_runs.control_policy
 ORDER BY xcol"
 
 plot_graph_from_query(query,
-xlab='Delay between launched', 
+xlab='Delay between launches in seconds', 
 ylab='Average number of crashes',
 xlim=c(0,600),
 ylim=c(0,2000),
-main_title="Average number of crashes per brain type for simulation runss with %i boats launched")
+main_title="Average number of crashes per control policy for simulation runs with %i boats launched")

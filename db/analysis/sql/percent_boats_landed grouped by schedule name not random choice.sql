@@ -13,6 +13,6 @@ SELECT
 JOIN simulation_runs ON simulation_runs.id = aggregate_boat_records.simulation_run_id
 JOIN simulation_parameters ON simulation_parameters.id = simulation_runs.simulation_parameters_id
 JOIN schedules ON schedules.id = simulation_parameters.schedule_id
-WHERE simulation_runs.brain_type != 'RandomChoice'
+WHERE simulation_runs.control_policy != 'RandomChoice'
 GROUP BY schedules.name
-ORDER BY simulation_runs.brain_type, boats_launched, delay, schedules.name, schedules.version
+ORDER BY simulation_runs.control_policy, boats_launched, delay, schedules.name, schedules.version

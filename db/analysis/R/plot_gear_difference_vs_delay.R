@@ -5,7 +5,7 @@ source('functions/plot_graph_from_query.R')
 query = "
 SELECT
   schedules.name,
-  simulation_runs.brain_type,
+  simulation_runs.control_policy,
   boats_launched,
   delay as xcol,
   AVG(avg_landed_gear_difference_in_run) as ycol
@@ -21,15 +21,15 @@ JOIN (SELECT
 ) AS aggregate_boat_records ON aggregate_boat_records.simulation_run_id = simulation_runs.id
 JOIN simulation_parameters ON simulation_parameters.id = simulation_runs.simulation_parameters_id
 JOIN schedules ON schedules.id = simulation_parameters.schedule_id
-WHERE simulation_runs.brain_type = '%s'
+WHERE simulation_runs.control_policy = '%s'
 AND boats_launched = %d
 GROUP BY schedules.name
 ORDER BY xcol"
 
 plot_graph_from_query(query,
-xlab='Delay between launched', 
+xlab='Delay between launches in seconds', 
 ylab='Average aggregate gear difference',
 xlim=c(0,600),
 ylim=c(0,45000),
-main_title="Average aggregate gear difference recorded ever tick per brain type for simulation runss with %i boats launched")
+main_title="Average aggregate gear difference recorded ever tick per control policy for simulation runs with %i boats launched")
 

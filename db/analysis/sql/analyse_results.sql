@@ -1,6 +1,6 @@
 SELECT
   schedules.name,
-  experiment_runs.brain_type,
+  experiment_runs.control_policy,
   boats_launched,
   AVG(boats_landed),
   AVG(experiment_runs.crash_count) as ycol,
@@ -17,6 +17,6 @@ JOIN (SELECT
 JOIN experiments ON experiments.id = experiment_runs.experiment_id
 JOIN schedules ON schedules.id = experiments.schedule_id
 WHERE boats_launched = 10
-AND experiment_runs.brain_type = "BasicBrain"
-GROUP BY boats_launched, delay, experiment_runs.brain_type
-ORDER BY experiment_runs.brain_type
+AND experiment_runs.control_policy = "BasicBrain"
+GROUP BY boats_launched, delay, experiment_runs.control_policy
+ORDER BY experiment_runs.control_policy

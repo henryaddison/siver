@@ -1,4 +1,4 @@
-package siver.cox.brains;
+package siver.cox.control_policies;
 
 import repast.simphony.random.RandomHelper;
 import siver.cox.actions.*;

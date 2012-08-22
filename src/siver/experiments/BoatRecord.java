@@ -11,14 +11,14 @@ public class BoatRecord extends ExperimentalDatum {
 	private Integer scheduled_launch_id, land_tick;
 	private int launch_tick, desired_gear, aggregate_gear_difference, simulation_run_id, aggregate_tenth_tick_gear_difference;
 	private double speed_multiplier, distance_covered;
-	private String brain_type;
+	private String control_policy;
 	
 	public BoatRecord(Integer scheduled_launch_id, int launch_tick, Boat boat, Cox cox) {
 		this.scheduled_launch_id = scheduled_launch_id;
 		this.launch_tick = launch_tick;
 		this.desired_gear = cox.desired_gear();
 		this.speed_multiplier = boat.getSpeedMultiplier();
-		this.brain_type = cox.brain_type();
+		this.control_policy = cox.control_policy();
 		this.distance_covered = 0;
 		this.aggregate_gear_difference = 0;
 		this.aggregate_tenth_tick_gear_difference = 0;
@@ -47,7 +47,7 @@ public class BoatRecord extends ExperimentalDatum {
 	public void flush() {
 		PreparedStatement insertBoatRecord = null;
 		
-		String sql = "INSERT INTO boat_records(scheduled_launch_id, simulation_run_id, launch_tick, land_tick, desired_gear, speed_multiplier, distance_covered, aggregate_gear_difference, aggregate_tenth_tick_gear_difference, brain_type)"
+		String sql = "INSERT INTO boat_records(scheduled_launch_id, simulation_run_id, launch_tick, land_tick, desired_gear, speed_multiplier, distance_covered, aggregate_gear_difference, aggregate_tenth_tick_gear_difference, control_policy)"
                 + "VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
         try {
 			insertBoatRecord = conn.prepareStatement(sql);
@@ -61,7 +61,7 @@ public class BoatRecord extends ExperimentalDatum {
 			insertBoatRecord.setDouble(7, distance_covered);
 			insertBoatRecord.setInt(8, aggregate_gear_difference);
 			insertBoatRecord.setInt(9, aggregate_tenth_tick_gear_difference);
-			insertBoatRecord.setString(10, brain_type);
+			insertBoatRecord.setString(10, control_policy);
 		    insertBoatRecord.executeUpdate();
 		    insertBoatRecord.close();
 		} catch (SQLException e) {

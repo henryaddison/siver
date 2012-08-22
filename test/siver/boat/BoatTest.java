@@ -64,7 +64,7 @@ public class BoatTest {
 	
 	private void launchBoat() {
 		expect(mockCox.desired_gear()).andStubReturn(5);
-		expect(mockCox.brain_type()).andStubReturn("TestBrain");
+		expect(mockCox.control_policy()).andStubReturn("TestBrain");
 		replay(mockContext);
 		replay(mockSpace);
 		replay(mockCox);

@@ -1,4 +1,4 @@
-package siver.cox.brains;
+package siver.cox.control_policies;
 
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;

@@ -1,4 +1,4 @@
-package siver.cox.brains;
+package siver.cox.control_policies;
 
 import siver.cox.actions.*;
 

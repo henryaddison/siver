@@ -7,10 +7,10 @@ import javax.swing.JButton;
 import javax.swing.JPanel;
 
 import siver.context.SiverContextCreator;
-import siver.cox.brains.BasicBrain;
-import siver.cox.brains.CoxBrain;
-import siver.cox.brains.LaneChangeBrain;
-import siver.cox.brains.StartStopBrain;
+import siver.cox.control_policies.BasicBrain;
+import siver.cox.control_policies.CoxBrain;
+import siver.cox.control_policies.LaneChangeBrain;
+import siver.cox.control_policies.StartStopBrain;
 
 public class UserPanel extends JPanel {
 	private static final long serialVersionUID = 1L;

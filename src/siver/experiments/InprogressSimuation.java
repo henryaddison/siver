@@ -12,8 +12,8 @@ import repast.simphony.parameter.Parameters;
 import repast.simphony.random.RandomHelper;
 import repast.simphony.ui.RSApplication;
 import siver.context.SiverContextCreator;
-import siver.cox.brains.BasicBrain;
-import siver.cox.brains.CoxBrain;
+import siver.cox.control_policies.BasicBrain;
+import siver.cox.control_policies.CoxBrain;
 import siver.ui.UserPanel;
 
 public class InprogressSimuation extends ExperimentalDatum {
@@ -24,7 +24,7 @@ public class InprogressSimuation extends ExperimentalDatum {
 	private int simulation_run_id;
 	private ArrayList<BoatRecord> inprogress_records;
 	private int random_seed;
-	private Class<? extends CoxBrain> brain_type;
+	private Class<? extends CoxBrain> control_policy;
 	
 	public static void start() {
 		if(instance() == null) {
@@ -36,7 +36,7 @@ public class InprogressSimuation extends ExperimentalDatum {
 		initializeDBConnection();
 		BoatRecord.initializeDBConnection();
 		try {
-			instance().findRandomSeedScheduleIdAndBrainType();
+			instance().findRandomSeedScheduleIdAndControlPolicy();
 			instance().create_simulation_run();
 			instance().scheduleLaunches();
 			if(instance().isAutomated()) {
@@ -76,7 +76,7 @@ public class InprogressSimuation extends ExperimentalDatum {
 	
 	private void create_simulation_run() throws SQLException {
 		PreparedStatement insertSimulationRun = null;
-		String sql = "INSERT INTO simulation_runs(simulation_parameters_id, random_seed, brain_type)"
+		String sql = "INSERT INTO simulation_runs(simulation_parameters_id, random_seed, control_policy)"
                 + "VALUES(?, ?, ?)";
         insertSimulationRun = conn.prepareStatement(sql);
 		if(isAutomated()) {
@@ -85,8 +85,8 @@ public class InprogressSimuation extends ExperimentalDatum {
 			insertSimulationRun.setNull(1, java.sql.Types.INTEGER);
 		}
 	    insertSimulationRun.setInt(2, random_seed);
-	    if(brain_type != null) {
-	    	insertSimulationRun.setString(3, brain_type.getSimpleName());
+	    if(control_policy != null) {
+	    	insertSimulationRun.setString(3, control_policy.getSimpleName());
 	    } else {
 	    	insertSimulationRun.setNull(3, java.sql.Types.VARCHAR);
 	    }
@@ -105,10 +105,10 @@ public class InprogressSimuation extends ExperimentalDatum {
 		this.inprogress_records = new ArrayList<BoatRecord>();
 	}
 	
-	private void findRandomSeedScheduleIdAndBrainType() {
+	private void findRandomSeedScheduleIdAndControlPolicy() {
 		if(isAutomated()) {
 			PreparedStatement getRandomSeed = null;
-			String sql = "SELECT random_seed, schedule_id, brain_type FROM simulation_parameters WHERE ID = ?";
+			String sql = "SELECT random_seed, schedule_id, control_policy FROM simulation_parameters WHERE ID = ?";
 			try {
 				getRandomSeed = conn.prepareStatement(sql);
 				getRandomSeed.setInt(1, simulation_parameters_id);
@@ -116,13 +116,13 @@ public class InprogressSimuation extends ExperimentalDatum {
 				rseed.first();
 				random_seed = rseed.getInt(1);
 				schedule_id = rseed.getInt(2);
-				String coxBrainClassName =  rseed.getString(3);
+				String coxControlPolicyClassName =  rseed.getString(3);
 				getRandomSeed.close();
 				
-				if(!coxBrainClassName.startsWith("siver.")) {
-					coxBrainClassName = BasicBrain.class.getPackage().getName()+"."+coxBrainClassName;
+				if(!coxControlPolicyClassName.startsWith("siver.")) {
+					coxControlPolicyClassName = BasicBrain.class.getPackage().getName()+"."+coxControlPolicyClassName;
 				}
-				brain_type = (Class<? extends CoxBrain>) Class.forName(coxBrainClassName);
+				control_policy = (Class<? extends CoxBrain>) Class.forName(coxControlPolicyClassName);
 				RandomHelper.setSeed(random_seed);
 			} catch (SQLException e) {
 				// TODO Auto-generated catch block
@@ -206,7 +206,7 @@ public class InprogressSimuation extends ExperimentalDatum {
 					
 					ScheduleParameters params = ScheduleParameters.createOneTime(launch_tick);
 					schedule.schedule(params, SiverContextCreator.getBoatHouse(), "launch", 
-							schedule_launch_id,desired_gear, speed_multiplier, distance_to_cover, brain_type);
+							schedule_launch_id,desired_gear, speed_multiplier, distance_to_cover, control_policy);
 				}
 				stmt.close();
 			} catch (SQLException e) {

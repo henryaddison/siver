@@ -1,15 +1,12 @@
-package siver.cox.brains;
+package siver.cox.control_policies;
 
 import siver.cox.actions.*;
 
-public class ConservativeBrain extends CoxBrain {
+public class BasicBrain extends CoxBrain {
 	@Override
-	public Class<? extends Action> typeSpecificActionChoice() {
+	protected Class<? extends Action> typeSpecificActionChoice() {
 		if(latestObservations.atRiversEnd()) {
 			return Spin.class;
-		}
-		if(latestObservations.nearbyBoatInfront()) {
-			return SlowDown.class;
 		}
 		if(latestObservations.belowDesiredSpeed()) {
 			return SpeedUp.class;

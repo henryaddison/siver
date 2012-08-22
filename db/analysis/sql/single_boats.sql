@@ -1,14 +1,14 @@
 select
-experiment_runs.brain_type,
+simulation_runs.control_policy,
 avg(boat_records.launch_tick),
 avg(boat_records.land_tick),
 avg(boat_records.desired_gear),
 avg(boat_records.distance_covered),
 avg(boat_records.aggregate_gear_difference)
 from 
-experiment_runs 
-join experiments on experiments.id = experiment_runs.experiment_id
-join schedules on schedules.id = experiments.schedule_id
-join boat_records on experiment_runs.id = boat_records.experiment_run_id
+simulation_runs 
+join simulation_parameters on simulation_parameters.id = simulation_runs.simulation_parameters_id
+join schedules on schedules.id = simulation_parameters.schedule_id
+join boat_records on simulation_runs.id = boat_records.simulation_run_id
 where schedules.name = "One boat"
-group by experiment_runs.brain_type
+group by simulation_runs.control_policy

@@ -9,8 +9,8 @@ import siver.boat.Boat;
 import siver.boat.BoatNavigation;
 import siver.context.SiverContextCreator;
 import siver.cox.actions.*;
-import siver.cox.brains.BasicBrain;
-import siver.cox.brains.CoxBrain;
+import siver.cox.control_policies.BasicBrain;
+import siver.cox.control_policies.CoxBrain;
 
 public class Cox {
 	//The boat the cox is controlling.
@@ -25,7 +25,7 @@ public class Cox {
 	protected Action action;
 	protected BoatNavigation navigator;
 	
-	private CoxBrain brain;
+	private CoxBrain control_policy;
 	
 	public Cox() {
 		
@@ -35,15 +35,15 @@ public class Cox {
 		launch(BasicBrain.class, boat, launchLane, desGear, speedMult, distance_to_cover, launch_schedule_id);
 	}
 	
-	public void launch(Class<? extends CoxBrain> brainType, Boat boat, Lane launchLane, int desGear, double speedMult, double distance_to_cover, Integer launch_schedule_id) throws SecurityException, NoSuchMethodException, IllegalArgumentException, InstantiationException, IllegalAccessException, InvocationTargetException {
+	public void launch(Class<? extends CoxBrain> control_policy_type, Boat boat, Lane launchLane, int desGear, double speedMult, double distance_to_cover, Integer launch_schedule_id) throws SecurityException, NoSuchMethodException, IllegalArgumentException, InstantiationException, IllegalAccessException, InvocationTargetException {
 		//save reference to boat launched in
 		this.boat = boat;
 		this.incapcitated = false;
 		this.desired_gear = desGear;
 		this.distance_to_cover = distance_to_cover;
 		
-		Constructor<? extends CoxBrain> cons = brainType.getConstructor();
-		brain = cons.newInstance();
+		Constructor<? extends CoxBrain> cons = control_policy_type.getConstructor();
+		control_policy = cons.newInstance();
 		
 		boat.launch(this, launch_schedule_id);
 		navigator = new BoatNavigation(this, boat, false);
@@ -67,13 +67,13 @@ public class Cox {
 	
 	private void makeObservations() {
 		CoxObservations observations = new CoxObservations(this, boat, navigator);
-		brain.updateObservations(observations);
+		control_policy.updateObservations(observations);
 	}
 	
 	private void chooseAction() throws SecurityException, NoSuchMethodException, IllegalArgumentException, InstantiationException, IllegalAccessException, InvocationTargetException {
 		if(action == null) {
-			//have brain pick a new action if the cox isn't in the middle of one at the moment
-			Constructor<? extends Action> cons = brain.chooseAction().getConstructor(Cox.class);
+			//have control policy pick a new action if the cox isn't in the middle of one at the moment
+			Constructor<? extends Action> cons = control_policy.chooseAction().getConstructor(Cox.class);
 			action = cons.newInstance(this);
 		}
 	}
@@ -118,8 +118,8 @@ public class Cox {
 		return desired_gear;
 	}
 	
-	public String brain_type() {
-		return this.brain.getClass().getSimpleName();
+	public String control_policy() {
+		return this.control_policy.getClass().getSimpleName();
 	}
 	
 	public double getGoalDistance() {
