@@ -22,3 +22,6 @@ Repast.Settings
 
 # Graphs automatically generated
 db/analysis/R/images/
+
+#Mysql workbench EER models
+*.mwb*
