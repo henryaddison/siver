@@ -36,7 +36,7 @@ public class UserPanel extends JPanel {
 			
 			JButton launchButton = new JButton();
 			
-			launchButton.setText("Launch Boat with " + coxBrainClass.getName());
+			launchButton.setText("Launch Boat with " + coxBrainClass.getSimpleName());
 			launchButton.setActionCommand("launchBoat");
 			launchButton.addActionListener(new java.awt.event.ActionListener() {
 	            public void actionPerformed(java.awt.event.ActionEvent evt) {
