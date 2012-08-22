@@ -6,7 +6,7 @@
 						converter="repast.simphony.parameter.StringConverterFactory$IntConverter"
 									
 		/>
-				<parameter name="ExperimentId" displayName="Experiment Id" type="int" 
+				<parameter name="SimulationParametersId" displayName="Simulation Parameters Id" type="int" 
 						defaultValue="0" 
 						isReadOnly="false" 
 						converter="repast.simphony.parameter.StringConverterFactory$IntConverter"

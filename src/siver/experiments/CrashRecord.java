@@ -11,11 +11,11 @@ public class CrashRecord extends ExperimentalDatum {
 		
 		
 		
-		String sql = "INSERT INTO crash_records(experiment_run_id, tick, middle_lane, relative_velocity, boats_count)"
+		String sql = "INSERT INTO crash_records(simulation_run_id, tick, middle_lane, relative_velocity, boats_count)"
                 + "VALUES(?, ?, ?, ?, ?)";
         try {
 			insertCrashRecord = conn.prepareStatement(sql);
-			insertCrashRecord.setInt(1, InprogressExperiment.instance().experiment_run_id());
+			insertCrashRecord.setInt(1, InprogressSimuation.instance().simulation_run_id());
 			insertCrashRecord.setInt(2, SiverContextCreator.getTickCount());
 			insertCrashRecord.setBoolean(3, middle_lane);
 			insertCrashRecord.setDouble(4, relative_velocity);

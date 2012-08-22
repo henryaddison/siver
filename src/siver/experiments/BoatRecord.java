@@ -9,7 +9,7 @@ import siver.cox.Cox;
 
 public class BoatRecord extends ExperimentalDatum {
 	private Integer scheduled_launch_id, land_tick;
-	private int launch_tick, desired_gear, aggregate_gear_difference, experiment_run_id, aggregate_tenth_tick_gear_difference;
+	private int launch_tick, desired_gear, aggregate_gear_difference, simulation_run_id, aggregate_tenth_tick_gear_difference;
 	private double speed_multiplier, distance_covered;
 	private String brain_type;
 	
@@ -22,11 +22,11 @@ public class BoatRecord extends ExperimentalDatum {
 		this.distance_covered = 0;
 		this.aggregate_gear_difference = 0;
 		this.aggregate_tenth_tick_gear_difference = 0;
-		if(InprogressExperiment.instance() != null) {
-			this.experiment_run_id = InprogressExperiment.instance().experiment_run_id();
+		if(InprogressSimuation.instance() != null) {
+			this.simulation_run_id = InprogressSimuation.instance().simulation_run_id();
 		}
 		this.land_tick = null;
-		InprogressExperiment.addBoatRecord(this);
+		InprogressSimuation.addBoatRecord(this);
 	}
 	
 	public void updateStats(double distance_travelled, int gear, int tick) {
@@ -41,19 +41,19 @@ public class BoatRecord extends ExperimentalDatum {
 	public void landed(int land_tick) {
 		this.land_tick = land_tick;
 		flush();
-		InprogressExperiment.removeBoatRecord(this);
+		InprogressSimuation.removeBoatRecord(this);
 	}
 	
 	public void flush() {
 		PreparedStatement insertBoatRecord = null;
 		
-		String sql = "INSERT INTO boat_records(scheduled_launch_id, experiment_run_id, launch_tick, land_tick, desired_gear, speed_multiplier, distance_covered, aggregate_gear_difference, aggregate_tenth_tick_gear_difference, brain_type)"
+		String sql = "INSERT INTO boat_records(scheduled_launch_id, simulation_run_id, launch_tick, land_tick, desired_gear, speed_multiplier, distance_covered, aggregate_gear_difference, aggregate_tenth_tick_gear_difference, brain_type)"
                 + "VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
         try {
 			insertBoatRecord = conn.prepareStatement(sql);
 			
 			intOrNullParam(insertBoatRecord, 1, scheduled_launch_id);
-			insertBoatRecord.setInt(2, experiment_run_id);
+			insertBoatRecord.setInt(2, simulation_run_id);
 			insertBoatRecord.setInt(3, launch_tick);
 			intOrNullParam(insertBoatRecord, 4, land_tick);
 			insertBoatRecord.setInt(5, desired_gear);

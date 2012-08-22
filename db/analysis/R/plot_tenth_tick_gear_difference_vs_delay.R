@@ -5,23 +5,23 @@ source('functions/plot_graph_from_query.R')
 query = "
 SELECT
   schedules.name,
-  experiment_runs.brain_type,
+  simulation_runs.brain_type,
   boats_launched,
   delay as xcol,
   AVG(avg_landed_tenth_tick_gear_difference_in_run) as ycol
-FROM experiment_runs
+FROM simulation_runs
 JOIN (SELECT 
-  experiment_run_id,
+  simulation_run_id,
   COUNT(boat_records.id) as boats_launched,
   SUM(IF(boat_records.land_tick IS NOT NULL, 1, 0)) as boats_landed,
   MAX(boat_records.launch_tick)/(COUNT(boat_records.id)-1) as delay,
   SUM(IF(boat_records.land_tick IS NOT NULL, boat_records.aggregate_tenth_tick_gear_difference,0))/SUM(IF(boat_records.land_tick IS NOT NULL, 1, 0)) as avg_landed_tenth_tick_gear_difference_in_run
   FROM boat_records
-  GROUP BY experiment_run_id
-) AS aggregate_boat_records ON aggregate_boat_records.experiment_run_id = experiment_runs.id
-JOIN experiments ON experiments.id = experiment_runs.experiment_id
-JOIN schedules ON schedules.id = experiments.schedule_id
-WHERE experiment_runs.brain_type = '%s'
+  GROUP BY simulation_run_id
+) AS aggregate_boat_records ON aggregate_boat_records.simulation_run_id = simulation_runs.id
+JOIN simulation_parameters ON simulation_parameters.id = simulation_runs.simulation_parameters_id
+JOIN schedules ON schedules.id = simulation_parameters.schedule_id
+WHERE simulation_runs.brain_type = '%s'
 AND boats_launched = %d
 GROUP BY schedules.name
 ORDER BY xcol"
@@ -31,5 +31,5 @@ xlab='Delay between launched in seconds',
 ylab='Average aggregate 10th tick gear difference',
 xlim=c(0,600),
 ylim=c(0,4500),
-main_title="Average aggregate gear difference recorded every 10th tick per brain type for experiments with %i boats launched")
+main_title="Average aggregate gear difference recorded every 10th tick per brain type for simulation runss with %i boats launched")
 

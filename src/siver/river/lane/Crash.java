@@ -3,7 +3,7 @@ package siver.river.lane;
 import repast.simphony.engine.schedule.ScheduledMethod;
 import siver.context.SiverContextCreator;
 import siver.cox.Cox;
-import siver.experiments.InprogressExperiment;
+import siver.experiments.InprogressSimuation;
 
 public class Crash {
 	public class CrashError extends RuntimeException {
@@ -37,7 +37,7 @@ public class Crash {
 			c.incapcitate();
 		}
 		boolean in_middle_lane = edge.getSource().getLane() == SiverContextCreator.getRiver().middle_lane();
-		InprogressExperiment.incrementCrashCount(in_middle_lane, relative_velocity, edge.getCoxes().size());
+		InprogressSimuation.incrementCrashCount(in_middle_lane, relative_velocity, edge.getCoxes().size());
 	}
 	
 	public LaneEdge getEdge() {

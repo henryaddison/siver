@@ -16,31 +16,31 @@ import siver.cox.brains.BasicBrain;
 import siver.cox.brains.CoxBrain;
 import siver.ui.UserPanel;
 
-public class InprogressExperiment extends ExperimentalDatum {
-	private static final double TICK_TIMEOUT = 4*60*60; // a 4 hour session is experiment maximum
+public class InprogressSimuation extends ExperimentalDatum {
+	private static final double TICK_TIMEOUT = 4*60*60; // a 4 hour session is an automated simulation run maximum
 	
-	private static InprogressExperiment instance;
-	private Integer experiment_id, schedule_id;
-	private int experiment_run_id;
+	private static InprogressSimuation instance;
+	private Integer simulation_parameters_id, schedule_id;
+	private int simulation_run_id;
 	private ArrayList<BoatRecord> inprogress_records;
 	private int random_seed;
 	private Class<? extends CoxBrain> brain_type;
 	
 	public static void start() {
 		if(instance() == null) {
-			instance = new InprogressExperiment();
+			instance = new InprogressSimuation();
 		} else {
-			throw new RuntimeException("Trying to start new Inprogress Experiment while one is already in progress.");
+			throw new RuntimeException("Trying to start new Inprogress Simulation while one is already in progress.");
 		}
 		
 		initializeDBConnection();
 		BoatRecord.initializeDBConnection();
 		try {
 			instance().findRandomSeedScheduleIdAndBrainType();
-			instance().create_experiment_run();
+			instance().create_simulation_run();
 			instance().scheduleLaunches();
 			if(instance().isAutomated()) {
-				//set up a scheduled method to run when after a certain number of ticks has passed so experiments don't take too long
+				//set up a scheduled method to run when after a certain number of ticks has passed so simulation runs don't take too long
 				ISchedule schedule = RunEnvironment.getInstance().getCurrentSchedule();
 				ScheduleParameters simTimeoutParams = ScheduleParameters.createOneTime(TICK_TIMEOUT);
 				schedule.schedule(simTimeoutParams, instance(), "stopSim");
@@ -70,48 +70,48 @@ public class InprogressExperiment extends ExperimentalDatum {
 		}
 	}
 	
-	public static InprogressExperiment instance() {
+	public static InprogressSimuation instance() {
 		return instance;
 	}
 	
-	private void create_experiment_run() throws SQLException {
-		PreparedStatement insertExperimentRun = null;
-		String sql = "INSERT INTO experiment_runs(experiment_id, random_seed, brain_type)"
+	private void create_simulation_run() throws SQLException {
+		PreparedStatement insertSimulationRun = null;
+		String sql = "INSERT INTO simulation_runs(simulation_parameters_id, random_seed, brain_type)"
                 + "VALUES(?, ?, ?)";
-        insertExperimentRun = conn.prepareStatement(sql);
+        insertSimulationRun = conn.prepareStatement(sql);
 		if(isAutomated()) {
-			insertExperimentRun.setInt(1, experiment_id);
+			insertSimulationRun.setInt(1, simulation_parameters_id);
 		} else {
-			insertExperimentRun.setNull(1, java.sql.Types.INTEGER);
+			insertSimulationRun.setNull(1, java.sql.Types.INTEGER);
 		}
-	    insertExperimentRun.setInt(2, random_seed);
+	    insertSimulationRun.setInt(2, random_seed);
 	    if(brain_type != null) {
-	    	insertExperimentRun.setString(3, brain_type.getSimpleName());
+	    	insertSimulationRun.setString(3, brain_type.getSimpleName());
 	    } else {
-	    	insertExperimentRun.setNull(3, java.sql.Types.VARCHAR);
+	    	insertSimulationRun.setNull(3, java.sql.Types.VARCHAR);
 	    }
-	    insertExperimentRun.executeUpdate();
-	    ResultSet keys = insertExperimentRun.getGeneratedKeys();
+	    insertSimulationRun.executeUpdate();
+	    ResultSet keys = insertSimulationRun.getGeneratedKeys();
 	    keys.first();
-	    this.experiment_run_id = keys.getInt(1);
+	    this.simulation_run_id = keys.getInt(1);
 	    
-	    insertExperimentRun.close();
+	    insertSimulationRun.close();
 	}
 	
-	private InprogressExperiment() {
+	private InprogressSimuation() {
 		Parameters params = RunEnvironment.getInstance().getParameters(); 
-		this.experiment_id = (Integer)params.getValue("ExperimentId");
-		if(this.experiment_id <= 0) this.experiment_id = null;
+		this.simulation_parameters_id = (Integer)params.getValue("SimulationParametersId");
+		if(this.simulation_parameters_id <= 0) this.simulation_parameters_id = null;
 		this.inprogress_records = new ArrayList<BoatRecord>();
 	}
 	
 	private void findRandomSeedScheduleIdAndBrainType() {
 		if(isAutomated()) {
 			PreparedStatement getRandomSeed = null;
-			String sql = "SELECT random_seed, schedule_id, brain_type FROM experiments WHERE ID = ?";
+			String sql = "SELECT random_seed, schedule_id, brain_type FROM simulation_parameters WHERE ID = ?";
 			try {
 				getRandomSeed = conn.prepareStatement(sql);
-				getRandomSeed.setInt(1, experiment_id);
+				getRandomSeed.setInt(1, simulation_parameters_id);
 				ResultSet rseed = getRandomSeed.executeQuery();
 				rseed.first();
 				random_seed = rseed.getInt(1);
@@ -156,34 +156,34 @@ public class InprogressExperiment extends ExperimentalDatum {
 	}
 	
 	private boolean isAutomated() {
-		return experiment_id != null;
+		return simulation_parameters_id != null;
 	}
 	
-	public int experiment_run_id() {
-		return this.experiment_run_id;
+	public int simulation_run_id() {
+		return this.simulation_run_id;
 	}
 	
 	private void flush() throws SQLException {
-		PreparedStatement finishExperimentRun = null;
-		String sql = "UPDATE experiment_runs " +
+		PreparedStatement finishSimulationRun = null;
+		String sql = "UPDATE simulation_runs " +
 				     "SET flushed = ?, tick_count = ? " + 
 					 "WHERE id = ?";
-		finishExperimentRun = conn.prepareStatement(sql);
+		finishSimulationRun = conn.prepareStatement(sql);
 		if(isAutomated()) {
-			finishExperimentRun.setInt(1, experiment_id);
+			finishSimulationRun.setInt(1, simulation_parameters_id);
 		} else {
-			finishExperimentRun.setNull(1, java.sql.Types.INTEGER);
+			finishSimulationRun.setNull(1, java.sql.Types.INTEGER);
 		}
-		finishExperimentRun.setBoolean(1, true);
-		finishExperimentRun.setInt(2, SiverContextCreator.getTickCount());
-		finishExperimentRun.setInt(3, experiment_run_id);
-		finishExperimentRun.executeUpdate();
-	    finishExperimentRun.close();
+		finishSimulationRun.setBoolean(1, true);
+		finishSimulationRun.setInt(2, SiverContextCreator.getTickCount());
+		finishSimulationRun.setInt(3, simulation_run_id);
+		finishSimulationRun.executeUpdate();
+	    finishSimulationRun.close();
                 
 	}
 	
 	private void scheduleLaunches() {
-		//remove any old user control panel that may be there to prevent manual launches mid automated experiment run
+		//remove any old user control panel that may be there to prevent manual launches mid automated simulation run
 		if(RSApplication.getRSApplicationInstance() != null) {
 			//make sure we're in a mode where there is an RS Application instance (so not running in batch mode)
 			RSApplication.getRSApplicationInstance().removeCustomUserPanel();
@@ -215,7 +215,7 @@ public class InprogressExperiment extends ExperimentalDatum {
 			}
 			
 		} else {
-			//if the experiment run does not have an automated schedule
+			//if the simulation run does not have an automated schedule
 			//then add a control panel so boat's may be launched manually
 			RSApplication.getRSApplicationInstance().addCustomUserPanel(new UserPanel()); //and add a new one
 		}

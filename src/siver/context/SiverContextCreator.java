@@ -11,7 +11,7 @@ import repast.simphony.engine.schedule.ISchedule;
 import repast.simphony.engine.schedule.ScheduleParameters;
 import repast.simphony.space.continuous.ContinuousSpace;
 import repast.simphony.space.continuous.SimpleCartesianAdder;
-import siver.experiments.InprogressExperiment;
+import siver.experiments.InprogressSimuation;
 import siver.river.BoatHouse;
 import siver.river.River;
 import siver.river.RiverFactory;
@@ -48,7 +48,7 @@ public class SiverContextCreator implements ContextBuilder<Object> {
 	}
 	
 	private void initializeDataCollection() {
-		InprogressExperiment.start();
+		InprogressSimuation.start();
 		
 		//schedule a method to run when the simulation ends so we can flush all collected data to database
 		ISchedule schedule = RunEnvironment.getInstance().getCurrentSchedule();
@@ -57,7 +57,7 @@ public class SiverContextCreator implements ContextBuilder<Object> {
 	}
 	
 	public void stopDataCollection() {
-		InprogressExperiment.end();
+		InprogressSimuation.end();
 	}
 	
 	//helpers to get the current tick count
