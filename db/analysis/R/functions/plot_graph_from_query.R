@@ -1,5 +1,6 @@
 plot_graph_from_query <- function(query, xlab, ylab, xlim, ylim, main_title) {
-	con <- dbConnect("MySQL", user="siver", host="localhost", dbname="siver_development")
+  dbname="siver_development"
+	con <- dbConnect("MySQL", user="siver", host="localhost", dbname=dbname)
 	control_policies <- c("BasicBrain", "ConservativeBrain", "OvertakingBrain", "RandomMovement")
 
 	control_policies_to_colour_map = c(BasicBrain="black", OvertakingBrain="green", RandomMovement="blue", ConservativeBrain="red")
@@ -12,7 +13,7 @@ plot_graph_from_query <- function(query, xlab, ylab, xlim, ylim, main_title) {
 		
 		interpolated_main_title = sprintf(main_title, launched)
 		
-		pdf(paste("images/", interpolated_main_title, ".pdf", sep=""))
+		pdf(paste(paste("images",dbname,"",sep="/"), interpolated_main_title, ".pdf", sep=""))
 		plot(list(), list(), xlim=xlim, ylim=ylim, xlab=xlab, ylab=ylab, xaxs = "i", yaxs = "i")
 		
 		title(main=paste(strwrap(interpolated_main_title, width=60), collapse="\n"))
