@@ -25,21 +25,21 @@ DROP TABLE IF EXISTS `boat_records`;
 CREATE TABLE `boat_records` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `scheduled_launch_id` int(11) DEFAULT NULL,
-  `experiment_run_id` int(11) NOT NULL,
+  `simulation_run_id` int(11) NOT NULL,
   `launch_tick` int(11) NOT NULL,
   `land_tick` int(11) DEFAULT NULL,
   `desired_gear` int(11) NOT NULL,
   `speed_multiplier` double NOT NULL DEFAULT '0.5',
   `distance_covered` double NOT NULL,
   `aggregate_gear_difference` int(11) DEFAULT NULL,
-  `brain_type` varchar(255) DEFAULT NULL,
+  `control_policy` varchar(255) DEFAULT NULL,
   `aggregate_tenth_tick_gear_difference` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `boat_record_launch_fk` (`scheduled_launch_id`),
-  KEY `boat_record_experiment_run_fk` (`experiment_run_id`),
-  CONSTRAINT `boat_record_experiment_run_fk` FOREIGN KEY (`experiment_run_id`) REFERENCES `experiment_runs` (`id`),
-  CONSTRAINT `boat_record_launch_fk` FOREIGN KEY (`scheduled_launch_id`) REFERENCES `scheduled_launches` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=66433 DEFAULT CHARSET=utf8;
+  KEY `boat_record_simulation_run_fk` (`simulation_run_id`),
+  CONSTRAINT `boat_record_launch_fk` FOREIGN KEY (`scheduled_launch_id`) REFERENCES `scheduled_launches` (`id`),
+  CONSTRAINT `boat_record_simulation_run_fk` FOREIGN KEY (`simulation_run_id`) REFERENCES `simulation_runs` (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=103333 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -51,55 +51,15 @@ DROP TABLE IF EXISTS `crash_records`;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `crash_records` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `experiment_run_id` int(11) NOT NULL,
+  `simulation_run_id` int(11) NOT NULL,
   `tick` int(11) NOT NULL,
   `middle_lane` tinyint(1) DEFAULT NULL,
   `relative_velocity` double DEFAULT NULL,
   `boats_count` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`),
-  KEY `crash_record_experiment_run_fk` (`experiment_run_id`),
-  CONSTRAINT `crash_record_experiment_run_fk` FOREIGN KEY (`experiment_run_id`) REFERENCES `experiment_runs` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Table structure for table `experiment_runs`
---
-
-DROP TABLE IF EXISTS `experiment_runs`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `experiment_runs` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `experiment_id` int(11) DEFAULT NULL,
-  `started_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `tick_count` int(11) DEFAULT NULL,
-  `random_seed` int(11) DEFAULT NULL,
-  `flushed` tinyint(1) DEFAULT '0',
-  `all_boats_finished` tinyint(1) DEFAULT '0',
-  `brain_type` varchar(255) DEFAULT NULL,
-  PRIMARY KEY (`id`),
-  KEY `experiment_run_schedule_fk` (`experiment_id`),
-  CONSTRAINT `experiment_run_schedule_fk` FOREIGN KEY (`experiment_id`) REFERENCES `experiments` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=3480 DEFAULT CHARSET=utf8;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Table structure for table `experiments`
---
-
-DROP TABLE IF EXISTS `experiments`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `experiments` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `random_seed` int(11) NOT NULL,
-  `schedule_id` int(11) NOT NULL,
-  `brain_type` varchar(255) NOT NULL DEFAULT 'BasicBrain',
-  PRIMARY KEY (`id`),
-  KEY `experiment_schedule_fk` (`schedule_id`),
-  CONSTRAINT `experiment_schedule_fk` FOREIGN KEY (`schedule_id`) REFERENCES `schedules` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=1901 DEFAULT CHARSET=utf8;
+  KEY `crash_record_simulation_run_fk` (`simulation_run_id`),
+  CONSTRAINT `crash_record_simulation_run_fk` FOREIGN KEY (`simulation_run_id`) REFERENCES `simulation_runs` (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=721526 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -138,6 +98,46 @@ CREATE TABLE `schedules` (
   UNIQUE KEY `schedule_name_and_version` (`name`,`version`)
 ) ENGINE=InnoDB AUTO_INCREMENT=80 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `simulation_parameters`
+--
+
+DROP TABLE IF EXISTS `simulation_parameters`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `simulation_parameters` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `random_seed` int(11) NOT NULL,
+  `schedule_id` int(11) NOT NULL,
+  `control_policy` varchar(255) NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `experiment_schedule_fk` (`schedule_id`),
+  CONSTRAINT `experiment_schedule_fk` FOREIGN KEY (`schedule_id`) REFERENCES `schedules` (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=1901 DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `simulation_runs`
+--
+
+DROP TABLE IF EXISTS `simulation_runs`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `simulation_runs` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `simulation_parameters_id` int(11) DEFAULT NULL,
+  `started_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `tick_count` int(11) DEFAULT NULL,
+  `random_seed` int(11) DEFAULT NULL,
+  `flushed` tinyint(1) DEFAULT '0',
+  `all_boats_finished` tinyint(1) DEFAULT '0',
+  `control_policy` varchar(255) DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `simulation_run_schedule_fk` (`simulation_parameters_id`),
+  CONSTRAINT `simulation_run_schedule_fk` FOREIGN KEY (`simulation_parameters_id`) REFERENCES `simulation_parameters` (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=5380 DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
@@ -148,7 +148,7 @@ CREATE TABLE `schedules` (
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2012-08-21 19:00:38
+-- Dump completed on 2012-08-22 20:34:42
 -- MySQL dump 10.13  Distrib 5.1.57, for apple-darwin10.3.0 (i386)
 --
 -- Host: localhost    Database: siver_production
@@ -185,7 +185,7 @@ CREATE TABLE `migrations` (
 
 LOCK TABLES `migrations` WRITE;
 /*!40000 ALTER TABLE `migrations` DISABLE KEYS */;
-INSERT INTO `migrations` VALUES (0),(1),(2),(3),(4);
+INSERT INTO `migrations` VALUES (0),(1),(2),(3),(4),(5),(6);
 /*!40000 ALTER TABLE `migrations` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -198,4 +198,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2012-08-21 19:00:38
+-- Dump completed on 2012-08-22 20:34:42
