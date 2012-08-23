@@ -15,7 +15,8 @@ public abstract class LaneObservation extends AbstractObservation {
 
 	public class Blockage {
 		private Double max_relative_speed, min_relative_speed;
-		Integer edges_away;
+		private Integer edges_away;
+		private LaneEdge blocked_edge;
 
 		public Integer getEdgesAway() {
 			return edges_away;
@@ -40,6 +41,14 @@ public abstract class LaneObservation extends AbstractObservation {
 		public void setMinRelativeSpeed(Double min_relative_speed) {
 			this.min_relative_speed = min_relative_speed;
 		}
+
+		public LaneEdge getBlockedEdge() {
+			return blocked_edge;
+		}
+
+		public void setBlockedEdge(LaneEdge blocked_edge) {
+			this.blocked_edge = blocked_edge;
+		}
 	}
 
 	public LaneObservation(CoxObservations obs, Cox cox, Boat boat,
@@ -63,11 +72,14 @@ public abstract class LaneObservation extends AbstractObservation {
 	protected void calculateValue() {
 		value = new Blockage();
 		Blockage cast_value = (Blockage) value;
+		
 		try {
+			cast_value.setBlockedEdge(getVision().blockedEdge(getLane(), getInfront()));
 			cast_value.setEdgesAway((Integer) getVision().edgesOfClearRiver(getLane(),getInfront()));
 		} catch (NoLaneFound e) {
-			//if there is no lane, then set value to 0
+			//if there is no lane, then set edges away to 0 and blocked edge to null
 			cast_value.setEdgesAway(0);
+			cast_value.setBlockedEdge(null);
 		}
 		
 		ArrayList<Double> speeds = collectSpeeds();
