@@ -16,7 +16,7 @@ public class Cox {
 	//The boat the cox is controlling.
 	protected Boat boat;
 	
-	//how fast the boat would like to be travelling
+	//how fast and how far the boat would like to travel
 	private int desired_gear;
 	private double distance_to_cover;
 	
