@@ -22,7 +22,7 @@ public abstract class LaneObservation extends AbstractObservation {
 			return edges_away;
 		}
 
-		public void setEdgesAway(Integer edges_away) {
+		private void setEdgesAway(Integer edges_away) {
 			this.edges_away = edges_away;
 		}
 
@@ -30,7 +30,7 @@ public abstract class LaneObservation extends AbstractObservation {
 			return max_relative_speed;
 		}
 
-		public void setMaxRelativeSpeed(Double max_relative_speed) {
+		private void setMaxRelativeSpeed(Double max_relative_speed) {
 			this.max_relative_speed = max_relative_speed;
 		}
 
@@ -38,7 +38,7 @@ public abstract class LaneObservation extends AbstractObservation {
 			return min_relative_speed;
 		}
 
-		public void setMinRelativeSpeed(Double min_relative_speed) {
+		private void setMinRelativeSpeed(Double min_relative_speed) {
 			this.min_relative_speed = min_relative_speed;
 		}
 
@@ -46,7 +46,7 @@ public abstract class LaneObservation extends AbstractObservation {
 			return blocked_edge;
 		}
 
-		public void setBlockedEdge(LaneEdge blocked_edge) {
+		private void setBlockedEdge(LaneEdge blocked_edge) {
 			this.blocked_edge = blocked_edge;
 		}
 	}
