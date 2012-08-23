@@ -79,27 +79,25 @@ public class CoxObservations {
 		return (Boolean) retrieveFromObservations(ChangingLane.class);
 	}
 	
-	//these are more complicated
 	
 	public Blockage aheadCurrentLaneLook() throws SecurityException, IllegalArgumentException, NoSuchMethodException, InstantiationException, IllegalAccessException, InvocationTargetException {
 		return (Blockage) retrieveFromObservations(AheadCurrentLane.class);
 	}
 	
-	public boolean nearbyBoatInfront() throws SecurityException, IllegalArgumentException, NoSuchMethodException, InstantiationException, IllegalAccessException, InvocationTargetException {
-		return (Boolean) retrieveFromObservations(NearbyBoatInfront.class);
+	public Blockage aheadLeftLaneLook() throws SecurityException, IllegalArgumentException, NoSuchMethodException, InstantiationException, IllegalAccessException, InvocationTargetException {
+		return (Blockage) retrieveFromObservations(AheadLeftLane.class);
 	}
 	
-	public boolean slowBoatInfront() throws SecurityException, IllegalArgumentException, NoSuchMethodException, InstantiationException, IllegalAccessException, InvocationTargetException {
-		return (Boolean) retrieveFromObservations(SlowBoatInfront.class);
+	public Blockage behindLeftLaneLook() throws SecurityException, IllegalArgumentException, NoSuchMethodException, InstantiationException, IllegalAccessException, InvocationTargetException {
+		return (Blockage) retrieveFromObservations(BehindLeftLane.class);
 	}
 	
-	public boolean laneToLeftIsClear() throws SecurityException, IllegalArgumentException, NoSuchMethodException, InstantiationException, IllegalAccessException, InvocationTargetException {
-		return (Boolean) retrieveFromObservations(LaneToLeftIsClear.class);
+	public Blockage aheadRightLaneLook() throws SecurityException, IllegalArgumentException, NoSuchMethodException, InstantiationException, IllegalAccessException, InvocationTargetException {
+		return (Blockage) retrieveFromObservations(AheadRightLane.class);
 	}
 	
-	public boolean laneToRightIsClear() throws SecurityException, IllegalArgumentException, NoSuchMethodException, InstantiationException, IllegalAccessException, InvocationTargetException {
-		return (Boolean) retrieveFromObservations(LaneToRightIsClear.class);
+	public Blockage behindRightLaneLook() throws SecurityException, IllegalArgumentException, NoSuchMethodException, InstantiationException, IllegalAccessException, InvocationTargetException {
+		return (Blockage) retrieveFromObservations(BehindRightLane.class);
 	}
 	
-		
 }

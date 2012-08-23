@@ -3,10 +3,13 @@ package siver.cox.control_policies;
 import java.lang.reflect.InvocationTargetException;
 
 import siver.cox.actions.*;
+import siver.cox.observations.LaneObservation.Blockage;
 
 public class OvertakingBrain extends CoxBrain {
-	private boolean overtaking = false;
+	private static final double OVERTAKING_SPEED_DIFFERENCE = 1.0;
+	private static final int CLEAR_BOUNDARY = 3;
 	
+	private boolean overtaking = false;
 	
 	@Override
 	protected Class<? extends Action> typeSpecificActionChoice() throws SecurityException, IllegalArgumentException, NoSuchMethodException, InstantiationException, IllegalAccessException, InvocationTargetException {
@@ -20,7 +23,7 @@ public class OvertakingBrain extends CoxBrain {
 		if(latestObservations.aboveDesiredSpeed()) {
 			return SlowDown.class;
 		}
-		if(latestObservations.slowBoatInfront() && latestObservations.laneToLeftIsClear()) {
+		if(slowBoatInfront() && laneToLeftIsClear()) {
 			overtaking = true;
 			return MoveToLaneOnLeft.class;
 		}
@@ -31,7 +34,7 @@ public class OvertakingBrain extends CoxBrain {
 	}
 	
 	private Class<? extends Action> overtakingActionChoice() throws SecurityException, IllegalArgumentException, NoSuchMethodException, InstantiationException, IllegalAccessException, InvocationTargetException {
-		if(latestObservations.laneToRightIsClear() && !latestObservations.changingLane()) {
+		if(laneToRightIsClear() && !latestObservations.changingLane()) {
 			overtaking = false;
 			return MoveToLaneOnRight.class;
 		}
@@ -49,6 +52,24 @@ public class OvertakingBrain extends CoxBrain {
 			return LetBoatRun.class;
 		}
 		throw new RuntimeException("No action chosen by brain. Something has gone very wrong");
+	}
+	
+	private boolean slowBoatInfront() throws SecurityException, IllegalArgumentException, NoSuchMethodException, InstantiationException, IllegalAccessException, InvocationTargetException {
+		Blockage blockage = latestObservations.aheadCurrentLaneLook();
+		return blockage.getMaxRelativeSpeed() > OVERTAKING_SPEED_DIFFERENCE;
+	}
+	
+	private boolean laneToLeftIsClear() throws SecurityException, IllegalArgumentException, NoSuchMethodException, InstantiationException, IllegalAccessException, InvocationTargetException {
+		Blockage aheadLeftblockage = latestObservations.aheadLeftLaneLook();
+		Blockage behindLeftblockage = latestObservations.behindLeftLaneLook();
+		return (aheadLeftblockage.getEdgesAway() >= CLEAR_BOUNDARY) && (behindLeftblockage.getEdgesAway() >= CLEAR_BOUNDARY); 
+				
+	}
+	
+	private boolean laneToRightIsClear() throws SecurityException, IllegalArgumentException, NoSuchMethodException, InstantiationException, IllegalAccessException, InvocationTargetException {
+		Blockage aheadRightblockage = latestObservations.aheadRightLaneLook();
+		Blockage behindRightblockage = latestObservations.behindRightLaneLook();
+		return (aheadRightblockage.getEdgesAway() >= CLEAR_BOUNDARY) && (behindRightblockage.getEdgesAway() >= CLEAR_BOUNDARY);
 	}
 
 }
