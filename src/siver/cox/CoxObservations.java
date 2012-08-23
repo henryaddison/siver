@@ -7,6 +7,7 @@ import java.util.HashMap;
 import siver.boat.Boat;
 import siver.boat.BoatNavigation;
 import siver.cox.observations.*;
+import siver.cox.observations.LaneObservation.Blockage;
 
 public class CoxObservations {
 	private Cox cox;
@@ -76,6 +77,12 @@ public class CoxObservations {
 	
 	public boolean changingLane() throws SecurityException, IllegalArgumentException, NoSuchMethodException, InstantiationException, IllegalAccessException, InvocationTargetException {
 		return (Boolean) retrieveFromObservations(ChangingLane.class);
+	}
+	
+	//these are more complicated
+	
+	public Blockage aheadCurrentLaneLook() throws SecurityException, IllegalArgumentException, NoSuchMethodException, InstantiationException, IllegalAccessException, InvocationTargetException {
+		return (Blockage) retrieveFromObservations(AheadCurrentLane.class);
 	}
 	
 	public boolean nearbyBoatInfront() throws SecurityException, IllegalArgumentException, NoSuchMethodException, InstantiationException, IllegalAccessException, InvocationTargetException {
