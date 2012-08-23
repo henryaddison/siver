@@ -173,7 +173,7 @@ public class BoatNavigationTest {
 		LaneEdge mockEdge= createMock(LaneEdge.class);
 		
 		assertTrue(!cl.changingLane());
-		LaneChangeEdge change_edge = new LaneChangeEdge(new LaneNode(10,10,river.upstream_lane()), new LaneNode(30,20, river.upstream_lane()), mockEdge , mockEdge);
+		LaneChangeEdge change_edge = new LaneChangeEdge(new TemporaryLaneNode(10,10,river.upstream_lane()), new TemporaryLaneNode(30,20, river.upstream_lane()), mockEdge , mockEdge);
 		
 		Boat boat = cox.getBoat();
 		boat.steerToward(change_edge.getNextNode(false).getLocation());

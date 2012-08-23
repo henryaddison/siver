@@ -44,8 +44,8 @@ public class LaneChangeEdgeTest extends EdgeTester {
 		
 		replay(mockLane);
 		
-		LaneNode s = new LaneNode(0,0,mockLane);
-		LaneNode d = new LaneNode(3,4,mockLane);
+		LaneNode s = new TemporaryLaneNode(0,0,mockLane);
+		LaneNode d = new TemporaryLaneNode(3,4,mockLane);
 		e = new LaneChangeEdge(s,d, sLEdge, dLEdge);
 	}
 

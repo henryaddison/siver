@@ -33,29 +33,31 @@ public class LaneNodeTest {
 
 	@Test
 	public void testLaneNodeDoubleDouble() {
-		LaneNode ln = new LaneNode(1.5, 6.7, null);
+		LaneNode ln = new LaneNode(1.5, 6.7, null,true);
 		assertEquals(new Point2D.Double(1.5,6.7), ln.getLocation());
+		assertTrue(ln.blocksVision());
 	}
 
 	@Test
 	public void testLaneNodeDouble() {
 		Point2D.Double exp_loc = new Point2D.Double(1.5,6.7);
-		LaneNode ln = new LaneNode(exp_loc, null);
+		LaneNode ln = new LaneNode(exp_loc, null, false);
 		assertEquals(exp_loc, ln.getLocation());
+		assertFalse(ln.blocksVision());
 	}
 	
 	@Test
 	public void testLaneNodeNdPoint() {
 		Point2D.Double exp_loc = new Point2D.Double(1.5,6.7);
 		NdPoint pt = new NdPoint(1.5, 6.7);
-		LaneNode ln = new LaneNode(pt, null);
+		LaneNode ln = new LaneNode(pt, null, false);
 		assertEquals(exp_loc, ln.getLocation());
 	}
 
 	@Test
 	public void testDistance() {
-		LaneNode ln = new LaneNode(0,0,null);
-		LaneNode otherln = new LaneNode(3,4,null);
+		LaneNode ln = new LaneNode(0,0,null, false);
+		LaneNode otherln = new LaneNode(3,4,null, false);
 		assertEquals(0, ln.distance(ln), 1E-5);
 		assertEquals(5, ln.distance(otherln), 1E-5);
 		assertEquals(5, otherln.distance(ln), 1E-5);
@@ -64,20 +66,20 @@ public class LaneNodeTest {
 	@Test
 	public void testLaneNodeWithLane() {
 		Lane testLane = new Lane(new LaneContext("Test Context"), "Test lane");
-		LaneNode ln = new LaneNode(1,2, testLane);
+		LaneNode ln = new LaneNode(1,2, testLane, false);
 		assertEquals(testLane, ln.getLane());
 	}
 	
 	@Test
 	public void testLaneNodeDoubleWithLane() {
 		Lane testLane = new Lane(new LaneContext("Test Context"), "Test lane");
-		LaneNode ln = new LaneNode(new Point2D.Double(12,13), testLane);
+		LaneNode ln = new LaneNode(new Point2D.Double(12,13), testLane, false);
 		assertEquals(testLane, ln.getLane());
 	}
 	
 	@Test
 	public void testDistanceToNdPoint() {
-		LaneNode ln = new LaneNode(0,0,null);
+		LaneNode ln = new LaneNode(0,0,null, false);
 		NdPoint pt = new NdPoint(3,4);
 		NdPoint otherpt = new NdPoint(-3,-4);
 		NdPoint anotherpt = new NdPoint(10,0);
@@ -92,7 +94,7 @@ public class LaneNodeTest {
 	
 	@Test
 	public void testToNdPoint() {
-		LaneNode ln = new LaneNode(3,5,null);
+		LaneNode ln = new LaneNode(3,5,null, false);
 		
 		assertEquals(new NdPoint(3,5), ln.toNdPoint());
 	}

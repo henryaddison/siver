@@ -88,7 +88,7 @@ public class Lane extends OutlinedArea {
 	public void start(Point2D.Double start) {
 		bottom.add(new Point2D.Double(start.getX(), start.getY() - width ));
 		top.add(new Point2D.Double(start.getX(), start.getY() + width ));
-		startNode = new LaneNode(start, this);
+		startNode = new LaneNode(start, this, false);
 		lastAddedNode = startNode;
 		context.add(startNode);
 		started = true;
@@ -113,7 +113,7 @@ public class Lane extends OutlinedArea {
 	 * @throws UnstartedLaneException
 	 * @throws CompletedLaneException 
 	 */
-	public void extend(double heading) throws UnstartedLaneException, CompletedLaneException {
+	public void extend(double heading, boolean blocksVision) throws UnstartedLaneException, CompletedLaneException {
 		if(!started) {
 			throw new UnstartedLaneException("Cannot add a point when the Lane has not been started");
 		}
@@ -136,10 +136,14 @@ public class Lane extends OutlinedArea {
 		top.add(next_top);
 		
 		bottom.add(next_bottom);
-		LaneNode next = new LaneNode(next_mid, this);
+		LaneNode next = new LaneNode(next_mid, this, blocksVision);
 		context.add(next);
 		net.addEdge(lastAddedNode, next);
 		lastAddedNode = next;
+	}
+	
+	public void extend(double heading) throws UnstartedLaneException, CompletedLaneException {
+		extend(heading, false);
 	}
 	
 	//GRAPH HELPERS

@@ -15,20 +15,26 @@ public class LaneNode {
 	// a node has a location in the world
 	protected Point2D.Double location;
 	protected Lane lane;
+	private boolean blocksVision;
 	
-	public LaneNode(double x, double y, Lane l) {
-		location = new Point2D.Double(x,y);
-		lane = l;
+	
+	public LaneNode(double x, double y, Lane l, boolean visionBlocker) {
+		setupProperties(new Point2D.Double(x,y), l, visionBlocker);
+		
 	}
 	
-	public LaneNode(Point2D.Double loc, Lane lan) {
-		location = loc;
-		lane = lan;
+	public LaneNode(Point2D.Double loc, Lane lane, boolean visionBlocker) {
+		setupProperties(loc, lane, visionBlocker);
 	}
 	
-	public LaneNode(NdPoint loc, Lane lan) {
-		location = new Point2D.Double(loc.getX(), loc.getY());
-		lane = lan;
+	public LaneNode(NdPoint loc, Lane lane, boolean visionBlocker) {
+		setupProperties(new Point2D.Double(loc.getX(), loc.getY()), lane, visionBlocker);
+	}
+	
+	private void setupProperties(Point2D.Double loc, Lane l, boolean visionBlocker) {
+		this.location = loc;
+		this.lane = l;
+		this.blocksVision=visionBlocker;
 	}
 	
 	/**
@@ -72,5 +78,9 @@ public class LaneNode {
 	
 	public boolean isTemporary() {
 		return false;
+	}
+	
+	public boolean blocksVision() {
+		return blocksVision;
 	}
 }

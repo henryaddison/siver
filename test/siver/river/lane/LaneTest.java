@@ -181,7 +181,7 @@ public class LaneTest {
 		startedL.extend(0);
 		LaneNode first = startedL.getStartNode();
 		LaneNode second = startedL.getNextEdge(first, false).getTarget();
-		LaneNode tempNode = new LaneNode(50,50, startedL);
+		LaneNode tempNode = new LaneNode(50,50, startedL, false);
 		LaneChangeEdge temp_edge = new LaneChangeEdge(second, tempNode, null, null);
 		startedL.getContext().add(tempNode);
 		
@@ -233,7 +233,7 @@ public class LaneTest {
 		startedL.extend(0);
 		LaneNode first = startedL.getStartNode();
 		LaneNode second = startedL.getNextEdge(first, false).getTarget();
-		LaneNode tempNode = new LaneNode(50,50, startedL);
+		LaneNode tempNode = new LaneNode(50,50, startedL, false);
 		LaneChangeEdge temp_edge = new LaneChangeEdge(second, tempNode, null, null);
 		startedL.getContext().add(tempNode);
 		
