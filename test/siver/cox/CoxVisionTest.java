@@ -62,7 +62,8 @@ public class CoxVisionTest {
 		expect(mboat.getLocation()).andReturn(new NdPoint(10,10)).times(4);
 		
 		replay(mboat, mcox, mnav);
-		CoxVision vc = CoxVision.look(mcox, mboat, mnav);
+		CoxVision vc = new CoxVision(mcox, mboat, mnav);
+		vc.lookEverywhere();
 		verify(mboat, mcox, mnav);
 		reset(mboat, mcox, mnav);
 		return vc;
@@ -141,9 +142,6 @@ public class CoxVisionTest {
 	
 	@Test
 	public void testCantSeePastBlockingNodes() throws NoNextNode {
-		CoxVision vc = look();
-		assertEquals(4, vc.edgesOfClearRiver(r.middle_lane(), true));
-		
 		LaneNode nextNode = r.middle_lane().getNthNodeAhead(r.middle_lane().getStartNode(), false, 2);
 		assertFalse(nextNode.blocksVision());
 		nextNode.setBlocksVision(true);

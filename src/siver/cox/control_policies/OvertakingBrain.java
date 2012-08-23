@@ -1,5 +1,7 @@
 package siver.cox.control_policies;
 
+import java.lang.reflect.InvocationTargetException;
+
 import siver.cox.actions.*;
 
 public class OvertakingBrain extends CoxBrain {
@@ -7,7 +9,7 @@ public class OvertakingBrain extends CoxBrain {
 	
 	
 	@Override
-	protected Class<? extends Action> typeSpecificActionChoice() {
+	protected Class<? extends Action> typeSpecificActionChoice() throws SecurityException, IllegalArgumentException, NoSuchMethodException, InstantiationException, IllegalAccessException, InvocationTargetException {
 		if(latestObservations.atRiversEnd()) {
 			overtaking = false;
 			return Spin.class;
@@ -28,7 +30,7 @@ public class OvertakingBrain extends CoxBrain {
 		throw new RuntimeException("No action chosen by brain. Something has gone very wrong");
 	}
 	
-	private Class<? extends Action> overtakingActionChoice() {
+	private Class<? extends Action> overtakingActionChoice() throws SecurityException, IllegalArgumentException, NoSuchMethodException, InstantiationException, IllegalAccessException, InvocationTargetException {
 		if(latestObservations.laneToRightIsClear() && !latestObservations.changingLane()) {
 			overtaking = false;
 			return MoveToLaneOnRight.class;
@@ -39,7 +41,7 @@ public class OvertakingBrain extends CoxBrain {
 		throw new RuntimeException("No action chosen by brain. Something has gone very wrong");
 	}
 	
-	private Class<? extends Action> continueInLaneChoice() {
+	private Class<? extends Action> continueInLaneChoice() throws SecurityException, IllegalArgumentException, NoSuchMethodException, InstantiationException, IllegalAccessException, InvocationTargetException {
 		if(latestObservations.belowDesiredSpeed()) {
 			return SpeedUp.class;
 		}

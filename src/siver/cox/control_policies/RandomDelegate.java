@@ -40,7 +40,7 @@ public class RandomDelegate extends CoxBrain {
 	}
 
 	@Override
-	protected Class<? extends Action> typeSpecificActionChoice() {
+	protected Class<? extends Action> typeSpecificActionChoice() throws SecurityException, IllegalArgumentException, NoSuchMethodException, InstantiationException, IllegalAccessException, InvocationTargetException {
 		return delegate.chooseAction();
 	}
 	

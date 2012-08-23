@@ -1,10 +1,12 @@
 package siver.cox.control_policies;
 
+import java.lang.reflect.InvocationTargetException;
+
 import siver.cox.actions.*;
 
 public class BasicBrain extends CoxBrain {
 	@Override
-	protected Class<? extends Action> typeSpecificActionChoice() {
+	protected Class<? extends Action> typeSpecificActionChoice() throws SecurityException, IllegalArgumentException, NoSuchMethodException, InstantiationException, IllegalAccessException, InvocationTargetException {
 		if(latestObservations.atRiversEnd()) {
 			return Spin.class;
 		}

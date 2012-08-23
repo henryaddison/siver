@@ -3,6 +3,8 @@ package siver.cox;
 import static org.easymock.EasyMock.*;
 import static org.junit.Assert.*;
 
+import java.lang.reflect.InvocationTargetException;
+
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
@@ -75,37 +77,37 @@ public class CoxObservationsTest {
 	}
 	
 	@Test
-	public void testTravellingTooSlowly() {
+	public void testTravellingTooSlowly()  throws NoNextNode, SecurityException, IllegalArgumentException, NoSuchMethodException, InstantiationException, IllegalAccessException, InvocationTargetException {
 		expect(mcox.desired_gear()).andStubReturn(5);
 		expect(mboat.getGear()).andReturn(2).once();
 		
 		replayMocks();
-		obs.freezeBelowDesiredSpeed();
 		assertTrue(obs.belowDesiredSpeed());
 		verifyAndResetMocks();
-		
+	}
+	
+	@Test
+	public void testTravellingQuicklyEnoughSlowly() throws SecurityException, IllegalArgumentException, NoSuchMethodException, InstantiationException, IllegalAccessException, InvocationTargetException {
 		expect(mcox.desired_gear()).andStubReturn(5);
 		expect(mboat.getGear()).andReturn(9).once();
 		
 		replayMocks();
-		obs.freezeBelowDesiredSpeed();
 		assertFalse(obs.belowDesiredSpeed());
 		verifyAndResetMocks();
 	}
 	
 	@Test
-	public void testOutingOverNotCoveredDistance() throws NoNextNode {
+	public void testOutingOverNotCoveredDistance() throws NoNextNode, SecurityException, IllegalArgumentException, NoSuchMethodException, InstantiationException, IllegalAccessException, InvocationTargetException {
 		expect(mcox.getGoalDistance()).andReturn(1000.0).once();
 		expect(mboat.total_distance_covered()).andReturn(0.0).once();
 		
 		replayMocks();
-		obs.freezeOutingOver();
-		verifyAndResetMocks();
 		assertFalse(obs.outingComplete());
+		verifyAndResetMocks();
 	}
 	
 	@Test
-	public void testOutingOverNotBackAtBoatHouse() throws NoNextNode {
+	public void testOutingOverNotBackAtBoatHouse() throws NoNextNode, SecurityException, IllegalArgumentException, NoSuchMethodException, InstantiationException, IllegalAccessException, InvocationTargetException {
 		expect(mcox.getGoalDistance()).andReturn(1000.0).once();
 		expect(mboat.total_distance_covered()).andReturn(2000.0).once();
 		Lane l = r.downstream_lane();
@@ -115,13 +117,12 @@ public class CoxObservationsTest {
 		expect(mnav.getLane()).andReturn(l);
 		
 		replayMocks();
-		obs.freezeOutingOver();
-		verifyAndResetMocks();
 		assertFalse(obs.outingComplete());
+		verifyAndResetMocks();
 	}
 	
 	@Test
-	public void testOutingOver() {
+	public void testOutingOver() throws SecurityException, IllegalArgumentException, NoSuchMethodException, InstantiationException, IllegalAccessException, InvocationTargetException {
 		expect(mcox.getGoalDistance()).andReturn(1000.0).once();
 		expect(mboat.total_distance_covered()).andReturn(2000.0).once();
 		Lane l = r.downstream_lane();
@@ -131,8 +132,7 @@ public class CoxObservationsTest {
 		expect(mnav.getLane()).andReturn(l);
 		
 		replayMocks();
-		obs.freezeOutingOver();
-		verifyAndResetMocks();
 		assertTrue(obs.outingComplete());
+		verifyAndResetMocks();
 	}
 }

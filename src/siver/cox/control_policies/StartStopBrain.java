@@ -1,12 +1,14 @@
 package siver.cox.control_policies;
 
+import java.lang.reflect.InvocationTargetException;
+
 import siver.cox.actions.*;
 
 public class StartStopBrain extends CoxBrain {
 	private boolean speedUp = true;
 	
 	@Override
-	public Class<? extends Action> typeSpecificActionChoice() {
+	public Class<? extends Action> typeSpecificActionChoice() throws SecurityException, IllegalArgumentException, NoSuchMethodException, InstantiationException, IllegalAccessException, InvocationTargetException {
 		if(latestObservations.atRiversEnd()) {
 			return Spin.class;
 		}

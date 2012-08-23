@@ -1,205 +1,98 @@
 package siver.cox;
 
+import java.lang.reflect.Constructor;
+import java.lang.reflect.InvocationTargetException;
 import java.util.HashMap;
 
 import siver.boat.Boat;
 import siver.boat.BoatNavigation;
-import siver.river.River.NoLaneFound;
-import siver.river.lane.Lane;
-import siver.river.lane.LaneEdge;
-import siver.river.lane.LaneNode;
+import siver.cox.observations.*;
 
 public class CoxObservations {
 	private Cox cox;
 	private Boat boat;
 	private BoatNavigation navigator;
 	
-	private static final int CLEAR_BOUNDARY = 3;
-	private static final double OVERTAKING_SPEED_DIFFERENCE = 1.0;
-	
-	private HashMap<String, Boolean> frozen_observations;
+	OutingComplete outingComplete;
 	
 	private CoxVision vision;
-	private static final String 
-		outingComplete="outingComplete", 
-		atRiversEnd="atRiversEnd", 
-		belowDesiredSpeed="belowDesiredSpeed", 
-		aboveDesiredSpeed="aboveDesiredSpeed", 
-		slowBoatInfront="slowBoatInfront", 
-		changingLane="changingLane", 
-		laneToRightIsClear="laneToRightIsClear", 
-		laneToLeftIsClear="laneToLeftIsClear",
-		nearbyBoatInfront = "nearbyBoatInfront";
+	
+	private static HashMap<Class<AbstractObservation>, AbstractObservation> observations;
+
 	
 	public CoxObservations(Cox cox, Boat boat, BoatNavigation navigator) {
 		this.cox = cox;
 		this.boat = boat;
 		this.navigator = navigator;
-		frozen_observations = new HashMap<String, Boolean>();
+		observations = new HashMap<Class<AbstractObservation>, AbstractObservation>();
 	}
 	
 	public static CoxObservations make(Cox cox, Boat boat, BoatNavigation navigator) {
 		CoxObservations obs = new CoxObservations(cox, boat, navigator);
 		
-		obs.freeze();
-		
 		return obs;
 	}
 	
-	public Integer boatGear() {
-		return boat.getGear();
-	}
-	
-	public Boolean outingComplete() {
-		return retrieveFrozenObservation(outingComplete);
-	}
-	
-	public boolean atRiversEnd() {
-		return retrieveFrozenObservation(atRiversEnd);
-	}
-	
-	public boolean belowDesiredSpeed() {
-		return retrieveFrozenObservation(belowDesiredSpeed);
-	}
-	
-	public boolean aboveDesiredSpeed() {
-		return retrieveFrozenObservation(aboveDesiredSpeed);
-	}
-	
-	public boolean changingLane() {
-		return retrieveFrozenObservation(changingLane);
-	}
-	
-	public boolean nearbyBoatInfront() {
-		return retrieveFrozenObservation(nearbyBoatInfront);
-	}
-	
-	public boolean slowBoatInfront() {
-		return retrieveFrozenObservation(slowBoatInfront);
-	}
-	
-	public boolean laneToLeftIsClear() {
-		return retrieveFrozenObservation(laneToLeftIsClear);
-	}
-	
-	public boolean laneToRightIsClear() {
-		return retrieveFrozenObservation(laneToRightIsClear);
-	}
-	
-	private void freeze() {
-		freezeVision(CoxVision.look(cox, boat, navigator));
-		freezeOutingOver();
-		freezeAtRiversEnd();
-		freezeBelowDesiredSpeed();
-		freezeAboveDesiredSpeed();
-		freezeChangingLane();
-		freezeNearbyBoatInfront();
-		freezeSlowBoatInfront();
-		freezeLaneToLeftIsClear();
-		freezeLaneToRightIsClear();
-	}
-	
-	protected void freezeVision(CoxVision sight) {
-		this.vision = sight;
-	}
-	
-	protected void freezeOutingOver() {
-		Boolean value = (boat.total_distance_covered() >= cox.getGoalDistance()) && (navigator.getDestinationNode().equals(navigator.getLane().getStartNode()));
-		frozen_observations.put(outingComplete, value);
-	}
-	
-	protected void freezeAtRiversEnd() { 
-		LaneNode node = navigator.getDestinationNode();
-		LaneEdge next_edge = node.getLane().getNextEdge(node, navigator.headingUpstream());
-		Boolean value = (next_edge == null);
-		frozen_observations.put(atRiversEnd, value);
-	}
-	
-	protected void freezeBelowDesiredSpeed() {
-		Boolean value = boat.getGear() < cox.desired_gear();
-		frozen_observations.put(belowDesiredSpeed, value);
-	}
-	
-	protected void freezeAboveDesiredSpeed() {
-		Boolean value = boat.getGear() > cox.desired_gear();
-		frozen_observations.put(aboveDesiredSpeed, value);
-	}
-	
-	protected void freezeChangingLane() {
-		Boolean value = navigator.changingLane();;
-		frozen_observations.put(changingLane, value);
-	}
-	
-	protected void freezeNearbyBoatInfront() {
-		//check that cannot see as far as CLEAR_BOUNDARY and that the limiting factor is a blocked edge (not the end of the river)
-		Boolean value = (vision.edgesOfClearRiver(navigator.getLane(), true) < CLEAR_BOUNDARY) && 
-				(vision.blockedEdge(navigator.getLane(), true) != null);
-		frozen_observations.put(nearbyBoatInfront, value);
-	}
-	
-	protected void freezeSlowBoatInfront() {
-		frozen_observations.put(slowBoatInfront, calculateSlowBoatInfront());
-	}
-	
-	protected void freezeLaneToLeftIsClear() {
-		frozen_observations.put(laneToLeftIsClear, calculateLaneToLeftIsClear());
-	}
-	
-	protected void freezeLaneToRightIsClear() {
-		frozen_observations.put(laneToRightIsClear, calculateLaneToRightIsClear());
-	}
-	
-	private boolean calculateSlowBoatInfront() {
-		LaneEdge occupiedEdgeAhead = (LaneEdge) vision.blockedEdge(navigator.getLane(),true);
-		if(occupiedEdgeAhead == null) {
-			// return false if there is no occupied edge ahead
-			return false;
+	public CoxVision getVision() {
+		if(vision == null) {
+			this.setVision(new CoxVision(cox, boat, navigator));
 		}
+		return vision;
+	}
+
+	private void setVision(CoxVision vision) {
+		this.vision = vision;
+	}
+	
+	private Object retrieveFromObservations(Class<? extends AbstractObservation> klass) throws SecurityException, NoSuchMethodException, IllegalArgumentException, InstantiationException, IllegalAccessException, InvocationTargetException {
+		if(observations.get(klass) == null) {
+			Constructor<? extends AbstractObservation> cons = klass.getConstructor(CoxObservations.class, Cox.class, Boat.class, BoatNavigation.class);
+			AbstractObservation instance = cons.newInstance(this, cox, boat, navigator);
+			observations.put((Class<AbstractObservation>) klass, instance);
+		}
+		return observations.get(klass).getValue();
 		
-		for(Cox coxInfront : occupiedEdgeAhead.getCoxes()) {			
-			if(cox.getNavigator().headingUpstream() == coxInfront.getNavigator().headingUpstream()) {
-				//if boats are travelling in the same direction then want the difference in their speeds to be greater than limit
-				return (boat.getSpeed() - coxInfront.getBoat().getSpeed()) > OVERTAKING_SPEED_DIFFERENCE;
-			} else {
-				//if boats are travelling in the different direction then want the sum of their speeds to be greater than limit
-				return (boat.getSpeed() + coxInfront.getBoat().getSpeed()) > OVERTAKING_SPEED_DIFFERENCE;
-			}
-			
-		}
-		return false;
 	}
 	
-	private boolean calculateLaneToLeftIsClear() {
-		try {
-			Lane laneToLeft = boat.getRiver().getLaneToLeftOf(navigator.getLane(), navigator.headingUpstream());
-			return laneIsClear(laneToLeft);
-		} catch (NoLaneFound e) {
-			//if there is no lane to the left, then it is not clear
-			return false;
-		}
+	public Integer boatGear() throws SecurityException, IllegalArgumentException, NoSuchMethodException, InstantiationException, IllegalAccessException, InvocationTargetException {
+		return (Integer) retrieveFromObservations(BoatGear.class);
 	}
 	
-	private boolean calculateLaneToRightIsClear() {
-		try {
-			Lane laneToRight = boat.getRiver().getLaneToRightOf(navigator.getLane(), navigator.headingUpstream());
-			return laneIsClear(laneToRight);
-		} catch (NoLaneFound e) {
-			//if there is no lane to the left, then it is not clear
-			return false;
-		}
+	public Boolean outingComplete() throws SecurityException, IllegalArgumentException, NoSuchMethodException, InstantiationException, IllegalAccessException, InvocationTargetException {
+		return (Boolean) retrieveFromObservations(OutingComplete.class);
 	}
 	
-	private boolean laneIsClear(Lane lane) {
-		//return true only if there's nothing ahead and nothing behind
-		//very simplistic at the moment, only checks existence, not relative speed
-		return (vision.edgesOfClearRiver(lane, true) >= CLEAR_BOUNDARY) && 
-				(vision.edgesOfClearRiver(lane, false) >= CLEAR_BOUNDARY);
+	public boolean atRiversEnd() throws SecurityException, IllegalArgumentException, NoSuchMethodException, InstantiationException, IllegalAccessException, InvocationTargetException {
+		return (Boolean) retrieveFromObservations(AtRiverEnd.class);
 	}
 	
-	private Boolean retrieveFrozenObservation(String key) {
-		Boolean output = frozen_observations.get(key);
-		if(output == null) throw new NullPointerException(key + " has not been set");
-		return output;
+	public boolean belowDesiredSpeed() throws SecurityException, IllegalArgumentException, NoSuchMethodException, InstantiationException, IllegalAccessException, InvocationTargetException {
+		return (Boolean) retrieveFromObservations(BelowDesiredSpeed.class);
 	}
 	
+	public boolean aboveDesiredSpeed() throws SecurityException, IllegalArgumentException, NoSuchMethodException, InstantiationException, IllegalAccessException, InvocationTargetException {
+		return (Boolean) retrieveFromObservations(AboveDesiredSpeed.class);
+	}
+	
+	public boolean changingLane() throws SecurityException, IllegalArgumentException, NoSuchMethodException, InstantiationException, IllegalAccessException, InvocationTargetException {
+		return (Boolean) retrieveFromObservations(ChangingLane.class);
+	}
+	
+	public boolean nearbyBoatInfront() throws SecurityException, IllegalArgumentException, NoSuchMethodException, InstantiationException, IllegalAccessException, InvocationTargetException {
+		return (Boolean) retrieveFromObservations(NearbyBoatInfront.class);
+	}
+	
+	public boolean slowBoatInfront() throws SecurityException, IllegalArgumentException, NoSuchMethodException, InstantiationException, IllegalAccessException, InvocationTargetException {
+		return (Boolean) retrieveFromObservations(SlowBoatInfront.class);
+	}
+	
+	public boolean laneToLeftIsClear() throws SecurityException, IllegalArgumentException, NoSuchMethodException, InstantiationException, IllegalAccessException, InvocationTargetException {
+		return (Boolean) retrieveFromObservations(LaneToLeftIsClear.class);
+	}
+	
+	public boolean laneToRightIsClear() throws SecurityException, IllegalArgumentException, NoSuchMethodException, InstantiationException, IllegalAccessException, InvocationTargetException {
+		return (Boolean) retrieveFromObservations(LaneToRightIsClear.class);
+	}
+	
+		
 }

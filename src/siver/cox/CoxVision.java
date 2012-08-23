@@ -31,30 +31,26 @@ public class CoxVision {
 		}
 	}
 	
-	public static CoxVision look(Cox cox, Boat boat, BoatNavigation navigator) {
-		CoxVision sight = new CoxVision(cox, boat, navigator);
-		sight.look();
-		
-		return sight;
-	}
-	
 	public int edgesOfClearRiver(Lane lane, boolean infront) {
-		check(lane, infront);
-		return (Integer) vision.get(lane).get(infront).get(VISION_DISTANCE_KEY);
+		return (Integer) getVisionCorridor(lane, infront).get(VISION_DISTANCE_KEY);
 	}
 	
 	public LaneEdge blockedEdge(Lane lane, boolean infront) {
-		check(lane, infront);
-		return (LaneEdge) vision.get(lane).get(infront).get(BLOCKED_EDGE_KEY);
+		return (LaneEdge) getVisionCorridor(lane, infront).get(BLOCKED_EDGE_KEY);
+		
 	}
 	
-	private void check(Lane lane, boolean infront) {
-		if(vision.get(lane) == null) throw new NullPointerException("lane not set");
-		if(vision.get(lane).get(infront) == null) throw new NullPointerException("direction not set");
+	private HashMap<String,Object> getVisionCorridor(Lane lane, boolean infront) {
+		if(vision.get(lane).get(infront) == null) {
+			look(lane, infront);
+		}
+		return vision.get(lane).get(infront);
 	}
 	
-	private void look() {
-		for(Lane lane : vision.keySet()) {
+	public void lookEverywhere() {
+		ArrayList<Lane> all_lanes = SiverContextCreator.getRiver().getLanes();
+		for(Lane lane : all_lanes) {
+			this.vision.put(lane, new HashMap<Boolean, HashMap<String,Object>>());
 			look(lane, true);
 			look(lane, false);
 		}
@@ -79,10 +75,6 @@ public class CoxVision {
 		sees.put(BLOCKED_EDGE_KEY, null);
 		sees.put(VISION_DISTANCE_KEY, edges_ahead);
 		while(edges_ahead < MAX_VIEWING_DISTANCE) {
-			//if the node ahead blocks vision, then stop the look now - no blocked edge but viewing distance is restricted
-			if(node.blocksVision()) {
-				return;
-			}
 			LaneEdge edge = node.getLane().getNextEdge(node, (infront == upstream));
 			//if there is no further edge then there no blocked edge infront but viewing distance is restricted (because we're at the end of the river)
 			if(edge == null) {
