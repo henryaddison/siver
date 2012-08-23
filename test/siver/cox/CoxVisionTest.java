@@ -21,15 +21,14 @@ import siver.river.lane.LaneNode;
 import siver.river.lane.LaneTest;
 
 public class CoxVisionTest {
-	private static River r;
+	private River r;
 	Boat mboat;
 	Cox mcox;
 	BoatNavigation mnav;
 	
 	@BeforeClass
 	public static void setUpBeforeClass() throws Exception {
-		r = LaneTest.setupRiver();
-		SiverContextCreator.setRiver(r);
+		
 	}
 
 	@AfterClass
@@ -38,6 +37,8 @@ public class CoxVisionTest {
 
 	@Before
 	public void setUp() throws Exception {
+		r = LaneTest.setupRiver();
+		SiverContextCreator.setRiver(r);
 		mboat = createMock(Boat.class);
 		mcox = createMock(Cox.class);
 		mnav = createMock(BoatNavigation.class);
@@ -63,6 +64,7 @@ public class CoxVisionTest {
 		replay(mboat, mcox, mnav);
 		CoxVision vc = CoxVision.look(mcox, mboat, mnav);
 		verify(mboat, mcox, mnav);
+		reset(mboat, mcox, mnav);
 		return vc;
 	}
 	
@@ -135,6 +137,19 @@ public class CoxVisionTest {
 		
 		assertEquals(3, vc.edgesOfClearRiver(r.downstream_lane(), true));
 		assertEquals(0, vc.edgesOfClearRiver(r.downstream_lane(), false));
+	}
+	
+	@Test
+	public void testCantSeePastBlockingNodes() throws NoNextNode {
+		CoxVision vc = look();
+		assertEquals(4, vc.edgesOfClearRiver(r.middle_lane(), true));
+		
+		LaneNode nextNode = r.middle_lane().getNthNodeAhead(r.middle_lane().getStartNode(), false, 2);
+		assertFalse(nextNode.blocksVision());
+		nextNode.setBlocksVision(true);
+		assertTrue(nextNode.blocksVision());
+		CoxVision second_look = look();
+		assertEquals(2, second_look.edgesOfClearRiver(r.middle_lane(), true));
 	}
 
 }

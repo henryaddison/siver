@@ -34,7 +34,7 @@ public class LaneNode {
 	private void setupProperties(Point2D.Double loc, Lane l, boolean visionBlocker) {
 		this.location = loc;
 		this.lane = l;
-		this.blocksVision=visionBlocker;
+		setBlocksVision(visionBlocker);
 	}
 	
 	/**
@@ -82,5 +82,9 @@ public class LaneNode {
 	
 	public boolean blocksVision() {
 		return blocksVision;
+	}
+	
+	public void setBlocksVision(boolean blocks) {
+		blocksVision = blocks;
 	}
 }

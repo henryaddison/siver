@@ -79,6 +79,10 @@ public class CoxVision {
 		sees.put(BLOCKED_EDGE_KEY, null);
 		sees.put(VISION_DISTANCE_KEY, edges_ahead);
 		while(edges_ahead < MAX_VIEWING_DISTANCE) {
+			//if the node ahead blocks vision, then stop the look now - no blocked edge but viewing distance is restricted
+			if(node.blocksVision()) {
+				return;
+			}
 			LaneEdge edge = node.getLane().getNextEdge(node, (infront == upstream));
 			//if there is no further edge then there no blocked edge infront but viewing distance is restricted (because we're at the end of the river)
 			if(edge == null) {
