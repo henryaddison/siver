@@ -90,17 +90,17 @@ public class CoxObservations {
 	public boolean slowBoatInfront() {
 		LaneEdge occupiedEdgeAhead = (LaneEdge) look(navigator.getLane(), true).get(BLOCKED_EDGE_KEY);
 		if(occupiedEdgeAhead == null) {
-			// return false is there is no occupied edge ahead
+			// return false if there is no occupied edge ahead
 			return false;
 		}
 		
 		for(Cox coxInfront : occupiedEdgeAhead.getCoxes()) {			
 			if(cox.getNavigator().headingUpstream() == coxInfront.getNavigator().headingUpstream()) {
 				//if boats are travelling in the same direction then want the difference in their speeds to be greater than limit
-				return (Math.abs(boat.getSpeed() - coxInfront.getBoat().getSpeed()) > OVERTAKING_SPEED_DIFFERENCE);
+				return (boat.getSpeed() - coxInfront.getBoat().getSpeed()) > OVERTAKING_SPEED_DIFFERENCE;
 			} else {
 				//if boats are travelling in the different direction then want the sum of their speeds to be greater than limit
-				return (Math.abs(boat.getSpeed()) + Math.abs(coxInfront.getBoat().getSpeed()) > OVERTAKING_SPEED_DIFFERENCE);
+				return (boat.getSpeed() + coxInfront.getBoat().getSpeed()) > OVERTAKING_SPEED_DIFFERENCE;
 			}
 			
 		}
