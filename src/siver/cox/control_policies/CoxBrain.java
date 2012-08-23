@@ -12,7 +12,7 @@ public abstract class CoxBrain {
 	}
 	
 	public Class<? extends Action> chooseAction() {
-		if(latestObservations.outingOver()) {
+		if(latestObservations.outingComplete()) {
 			return Land.class;
 		}
 		if(true) {

@@ -9,6 +9,7 @@ import siver.river.lane.*;
 import siver.boat.*;
 import siver.cox.CoxObservationsTest;
 import siver.cox.CoxTest;
+import siver.cox.CoxVisionTest;
 import siver.cox.actions.*;
 
 
@@ -31,7 +32,8 @@ import siver.cox.actions.*;
 	SlowDownTest.class,
 	MoveToLaneOnLeftTest.class,
 	MoveToLaneOnRightTest.class,
-	CoxObservationsTest.class})
+	CoxObservationsTest.class,
+	CoxVisionTest.class})
 public class AllTests {
 
 }

@@ -66,7 +66,7 @@ public class Cox {
 	}
 	
 	private void makeObservations() {
-		CoxObservations observations = new CoxObservations(this, boat, navigator);
+		CoxObservations observations = CoxObservations.make(this, boat, navigator);
 		control_policy.updateObservations(observations);
 	}
 	
