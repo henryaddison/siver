@@ -21,7 +21,8 @@ JOIN (SELECT
 ) AS aggregate_boat_records ON aggregate_boat_records.simulation_run_id = simulation_runs.id
 JOIN simulation_parameters ON simulation_parameters.id = simulation_runs.simulation_parameters_id
 JOIN schedules ON schedules.id = simulation_parameters.schedule_id
-WHERE simulation_runs.control_policy = '%s'
+WHERE simulation_runs.flushed = 1
+AND simulation_runs.control_policy = '%s'
 AND boats_launched = %d
 GROUP BY schedules.name
 ORDER BY xcol"

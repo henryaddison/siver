@@ -16,7 +16,8 @@ JOIN (SELECT
 ) AS boat_schedule ON boat_schedule.experiment_run_id = experiment_runs.id
 JOIN experiments ON experiments.id = experiment_runs.experiment_id
 JOIN schedules ON schedules.id = experiments.schedule_id
-WHERE boats_launched = 10
+WHERE simulation_runs.flushed = 1
 AND experiment_runs.control_policy = "BasicBrain"
+AND boats_launched = 10
 GROUP BY boats_launched, delay, experiment_runs.control_policy
 ORDER BY experiment_runs.control_policy
