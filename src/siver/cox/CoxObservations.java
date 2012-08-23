@@ -20,15 +20,16 @@ public class CoxObservations {
 	private HashMap<String, Boolean> frozen_observations;
 	
 	private CoxVision vision;
-	private static final String outingComplete="outingComplete", 
-			atRiversEnd="atRiversEnd", 
-			belowDesiredSpeed="belowDesiredSpeed", 
-			aboveDesiredSpeed="aboveDesiredSpeed", 
-			slowBoatInfront="slowBoatInfront", 
-			changingLane="changingLane", 
-			laneToRightIsClear="laneToRightIsClear", 
-			laneToLeftIsClear="laneToLeftIsClear",
-			nearbyBoatInfront = "nearbyBoatInfront";
+	private static final String 
+		outingComplete="outingComplete", 
+		atRiversEnd="atRiversEnd", 
+		belowDesiredSpeed="belowDesiredSpeed", 
+		aboveDesiredSpeed="aboveDesiredSpeed", 
+		slowBoatInfront="slowBoatInfront", 
+		changingLane="changingLane", 
+		laneToRightIsClear="laneToRightIsClear", 
+		laneToLeftIsClear="laneToLeftIsClear",
+		nearbyBoatInfront = "nearbyBoatInfront";
 	
 	public CoxObservations(Cox cox, Boat boat, BoatNavigation navigator) {
 		this.cox = cox;
