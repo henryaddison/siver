@@ -7,7 +7,7 @@ require 'active_record'
 require 'optparse'
 
 random_seed = rand(2**31)
-brain_types = ["BasicBrain"]
+control_policies = []
 schedule_ids = []
 
 optparse = OptionParser.new do|opts|
@@ -23,8 +23,8 @@ optparse = OptionParser.new do|opts|
     random_seed = rs
   end
   
-  opts.on('-b', '--brain-types BRAIN_TYPES', Array, "List of brain class names") do |bts|
-    brain_types = bts
+  opts.on('-c', '--control-policies CONTROL_POLICY_TYPES', Array, "List of control policy class names") do |cps|
+    control_policies = cps
   end
   
   opts.on("-h", "--help", "Show this message") do
@@ -43,12 +43,12 @@ require './db_connect'
 schedules = Schedule.find(schedule_ids)
 
 Experiment.transaction do
-  brain_types.each do |brain|
+  control_policies.each do |cp|
     schedules.each do |sch|
       experiment = Experiment.create!(
         :schedule => sch, 
         :random_seed => random_seed, 
-        :brain_type => brain)
+        :control_policy => cp)
       end
   end
 end

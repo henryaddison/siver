@@ -5,7 +5,7 @@ import java.lang.reflect.InvocationTargetException;
 import siver.cox.actions.*;
 import siver.cox.observations.LaneObservation.Blockage;
 
-public class OvertakingBrain extends CoxBrain {
+public class Overtaking extends ControlPolicy {
 	private static final double OVERTAKING_SPEED_DIFFERENCE = 1.0;
 	private static final int CLEAR_BOUNDARY = 3;
 	

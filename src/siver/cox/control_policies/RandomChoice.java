@@ -5,7 +5,7 @@ import java.lang.reflect.InvocationTargetException;
 import repast.simphony.random.RandomHelper;
 import siver.cox.actions.*;
 
-public class RandomChoice extends CoxBrain {
+public class RandomChoice extends ControlPolicy {
 	private static final Class[] possible_actions = {LetBoatRun.class, MoveToLaneOnLeft.class, MoveToLaneOnRight.class, SpeedUp.class, SlowDown.class, Spin.class};
 	
 	@Override

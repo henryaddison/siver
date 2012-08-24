@@ -4,33 +4,28 @@ import java.lang.reflect.InvocationTargetException;
 
 import siver.cox.actions.*;
 
-public class LaneChangeBrain extends CoxBrain {
-	private boolean move_to_left = true;
-	private int countDown = 10;
+public class DemoChangingSpeed extends ControlPolicy {
+	private boolean speedUp = true;
 	
 	@Override
 	public Class<? extends Action> typeSpecificActionChoice() throws SecurityException, IllegalArgumentException, NoSuchMethodException, InstantiationException, IllegalAccessException, InvocationTargetException {
 		if(latestObservations.atRiversEnd()) {
 			return Spin.class;
 		}
-		if(latestObservations.belowDesiredSpeed()) {
+		if(latestObservations.boatGear() == 0) {
+			speedUp = true;
 			return SpeedUp.class;
 		}
-		if(move_to_left & countDown == 0) {
-			move_to_left = !move_to_left;
-			countDown = 50;
-			return  MoveToLaneOnLeft.class;
+		if(latestObservations.boatGear() == 10) {
+			speedUp = false;
+			return SlowDown.class;
 		}
-		if(!move_to_left & countDown == 0) {
-			move_to_left = !move_to_left;
-			countDown = 50;
-			return  MoveToLaneOnRight.class;
+		else if(speedUp) {
+			return SpeedUp.class;
 		}
-		if(true) {
-			countDown--;
-			return LetBoatRun.class;
+		else if(true) {
+			return SlowDown.class;
 		}
-		
 		throw new RuntimeException("No action chosen by brain. Something has gone very wrong");
 	}
 }

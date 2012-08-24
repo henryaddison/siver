@@ -9,8 +9,8 @@ import siver.boat.Boat;
 import siver.boat.BoatNavigation;
 import siver.context.SiverContextCreator;
 import siver.cox.actions.*;
-import siver.cox.control_policies.BasicBrain;
-import siver.cox.control_policies.CoxBrain;
+import siver.cox.control_policies.GearFocussed;
+import siver.cox.control_policies.ControlPolicy;
 
 public class Cox {
 	//The boat the cox is controlling.
@@ -25,24 +25,24 @@ public class Cox {
 	protected Action action;
 	protected BoatNavigation navigator;
 	
-	private CoxBrain control_policy;
+	private ControlPolicy control_policy;
 	
 	public Cox() {
 		
 	}
 	
 	public void launch(Boat boat, Lane launchLane, int desGear, double speedMult, double distance_to_cover, Integer launch_schedule_id) throws SecurityException, IllegalArgumentException, NoSuchMethodException, InstantiationException, IllegalAccessException, InvocationTargetException {
-		launch(BasicBrain.class, boat, launchLane, desGear, speedMult, distance_to_cover, launch_schedule_id);
+		launch(GearFocussed.class, boat, launchLane, desGear, speedMult, distance_to_cover, launch_schedule_id);
 	}
 	
-	public void launch(Class<? extends CoxBrain> control_policy_type, Boat boat, Lane launchLane, int desGear, double speedMult, double distance_to_cover, Integer launch_schedule_id) throws SecurityException, NoSuchMethodException, IllegalArgumentException, InstantiationException, IllegalAccessException, InvocationTargetException {
+	public void launch(Class<? extends ControlPolicy> control_policy_type, Boat boat, Lane launchLane, int desGear, double speedMult, double distance_to_cover, Integer launch_schedule_id) throws SecurityException, NoSuchMethodException, IllegalArgumentException, InstantiationException, IllegalAccessException, InvocationTargetException {
 		//save reference to boat launched in
 		this.boat = boat;
 		this.incapcitated = false;
 		this.desired_gear = desGear;
 		this.distance_to_cover = distance_to_cover;
 		
-		Constructor<? extends CoxBrain> cons = control_policy_type.getConstructor();
+		Constructor<? extends ControlPolicy> cons = control_policy_type.getConstructor();
 		control_policy = cons.newInstance();
 		
 		boat.launch(this, launch_schedule_id);

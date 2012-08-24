@@ -6,7 +6,7 @@ import siver.cox.CoxObservations;
 import siver.cox.actions.Action;
 import siver.cox.actions.Land;
 
-public abstract class CoxBrain {
+public abstract class ControlPolicy {
 	CoxObservations latestObservations;
 	
 	public void updateObservations(CoxObservations obs) {

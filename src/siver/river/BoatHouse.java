@@ -7,8 +7,8 @@ import repast.simphony.random.RandomHelper;
 import repast.simphony.space.continuous.ContinuousSpace;
 import siver.boat.Boat;
 import siver.cox.Cox;
-import siver.cox.control_policies.BasicBrain;
-import siver.cox.control_policies.CoxBrain;
+import siver.cox.control_policies.GearFocussed;
+import siver.cox.control_policies.ControlPolicy;
 import siver.river.lane.Lane;
 
 /**
@@ -33,10 +33,10 @@ public class BoatHouse {
 	}
 	
 	public void manualLaunch() {
-		manualLaunch(BasicBrain.class);
+		manualLaunch(GearFocussed.class);
 	}
 	
-	public void launch(Integer scheduled_launch_id, Integer desired_gear, Double speed_multiplier, Double distance_to_cover, Class<? extends CoxBrain> coxBrainClass) {
+	public void launch(Integer scheduled_launch_id, Integer desired_gear, Double speed_multiplier, Double distance_to_cover, Class<? extends ControlPolicy> controlPolicyClass) {
 		Boat boat = new Boat(river, context, space, speed_multiplier);
 		context.add(boat);
 		
@@ -44,7 +44,7 @@ public class BoatHouse {
 		context.add(cox);
 		
 		try {
-			cox.launch(coxBrainClass, boat, getLaunchLane(), desired_gear, speed_multiplier, distance_to_cover, scheduled_launch_id);
+			cox.launch(controlPolicyClass, boat, getLaunchLane(), desired_gear, speed_multiplier, distance_to_cover, scheduled_launch_id);
 		} catch (SecurityException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -66,8 +66,8 @@ public class BoatHouse {
 		}
 	}
 	
-	public void manualLaunch(Class<? extends CoxBrain> coxBrainClass) {
-		launch(null, RandomHelper.nextIntFromTo(1,10), 0.5, 5000.0, coxBrainClass);
+	public void manualLaunch(Class<? extends ControlPolicy> controlPolicyClass) {
+		launch(null, RandomHelper.nextIntFromTo(1,10), 0.5, 5000.0, controlPolicyClass);
 	}
 	
 	public Lane getLaunchLane() {

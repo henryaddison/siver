@@ -12,8 +12,8 @@ import repast.simphony.parameter.Parameters;
 import repast.simphony.random.RandomHelper;
 import repast.simphony.ui.RSApplication;
 import siver.context.SiverContextCreator;
-import siver.cox.control_policies.BasicBrain;
-import siver.cox.control_policies.CoxBrain;
+import siver.cox.control_policies.GearFocussed;
+import siver.cox.control_policies.ControlPolicy;
 import siver.ui.UserPanel;
 
 public class InprogressSimuation extends ExperimentalDatum {
@@ -24,7 +24,7 @@ public class InprogressSimuation extends ExperimentalDatum {
 	private int simulation_run_id;
 	private ArrayList<BoatRecord> inprogress_records;
 	private int random_seed;
-	private Class<? extends CoxBrain> control_policy;
+	private Class<? extends ControlPolicy> control_policy;
 	
 	public static void start() {
 		if(instance() == null) {
@@ -120,9 +120,9 @@ public class InprogressSimuation extends ExperimentalDatum {
 				getRandomSeed.close();
 				
 				if(!coxControlPolicyClassName.startsWith("siver.")) {
-					coxControlPolicyClassName = BasicBrain.class.getPackage().getName()+"."+coxControlPolicyClassName;
+					coxControlPolicyClassName = GearFocussed.class.getPackage().getName()+"."+coxControlPolicyClassName;
 				}
-				control_policy = (Class<? extends CoxBrain>) Class.forName(coxControlPolicyClassName);
+				control_policy = (Class<? extends ControlPolicy>) Class.forName(coxControlPolicyClassName);
 				RandomHelper.setSeed(random_seed);
 			} catch (SQLException e) {
 				// TODO Auto-generated catch block

@@ -5,7 +5,7 @@ import java.lang.reflect.InvocationTargetException;
 import siver.cox.actions.*;
 import siver.cox.observations.LaneObservation.Blockage;
 
-public class ConservativeBrain extends CoxBrain {
+public class SafetyFocussed extends ControlPolicy {
 	private static final int CLEAR_BOUNDARY = 3;
 	
 	@Override

@@ -4,7 +4,7 @@ import java.lang.reflect.InvocationTargetException;
 
 import siver.cox.actions.*;
 
-public class BasicBrain extends CoxBrain {
+public class GearFocussed extends ControlPolicy {
 	@Override
 	protected Class<? extends Action> typeSpecificActionChoice() throws SecurityException, IllegalArgumentException, NoSuchMethodException, InstantiationException, IllegalAccessException, InvocationTargetException {
 		if(latestObservations.atRiversEnd()) {

@@ -7,10 +7,10 @@ import javax.swing.JButton;
 import javax.swing.JPanel;
 
 import siver.context.SiverContextCreator;
-import siver.cox.control_policies.BasicBrain;
-import siver.cox.control_policies.CoxBrain;
-import siver.cox.control_policies.LaneChangeBrain;
-import siver.cox.control_policies.StartStopBrain;
+import siver.cox.control_policies.GearFocussed;
+import siver.cox.control_policies.ControlPolicy;
+import siver.cox.control_policies.DemoLaneChanging;
+import siver.cox.control_policies.DemoChangingSpeed;
 
 public class UserPanel extends JPanel {
 	private static final long serialVersionUID = 1L;
@@ -25,22 +25,22 @@ public class UserPanel extends JPanel {
 		
 		setBackground(new java.awt.Color(255, 0, 0));
 		
-		ArrayList<Class<? extends CoxBrain>> coxBrainClassesNames = new ArrayList<Class<? extends CoxBrain>>();
-		coxBrainClassesNames.add(BasicBrain.class);
-		coxBrainClassesNames.add(StartStopBrain.class);
-		coxBrainClassesNames.add(LaneChangeBrain.class);
+		ArrayList<Class<? extends ControlPolicy>> controlPolicyClassesNames = new ArrayList<Class<? extends ControlPolicy>>();
+		controlPolicyClassesNames.add(GearFocussed.class);
+		controlPolicyClassesNames.add(DemoChangingSpeed.class);
+		controlPolicyClassesNames.add(DemoLaneChanging.class);
 		
 		
-		for(Class<? extends CoxBrain> klass : coxBrainClassesNames) {
-			final Class<? extends CoxBrain> coxBrainClass = klass;
+		for(Class<? extends ControlPolicy> klass : controlPolicyClassesNames) {
+			final Class<? extends ControlPolicy> controlPolicyClass = klass;
 			
 			JButton launchButton = new JButton();
 			
-			launchButton.setText("Launch Boat with " + coxBrainClass.getSimpleName());
+			launchButton.setText("Launch Boat with " + controlPolicyClass.getSimpleName());
 			launchButton.setActionCommand("launchBoat");
 			launchButton.addActionListener(new java.awt.event.ActionListener() {
 	            public void actionPerformed(java.awt.event.ActionEvent evt) {
-	            	launchButtonActionPerformed(evt, coxBrainClass);
+	            	launchButtonActionPerformed(evt, controlPolicyClass);
 	            }
 	        });
 			
@@ -48,7 +48,7 @@ public class UserPanel extends JPanel {
 		}
 	}
 	
-	private void launchButtonActionPerformed(java.awt.event.ActionEvent evt, Class<? extends CoxBrain> coxBrainClass) {
-		SiverContextCreator.getBoatHouse().manualLaunch(coxBrainClass);
+	private void launchButtonActionPerformed(java.awt.event.ActionEvent evt, Class<? extends ControlPolicy> controlPolicyClass) {
+		SiverContextCreator.getBoatHouse().manualLaunch(controlPolicyClass);
 	}
 }

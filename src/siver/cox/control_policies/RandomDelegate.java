@@ -8,15 +8,15 @@ import siver.cox.Cox;
 import siver.cox.CoxObservations;
 import siver.cox.actions.Action;
 
-public class RandomDelegate extends CoxBrain {
-	private static final Class[] possible_brains = {BasicBrain.class, RandomMovement.class, RandomChoice.class};
+public class RandomDelegate extends ControlPolicy {
+	private static final Class[] possible_policies = {GearFocussed.class, RandomMovement.class, RandomChoice.class};
 	
-	private CoxBrain delegate;
+	private ControlPolicy delegate;
 	public RandomDelegate(CoxObservations obs) {
-		int index = RandomHelper.nextIntFromTo(0, possible_brains.length-1);
-		Constructor<? extends CoxBrain> cons;
+		int index = RandomHelper.nextIntFromTo(0, possible_policies.length-1);
+		Constructor<? extends ControlPolicy> cons;
 		try {
-			cons = possible_brains[index].getConstructor();
+			cons = possible_policies[index].getConstructor();
 			delegate = cons.newInstance();
 		} catch (SecurityException e) {
 			// TODO Auto-generated catch block

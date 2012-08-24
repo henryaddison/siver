@@ -1,9 +1,9 @@
 plot_graph_from_query <- function(query, xlab, ylab, xlim, ylim, main_title) {
   dbname="siver_development"
 	con <- dbConnect("MySQL", user="siver", host="localhost", dbname=dbname)
-	control_policies <- c("BasicBrain", "ConservativeBrain", "OvertakingBrain", "RandomMovement")
+	control_policies <- c("GearFocussed", "SafetyFocussed", "Overtaking", "RandomMovement")
 
-	control_policies_to_colour_map = c(BasicBrain="black", OvertakingBrain="green", RandomMovement="blue", ConservativeBrain="red")
+	control_policies_to_colour_map = c(GearFocussed="black", Overtaking="green", RandomMovement="blue", SafetyFocussed="red")
 	
 	launched_options <- c(10, 20, 30)
 	
