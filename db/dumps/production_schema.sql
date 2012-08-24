@@ -148,7 +148,7 @@ CREATE TABLE `simulation_runs` (
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2012-08-22 20:34:42
+-- Dump completed on 2012-08-24 16:47:32
 -- MySQL dump 10.13  Distrib 5.1.57, for apple-darwin10.3.0 (i386)
 --
 -- Host: localhost    Database: siver_production
@@ -185,7 +185,7 @@ CREATE TABLE `migrations` (
 
 LOCK TABLES `migrations` WRITE;
 /*!40000 ALTER TABLE `migrations` DISABLE KEYS */;
-INSERT INTO `migrations` VALUES (0),(1),(2),(3),(4),(5),(6);
+INSERT INTO `migrations` VALUES (0),(1),(2),(3),(4),(5),(6),(7);
 /*!40000 ALTER TABLE `migrations` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -198,4 +198,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2012-08-22 20:34:42
+-- Dump completed on 2012-08-24 16:47:32
