@@ -25,6 +25,9 @@ import siver.river.OutlinedArea;
  *
  */
 public class Lane extends OutlinedArea {
+	public final static double DEFAULT_OPACITY = 0.1;
+	
+	
 	public class NoNextNode extends Exception {
 		public NoNextNode(String msg) {
 			super(msg);
@@ -88,7 +91,7 @@ public class Lane extends OutlinedArea {
 	public void start(Point2D.Double start) {
 		bottom.add(new Point2D.Double(start.getX(), start.getY() - width ));
 		top.add(new Point2D.Double(start.getX(), start.getY() + width ));
-		startNode = new LaneNode(start, this, false);
+		startNode = new LaneNode(start, this, DEFAULT_OPACITY);
 		lastAddedNode = startNode;
 		context.add(startNode);
 		started = true;
@@ -113,7 +116,7 @@ public class Lane extends OutlinedArea {
 	 * @throws UnstartedLaneException
 	 * @throws CompletedLaneException 
 	 */
-	public void extend(double heading, boolean blocksVision) throws UnstartedLaneException, CompletedLaneException {
+	public void extend(double heading, double opacity) throws UnstartedLaneException, CompletedLaneException {
 		if(!started) {
 			throw new UnstartedLaneException("Cannot add a point when the Lane has not been started");
 		}
@@ -136,14 +139,14 @@ public class Lane extends OutlinedArea {
 		top.add(next_top);
 		
 		bottom.add(next_bottom);
-		LaneNode next = new LaneNode(next_mid, this, blocksVision);
+		LaneNode next = new LaneNode(next_mid, this, opacity);
 		context.add(next);
 		net.addEdge(lastAddedNode, next);
 		lastAddedNode = next;
 	}
 	
 	public void extend(double heading) throws UnstartedLaneException, CompletedLaneException {
-		extend(heading, false);
+		extend(heading, DEFAULT_OPACITY);
 	}
 	
 	//GRAPH HELPERS

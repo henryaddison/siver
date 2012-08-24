@@ -34,8 +34,8 @@ public class LaneEdgeCreatorTest {
 
 	@Test
 	public void testCreateEdge() {
-		LaneNode s = new LaneNode(0,0,null,false);
-		LaneNode d = new LaneNode(3,4,null,false);
+		LaneNode s = new LaneNode(0,0,null,Lane.DEFAULT_OPACITY);
+		LaneNode d = new LaneNode(3,4,null,Lane.DEFAULT_OPACITY);
 		LaneEdge edge = lec.createEdge(s, d, false, 10);
 		assertEquals(5.0,edge.getWeight(), 1E-5);
 		assertTrue(edge.isDirected());

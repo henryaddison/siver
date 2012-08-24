@@ -29,8 +29,8 @@ public class LaneEdgeTest extends EdgeTester{
 	public void setUp() throws Exception {
 		super.setUp();
 		
-		LaneNode s = new LaneNode(0,0,null,false);
-		LaneNode d = new LaneNode(3,4,null,true);
+		LaneNode s = new LaneNode(0,0,null,Lane.DEFAULT_OPACITY);
+		LaneNode d = new LaneNode(3,4,null,3*Lane.DEFAULT_OPACITY);
 		e = new LaneEdge(s,d);
 	}
 

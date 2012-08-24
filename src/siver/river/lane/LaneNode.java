@@ -15,26 +15,26 @@ public class LaneNode {
 	// a node has a location in the world
 	protected Point2D.Double location;
 	protected Lane lane;
-	private boolean blocksVision;
+	private double opacity;
 	
 	
-	public LaneNode(double x, double y, Lane l, boolean visionBlocker) {
-		setupProperties(new Point2D.Double(x,y), l, visionBlocker);
+	public LaneNode(double x, double y, Lane l, double opacity) {
+		setupProperties(new Point2D.Double(x,y), l, opacity);
 		
 	}
 	
-	public LaneNode(Point2D.Double loc, Lane lane, boolean visionBlocker) {
-		setupProperties(loc, lane, visionBlocker);
+	public LaneNode(Point2D.Double loc, Lane lane, double opacity) {
+		setupProperties(loc, lane, opacity);
 	}
 	
-	public LaneNode(NdPoint loc, Lane lane, boolean visionBlocker) {
-		setupProperties(new Point2D.Double(loc.getX(), loc.getY()), lane, visionBlocker);
+	public LaneNode(NdPoint loc, Lane lane, double opacity) {
+		setupProperties(new Point2D.Double(loc.getX(), loc.getY()), lane, opacity);
 	}
 	
-	private void setupProperties(Point2D.Double loc, Lane l, boolean visionBlocker) {
+	private void setupProperties(Point2D.Double loc, Lane l, double opacity) {
 		this.location = loc;
 		this.lane = l;
-		setBlocksVision(visionBlocker);
+		setOpacity(opacity);
 	}
 	
 	/**
@@ -80,11 +80,11 @@ public class LaneNode {
 		return false;
 	}
 	
-	public boolean blocksVision() {
-		return blocksVision;
+	public double getOpacity() {
+		return opacity;
 	}
 	
-	public void setBlocksVision(boolean blocks) {
-		blocksVision = blocks;
+	public void setOpacity(double opacity) {
+		this.opacity = opacity;
 	}
 }

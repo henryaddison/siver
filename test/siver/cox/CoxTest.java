@@ -85,8 +85,8 @@ public class CoxTest {
 	
 	private void launchCox() {
 		Point2D.Double expLoc = new Point2D.Double(10,30);
-		LaneNode expNode = new LaneNode(expLoc, mockLane, false);
-		LaneNode nextNode = new LaneNode(30,30, mockLane, false);
+		LaneNode expNode = new LaneNode(expLoc, mockLane, Lane.DEFAULT_OPACITY);
+		LaneNode nextNode = new LaneNode(30,30, mockLane, Lane.DEFAULT_OPACITY);
 		expect(mockLane.getStartNode()).andStubReturn(expNode);
 		mockBoat.moveTo(expNode.toNdPoint());
 		expectLastCall().once();
@@ -122,8 +122,8 @@ public class CoxTest {
 		launchCox();
 		
 		Point2D.Double expLoc = new Point2D.Double(10,30);
-		LaneNode expNode = new LaneNode(expLoc, mockLane, false);
-		LaneNode furtherNode = new LaneNode(50,30, mockLane, false);
+		LaneNode expNode = new LaneNode(expLoc, mockLane, Lane.DEFAULT_OPACITY);
+		LaneNode furtherNode = new LaneNode(50,30, mockLane, Lane.DEFAULT_OPACITY);
 		
 		expect(mockBoat.getGear()).andReturn(10).times(1);
 		

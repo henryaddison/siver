@@ -77,13 +77,13 @@ public class CoxVisionTest {
 	@Test
 	public void testEdgesOfClearRiver() {
 		CoxVision vc = look();
-		assertEquals(4, vc.edgesOfClearRiver(r.middle_lane(), true));
+		assertEquals(10, vc.edgesOfClearRiver(r.middle_lane(), true));
 		assertEquals(0, vc.edgesOfClearRiver(r.middle_lane(), false));
 		
-		assertEquals(4, vc.edgesOfClearRiver(r.upstream_lane(), true));
+		assertEquals(10, vc.edgesOfClearRiver(r.upstream_lane(), true));
 		assertEquals(0, vc.edgesOfClearRiver(r.upstream_lane(), false));
 		
-		assertEquals(4, vc.edgesOfClearRiver(r.downstream_lane(), true));
+		assertEquals(10, vc.edgesOfClearRiver(r.downstream_lane(), true));
 		assertEquals(0, vc.edgesOfClearRiver(r.downstream_lane(), false));
 	}
 
@@ -133,7 +133,7 @@ public class CoxVisionTest {
 		assertNull(vc.blockedEdge(r.upstream_lane(), true));
 		assertNull(vc.blockedEdge(r.upstream_lane(), false));
 		
-		assertEquals(4, vc.edgesOfClearRiver(r.upstream_lane(), true));
+		assertEquals(10, vc.edgesOfClearRiver(r.upstream_lane(), true));
 		assertEquals(0, vc.edgesOfClearRiver(r.upstream_lane(), false));
 		
 		assertEquals(3, vc.edgesOfClearRiver(r.downstream_lane(), true));
@@ -143,9 +143,7 @@ public class CoxVisionTest {
 	@Test
 	public void testCantSeePastBlockingNodes() throws NoNextNode {
 		LaneNode nextNode = r.middle_lane().getNthNodeAhead(r.middle_lane().getStartNode(), false, 2);
-		assertFalse(nextNode.blocksVision());
-		nextNode.setBlocksVision(true);
-		assertTrue(nextNode.blocksVision());
+		nextNode.setOpacity(1);
 		CoxVision second_look = look();
 		assertEquals(2, second_look.edgesOfClearRiver(r.middle_lane(), true));
 	}

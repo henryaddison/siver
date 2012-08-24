@@ -16,7 +16,7 @@ public class CoxVision {
 	private BoatNavigation navigator;
 	private HashMap<Lane, HashMap<Boolean, HashMap<String,Object>>> vision;
 	
-	private static final int MAX_VIEWING_DISTANCE = 4;
+	private static final double OPACITY_LIMIT = 1;
 	private static final String BLOCKED_EDGE_KEY = "blocked_edge";
 	private static final String VISION_DISTANCE_KEY = "vision_distance";
 	
@@ -74,7 +74,9 @@ public class CoxVision {
 		
 		sees.put(BLOCKED_EDGE_KEY, null);
 		sees.put(VISION_DISTANCE_KEY, edges_ahead);
-		while(edges_ahead < MAX_VIEWING_DISTANCE) {
+		
+		double total_opacity = node.getOpacity();;
+		while(total_opacity < OPACITY_LIMIT) {
 			LaneEdge edge = node.getLane().getNextEdge(node, (infront == upstream));
 			//if there is no further edge then there no blocked edge infront but viewing distance is restricted (because we're at the end of the river)
 			if(edge == null) {
@@ -90,6 +92,7 @@ public class CoxVision {
 			node = edge.getNextNode((infront == upstream));
 			edges_ahead++;
 			sees.put(VISION_DISTANCE_KEY, edges_ahead);
+			total_opacity += node.getOpacity();
 		}
 		return;
 	}
