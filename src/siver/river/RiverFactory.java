@@ -35,13 +35,13 @@ public class RiverFactory {
 			}
 			
 			for(double theta = 0; theta <= PI/2.0; theta += 1/4.4) {
-				up.extend(theta);
+				up.extend(theta, 3*Lane.DEFAULT_OPACITY);
 			}
 			for(double theta = 0; theta <= PI/2.0; theta += 1/5.0) {
-				middle.extend(theta);
+				middle.extend(theta, 3*Lane.DEFAULT_OPACITY);
 			}
 			for(double theta = 0; theta <= PI/2.0; theta += 1/5.5) {
-				down.extend(theta);
+				down.extend(theta, 3*Lane.DEFAULT_OPACITY);
 			}
 			
 			up.extend(PI/2.0);
@@ -55,13 +55,13 @@ public class RiverFactory {
 			}
 			
 			for(double theta = PI/2.0; theta >= 0 ; theta -= 1/4.4) {
-				down.extend(theta);
+				down.extend(theta, 3*Lane.DEFAULT_OPACITY);
 			}
 			for(double theta = PI/2.0; theta >= 0; theta -= 1/5.0) {
-				middle.extend(theta);
+				middle.extend(theta, 3*Lane.DEFAULT_OPACITY);
 			}
 			for(double theta = PI/2.0; theta >= 0; theta -= 1/5.7) {
-				up.extend(theta);
+				up.extend(theta, 3*Lane.DEFAULT_OPACITY);
 			}
 			
 			for(int i = 1; i <= 7; i++) {
@@ -71,13 +71,13 @@ public class RiverFactory {
 			}
 			
 			for(double theta = 0; theta <= PI/3.0; theta += 1/4.5) {
-				up.extend(theta);
+				up.extend(theta, 3*Lane.DEFAULT_OPACITY);
 			}
 			for(double theta = 0; theta <= PI/3.0; theta += 1/5.0) {
-				middle.extend(theta);
+				middle.extend(theta, 3*Lane.DEFAULT_OPACITY);
 			}
 			for(double theta = 0; theta <= PI/3.0; theta += 1/5.5) {
-				down.extend(theta);
+				down.extend(theta, 3*Lane.DEFAULT_OPACITY);
 			}
 			
 			for(int i = 1; i <= 25; i++) {
@@ -121,13 +121,13 @@ public class RiverFactory {
 				down.extend(0);
 			}
 			
-			up.extend(PI/4.0);
-			middle.extend(PI/4.0);
-			down.extend(PI/4.0);
+			up.extend(PI/4.0, 3*Lane.DEFAULT_OPACITY);
+			middle.extend(PI/4.0, 3*Lane.DEFAULT_OPACITY);
+			down.extend(PI/4.0, 3*Lane.DEFAULT_OPACITY);
 			
-			up.extend(PI/2.0);
-			middle.extend(PI/2.0);
-			down.extend(PI/2.0);
+			up.extend(PI/2.0, 3*Lane.DEFAULT_OPACITY);
+			middle.extend(PI/2.0, 3*Lane.DEFAULT_OPACITY);
+			down.extend(PI/2.0, 3*Lane.DEFAULT_OPACITY);
 		} catch (UnstartedLaneException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
