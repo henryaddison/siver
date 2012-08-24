@@ -26,6 +26,7 @@ import siver.river.OutlinedArea;
  */
 public class Lane extends OutlinedArea {
 	public final static double DEFAULT_OPACITY = 0.1;
+	public final static double CORNER_OPACITY = 3*DEFAULT_OPACITY;
 	
 	
 	public class NoNextNode extends Exception {

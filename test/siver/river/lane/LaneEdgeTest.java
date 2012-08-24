@@ -30,7 +30,7 @@ public class LaneEdgeTest extends EdgeTester{
 		super.setUp();
 		
 		LaneNode s = new LaneNode(0,0,null,Lane.DEFAULT_OPACITY);
-		LaneNode d = new LaneNode(3,4,null,3*Lane.DEFAULT_OPACITY);
+		LaneNode d = new LaneNode(3,4,null,Lane.CORNER_OPACITY);
 		e = new LaneEdge(s,d);
 	}
 

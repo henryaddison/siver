@@ -33,7 +33,7 @@ public class LaneNodeTest {
 
 	@Test
 	public void testLaneNodeDoubleDouble() {
-		LaneNode ln = new LaneNode(1.5, 6.7, null,3*Lane.DEFAULT_OPACITY);
+		LaneNode ln = new LaneNode(1.5, 6.7, null,Lane.CORNER_OPACITY);
 		assertEquals(new Point2D.Double(1.5,6.7), ln.getLocation());
 		assertEquals(0.3,ln.getOpacity(),1E-5);
 	}
