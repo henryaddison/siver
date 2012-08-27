@@ -1,6 +1,6 @@
 SELECT
 schedules.name,
-AVG(boats_landed/boats_launched*100) as percent_boats_returned
+ROUND(AVG(boats_landed/boats_launched*100),0) as percent_boats_returned
 FROM (
 SELECT 
   simulation_run_id,
