@@ -6,7 +6,7 @@ import siver.cox.Cox;
 import siver.river.lane.Lane.NoNextNode;
 
 public class LaneChangeEdge extends LaneEdge {
-	final private static int nodes_ahead_to_aim_for = 4;
+	final private static int NODES_AHEAD_TO_JOIN_LANE = 4;
 	private Lane destinationLane;
 	//need to keep track of which proper edges are currently being occupied while a boat traverses this lane
 	//fortunately can only have one boat on an edge like this at a time so 
@@ -34,14 +34,14 @@ public class LaneChangeEdge extends LaneEdge {
 		}
 		
 		
-		for(int i = 1; i <= nodes_ahead_to_aim_for; i++) {
+		for(int i = 1; i <= NODES_AHEAD_TO_JOIN_LANE; i++) {
 			sLNode = sLaneEdge.getNextNode(upstream);
 			dLNode = dLaneEdge.getNextNode(upstream);
 			
 			
-			if(i < nodes_ahead_to_aim_for) {
-				double x = sLNode.getLocation().getX()*((nodes_ahead_to_aim_for-i)/((double)nodes_ahead_to_aim_for)) + dLNode.getLocation().getX()*(i/((double)nodes_ahead_to_aim_for));
-				double y = sLNode.getLocation().getY()*((nodes_ahead_to_aim_for-i)/((double)nodes_ahead_to_aim_for)) + dLNode.getLocation().getY()*(i/((double)nodes_ahead_to_aim_for));
+			if(i < NODES_AHEAD_TO_JOIN_LANE) {
+				double x = sLNode.getLocation().getX()*((NODES_AHEAD_TO_JOIN_LANE-i)/((double)NODES_AHEAD_TO_JOIN_LANE)) + dLNode.getLocation().getX()*(i/((double)NODES_AHEAD_TO_JOIN_LANE));
+				double y = sLNode.getLocation().getY()*((NODES_AHEAD_TO_JOIN_LANE-i)/((double)NODES_AHEAD_TO_JOIN_LANE)) + dLNode.getLocation().getY()*(i/((double)NODES_AHEAD_TO_JOIN_LANE));
 				
 				endNode = new TemporaryLaneNode(x,y,dLane);
 				dLane.getContext().add(endNode);
