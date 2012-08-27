@@ -1,14 +1,13 @@
 SELECT 
-ROUND(AVG(avg_crash_speed),1) as avg_relative_speed_per_crash,
-ROUND(AVG(avg_boats_per_crash), 1) as avg_boats_per_crash,
-ROUND(AVG(crash_count),0) as avg_crashes_per_run,
-ROUND(AVG(crashes_in_middle_lane_count),0) as avg_num_crashes_in_middle_lane,
-ROUND((AVG(crashes_in_middle_lane_count)/AVG(crash_count))*100,1) as percent_crashes_in_middle_lane,
-ROUND(AVG(max_crash_speed),1) as avg_max_crash_speed,
+simulation_runs.control_policy,
+ROUND(AVG(crash_count),0) as crashes_per_run,
+ROUND(AVG(avg_crash_speed),1) as speed_per_crash,
+ROUND(AVG(max_crash_speed),1) as max_crash_speed,
+ROUND(AVG(avg_boats_per_crash), 1) as boats_per_crash,
+ROUND((AVG(crashes_in_middle_lane_count)/AVG(crash_count))*100,1) as percent_middle_lane,
 ROUND(AVG(avg_tick),0) as avg_crash_tick,
-ROUND(AVG(sim_end_est),0) as avg_simulation_length_estimate,
-ROUND(AVG(crashes_during_launch_est)*100/AVG(crash_count),0) as avg_crashes_at_launch_est,
-simulation_runs.control_policy
+ROUND(AVG(sim_end_est),0) as simulation_length_estimate,
+ROUND(AVG(crashes_during_launch_est)*100/AVG(crash_count),0) as launch_crash_percent_est
 FROM simulation_runs
 LEFT JOIN (
 SELECT
