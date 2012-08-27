@@ -26,7 +26,7 @@ plot_graph_from_query <- function(query, xlab, ylab, xlim, ylim, main_title) {
 		
 			brain_data = fetch(res, -1)
 	
-			points(x=brain_data$xcol, y=brain_data$ycol, col=control_policies_to_colour_map[control_policy])
+			points(x=brain_data$xcol, y=brain_data$ycol, col=control_policies_to_colour_map[control_policy], type='o')
 		}
 		
 		dev.off()

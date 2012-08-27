@@ -36,6 +36,6 @@ ORDER BY xcol"
 plot_graph_from_query(query,
 xlab='Delay between launches in seconds', 
 ylab='Average number of crashes',
-xlim=c(0,600),
+xlim=c(0,630),
 ylim=c(0,2000),
 main_title="Average number of crashes per control policy for simulation runs with %i boats launched")

@@ -30,7 +30,7 @@ ORDER BY xcol"
 plot_graph_from_query(query,
 xlab='Delay between launches in seconds', 
 ylab='Average aggregate 10th tick gear difference',
-xlim=c(0,600),
+xlim=c(0,630),
 ylim=c(0,4500),
 main_title="Average aggregate gear difference recorded every 10th tick per control policy for simulation runs with %i boats launched")
 
