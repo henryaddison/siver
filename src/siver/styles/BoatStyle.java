@@ -5,7 +5,6 @@ import java.awt.Font;
 import java.awt.geom.Path2D;
 import java.util.HashMap;
 
-import repast.simphony.random.RandomHelper;
 import repast.simphony.visualizationOGL2D.StyleOGL2D;
 import saf.v3d.ShapeFactory2D;
 import saf.v3d.scene.Position;
@@ -69,15 +68,16 @@ public class BoatStyle implements StyleOGL2D<Boat> {
 	
 	private static final Color[] available_colors = {Color.RED, Color.YELLOW, Color.GREEN};
 	private static HashMap<Boat,Color> colorMap = new HashMap<Boat,Color>();
-	
+	private static int next_color_index = 0;
 	@Override
 	public Color getColor(Boat object) {
 		Color color = colorMap.get(object);
 		
 		if(color == null) {
-			int color_index = RandomHelper.nextIntFromTo(0, available_colors.length-1);
-			color = available_colors[color_index];
+			color = available_colors[next_color_index];
 			colorMap.put(object, color);
+			next_color_index++;
+			next_color_index = (next_color_index % available_colors.length);
 		}
 		
 		return color;
