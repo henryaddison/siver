@@ -1,5 +1,5 @@
 plot_graph_from_query <- function(query, xlab, ylab, xlim, ylim, main_title) {
-  dbname="siver_development"
+  dbname="siver_production"
 	con <- dbConnect("MySQL", user="siver", host="localhost", dbname=dbname)
 	control_policies <- c("GearFocussed", "SafetyFocussed", "Overtaking", "RandomMovement")
 
