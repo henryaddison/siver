@@ -4,7 +4,6 @@ import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
 import siver.boat.Boat;
-import siver.context.SiverContextCreator;
 import siver.cox.Cox;
 
 public class BoatRecord extends ExperimentalDatum {
