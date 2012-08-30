@@ -39,7 +39,7 @@ CREATE TABLE `boat_records` (
   KEY `boat_record_simulation_run_fk` (`simulation_run_id`),
   CONSTRAINT `boat_record_launch_fk` FOREIGN KEY (`scheduled_launch_id`) REFERENCES `scheduled_launches` (`id`),
   CONSTRAINT `boat_record_simulation_run_fk` FOREIGN KEY (`simulation_run_id`) REFERENCES `simulation_runs` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=103333 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=140233 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -59,7 +59,7 @@ CREATE TABLE `crash_records` (
   PRIMARY KEY (`id`),
   KEY `crash_record_simulation_run_fk` (`simulation_run_id`),
   CONSTRAINT `crash_record_simulation_run_fk` FOREIGN KEY (`simulation_run_id`) REFERENCES `simulation_runs` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=721526 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=1446204 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -131,12 +131,11 @@ CREATE TABLE `simulation_runs` (
   `tick_count` int(11) DEFAULT NULL,
   `random_seed` int(11) DEFAULT NULL,
   `flushed` tinyint(1) DEFAULT '0',
-  `all_boats_finished` tinyint(1) DEFAULT '0',
   `control_policy` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `simulation_run_schedule_fk` (`simulation_parameters_id`),
   CONSTRAINT `simulation_run_schedule_fk` FOREIGN KEY (`simulation_parameters_id`) REFERENCES `simulation_parameters` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=5380 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=7280 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
@@ -148,7 +147,7 @@ CREATE TABLE `simulation_runs` (
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2012-08-24 16:47:32
+-- Dump completed on 2012-08-30 17:04:09
 -- MySQL dump 10.13  Distrib 5.1.57, for apple-darwin10.3.0 (i386)
 --
 -- Host: localhost    Database: siver_production
@@ -185,7 +184,7 @@ CREATE TABLE `migrations` (
 
 LOCK TABLES `migrations` WRITE;
 /*!40000 ALTER TABLE `migrations` DISABLE KEYS */;
-INSERT INTO `migrations` VALUES (0),(1),(2),(3),(4),(5),(6),(7);
+INSERT INTO `migrations` VALUES (0),(1),(2),(3),(4),(5),(6),(7),(8);
 /*!40000 ALTER TABLE `migrations` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -198,4 +197,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2012-08-24 16:47:32
+-- Dump completed on 2012-08-30 17:04:09
