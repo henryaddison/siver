@@ -54,19 +54,19 @@ public class Overtaking extends ControlPolicy {
 		throw new RuntimeException("No action chosen by brain. Something has gone very wrong");
 	}
 	
-	private boolean slowBoatInfront() throws SecurityException, IllegalArgumentException, NoSuchMethodException, InstantiationException, IllegalAccessException, InvocationTargetException {
+	protected boolean slowBoatInfront() throws SecurityException, IllegalArgumentException, NoSuchMethodException, InstantiationException, IllegalAccessException, InvocationTargetException {
 		Blockage blockage = latestObservations.aheadCurrentLaneLook();
-		return blockage.getMaxRelativeSpeed() > OVERTAKING_SPEED_DIFFERENCE;
+		return (blockage.getEdgesAway() < CLEAR_BOUNDARY) && (blockage.getMaxRelativeSpeed() > OVERTAKING_SPEED_DIFFERENCE);
 	}
 	
-	private boolean laneToLeftIsClear() throws SecurityException, IllegalArgumentException, NoSuchMethodException, InstantiationException, IllegalAccessException, InvocationTargetException {
+	protected boolean laneToLeftIsClear() throws SecurityException, IllegalArgumentException, NoSuchMethodException, InstantiationException, IllegalAccessException, InvocationTargetException {
 		Blockage aheadLeftblockage = latestObservations.aheadLeftLaneLook();
 		Blockage behindLeftblockage = latestObservations.behindLeftLaneLook();
 		return (aheadLeftblockage.getEdgesAway() >= CLEAR_BOUNDARY) && (behindLeftblockage.getEdgesAway() >= CLEAR_BOUNDARY); 
 				
 	}
 	
-	private boolean laneToRightIsClear() throws SecurityException, IllegalArgumentException, NoSuchMethodException, InstantiationException, IllegalAccessException, InvocationTargetException {
+	protected boolean laneToRightIsClear() throws SecurityException, IllegalArgumentException, NoSuchMethodException, InstantiationException, IllegalAccessException, InvocationTargetException {
 		Blockage aheadRightblockage = latestObservations.aheadRightLaneLook();
 		Blockage behindRightblockage = latestObservations.behindRightLaneLook();
 		return (aheadRightblockage.getEdgesAway() >= CLEAR_BOUNDARY) && (behindRightblockage.getEdgesAway() >= CLEAR_BOUNDARY);
