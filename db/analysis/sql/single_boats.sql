@@ -11,4 +11,4 @@ JOIN schedules ON schedules.id = simulation_parameters.schedule_id
 JOIN boat_records ON simulation_runs.id = boat_records.simulation_run_id
 WHERE simulation_runs.flushed = 1
 AND schedules.name = "One boat"
-GROUP BY simulation_runs.CONTROL_POLICY
+GROUP BY simulation_runs.control_policy
