@@ -9,10 +9,15 @@ require 'optparse'
 schedule_name = nil
 launch_delay = nil
 boat_count = 100
+version = v
 
 optparse = OptionParser.new do|opts|
   opts.on( '-s', '--schedule-name SNAME', "Schedule name" ) do |sn|
     schedule_name = sn
+  end
+  
+  opts.on( '-v', '--scehdule-version SCHEDULE_VERSION', Integer, "Schedule version") do |v|
+    version = v
   end
   
   opts.on( '-b', '--boat-count BOAT_COUNT', Integer, "Boat count") do |bc|
@@ -37,7 +42,7 @@ require './scheduled_launch'
 require './db_connect'
 
 Schedule.transaction do
-  schedule = Schedule.create!(:name => schedule_name)
+  schedule = Schedule.create!(:name => schedule_name, :version => v)
   boat_count.times do |i|
     ScheduledLaunch.create!(
       :schedule => schedule, 

@@ -36,7 +36,7 @@ end
 optparse.parse!
 
 require './schedule'
-require './experiment'
+require './simulation_parameters'
 require './scheduled_launch'
 require './db_connect'
 
@@ -45,7 +45,7 @@ schedules = Schedule.find(schedule_ids)
 Experiment.transaction do
   control_policies.each do |cp|
     schedules.each do |sch|
-      experiment = Experiment.create!(
+      SimulationParameters.create!(
         :schedule => sch, 
         :random_seed => random_seed, 
         :control_policy => cp)
