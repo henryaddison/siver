@@ -9,14 +9,14 @@ require 'optparse'
 schedule_name = nil
 launch_delay = nil
 boat_count = 100
-version = v
+version = 1
 
 optparse = OptionParser.new do|opts|
   opts.on( '-s', '--schedule-name SNAME', "Schedule name" ) do |sn|
     schedule_name = sn
   end
   
-  opts.on( '-v', '--scehdule-version SCHEDULE_VERSION', Integer, "Schedule version") do |v|
+  opts.on( '-v', '--schedule-version SCHEDULE_VERSION', Integer, "Schedule version") do |v|
     version = v
   end
   
