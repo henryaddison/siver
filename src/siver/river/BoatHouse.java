@@ -67,7 +67,7 @@ public class BoatHouse {
 	}
 	
 	public void manualLaunch(Class<? extends ControlPolicy> controlPolicyClass) {
-		launch(null, RandomHelper.nextIntFromTo(1,10), 0.5, 5000.0, controlPolicyClass);
+		launch(null, RandomHelper.nextIntFromTo(7,10), 0.5, 5000.0, controlPolicyClass);
 	}
 	
 	public Lane getLaunchLane() {
