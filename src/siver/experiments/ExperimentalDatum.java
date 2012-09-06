@@ -18,7 +18,7 @@ public abstract class ExperimentalDatum {
 			}
 	        try {
 	        	String db_env = System.getenv("DB_ENV");
-	        	if(db_env.isEmpty()) db_env = "development";
+	        	if(db_env == null || db_env.isEmpty()) db_env = "development";
 				conn = DriverManager.getConnection(URL+db_env, "siver", "");
 			} catch (SQLException e) {
 				// TODO Auto-generated catch block
